@@ -1,0 +1,22 @@
+# dbt build artifacts
+target/
+dbt_packages/
+logs/
+.user.yml
+
+# local database + downloaded raw data (fetched from the GitHub release)
+*.duckdb
+*.duckdb.wal
+job_postings/data/
+
+# python
+.venv/
+__pycache__/
+uv.lock
+
+# exercise solutions stay private (never shipped in the public repo)
+**/_solutions/
+
+# os
+.DS_Store
+.claude/
