@@ -7,7 +7,7 @@ logs/
 # local database + downloaded raw data (fetched from the GitHub release)
 *.duckdb
 *.duckdb.wal
-job_postings/data/
+data/
 
 # python
 .venv/

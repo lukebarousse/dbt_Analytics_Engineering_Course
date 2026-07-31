@@ -17,13 +17,10 @@ You'll build one project the whole way through: transforming a year of real data
 
 | Module | Concepts |
 | --- | --- |
-| [0. Setup and orientation](0_Setup_Orientation/) | What analytics engineering is; project setup with dbt Core + DuckDB |
-| [1. Models and dependencies](1_Models_Dependencies/) | Models, `ref`, the DAG, materializations |
-| [2. Structuring a project](2_Structuring_Project/) | Layering: staging, intermediate, marts (and how it maps to medallion) |
-| [3. Trust: sources and tests](3_Sources_Tests/) | Declaring sources, freshness, data tests |
-| [4. Incremental processing](4_Incremental_Processing/) | Processing only new data |
-| [5. Documentation and lineage](5_Documentation_Lineage/) | Self-documenting pipelines, the lineage graph |
-| [6. Shipping to production](6_Shipping_Production/) | dev vs prod, `dbt build`, deploying to BigQuery, capstone |
+| [0. Intro](0_intro/) | What dbt is, prerequisites, the data and project overview |
+| [1. Basics](1_basics/) | Setup, models, `ref`, the DAG & docs, materializations |
+| [2. Advanced](2_advanced/) | Layering, refactoring, sources, tests, incremental |
+| [3. Project](3_project/) | Dev vs prod, ship to BigQuery, capstone |
 
 ## Setup
 
@@ -33,8 +30,8 @@ Requires [uv](https://docs.astral.sh/uv/) (Part 1 of the bootcamp covers it). Th
 git clone https://github.com/lukebarousse/dbt_Analytics_Engineering_Course.git
 cd dbt_Analytics_Engineering_Course
 uv sync                                      # installs dbt (DuckDB + BigQuery adapters)
-uv run job_postings/scripts/download_data.py    # downloads the course dataset (~85MB)
-cd job_postings
+uv run scripts/download_data.py                 # downloads the course dataset (~85MB)
+cd dbt
 uv run dbt debug                             # verify everything works
 ```
 

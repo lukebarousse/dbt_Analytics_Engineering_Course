@@ -1,8 +1,8 @@
-"""Download the course dataset (raw job postings + skills) into job_postings/data/raw/.
+"""Download the course dataset (raw job postings + skills) into data/raw/ at the repo root.
 
 Run once during setup, from anywhere in the repo:
 
-    uv run job_postings/scripts/download_data.py
+    uv run scripts/download_data.py
 
 Files come from the course GitHub release (~85MB total). Re-running skips
 files you already have.
