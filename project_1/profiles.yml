@@ -1,8 +1,6 @@
-# dev  (default) = local DuckDB dev database (lives in data/ at repo root,
-#                  beside the raw files). Sections 1 & 2 run here.
-# prod           = starts as a second local DuckDB (3.1 teaches target switching
-#                  with zero cloud), then gets re-pointed at BigQuery in 3.2.
-#                  This file shows the END state (prod = BigQuery).
+# Project #1 runs entirely on local DuckDB — one database, one target.
+# (It's named "dev" on purpose: dev vs prod becomes a real concept in
+# Section 3, on Project #2, where dev and prod are BigQuery datasets.)
 
 job_postings:
   target: dev
@@ -10,11 +8,4 @@ job_postings:
     dev:
       type: duckdb
       path: ../data/dev.duckdb
-      threads: 4
-    prod:
-      type: bigquery
-      method: oauth
-      project: your-gcp-project-id   # <- your BigQuery sandbox project id
-      dataset: job_postings
-      location: US
       threads: 4
