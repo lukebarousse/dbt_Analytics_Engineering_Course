@@ -1,11 +1,12 @@
-"""Download the course dataset (raw job postings + skills) into data/raw/ at the repo root.
+"""Download the course dataset (raw job postings + skills) into data/raw/.
 
-Run once during setup, from anywhere in the repo:
+Students: run this ONCE from your project root, wherever you created it:
 
-    uv run scripts/download_data.py
+    curl -LO https://raw.githubusercontent.com/lukebarousse/dbt_Analytics_Engineering_Course/main/scripts/download_data.py
+    uv run download_data.py
 
-Files come from the course GitHub release (~85MB total). Re-running skips
-files you already have.
+Files land in data/raw/ inside the folder you run it from (~85MB total).
+Re-running skips files you already have.
 """
 
 import urllib.request
@@ -21,7 +22,7 @@ MONTHS = [
 ]
 FILES = [f"raw_job_postings_{m}.parquet" for m in MONTHS] + ["raw_job_skills.parquet"]
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
+DATA_DIR = Path.cwd() / "data" / "raw"   # relative to where you RUN it
 
 if __name__ == "__main__":
     DATA_DIR.mkdir(parents=True, exist_ok=True)
