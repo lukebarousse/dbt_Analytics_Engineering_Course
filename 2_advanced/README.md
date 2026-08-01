@@ -11,7 +11,7 @@ Project #2 begins here: new repo, BigQuery.
 | 2.5 | Analyses & Seeds |
 | 2.6 | Macros (write your first) |
 | 2.7 | Data Tests (+ descriptions) |
-| 2.8 | Incremental Models |
-| 2.9 | Snapshots |
+| 2.8 | Snapshots |
+| 2.9 | Incremental Models |
 
 <!-- exercises land here during the build -->
