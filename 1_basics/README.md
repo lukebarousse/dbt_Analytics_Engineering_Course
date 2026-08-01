@@ -9,5 +9,6 @@
 | 1.5 | The DAG & Docs |
 | 1.6 | Jinja (loops & filters) |
 | 1.7 | Materializations |
+| 1.8 | Project #1: build & publish |
 
 <!-- exercises land here during the build -->

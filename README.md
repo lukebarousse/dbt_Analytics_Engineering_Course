@@ -31,7 +31,7 @@ git clone https://github.com/lukebarousse/dbt_Analytics_Engineering_Course.git
 cd dbt_Analytics_Engineering_Course
 uv sync                                      # installs dbt (DuckDB + BigQuery adapters)
 uv run scripts/download_data.py                 # downloads the course dataset (~85MB)
-cd dbt
+cd project_1
 uv run dbt debug                             # verify everything works
 ```
 
