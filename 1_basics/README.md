@@ -1,14 +1,16 @@
 # Section 1 — Basics
 
+Build the foundations on local DuckDB.
+
 | # | Lesson |
 | --- | --- |
-| 1.1 | Tool Setup (VS Code, terminal, uv, git check, DuckDB CLI) |
-| 1.2 | dbt Setup (ends at green `dbt debug`) |
-| 1.3 | Models (first `dbt run`) |
-| 1.4 | Dependencies (`ref` + Jinja intro, `--select`) |
-| 1.5 | The DAG & Docs |
-| 1.6 | Jinja (loops & filters) |
+| 1.1 | Tool Setup |
+| 1.2 | dbt Setup |
+| 1.3 | Models |
+| 1.4 | Dependencies |
+| 1.5 | Sources |
+| 1.6 | The DAG & Docs |
 | 1.7 | Materializations |
-| 1.8 | Project #1: build & publish |
+| 1.8 | Tests - pt 1 |
 
 <!-- exercises land here during the build -->

@@ -1,0 +1,114 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1.4 — Jinja: the three markers</title>
+<style>
+  :root{
+    /* base = Notion dark, so exports blend into the notes */
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    /* semantic accents (carry meaning — don't rotate) */
+    --dbt:#FF694B; --duck:#F2C94C;
+    /* THE course accent — Luke's blue (placeholder hex, one-line swap) */
+    --blue:#58A6FF;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+    font-family:var(--sans);color:var(--text);
+    background:
+      radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+      radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
+      var(--bg);}
+  .card{position:absolute;background:var(--panel);border:1.5px solid var(--line);
+    border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .mono{font-family:var(--mono)}
+  .code{font-family:var(--mono);font-size:18px;line-height:1.75;color:var(--text);
+    background:#191919;border-radius:10px;padding:14px 18px}
+  .marker{display:inline-block;padding:6px 16px;border-radius:10px;font-family:var(--mono);
+    font-weight:700;font-size:21px;background:rgba(88,166,255,.14);color:var(--blue)}
+  .def{font-size:17px;color:var(--muted);line-height:1.45;margin-top:12px}
+  .colhead{font-size:16px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+  .soon{display:inline-block;padding:4px 12px;border-radius:999px;font-size:14.5px;font-weight:700;
+    background:rgba(88,166,255,.14);color:var(--blue)}
+  svg.overlay{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- title -->
+  <div style="position:absolute;left:76px;top:50px">
+    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Jinja: the three markers</div>
+    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:14px 0 12px"></div>
+    <div style="font-size:20px;color:var(--muted)">Jinja runs first — the warehouse only ever sees plain SQL</div>
+  </div>
+
+  <!-- column headers -->
+  <div class="colhead" style="position:absolute;left:520px;top:172px">you write</div>
+  <div class="colhead" style="position:absolute;left:1260px;top:172px">the warehouse gets</div>
+
+  <!-- ================= row 1: expression ================= -->
+  <div style="position:absolute;left:76px;top:210px;width:400px">
+    <span class="marker">{{ ... }}</span>&nbsp;&nbsp;<span style="font-size:22px;font-weight:700">Expression</span>
+    <div class="def">Outputs a value — reference variables, call functions like ref()</div>
+  </div>
+  <div class="card" style="left:500px;top:210px;width:600px;height:150px">
+    <div class="code" style="margin:18px">SELECT {{ 2 + 2 }} AS four<br>FROM {{ ref('job_postings') }}</div>
+  </div>
+  <div class="card" style="left:1240px;top:210px;width:600px;height:150px">
+    <div class="code" style="margin:18px">SELECT 4 AS four<br>FROM "dev"."main"."job_postings"</div>
+  </div>
+
+  <!-- ================= row 2: statement ================= -->
+  <div style="position:absolute;left:76px;top:490px;width:400px">
+    <span class="marker">{% ... %}</span>&nbsp;&nbsp;<span style="font-size:22px;font-weight:700">Statement</span>
+    <div class="def">Logic — for loops, if, setting variables. Outputs nothing itself</div>
+    <div style="margin-top:12px"><span class="soon">you'll write these soon</span></div>
+  </div>
+  <div class="card" style="left:500px;top:470px;width:600px;height:190px">
+    <div class="code" style="margin:18px">{% for n in [1, 2] %}<br>SELECT {{ n }} AS n<br>{% endfor %}</div>
+  </div>
+  <div class="card" style="left:1240px;top:470px;width:600px;height:190px">
+    <div class="code" style="margin:18px">SELECT 1 AS n<br>SELECT 2 AS n<br><span style="color:#6B6B6B">-- the loop wrote the SQL for you</span></div>
+  </div>
+
+  <!-- ================= row 3: comment ================= -->
+  <div style="position:absolute;left:76px;top:770px;width:400px">
+    <span class="marker">{# ... #}</span>&nbsp;&nbsp;<span style="font-size:22px;font-weight:700">Comment</span>
+    <div class="def">Never executes, never ships — vanishes at compile</div>
+  </div>
+  <div class="card" style="left:500px;top:750px;width:600px;height:190px">
+    <div class="code" style="margin:18px">{# note to self: fix later #}<br>-- TODO: add salary<br>SELECT job_title FROM jobs</div>
+  </div>
+  <div class="card" style="left:1240px;top:750px;width:600px;height:190px">
+    <div class="code" style="margin:18px"><span style="color:#6B6B6B;font-style:italic">({# #} line — gone)</span><br>-- TODO: add salary<br>SELECT job_title FROM jobs</div>
+  </div>
+
+  <!-- compile arrows -->
+  <svg class="overlay" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8.5" markerHeight="8.5" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#FF694B"/>
+      </marker>
+    </defs>
+    <path d="M1112 285 L1226 285" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar)"/>
+    <path d="M1112 565 L1226 565" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar)"/>
+    <path d="M1112 845 L1226 845" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar)"/>
+    <g font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" fill="#FF694B" text-anchor="middle" font-weight="700">
+      <text x="1168" y="264">dbt compile</text>
+      <text x="1168" y="544">dbt compile</text>
+      <text x="1168" y="824">dbt compile</text>
+    </g>
+  </svg>
+
+  <!-- footer gotcha -->
+  <div style="position:absolute;left:76px;bottom:26px;font-size:17.5px;color:var(--faint)">
+    ⚠️ <span class="mono" style="color:var(--muted)">--</span> doesn't stop Jinja — a commented-out <span class="mono" style="color:var(--muted)">{{ ref() }}</span> still runs at compile. Only <span class="mono" style="color:var(--muted)">{# #}</span> truly disables it
+  </div>
+</div>
+</body>
+</html>

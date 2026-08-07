@@ -1,0 +1,116 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1.2 — Inside the dbt project: the six folders</title>
+<style>
+  :root{
+    /* base = Notion dark, so exports blend into the notes */
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    /* semantic accents (carry meaning — don't rotate) */
+    --dbt:#FF694B; --duck:#F2C94C;
+    /* THE course accent — Luke's blue (placeholder hex, one-line swap) */
+    --blue:#58A6FF;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+    font-family:var(--sans);color:var(--text);
+    background:
+      radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+      radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
+      var(--bg);}
+  .card{position:absolute;background:var(--panel);border:1.5px solid var(--line);
+    border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .mono{font-family:var(--mono)}
+  .fname{font-family:var(--mono);font-weight:700;color:var(--text)}
+  .job{color:var(--muted);line-height:1.4}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- title -->
+  <div style="position:absolute;left:76px;top:54px">
+    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Inside the dbt project</div>
+    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:14px 0 12px"></div>
+    <div style="font-size:20px;color:var(--muted)">six folders, one job each — every one scaffolded by <span class="mono" style="color:var(--text)">dbt init</span></div>
+  </div>
+
+  <!-- project container -->
+  <div class="card" style="left:76px;top:196px;width:1768px;height:810px;background:var(--panel2);
+       border:1.5px solid rgba(255,105,75,.55);
+       box-shadow:0 0 0 1px rgba(255,105,75,.15), 0 16px 48px rgba(0,0,0,.42)">
+    <div style="padding:26px 36px 0;display:flex;align-items:center;gap:16px">
+      <span class="fname" style="font-size:32px;color:var(--dbt)">job_postings/</span>
+      <span class="job" style="font-size:20px">the dbt project</span>
+      <div style="margin-left:auto;border:1.5px solid var(--dbt);border-radius:12px;padding:10px 20px;background:rgba(255,105,75,.08)">
+        <span class="mono" style="font-size:20px;font-weight:700;color:var(--dbt)">dbt_project.yml</span>
+        <span style="font-size:16px;color:var(--muted)">&nbsp;— the badge that makes this folder a dbt project</span>
+      </div>
+    </div>
+
+    <!-- 6 folders, 3 × 2 grid -->
+    <div style="position:absolute;left:36px;top:110px;display:grid;grid-template-columns:552px 552px 552px;gap:26px 24px">
+
+      <div class="card" style="position:relative;width:552px;height:310px;background:var(--panel)">
+        <div style="padding:28px 30px">
+          <div style="font-size:44px">📁</div>
+          <div class="fname" style="font-size:30px;margin-top:14px">models/</div>
+          <div class="job" style="font-size:19px;margin-top:12px">your SQL — one SELECT per file, versioned. The heart of every dbt project.</div>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;width:552px;height:310px;background:var(--panel)">
+        <div style="padding:28px 30px">
+          <div style="font-size:44px">📁</div>
+          <div class="fname" style="font-size:30px;margin-top:14px">seeds/</div>
+          <div class="job" style="font-size:19px;margin-top:12px">small lookup CSVs that live in the repo and load with one command.</div>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;width:552px;height:310px;background:var(--panel)">
+        <div style="padding:28px 30px">
+          <div style="font-size:44px">📁</div>
+          <div class="fname" style="font-size:30px;margin-top:14px">analyses/</div>
+          <div class="job" style="font-size:19px;margin-top:12px">scratch queries — compiled like models, never built into the warehouse.</div>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;width:552px;height:310px;background:var(--panel)">
+        <div style="padding:28px 30px">
+          <div style="font-size:44px">📁</div>
+          <div class="fname" style="font-size:30px;margin-top:14px">macros/</div>
+          <div class="job" style="font-size:19px;margin-top:12px">reusable SQL functions — you'll write your own.</div>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;width:552px;height:310px;background:var(--panel)">
+        <div style="padding:28px 30px">
+          <div style="font-size:44px">📁</div>
+          <div class="fname" style="font-size:30px;margin-top:14px">tests/</div>
+          <div class="job" style="font-size:19px;margin-top:12px">declared checks on your data — they fail loudly so bad data can't hide.</div>
+        </div>
+      </div>
+
+      <div class="card" style="position:relative;width:552px;height:310px;background:var(--panel)">
+        <div style="padding:28px 30px">
+          <div style="font-size:44px">📁</div>
+          <div class="fname" style="font-size:30px;margin-top:14px">snapshots/</div>
+          <div class="job" style="font-size:19px;margin-top:12px">row history — what changed, and when, as your data evolves.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="position:absolute;left:76px;bottom:24px;font-size:17.5px;color:var(--faint)">
+    dbt also generates <span class="mono" style="color:var(--muted)">target/</span>, <span class="mono" style="color:var(--muted)">logs/</span>, <span class="mono" style="color:var(--muted)">dbt_packages/</span> as it runs — build artifacts, not yours to edit
+  </div>
+</div>
+</body>
+</html>

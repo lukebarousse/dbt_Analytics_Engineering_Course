@@ -18,9 +18,10 @@ You'll build one project the whole way through: transforming a year of real data
 | Module | Concepts |
 | --- | --- |
 | [0. Intro](0_intro/) | What dbt is, prerequisites, the data and project overview |
-| [1. Basics](1_basics/) | Setup, models, `ref`, the DAG & docs, materializations |
-| [2. Advanced](2_advanced/) | Layering, refactoring, sources, tests, incremental |
-| [3. Project](3_project/) | Dev vs prod, ship to BigQuery, capstone |
+| [1. Basics](1_basics/) | Setup, models, `ref`, sources, the DAG & docs, materializations, tests |
+| [2. Project #1](2_project_1/) | Build & publish the local job-market pipeline |
+| [3. Advanced](3_advanced/) | To the cloud, data modeling, the refactor, macros, tests pt 2, snapshots |
+| [4. Project #2](4_project_2/) | Incremental, dev vs prod, capstone on BigQuery |
 
 ## Setup
 

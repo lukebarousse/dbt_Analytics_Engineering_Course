@@ -1,0 +1,190 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Anatomy of a dbt project</title>
+<style>
+  :root{
+    /* base = Notion dark, so exports blend into the notes */
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    /* semantic accents (carry meaning — don't rotate) */
+    --dbt:#FF694B; --duck:#F2C94C;
+    /* THE course accent — Luke's blue (placeholder hex, one-line swap) */
+    --blue:#58A6FF;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+    font-family:var(--sans);color:var(--text);
+    background:
+      radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+      radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
+      var(--bg);}
+  .card{position:absolute;background:var(--panel);border:1.5px solid var(--line);
+    border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .mono{font-family:var(--mono)}
+  .chip{display:inline-block;padding:5px 14px;border-radius:999px;font-family:var(--mono);
+    font-weight:700;font-size:17px;letter-spacing:.02em}
+  .chip.b,.chip.a{background:rgba(88,166,255,.14);color:var(--blue)}
+  .tag{display:inline-block;padding:4px 12px;border-radius:8px;font-size:15px;
+    background:rgba(143,160,186,.12);color:var(--muted)}
+  .fname{font-family:var(--mono);font-weight:700;font-size:23px;color:var(--text)}
+  .job{font-size:16.5px;color:var(--muted);line-height:1.35}
+  .conn{position:absolute;background:var(--line)}
+  svg.overlay{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ============ title ============ -->
+  <div style="position:absolute;left:76px;top:54px">
+    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Anatomy of a dbt project</div>
+    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:14px 0 12px"></div>
+    <div style="font-size:20px;color:var(--muted)">what <span class="mono" style="color:var(--text)">uv init</span> + <span class="mono" style="color:var(--text)">dbt init</span> scaffolded — and the lesson where each piece comes alive</div>
+  </div>
+
+  <!-- ============ tree: repo root ============ -->
+  <div class="card" style="left:76px;top:200px;width:430px;height:78px">
+    <div style="padding:17px 26px">
+      <span style="font-size:22px">🗂️</span>
+      <span class="fname" style="font-size:25px">&nbsp;dbt_course/</span>
+      <span class="job" style="margin-left:10px">your repo — root</span>
+    </div>
+  </div>
+
+  <!-- trunk + stubs -->
+  <div class="conn" style="left:114px;top:278px;width:2.5px;height:352px"></div>
+  <div class="conn" style="left:114px;top:362px;width:44px;height:2.5px"></div>
+  <div class="conn" style="left:114px;top:492px;width:44px;height:2.5px"></div>
+  <div class="conn" style="left:114px;top:628px;width:44px;height:2.5px"></div>
+
+  <!-- child: data/ — with the warehouse INSIDE it -->
+  <div class="card" style="left:158px;top:306px;width:660px;height:126px">
+    <div style="padding:14px 24px 0;display:flex;align-items:center">
+      <span class="fname">data/</span>
+      <span class="job" style="margin-left:10px">raw parquet files</span>
+      <span class="tag" style="margin-left:auto">outside the project</span>
+    </div>
+    <!-- the warehouse, where it actually lives -->
+    <div style="position:absolute;left:24px;top:58px;width:612px;height:50px;border:1.5px solid rgba(242,201,76,.55);
+         border-radius:10px;background:rgba(242,201,76,.06);display:flex;align-items:center;gap:12px;padding:0 16px;box-sizing:border-box">
+      <svg width="26" height="32" viewBox="0 0 26 32"><path d="M2 5 a11 3.5 0 0 1 22 0 v22 a11 3.5 0 0 1 -22 0 z" fill="none" stroke="#F2C94C" stroke-width="1.8"/><ellipse cx="13" cy="5" rx="11" ry="3.5" fill="none" stroke="#F2C94C" stroke-width="1.8"/></svg>
+      <span class="mono" style="font-size:18px;font-weight:700;color:var(--duck)">dev.duckdb</span>
+      <span class="job" style="font-size:15.5px">your local DuckDB warehouse — appears on first connection</span>
+    </div>
+  </div>
+
+  <!-- child: scripts/ -->
+  <div class="card" style="left:158px;top:454px;width:660px;height:76px">
+    <div style="padding:13px 24px;display:flex;align-items:center">
+      <span class="fname">scripts/</span>
+      <span class="job" style="margin-left:10px">EL — gets data in; dbt takes over from there</span>
+      <span class="tag" style="margin-left:auto">outside the project</span>
+    </div>
+  </div>
+
+  <!-- ============ child: the dbt project container ============ -->
+  <div class="card" style="left:158px;top:562px;width:1010px;height:452px;background:var(--panel2);
+       border:1.5px solid rgba(255,105,75,.55);
+       box-shadow:0 0 0 1px rgba(255,105,75,.15), 0 16px 48px rgba(0,0,0,.42)">
+    <div style="padding:18px 28px 0;display:flex;align-items:center;gap:14px">
+      <span class="fname" style="font-size:27px;color:var(--dbt)">job_postings/</span>
+      <span class="job" style="font-size:18px">the dbt project</span>
+      <!-- badge -->
+      <div style="margin-left:auto;border:1.5px solid var(--dbt);border-radius:10px;padding:8px 16px;background:rgba(255,105,75,.08)">
+        <span class="mono" style="font-size:18px;font-weight:700;color:var(--dbt)">dbt_project.yml</span>
+        <span style="font-size:15px;color:var(--muted)">&nbsp;— the badge</span>
+      </div>
+    </div>
+
+    <!-- 6 folders, 2-col grid -->
+    <div style="position:absolute;left:28px;top:80px;display:grid;grid-template-columns:462px 462px;gap:16px 22px">
+      <div class="card" style="position:relative;width:462px;height:100px;background:var(--panel)">
+        <div style="padding:15px 20px"><span class="fname">📁 models/</span>
+        <div class="job" style="margin-top:7px">your SQL — one SELECT per file, versioned</div></div>
+      </div>
+      <div class="card" style="position:relative;width:462px;height:100px;background:var(--panel)">
+        <div style="padding:15px 20px"><span class="fname">📁 seeds/</span>
+        <div class="job" style="margin-top:7px">small lookup CSVs that live in the repo</div></div>
+      </div>
+      <div class="card" style="position:relative;width:462px;height:100px;background:var(--panel)">
+        <div style="padding:15px 20px"><span class="fname">📁 analyses/</span>
+        <div class="job" style="margin-top:7px">scratch queries — compiled, never built</div></div>
+      </div>
+      <div class="card" style="position:relative;width:462px;height:100px;background:var(--panel)">
+        <div style="padding:15px 20px"><span class="fname">📁 macros/</span>
+        <div class="job" style="margin-top:7px">reusable SQL functions — you'll write one</div></div>
+      </div>
+      <div class="card" style="position:relative;width:462px;height:100px;background:var(--panel)">
+        <div style="padding:15px 20px"><span class="fname">📁 tests/</span>
+        <div class="job" style="margin-top:7px">declared checks that fail loudly on bad data</div></div>
+      </div>
+      <div class="card" style="position:relative;width:462px;height:100px;background:var(--panel)">
+        <div style="padding:15px 20px"><span class="fname">📁 snapshots/</span>
+        <div class="job" style="margin-top:7px">row history as your data changes over time</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ home zone: a DIFFERENT place on disk ============ -->
+  <div style="position:absolute;left:1310px;top:200px;width:540px;height:392px;border:2px dashed #4A4A4A;
+       border-radius:18px;background:var(--zone)">
+    <div style="padding:18px 26px 0">
+      <span style="font-size:22px">🏠</span>
+      <span class="fname" style="font-size:23px">&nbsp;~</span>
+      <span class="job" style="margin-left:8px">your home folder — <b style="color:var(--text)">not in the repo at all</b></span>
+    </div>
+    <!-- mini tree: .dbt/ → profiles.yml -->
+    <div class="conn" style="left:46px;top:62px;width:2.5px;height:56px"></div>
+    <div class="conn" style="left:46px;top:118px;width:26px;height:2.5px"></div>
+    <div style="position:absolute;left:80px;top:96px">
+      <span class="fname" style="font-size:20px">.dbt/</span>
+    </div>
+    <div class="conn" style="left:96px;top:132px;width:2.5px;height:44px"></div>
+    <div class="conn" style="left:96px;top:176px;width:22px;height:2.5px"></div>
+    <div class="card" style="left:126px;top:150px;width:386px;height:216px;background:var(--panel)">
+      <div style="padding:18px 22px">
+        <div class="mono" style="font-size:21px;font-weight:700">profiles.yml</div>
+        <div class="job" style="margin-top:4px;font-size:15.5px">connection settings — dbt init wrote it (1.22)</div>
+        <div class="mono" style="margin-top:12px;font-size:16px;color:var(--muted);background:#191919;
+             border-radius:10px;padding:11px 14px;line-height:1.55">
+          <span style="color:var(--dbt)">job_postings:</span><br>
+          &nbsp;&nbsp;type:&nbsp;duckdb<br>
+          &nbsp;&nbsp;path:&nbsp;<span style="color:var(--duck)">../data/dev.duckdb</span>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;left:26px;bottom:14px;font-size:14.5px;color:var(--faint)">one file for ALL your dbt projects — never committed to git</div>
+  </div>
+
+  <!-- ============ cables ============ -->
+  <svg class="overlay" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8.5" markerHeight="8.5" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#FF694B"/>
+      </marker>
+      <marker id="ar2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8.5" markerHeight="8.5" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#F2C94C"/>
+      </marker>
+    </defs>
+    <!-- badge → profiles.yml : the name lookup, leaving the repo (routed under the home zone) -->
+    <path d="M1170 602 C1250 602 1252 712 1340 712 L1680 712 C1770 712 1780 686 1780 600 L1780 570" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar)"/>
+    <text x="1352" y="672" font-size="16.5" font-weight="700" fill="#FF694B" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace">profile: 'job_postings'</text>
+    <text x="1352" y="695" font-size="15" fill="#9B9B9B">found by name, in your home folder</text>
+    <!-- profiles.yml path → back INTO the repo, to data/dev.duckdb -->
+    <path d="M1436 486 C1370 470 1352 330 1240 312 C1120 292 1000 340 900 375 C870 385 850 389 824 389" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar2)"/>
+    <text x="1062" y="252" font-size="16" font-weight="700" fill="#F2C94C" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" text-anchor="middle">path: ../data/dev.duckdb</text>
+    <text x="1062" y="275" font-size="15" fill="#9B9B9B" text-anchor="middle">points back into the repo</text>
+  </svg>
+
+  <!-- footer -->
+  <div style="position:absolute;left:76px;bottom:24px;font-size:17.5px;color:var(--faint)">
+    <span class="mono" style="color:var(--muted)">data/</span> and <span class="mono" style="color:var(--muted)">scripts/</span> stay outside the project on purpose — dbt transforms your data; it never owns it
+  </div>
+</div>
+</body>
+</html>
