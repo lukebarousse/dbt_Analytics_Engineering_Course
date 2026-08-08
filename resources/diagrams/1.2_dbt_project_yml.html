@@ -1,0 +1,80 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1.2 — Inside dbt_project.yml</title>
+<style>
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+    font-family:var(--sans);color:var(--text);
+    background:
+      radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+      radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
+      var(--bg);}
+  .mono{font-family:var(--mono)}
+  .filebox{position:absolute;left:76px;top:210px;width:900px;height:800px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .fhead{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--muted);
+    padding:18px 28px;border-bottom:1.5px solid var(--line)}
+  .code{font-family:var(--mono);font-size:19px;line-height:2.05;padding:18px 28px;white-space:pre}
+  .dim{color:#5C5C5C}
+  .hl-b{color:var(--blue);font-weight:700}
+  .hl-o{color:var(--dbt);font-weight:700}
+  .note{position:absolute;left:1040px;width:800px;padding:14px 20px;background:var(--zone);
+    border:1.5px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;
+    font-size:17.5px;color:var(--muted);line-height:1.4}
+  .note b{color:var(--text)}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div style="position:absolute;left:76px;top:54px">
+    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Inside dbt_project.yml</div>
+    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:14px 0 12px"></div>
+    <div style="font-size:20px;color:var(--muted)">the badge that makes the folder a dbt project — line by line</div>
+  </div>
+
+  <div class="filebox">
+    <div class="fhead">job_postings/dbt_project.yml</div>
+    <div class="code"><span class="hl-b">name:</span> 'job_postings'
+<span class="dim">version: '1.0.0'</span>
+
+<span class="hl-o">profile:</span> <span class="hl-o">'job_postings'</span>
+
+<span class="hl-b">model-paths:</span> ["models"]
+<span class="dim">analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]</span>
+
+<span class="hl-b">clean-targets:</span>
+<span class="dim">  - "target"
+  - "dbt_packages"</span>
+
+<span class="hl-b">models:</span>
+  job_postings:
+    <span class="hl-b">+materialized:</span> table</div>
+  </div>
+
+  <div class="note" style="top:250px"><b>name</b> — the project's name; also namespaces its configs</div>
+  <div class="note" style="top:352px;border-left-color:var(--dbt)"><b style="color:var(--dbt)">profile</b> — looked up BY NAME in ~/.dbt/profiles.yml. This one line is the cable between WHAT (this project) and WHERE (your warehouse)</div>
+  <div class="note" style="top:492px"><b>*-paths</b> — where dbt looks for each of the six folders from the anatomy. You'll almost never change these</div>
+  <div class="note" style="top:672px"><b>clean-targets</b> — what <span class="mono">dbt clean</span> deletes: build artifacts, never yours to edit</div>
+  <div class="note" style="top:800px"><b>models:</b> — materialization DEFAULTS, project-wide or per folder. One line here changes every model; a file's <span class="mono">config()</span> overrides it</div>
+
+  <div style="position:absolute;left:76px;bottom:26px;font-size:17.5px;color:var(--faint)">
+    lives IN the project, committed to git — it describes WHAT the pipeline is
+  </div>
+</div>
+</body>
+</html>

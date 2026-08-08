@@ -1,0 +1,134 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1.2 — Reading profiles.yml</title>
+<style>
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C;
+    --blue:#58A6FF;
+    /* status pair — pass/fail semantics only (mirrors dbt's terminal OK/ERROR) */
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+    font-family:var(--sans);color:var(--text);
+    background:
+      radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+      radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
+      var(--bg);}
+  .mono{font-family:var(--mono)}
+  .panel{position:absolute;top:234px;height:700px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .chip{position:absolute;font-family:var(--mono);font-size:16px;font-weight:700;
+    background:var(--panel2);border:1.5px solid var(--line);border-radius:8px;
+    padding:7px 14px;white-space:nowrap;color:var(--text)}
+  .code{position:absolute;font-family:var(--mono);font-size:19px;line-height:38px;
+    white-space:pre;color:var(--text)}
+  .ann{position:absolute;font-size:15.5px;color:var(--muted);line-height:1.25;width:470px}
+  .guide{position:absolute;width:0;border-left:1.5px dotted #3a3a3a}
+  .num{position:absolute;box-sizing:border-box;width:30px;height:30px;border-radius:50%;
+    border:2px solid var(--blue);color:var(--blue);font-weight:800;font-size:16px;
+    display:flex;align-items:center;justify-content:center;background:var(--bg)}
+  .step{position:absolute;box-sizing:border-box;left:1132px;width:676px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:12px;padding:14px 18px 14px 60px}
+  .step .name{font-size:20px;font-weight:700}
+  .step .sub{font-size:15px;color:var(--muted);margin-top:5px}
+  .cap{position:absolute;font-size:16px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div style="position:absolute;left:76px;top:50px">
+    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Reading profiles.yml</div>
+    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:12px 0 10px"></div>
+    <div style="font-size:20px;color:var(--muted)">a YAML file: plain-text settings dbt reads to find your warehouse — nothing executes, you can read it line by line</div>
+  </div>
+
+  <!-- ============ LEFT: the file ============ -->
+  <div class="panel" style="left:76px;width:980px"></div>
+  <div class="chip" style="left:116px;top:258px">~/.dbt/profiles.yml</div>
+
+  <!-- indent guides (2 spaces per level) -->
+  <div class="guide" style="left:173px;top:346px;height:368px"></div>
+  <div class="guide" style="left:196px;top:384px;height:330px"></div>
+  <div class="guide" style="left:219px;top:422px;height:292px"></div>
+
+  <div class="code" style="left:150px;top:308px"><span style="color:var(--blue);font-weight:700">job_postings:</span>
+  target: dev
+  outputs:
+    dev:
+      type: <span style="color:var(--dbt)">duckdb</span>
+      path: <span style="color:var(--duck)">../data/dev.duckdb</span>
+      threads: 1
+    <span style="color:var(--faint)">prod:</span>
+      <span style="color:var(--faint)">type: duckdb</span>
+      <span style="color:var(--faint)">path: ../data/prod.duckdb</span>
+      <span style="color:var(--faint)">threads: 4</span></div>
+
+  <!-- per-line annotations -->
+  <div class="ann" style="left:560px;top:316px">the block dbt looks up — named after your project</div>
+  <div class="ann" style="left:560px;top:354px">which output to use by default</div>
+  <div class="ann" style="left:560px;top:430px">your everyday connection</div>
+  <div class="ann" style="left:560px;top:468px">the adapter — which warehouse driver</div>
+  <div class="ann" style="left:560px;top:506px">where the database file lives</div>
+  <div class="ann" style="left:560px;top:544px">models built one at a time</div>
+  <div class="ann" style="left:560px;top:582px">scaffolded too — inert until <span class="mono">--target prod</span></div>
+  <div class="ann" style="left:560px;top:696px">up to 4 models at once</div>
+
+  <!-- step badges in the gutter -->
+  <div class="num" style="left:96px;top:312px">1</div>
+  <div class="num" style="left:96px;top:350px">2</div>
+  <div class="num" style="left:96px;top:464px">3</div>
+
+  <div class="cap" style="left:116px;top:854px;width:900px">the indentation IS the structure — every level is two spaces, never tabs</div>
+
+  <!-- ============ RIGHT: how dbt reads it ============ -->
+  <div class="panel" style="left:1096px;width:748px"></div>
+  <div style="position:absolute;left:1132px;top:258px;font-size:23px;font-weight:800">how <span class="mono" style="color:var(--blue)">dbt</span> reads it</div>
+
+  <div class="step" style="top:312px">
+    <div class="num" style="left:16px;top:18px">1</div>
+    <div class="name">find your project's block</div>
+    <div class="sub"><span class="mono">dbt_project.yml</span> says <span class="mono" style="color:var(--text)">profile: job_postings</span> — that's the lookup key. Ran <span class="mono">dbt init</span> twice? Two blocks — dbt reads only the one your project names</div>
+  </div>
+
+  <div class="step" style="top:452px">
+    <div class="num" style="left:16px;top:18px">2</div>
+    <div class="name">pick an output</div>
+    <div class="sub"><span class="mono" style="color:var(--text)">target: dev</span> is the default — <span class="mono">--target prod</span> overrides it for one run</div>
+  </div>
+
+  <div class="step" style="top:572px">
+    <div class="num" style="left:16px;top:18px">3</div>
+    <div class="name">read the connection settings</div>
+    <div class="sub"><span class="mono">type</span> = the adapter · <span class="mono">path</span> = the database file · <span class="mono">threads</span> = how many models at once</div>
+  </div>
+
+  <div class="step" style="top:692px">
+    <div class="num" style="left:16px;top:18px">4</div>
+    <div class="name">🗄 connect</div>
+    <div class="sub">every <span class="mono">dbt debug</span>, <span class="mono">run</span>, and <span class="mono">test</span> walks these steps. dbt wrote this file once at <span class="mono">dbt init</span> — it never edits it again; every change after that is yours, by hand</div>
+  </div>
+
+  <div class="cap" style="left:1132px;top:854px;width:676px">no code runs in here — it's structured settings, nothing more</div>
+
+  <!-- ============ YAML rules strip ============ -->
+  <div style="position:absolute;left:76px;top:962px;width:1768px;box-sizing:border-box;
+    border:1.5px solid var(--line);border-radius:12px;background:var(--panel);
+    padding:14px 24px;text-align:center;font-size:18px;color:var(--muted)">
+    YAML rules: indentation is <b style="color:var(--text)">meaning</b> — spaces, never tabs
+    <span style="color:var(--faint);padding:0 26px">|</span>
+    colons need a space: <span class="mono" style="color:var(--ok)">target: dev ✓</span>&ensp;<span class="mono" style="color:var(--err)">target:dev ✗</span>
+    <span style="color:var(--faint);padding:0 26px">|</span>
+    plain text — settings, not code
+  </div>
+</div>
+</body>
+</html>
