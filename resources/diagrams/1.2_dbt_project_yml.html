@@ -13,67 +13,75 @@
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
-  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
-    font-family:var(--sans);color:var(--text);
-    background:
-      radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
-      radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
-      var(--bg);}
+  a{color:var(--blue);text-decoration:none}a:hover{color:var(--duck)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
   .mono{font-family:var(--mono)}
-  .filebox{position:absolute;left:76px;top:210px;width:900px;height:800px;background:var(--panel);
-    border:1.5px solid var(--line);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
-  .fhead{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--muted);
-    padding:18px 28px;border-bottom:1.5px solid var(--line)}
-  .code{font-family:var(--mono);font-size:19px;line-height:2.05;padding:18px 28px;white-space:pre}
+  .filebox{position:absolute;left:76px;top:196px;width:900px;height:818px;background:var(--panel);border:1.5px solid var(--line);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .fhead{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--muted);padding:15px 28px;border-bottom:1.5px solid var(--line)}
+  .cl{position:absolute;left:118px;font-family:var(--mono);font-size:18.5px;white-space:pre;line-height:30px}
   .dim{color:#5C5C5C}
-  .hl-b{color:var(--blue);font-weight:700}
-  .hl-o{color:var(--dbt);font-weight:700}
-  .note{position:absolute;left:1040px;width:800px;padding:14px 20px;background:var(--zone);
-    border:1.5px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;
-    font-size:17.5px;color:var(--muted);line-height:1.4}
+  .rowhl{position:absolute;left:78px;width:896px;height:32px;background:rgba(255,105,75,.07)}
+  .gut{position:absolute;left:78px;width:4px;height:26px;border-radius:2px;background:var(--dbt)}
+  .note{position:absolute;left:1040px;width:804px;box-sizing:border-box;padding:12px 18px;background:var(--zone);border:1.5px solid var(--line);border-radius:10px;font-size:17px;color:var(--muted);line-height:1.42}
   .note b{color:var(--text)}
+  .pill{display:inline-block;font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-radius:5px;padding:2px 8px;margin-right:9px;vertical-align:2px}
+  .pill.req{color:var(--dbt);background:rgba(255,105,75,.14);border:1px solid rgba(255,105,75,.4)}
+  .pill.opt{color:var(--faint);background:rgba(155,155,155,.08);border:1px solid #3d3d3d}
+  svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div style="position:absolute;left:76px;top:54px">
+  <div style="position:absolute;left:76px;top:50px">
     <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Inside dbt_project.yml</div>
-    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:14px 0 12px"></div>
-    <div style="font-size:20px;color:var(--muted)">the badge that makes the folder a dbt project — line by line</div>
+    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:12px 0 10px"></div>
+    <div style="font-size:20px;color:var(--muted)">line by line — only <b style="color:var(--dbt)">two lines</b> are required; dbt init wrote the rest for you</div>
   </div>
 
-  <div class="filebox">
-    <div class="fhead">job_postings/dbt_project.yml</div>
-    <div class="code"><span class="hl-b">name:</span> 'job_postings'
-<span class="dim">version: '1.0.0'</span>
+  <div class="filebox"><div class="fhead">job_postings/dbt_project.yml <span style="color:var(--faint);font-weight:400">· comments trimmed</span></div></div>
 
-<span class="hl-o">profile:</span> <span class="hl-o">'job_postings'</span>
+  <!-- required row highlights + gutter bars -->
+  <div class="rowhl" style="top:263px"></div><div class="gut" style="top:266px"></div>
+  <div class="rowhl" style="top:374px"></div><div class="gut" style="top:377px"></div>
 
-<span class="hl-b">model-paths:</span> ["models"]
-<span class="dim">analysis-paths: ["analyses"]
-test-paths: ["tests"]
-seed-paths: ["seeds"]
-macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]</span>
+  <!-- code lines (30px line, 37px pitch, start y=264) -->
+  <div class="cl" style="top:264px"><span style="color:var(--dbt);font-weight:700">name:</span> 'job_postings'</div>
+  <div class="cl dim" style="top:301px">version: '1.0.0'</div>
+  <div class="cl" style="top:375px"><span style="color:var(--dbt);font-weight:700">profile:</span> 'job_postings'</div>
+  <div class="cl dim" style="top:449px">model-paths: ["models"]</div>
+  <div class="cl dim" style="top:486px">analysis-paths: ["analyses"]</div>
+  <div class="cl dim" style="top:523px">test-paths: ["tests"]</div>
+  <div class="cl dim" style="top:560px">seed-paths: ["seeds"]</div>
+  <div class="cl dim" style="top:597px">macro-paths: ["macros"]</div>
+  <div class="cl dim" style="top:634px">snapshot-paths: ["snapshots"]</div>
+  <div class="cl dim" style="top:704px">clean-targets:</div>
+  <div class="cl dim" style="top:741px">  - "target"</div>
+  <div class="cl dim" style="top:778px">  - "dbt_packages"</div>
+  <div class="cl" style="top:848px;color:var(--muted)">models:</div>
+  <div class="cl" style="top:885px;color:var(--muted)">  job_postings:</div>
+  <div class="cl dim" style="top:922px">    example:</div>
+  <div class="cl dim" style="top:959px">      +materialized: view</div>
 
-<span class="hl-b">clean-targets:</span>
-<span class="dim">  - "target"
-  - "dbt_packages"</span>
+  <!-- notes -->
+  <div class="note" style="top:252px"><span class="pill req">required</span><b>name</b> — what this project is called; configs below refer back to it</div>
+  <div class="note" style="top:351px;border-color:rgba(255,105,75,.45)"><span class="pill req">required</span><b style="color:var(--dbt)">profile</b> — which connection in <span class="mono">~/.dbt/profiles.yml</span> to use: the one cable between this project and your warehouse</div>
+  <div class="note" style="top:499px"><span class="pill opt">optional</span><b>*-paths</b> — where dbt looks for the six folders. These ARE the defaults — delete every one of these lines and nothing changes</div>
+  <div class="note" style="top:712px"><span class="pill opt">optional</span><b>clean-targets</b> — what <span class="mono">dbt clean</span> deletes. Without it, clean removes only target/ — this line ADDS dbt_packages to the list</div>
+  <div class="note" style="top:856px"><span class="pill opt">optional — but useful</span><b>models:</b> — materialization defaults for the whole project or one folder; a model's own <span class="mono">config()</span> overrides it. The <span class="mono">example:</span> lines configure dbt's demo folder — they leave when the demo does</div>
 
-<span class="hl-b">models:</span>
-  job_postings:
-    <span class="hl-b">+materialized:</span> table</div>
-  </div>
+  <svg class="art" viewBox="0 0 1920 1080">
+    <line x1="980" y1="279" x2="1034" y2="279" stroke="#FF694B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="980" y1="390" x2="1034" y2="390" stroke="#FF694B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="980" y1="545" x2="1034" y2="545" stroke="#6B6B6B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="980" y1="749" x2="1034" y2="749" stroke="#6B6B6B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="980" y1="899" x2="1034" y2="899" stroke="#6B6B6B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+  </svg>
 
-  <div class="note" style="top:250px"><b>name</b> — the project's name; also namespaces its configs</div>
-  <div class="note" style="top:352px;border-left-color:var(--dbt)"><b style="color:var(--dbt)">profile</b> — looked up BY NAME in ~/.dbt/profiles.yml. This one line is the cable between WHAT (this project) and WHERE (your warehouse)</div>
-  <div class="note" style="top:492px"><b>*-paths</b> — where dbt looks for each of the six folders from the anatomy. You'll almost never change these</div>
-  <div class="note" style="top:672px"><b>clean-targets</b> — what <span class="mono">dbt clean</span> deletes: build artifacts, never yours to edit</div>
-  <div class="note" style="top:800px"><b>models:</b> — materialization DEFAULTS, project-wide or per folder. One line here changes every model; a file's <span class="mono">config()</span> overrides it</div>
-
-  <div style="position:absolute;left:76px;bottom:26px;font-size:17.5px;color:var(--faint)">
-    lives IN the project, committed to git — it describes WHAT the pipeline is
+  <div style="position:absolute;left:76px;bottom:24px;right:76px;display:flex;gap:24px;font-size:17.5px;color:var(--faint)">
+    <span>lives IN the project, committed to git — it describes WHAT the pipeline is</span>
+    <span style="margin-left:auto">truly required: <b class="mono" style="color:var(--dbt)">name</b> + <b class="mono" style="color:var(--dbt)">profile</b> — everything grey was written by dbt init</span>
   </div>
 </div>
 </body>
