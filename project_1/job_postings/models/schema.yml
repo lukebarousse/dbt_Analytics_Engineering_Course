@@ -1,0 +1,55 @@
+models:
+  - name: job_postings
+    description: Cleaned postings; scraper error rows removed.
+    columns:
+      - name: job_title
+        description: Posting title as scraped; blank on the scraper's error rows.
+        data_tests:
+          - not_null
+
+  - name: monthly_summary
+    description: Monthly summary of job postings.
+    columns:
+      - name: month
+        description: Year and month of the summary.
+        data_tests:
+          - not_null
+          - unique
+  - name: top_companies
+    description: Ten most active employers by posting count.
+    columns:
+      - name: company_name
+        data_tests:
+          - not_null
+          - unique
+
+  - name: remote_by_role
+    description: Share of remote postings per search role.
+    columns:
+      - name: role
+        data_tests:
+          - not_null
+          - unique
+
+  - name: platform_share
+    description: Top posting platforms, cleaned of the "via " prefix artifact.
+    columns:
+      - name: platform
+        data_tests:
+          - not_null
+          - unique
+
+  - name: schedule_mix
+    description: Posting counts by schedule type; nulls labeled Not specified.
+    columns:
+      - name: schedule
+        data_tests:
+          - not_null
+          - unique
+
+  - name: salary_transparency
+    description: One-row summary of how many postings disclose salary.
+    columns:
+      - name: pct_with_salary
+        data_tests:
+          - not_null

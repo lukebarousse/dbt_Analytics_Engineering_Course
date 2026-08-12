@@ -1,0 +1,115 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>2.1 — Project #1 pipeline architecture (README hero)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --ink:#EDEDED;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
+  .mono{font-family:var(--mono)}
+  .btitle{position:absolute;top:34px;font-family:var(--hand);font-size:44px;font-weight:700;color:#FFFFFF;text-align:center}
+  /* hand-drawn card */
+  .hand{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;background:transparent}
+  .hand.dotted{border-style:dashed;border-radius:25px;border-width:2px;border-color:#8a8a8a}
+  .chip{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
+    border-radius:15px 225px 15px 255px/255px 15px 225px 15px;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    font-family:var(--hand);font-size:30px;font-weight:600;color:var(--ink)}
+  .lbl{position:absolute;font-family:var(--hand);font-size:30px;color:var(--ink);text-align:center}
+  .small{font-size:24px;color:var(--muted)}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ============ band titles ============ -->
+  <div class="btitle" style="left:60px;width:420px">Data Storage</div>
+  <div class="btitle" style="left:540px;width:420px">Transformation</div>
+  <div class="btitle" style="left:1020px;width:400px">Data Marts</div>
+  <div class="btitle" style="left:1470px;width:400px">Data Serving</div>
+
+  <!-- ============ band frames ============ -->
+  <div class="hand dotted" style="left:60px;top:104px;width:420px;height:700px"></div>
+  <div class="hand dotted" style="left:540px;top:104px;width:420px;height:700px"></div>
+  <div class="hand dotted" style="left:1020px;top:104px;width:400px;height:700px"></div>
+  <div class="hand dotted" style="left:1470px;top:104px;width:400px;height:700px"></div>
+
+  <!-- ============ 1. storage ============ -->
+  <div class="hand" style="left:110px;top:170px;width:320px;height:360px;transform:rotate(-.5deg)"></div>
+  <div class="lbl" style="left:110px;top:200px;width:320px;font-size:76px">📄📄📄</div>
+  <div class="lbl" style="left:110px;top:320px;width:320px">raw job postings<br><span class="small">12 monthly parquet + skills</span></div>
+  <div class="lbl" style="left:110px;top:440px;width:320px" class="mono"><span class="mono" style="font-size:19px;color:var(--muted)">github release · dataset-v1</span></div>
+  <div class="lbl" style="left:60px;top:660px;width:420px;font-size:64px">📦</div>
+  <div class="lbl" style="left:60px;top:740px;width:420px">GitHub Releases</div>
+
+  <!-- ============ 2. transformation ============ -->
+  <div class="hand" style="left:585px;top:170px;width:330px;height:420px;transform:rotate(.4deg)"></div>
+  <div class="lbl" style="left:585px;top:190px;width:330px"><span style="color:var(--dbt);font-weight:700;font-size:56px">dbt</span>&nbsp; + &nbsp;<span style="font-size:52px">🦆</span></div>
+  <div class="lbl" style="left:585px;top:290px;width:330px;font-family:var(--mono);font-size:19px;color:var(--text)">sources → models → tests <span style="color:var(--ok)">✓</span></div>
+  <div class="lbl small" style="left:585px;top:350px;width:330px">zero hardcoded paths<br>every mart tested<br>docs generated from code</div>
+  <div class="lbl" style="left:585px;top:480px;width:330px;font-family:var(--mono);font-size:20px;color:var(--duck)">dev.duckdb (scratch)</div>
+  <div class="lbl" style="left:540px;top:660px;width:420px;font-size:64px">🦆</div>
+  <div class="lbl" style="left:540px;top:740px;width:420px">DuckDB</div>
+
+  <!-- ============ 3. marts ============ -->
+  <div class="chip" style="left:1060px;top:170px;width:320px;height:76px;transform:rotate(-.4deg)">🗄 top_companies</div>
+  <div class="chip" style="left:1060px;top:280px;width:320px;height:76px;transform:rotate(.3deg)">🗄 remote_by_role</div>
+  <div class="chip" style="left:1060px;top:390px;width:320px;height:76px;transform:rotate(-.3deg)">🗄 salary_transparency</div>
+  <div class="chip" style="left:1060px;top:500px;width:320px;height:76px;border-style:dashed;color:var(--muted)">＋ your picks…</div>
+  <div class="lbl small" style="left:1020px;top:610px;width:400px">one question, one model,<br>one grain test — each</div>
+
+  <!-- ============ 4. serving ============ -->
+  <div class="hand" style="left:1510px;top:170px;width:320px;height:190px;transform:rotate(.4deg)"></div>
+  <div class="lbl" style="left:1510px;top:186px;width:320px;font-size:44px">📦 <span style="color:var(--duck)">prod.duckdb</span></div>
+  <div class="lbl" style="left:1510px;top:262px;width:320px;font-family:var(--mono);font-size:18.5px;color:var(--muted)">github release · warehouse<br>ATTACH '…' (READ_ONLY)</div>
+  <div class="lbl" style="left:1510px;top:400px;width:320px;font-size:34px">🦆 DuckDB CLI / UI</div>
+  <div class="lbl" style="left:1510px;top:470px;width:320px;font-size:34px">🐍 Python</div>
+  <div class="lbl" style="left:1510px;top:540px;width:320px;font-size:34px">📊 Power BI · Excel</div>
+  <div class="lbl small" style="left:1470px;top:620px;width:400px">anyone with the URL<br>can query the warehouse</div>
+
+  <!-- ============ automation rail ============ -->
+  <div class="hand" style="left:60px;top:850px;width:1810px;height:170px;border-color:var(--blue)"></div>
+  <div class="lbl" style="left:100px;top:884px;width:520px;font-size:40px;color:#FFF">🤖 GitHub Actions</div>
+  <div class="lbl" style="left:100px;top:950px;width:520px;font-family:var(--mono);font-size:20px;color:var(--muted)">on push · Mondays · manual button</div>
+  <div class="lbl" style="left:700px;top:900px;width:1100px;font-family:var(--mono);font-size:24px;color:var(--text)">download raw&ensp;→&ensp;dbt build --target prod&ensp;(models + tests)&ensp;→&ensp;publish warehouse</div>
+  <div class="lbl small" style="left:700px;top:960px;width:1100px;font-family:var(--hand);font-size:26px">the pipeline runs itself — no laptop required</div>
+
+  <!-- ============ arrows ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#EDEDED"/>
+      </marker>
+      <marker id="ab" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <!-- storage -> dbt -->
+    <path d="M 440 360 C 490 350, 520 350, 575 360" fill="none" stroke="#EDEDED" stroke-width="3" marker-end="url(#a)"/>
+    <!-- dbt -> marts -->
+    <path d="M 925 380 C 975 372, 1000 372, 1050 380" fill="none" stroke="#EDEDED" stroke-width="3" marker-end="url(#a)"/>
+    <!-- marts -> serving package -->
+    <path d="M 1390 300 C 1440 280, 1450 270, 1500 262" fill="none" stroke="#EDEDED" stroke-width="3" marker-end="url(#a)"/>
+    <!-- consumers read the package (up-arrows) -->
+    <path d="M 1660 396 C 1662 380, 1664 376, 1666 366" fill="none" stroke="#EDEDED" stroke-width="3" marker-end="url(#a)"/>
+    <!-- actions rail drives dbt + publish (short arrows to the band frames, routed clear of content) -->
+    <path d="M 750 846 C 749 834, 749 822, 750 812" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#ab)"/>
+    <path d="M 1670 846 C 1669 834, 1669 822, 1670 812" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#ab)"/>
+  </svg>
+
+</div>
+</body>
+</html>

@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <title>1.7 — Materializations: view vs table</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
     --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
@@ -12,7 +13,7 @@
     --blue:#58A6FF;
     /* status pair — pass/fail semantics only (mirrors dbt's terminal OK/ERROR) */
     --ok:#57AB5A; --err:#E5534B;
-    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
@@ -23,30 +24,30 @@
       radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
       var(--bg);}
   .mono{font-family:var(--mono)}
-  .panel{position:absolute;top:250px;width:856px;height:680px;background:var(--zone);
+  .panel{position:absolute;top:148px;width:856px;height:764px;background:var(--zone);
     border:1.5px solid var(--line);border-radius:18px}
-  .ptitle{text-align:center;font-family:var(--mono);font-size:32px;font-weight:800;
-    color:var(--blue);margin-top:24px}
-  .chip{position:absolute;font-family:var(--mono);font-size:17px;font-weight:700;
+  .ptitle{text-align:center;font-family:var(--mono);font-size:36px;font-weight:800;
+    color:var(--blue);margin-top:22px}
+  .chip{position:absolute;font-family:var(--mono);font-size:20px;font-weight:700;
     background:var(--panel2);border:1.5px solid var(--line);border-radius:8px;
     padding:8px 16px;white-space:nowrap}
   .ddl{position:absolute;width:776px;text-align:center;font-family:var(--mono);
-    font-size:15.5px;color:var(--faint)}
-  .tag{position:absolute;font-size:17px;font-weight:700;letter-spacing:.06em;
+    font-size:20px;color:var(--faint)}
+  .tag{position:absolute;font-size:21px;font-weight:700;letter-spacing:.06em;
     text-transform:uppercase}
   .card{position:absolute;box-sizing:border-box;background:var(--panel);
     border:1.5px solid var(--line);border-radius:12px;padding:16px 20px}
-  .card .name{font-family:var(--mono);font-size:20px;font-weight:700}
-  .card .sub{font-size:14.5px;color:var(--muted);margin-top:6px}
+  .card .name{font-family:var(--mono);font-size:25px;font-weight:700;white-space:nowrap}
+  .card .sub{font-size:21px;color:var(--muted);margin-top:8px}
   .artifact{position:absolute;box-sizing:border-box;background:var(--panel);
     border:1.5px solid var(--line);border-radius:12px;padding:14px 18px}
-  .artifact .inner-cap{font-size:13.5px;color:var(--faint);margin-top:10px}
-  .sqldoc{font-family:var(--mono);font-size:15px;line-height:1.5;white-space:pre;color:var(--text)}
+  .artifact .inner-cap{font-size:19px;color:var(--faint);margin-top:12px}
+  .sqldoc{font-family:var(--mono);font-size:21px;line-height:1.45;white-space:pre;color:var(--text)}
   table.grid{border-collapse:collapse;width:100%}
-  table.grid th{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--muted);
-    border:1px solid #4a4a4a;padding:4px 6px;text-align:left;background:var(--panel2)}
-  table.grid td{border:1px solid #4a4a4a;height:24px;padding:0}
-  .cap{position:absolute;font-size:16.5px;color:var(--muted);text-align:center;width:776px}
+  table.grid th{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--muted);
+    border:1px solid #4a4a4a;padding:5px 8px;text-align:left;background:var(--panel2)}
+  table.grid td{border:1px solid #4a4a4a;height:30px;padding:0}
+  .cap{position:absolute;font-size:22px;color:var(--muted);text-align:center;width:776px}
   .divider{position:absolute;height:1.5px;background:var(--line);width:776px}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
@@ -54,87 +55,85 @@
 <body>
 <div class="stage">
 
-  <div style="position:absolute;left:76px;top:54px">
-    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Materializations</div>
-    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:14px 0 12px"></div>
-    <div style="font-size:20px;color:var(--muted)">one SELECT — two different things <span class="mono" style="color:var(--text)">dbt run</span> can leave in the warehouse</div>
-  </div>
+  <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em">
+    Materializations</div>
 
   <!-- ============ VIEW panel ============ -->
   <div class="panel" style="left:76px">
     <div class="ptitle">view</div>
   </div>
-  <div class="chip" style="left:300px;top:326px;color:var(--text)">materialized='view' <span style="color:var(--faint);font-weight:400">· the default</span></div>
-  <div class="ddl" style="left:116px;top:374px">dbt writes → <span style="color:var(--muted)">CREATE VIEW job_postings AS ( your SELECT )</span></div>
+  <div class="chip" style="left:296px;top:236px;color:var(--text)">materialized='view' <span style="color:var(--faint);font-weight:400">· the default</span></div>
+  <div class="ddl" style="left:116px;top:294px">dbt writes → <span style="color:var(--muted)">CREATE VIEW job_postings AS ( your SELECT )</span></div>
 
-  <div class="tag" style="left:116px;top:414px;color:var(--dbt)">at dbt run</div>
+  <div class="tag" style="left:116px;top:338px;color:var(--dbt)">at dbt run</div>
 
-  <div class="card" style="left:116px;top:454px;width:264px">
+  <div class="card" style="left:116px;top:378px;width:330px">
     <div class="name">📄 job_postings.sql</div>
     <div class="sub">your model — plain SELECT</div>
   </div>
-  <div class="artifact" style="left:512px;top:440px;width:304px;height:192px;border-color:#4a4433">
+  <div class="artifact" style="left:552px;top:366px;width:340px;border-color:#4a4433">
     <div class="sqldoc">SELECT
   job_title,
   company_name, …
 FROM read_parquet('…')
 WHERE error IS NULL</div>
-    <div class="inner-cap">the query itself, saved — zero rows computed</div>
+    <div class="inner-cap">🧾 the recipe, saved — zero rows</div>
   </div>
-  <div class="cap" style="left:116px;top:652px">build is instant — <span class="mono" style="color:var(--duck)">dev.duckdb</span> stays at <span class="mono" style="color:var(--duck)">268K</span></div>
+  <div class="cap" style="left:116px;top:614px">⚡ build is instant — <span class="mono" style="color:var(--duck)">dev.duckdb</span> stays at <span class="mono" style="color:var(--duck)">268K</span></div>
 
-  <div class="divider" style="left:116px;top:696px"></div>
+  <div class="divider" style="left:116px;top:658px"></div>
 
-  <div class="tag" style="left:116px;top:716px;color:var(--blue)">every query after</div>
+  <div class="tag" style="left:116px;top:680px;color:var(--blue)">every query after</div>
 
-  <div class="card" style="left:116px;top:756px;width:264px">
+  <div class="card" style="left:116px;top:722px;width:330px">
     <div class="name">❓ SELECT …</div>
-    <div class="sub">any query that touches it</div>
+    <div class="sub">any query touching it</div>
   </div>
-  <div class="card" style="left:512px;top:756px;width:304px">
+  <div class="card" style="left:552px;top:722px;width:340px">
     <div class="name">⚙️ re-runs the recipe</div>
     <div class="sub">computed again, on the spot</div>
   </div>
-  <div class="cap" style="left:116px;top:866px">always fresh · every query pays the compute again</div>
+  <div class="cap" style="left:116px;top:846px">always fresh · every query pays compute</div>
 
   <!-- ============ TABLE panel ============ -->
   <div class="panel" style="left:988px">
     <div class="ptitle">table</div>
   </div>
-  <div class="chip" style="left:1140px;top:326px;color:var(--dbt)">{{ config(materialized='table') }} <span style="color:var(--faint);font-weight:400">· one line flips it</span></div>
-  <div class="ddl" style="left:1028px;top:374px">dbt writes → <span style="color:var(--muted)">CREATE TABLE job_postings AS ( your SELECT )</span> · CTAS, automated</div>
+  <div class="chip" style="left:1096px;top:236px;color:var(--dbt)">{{ config(materialized='table') }} <span style="color:var(--faint);font-weight:400">· one line flips it</span></div>
+  <div class="ddl" style="left:1028px;top:294px">dbt writes → <span style="color:var(--muted)">CREATE TABLE job_postings AS ( your SELECT )</span></div>
 
-  <div class="tag" style="left:1028px;top:414px;color:var(--dbt)">at dbt run</div>
+  <div class="tag" style="left:1028px;top:338px;color:var(--dbt)">at dbt run</div>
 
-  <div class="card" style="left:1028px;top:454px;width:264px">
+  <div class="card" style="left:1028px;top:378px;width:330px">
     <div class="name">📄 job_postings.sql</div>
-    <div class="sub">the same model, same SELECT</div>
+    <div class="sub">same model, same SELECT</div>
   </div>
-  <div class="artifact" style="left:1424px;top:440px;width:304px;height:192px;border-color:#5a5230">
+  <div class="artifact" style="left:1464px;top:366px;width:340px;border-color:#5a5230">
     <table class="grid">
-      <tr><th>job_title</th><th>company</th><th>location</th><th>salary</th></tr>
-      <tr><td></td><td></td><td></td><td></td></tr>
-      <tr><td></td><td></td><td></td><td></td></tr>
-      <tr><td></td><td></td><td></td><td></td></tr>
-      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><th>job_title</th><th>company</th><th>salary</th></tr>
+      <tr><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td></tr>
     </table>
-    <div class="inner-cap">843k rows, computed + written to disk</div>
+    <div class="inner-cap">🗄 843k rows written to disk</div>
   </div>
-  <div class="cap" style="left:1028px;top:652px">build does the work — <span class="mono" style="color:var(--duck)">dev.duckdb</span> jumps to <span class="mono" style="color:var(--duck)">32M</span></div>
+  <div class="cap" style="left:1028px;top:614px">build does the work — <span class="mono" style="color:var(--duck)">dev.duckdb</span> jumps to <span class="mono" style="color:var(--duck)">32M</span></div>
 
-  <div class="divider" style="left:1028px;top:696px"></div>
+  <div class="divider" style="left:1028px;top:658px"></div>
 
-  <div class="tag" style="left:1028px;top:716px;color:var(--blue)">every query after</div>
+  <div class="tag" style="left:1028px;top:680px;color:var(--blue)">every query after</div>
 
-  <div class="card" style="left:1028px;top:756px;width:264px">
+  <div class="card" style="left:1028px;top:722px;width:330px">
     <div class="name">❓ SELECT …</div>
-    <div class="sub">the same query as before</div>
+    <div class="sub">same query as before</div>
   </div>
-  <div class="card" style="left:1424px;top:756px;width:304px">
+  <div class="card" style="left:1464px;top:722px;width:340px">
     <div class="name">⚡ reads stored rows</div>
     <div class="sub">no computing — just reading</div>
   </div>
-  <div class="cap" style="left:1028px;top:866px">always fast · frozen until the next <span class="mono">dbt run</span></div>
+  <div class="cap" style="left:1028px;top:846px">always fast · frozen until next <span class="mono">dbt run</span></div>
 
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
@@ -147,27 +146,18 @@ WHERE error IS NULL</div>
     </defs>
 
     <!-- view panel cables -->
-    <line x1="396" y1="502" x2="496" y2="502" stroke="#FF694B" stroke-width="3.5"
+    <line x1="454" y1="424" x2="540" y2="424" stroke="#FF694B" stroke-width="3.5"
       stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
-    <line x1="396" y1="800" x2="496" y2="800" stroke="#58A6FF" stroke-width="3.5"
+    <line x1="454" y1="768" x2="540" y2="768" stroke="#58A6FF" stroke-width="3.5"
       stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-blue)"/>
 
     <!-- table panel cables -->
-    <line x1="1308" y1="502" x2="1408" y2="502" stroke="#FF694B" stroke-width="3.5"
+    <line x1="1366" y1="424" x2="1452" y2="424" stroke="#FF694B" stroke-width="3.5"
       stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
-    <line x1="1308" y1="800" x2="1408" y2="800" stroke="#58A6FF" stroke-width="3.5"
+    <line x1="1366" y1="768" x2="1452" y2="768" stroke="#58A6FF" stroke-width="3.5"
       stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-blue)"/>
   </svg>
 
-  <div style="position:absolute;left:76px;top:962px;width:1768px;box-sizing:border-box;
-    border:1.5px solid var(--line);border-radius:12px;background:var(--panel);
-    padding:14px 24px;text-align:center;font-size:18px;color:var(--muted)">
-    <span class="mono" style="color:var(--text)">view</span> → always live · pays at query time
-    <span style="color:var(--faint);padding:0 26px">|</span>
-    <span class="mono" style="color:var(--text)">table</span> → persistent snapshot · pays at build time
-    <span style="color:var(--faint);padding:0 26px">|</span>
-    <span class="mono" style="color:var(--text)">incremental</span> → too big to rebuild? later in the course
-  </div>
 </div>
 </body>
 </html>

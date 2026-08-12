@@ -1,0 +1,113 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1.5 — Three YAML files, three questions</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+               radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;left:0;top:38px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
+  .col{position:absolute;top:150px;width:566px;height:660px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .q{position:absolute;width:566px;text-align:center;top:174px;font-size:31px;font-weight:800;color:#FFFFFF}
+  .q b{color:var(--blue)}
+  .fname{position:absolute;top:240px;width:566px;text-align:center;
+    font-family:var(--mono);font-size:27px;font-weight:700;color:var(--text)}
+  .chiprow{position:absolute;top:292px;width:566px;display:flex;justify-content:center;gap:14px}
+  .chip{font-family:var(--mono);font-size:19px;background:var(--panel2);
+    border:1.5px solid var(--line);border-radius:8px;padding:7px 14px;white-space:nowrap;color:var(--muted)}
+  .chip.keep{color:var(--ok);border-color:rgba(87,171,90,.45)}
+  .chip.no{color:var(--err);border-color:rgba(229,83,75,.45)}
+  .code{position:absolute;top:356px;box-sizing:border-box;width:502px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:12px;padding:20px 24px;
+    font-family:var(--mono);font-size:22px;line-height:36px;white-space:pre;color:var(--text)}
+  .verb{position:absolute;width:566px;text-align:center;font-family:var(--mono);
+    font-size:22px;font-weight:700}
+  .target{position:absolute;top:912px;box-sizing:border-box;width:502px;height:96px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;
+    gap:16px;font-family:var(--mono);font-size:25px;font-weight:700}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">3 YAML files · 3 questions</div>
+
+  <!-- ============ COLUMN 1: profiles.yml ============ -->
+  <div class="col" style="left:76px"></div>
+  <div class="q" style="left:76px"><b>WHERE</b> does dbt connect?</div>
+  <div class="fname" style="left:76px">🏠 ~/.dbt/profiles.yml</div>
+  <div class="chiprow" style="left:76px">
+    <span class="chip">outside the project</span>
+    <span class="chip no">✗ never committed</span>
+  </div>
+  <div class="code" style="left:108px"><span style="color:var(--blue);font-weight:700">job_postings:</span>
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: <span style="color:var(--duck)">../data/dev.duckdb</span>
+      threads: 1</div>
+  <div class="verb" style="left:76px;top:856px;color:var(--duck)">🗄 writes ↓</div>
+  <div class="target" style="left:108px;border-color:rgba(242,201,76,.5)">🗄 <span style="color:var(--duck)">data/dev.duckdb</span></div>
+
+  <!-- ============ COLUMN 2: sources.yml ============ -->
+  <div class="col" style="left:677px"></div>
+  <div class="q" style="left:677px"><b>WHAT</b> raw data exists?</div>
+  <div class="fname" style="left:677px">📄 models/sources.yml</div>
+  <div class="chiprow" style="left:677px">
+    <span class="chip">in the project</span>
+    <span class="chip keep">✓ committed</span>
+  </div>
+  <div class="code" style="left:709px"><span style="color:var(--blue);font-weight:700">sources:</span>
+  - name: raw
+    tables:
+      - name: job_postings
+        meta:
+          <span style="color:var(--dbt);font-weight:700">external_location:</span>
+            <span style="color:var(--duck)">"read_parquet(…)"</span></div>
+  <div class="verb" style="left:677px;top:856px;color:var(--duck)">📥 reads ↓</div>
+  <div class="target" style="left:709px;border-color:rgba(242,201,76,.5)">📁 <span style="color:var(--duck)">data/raw/*.parquet</span></div>
+
+  <!-- ============ COLUMN 3: schema.yml ============ -->
+  <div class="col" style="left:1278px"></div>
+  <div class="q" style="left:1278px"><b>WHAT</b> does dbt build?</div>
+  <div class="fname" style="left:1278px">📄 models/schema.yml</div>
+  <div class="chiprow" style="left:1278px">
+    <span class="chip">in the project</span>
+    <span class="chip keep">✓ committed</span>
+  </div>
+  <div class="code" style="left:1310px"><span style="color:var(--blue);font-weight:700">models:</span>
+  - name: job_postings
+    description: Cleaned…
+    columns:
+      - name: job_title
+        <span style="color:var(--dbt);font-weight:700">data_tests:</span>
+          <span style="color:var(--dbt);font-weight:700">- not_null</span></div>
+  <div class="verb" style="left:1278px;top:856px;color:var(--dbt)">🧪 describes + tests ↓</div>
+  <div class="target" style="left:1310px;border-color:rgba(255,105,75,.5)">📄 <span style="color:var(--dbt)">models/*.sql</span></div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <line x1="359" y1="826" x2="359" y2="902" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="960" y1="826" x2="960" y2="902" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="1561" y1="826" x2="1561" y2="902" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+  </svg>
+
+</div>
+</body>
+</html>

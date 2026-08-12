@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <title>1.4 — Why the hardcode broke on prod</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
     --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
@@ -12,7 +13,7 @@
     --blue:#58A6FF;
     /* status pair — pass/fail semantics only (mirrors dbt's terminal OK/ERROR) */
     --ok:#57AB5A; --err:#E5534B;
-    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
@@ -25,84 +26,83 @@
   .mono{font-family:var(--mono)}
   .band{position:absolute;left:76px;width:1768px;background:var(--zone);
     border:1.5px solid var(--line);border-radius:18px}
-  .btitle{position:absolute;font-size:23px;font-weight:800}
-  .bsub{position:absolute;font-size:16px;color:var(--muted)}
-  .chip{position:absolute;font-family:var(--mono);font-size:15px;
+  .btitle{position:absolute;font-size:28px;font-weight:800}
+  .chip{position:absolute;font-family:var(--mono);font-size:20px;
     background:var(--panel2);border:1.5px solid var(--line);border-radius:8px;
-    padding:6px 12px;white-space:nowrap;color:var(--muted)}
-  .verdict{position:absolute;font-family:var(--mono);font-size:17px;font-weight:700;
+    padding:7px 14px;white-space:nowrap;color:var(--muted)}
+  .verdict{position:absolute;font-family:var(--mono);font-size:21px;font-weight:700;
     text-align:right}
-  .lane-lbl{position:absolute;font-family:var(--mono);font-size:14px;color:var(--faint)}
-  .bar{position:absolute;box-sizing:border-box;height:34px;background:var(--panel);
-    border:1.5px solid var(--line);border-radius:8px;display:flex;align-items:center;
-    padding:0 12px;font-family:var(--mono);font-size:15px;font-weight:700;white-space:nowrap}
-  .wait{position:absolute;box-sizing:border-box;height:34px;border:1.5px dashed #4a4a4a;
-    border-radius:8px;display:flex;align-items:center;padding:0 12px;
-    font-family:var(--mono);font-size:14px;color:var(--faint);white-space:nowrap}
-  .idle{position:absolute;font-family:var(--mono);font-size:14px;color:#4a4a4a}
-  .cap{position:absolute;font-size:16.5px;color:var(--muted);text-align:center;width:1688px}
+  .lane-lbl{position:absolute;font-family:var(--mono);font-size:19px;color:var(--faint)}
+  .bar{position:absolute;box-sizing:border-box;height:46px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:9px;display:flex;align-items:center;
+    padding:0 14px;font-family:var(--mono);font-size:23px;font-weight:700;white-space:nowrap}
+  .wait{position:absolute;box-sizing:border-box;height:46px;border:1.5px dashed #4a4a4a;
+    border-radius:9px;display:flex;align-items:center;padding:0 14px;
+    font-family:var(--mono);font-size:21px;color:var(--faint);white-space:nowrap}
+  .idle{position:absolute;font-family:var(--mono);font-size:19px;color:#4a4a4a}
+  .cap{position:absolute;font-size:21px;color:var(--muted);text-align:center;width:1688px}
+  .note{position:absolute;font-size:21px;color:var(--muted)}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div style="position:absolute;left:76px;top:50px">
-    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Why the hardcode broke on prod</div>
-    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:12px 0 10px"></div>
-    <div style="font-size:20px;color:var(--muted)"><span class="mono" style="color:var(--text)">FROM job_postings</span> is just a string — dbt can't see a dependency in it, so it can't order the build</div>
-  </div>
+  <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em">
+    Why the hardcode broke on prod</div>
 
   <!-- ============ BAND 1: dev ============ -->
-  <div class="band" style="top:234px;height:186px"></div>
-  <div class="btitle" style="left:116px;top:256px">on <span class="mono" style="color:var(--blue)">dev</span> — it works&hairsp;… sneakily</div>
-  <div class="chip" style="left:480px;top:254px">Concurrency: 1 threads (target='dev')</div>
-  <div class="verdict" style="right:116px;top:258px;color:var(--ok)">dbt run&ensp;✓ all green</div>
+  <div class="band" style="top:150px;height:220px"></div>
+  <div class="btitle" style="left:116px;top:172px">on <span class="mono" style="color:var(--blue)">dev</span> — it works&hairsp;… sneakily</div>
+  <div class="chip" style="left:560px;top:172px">Concurrency: 1 threads (target='dev')</div>
+  <div class="verdict" style="right:116px;top:178px;color:var(--ok)">dbt run&ensp;✓ all green</div>
 
-  <div class="chip" style="left:116px;top:312px;border-color:#5a5230;color:var(--text)">🗄 <span style="color:var(--duck)">dev.duckdb</span> — job_postings already inside <span style="color:var(--faint)">(built last lesson)</span></div>
+  <div class="chip" style="left:116px;top:236px;border-color:#5a5230;color:var(--text)">🗄 <span style="color:var(--duck)">dev.duckdb</span> — job_postings already inside</div>
 
-  <div class="lane-lbl" style="left:116px;top:372px">thread 1</div>
-  <div class="bar" style="left:480px;top:362px;width:340px;border-color:var(--ok)">job_postings&ensp;<span style="color:var(--ok)">✓</span></div>
-  <div class="lane-lbl" style="left:832px;top:372px">then</div>
-  <div class="bar" style="left:900px;top:362px;width:360px;border-color:var(--ok)">jobs_per_month&ensp;<span style="color:var(--ok)">✓</span></div>
-  <div style="position:absolute;left:1300px;top:368px;font-size:16px;color:var(--muted)">one at a time — and the FROM found its table either way</div>
+  <div class="lane-lbl" style="left:116px;top:314px">thread 1</div>
+  <div class="bar" style="left:480px;top:302px;width:380px;border-color:var(--ok)">job_postings&ensp;<span style="color:var(--ok)">✓</span></div>
+  <div class="lane-lbl" style="left:880px;top:314px">then</div>
+  <div class="bar" style="left:960px;top:302px;width:420px;border-color:var(--ok)">jobs_per_month&ensp;<span style="color:var(--ok)">✓</span></div>
+  <div class="note" style="left:1420px;top:312px">one at a time — its table always there</div>
 
   <!-- ============ BAND 2: prod ============ -->
-  <div class="band" style="top:436px;height:264px"></div>
-  <div class="btitle" style="left:116px;top:458px">on <span class="mono" style="color:var(--blue)">prod</span> — fresh database, the race</div>
-  <div class="chip" style="left:558px;top:456px">Concurrency: 4 threads (target='prod')</div>
-  <div class="chip" style="left:936px;top:456px;color:var(--faint)">prod.duckdb — brand new, empty</div>
-  <div class="verdict" style="right:116px;top:460px;color:var(--err)">dbt run --target prod&ensp;✗</div>
+  <div class="band" style="top:394px;height:352px"></div>
+  <div class="btitle" style="left:116px;top:416px">on <span class="mono" style="color:var(--blue)">prod</span> — fresh database, the race</div>
+  <div class="chip" style="left:620px;top:416px">Concurrency: 4 threads (target='prod')</div>
+  <div class="verdict" style="right:116px;top:422px;color:var(--err)">dbt run --target prod&ensp;✗</div>
 
-  <div class="lane-lbl" style="left:116px;top:520px">thread 1</div>
-  <div class="bar" style="left:480px;top:510px;width:420px;border-color:var(--ok)">job_postings&ensp;<span style="color:var(--ok)">✓</span></div>
-  <div class="lane-lbl" style="left:116px;top:560px">thread 2</div>
-  <div class="bar" style="left:480px;top:550px;width:230px;border-color:var(--err)">jobs_per_month&ensp;<span style="color:var(--err)">✗</span></div>
-  <div style="position:absolute;left:740px;top:556px;font-family:var(--mono);font-size:15px;color:var(--err)">Catalog Error: Table with name job_postings does not exist!</div>
-  <div class="lane-lbl" style="left:116px;top:600px">thread 3</div>
-  <div class="idle" style="left:480px;top:600px">— idle —</div>
-  <div class="lane-lbl" style="left:116px;top:640px">thread 4</div>
-  <div class="idle" style="left:480px;top:640px">— idle —</div>
+  <div class="chip" style="left:116px;top:474px;border-color:#5a5230;color:var(--text)">🗄 <span style="color:var(--duck)">prod.duckdb</span> — brand new, empty</div>
 
-  <div class="cap" style="left:116px;top:664px;width:1608px">up to four models at once — dbt saw no connection, so <b style="color:var(--text)">both models START at t=0</b>; the lookup lost the race</div>
+  <div class="lane-lbl" style="left:116px;top:548px">thread 1</div>
+  <div class="bar" style="left:480px;top:536px;width:440px;border-color:var(--ok)">job_postings&ensp;<span style="color:var(--ok)">✓</span></div>
+  <div class="lane-lbl" style="left:116px;top:602px">thread 2</div>
+  <div class="bar" style="left:480px;top:590px;width:260px;border-color:var(--err)">jobs_per_month&ensp;<span style="color:var(--err)">✗</span></div>
+  <div style="position:absolute;left:770px;top:600px;font-family:var(--mono);font-size:22px;color:var(--err)">Catalog Error: Table with name job_postings does not exist!</div>
+  <div class="lane-lbl" style="left:116px;top:646px">thread 3</div>
+  <div class="idle" style="left:480px;top:646px">— idle —</div>
+  <div class="lane-lbl" style="left:116px;top:680px">thread 4</div>
+  <div class="idle" style="left:480px;top:680px">— idle —</div>
+
+  <div class="cap" style="left:116px;top:708px">🏁 dbt sees no dependency — <b style="color:var(--text)">both START at t=0</b></div>
 
   <!-- ============ BAND 3: the fix ============ -->
-  <div class="band" style="top:716px;height:264px"></div>
-  <div class="btitle" style="left:116px;top:738px">the fix — <span class="mono" style="color:var(--dbt)">{{ ref('job_postings') }}</span></div>
-  <div class="chip" style="left:660px;top:736px">Concurrency: 4 threads (target='prod')</div>
-  <div class="verdict" style="right:116px;top:740px;color:var(--ok)">dbt run --target prod&ensp;✓ ordered</div>
+  <div class="band" style="top:770px;height:286px"></div>
+  <div class="btitle" style="left:116px;top:792px">the fix — <span class="mono" style="color:var(--dbt)">{{ ref('job_postings') }}</span></div>
+  <div class="chip" style="left:700px;top:792px">Concurrency: 4 threads (target='prod')</div>
+  <div class="verdict" style="right:116px;top:798px;color:var(--ok)">dbt run --target prod&ensp;✓ ordered</div>
 
-  <div class="lane-lbl" style="left:116px;top:800px">thread 1</div>
-  <div class="bar" style="left:480px;top:790px;width:420px;border-color:var(--ok)">job_postings&ensp;<span style="color:var(--ok)">✓</span></div>
-  <div class="lane-lbl" style="left:116px;top:840px">thread 2</div>
-  <div class="wait" style="left:480px;top:830px;width:420px">waiting — upstream not finished…</div>
-  <div class="bar" style="left:940px;top:830px;width:360px;border-color:var(--ok)">jobs_per_month&ensp;<span style="color:var(--ok)">✓</span></div>
-  <div class="lane-lbl" style="left:116px;top:880px">thread 3</div>
-  <div class="idle" style="left:480px;top:880px">— idle —</div>
-  <div class="lane-lbl" style="left:116px;top:920px">thread 4</div>
-  <div class="idle" style="left:480px;top:920px">— idle —</div>
+  <div class="lane-lbl" style="left:116px;top:860px">thread 1</div>
+  <div class="bar" style="left:480px;top:848px;width:440px;border-color:var(--ok)">job_postings&ensp;<span style="color:var(--ok)">✓</span></div>
+  <div class="lane-lbl" style="left:116px;top:914px">thread 2</div>
+  <div class="wait" style="left:480px;top:902px;width:450px">⏳ waiting on upstream…</div>
+  <div class="bar" style="left:960px;top:902px;width:420px;border-color:var(--ok)">jobs_per_month&ensp;<span style="color:var(--ok)">✓</span></div>
+  <div class="lane-lbl" style="left:116px;top:958px">thread 3</div>
+  <div class="idle" style="left:480px;top:958px">— idle —</div>
+  <div class="lane-lbl" style="left:116px;top:992px">thread 4</div>
+  <div class="idle" style="left:480px;top:992px">— idle —</div>
 
-  <div class="cap" style="left:116px;top:944px;width:1608px">ref() records a <b style="color:var(--text)">completion dependency</b> — downstream waits for upstream to finish. it doesn't make dbt slow — it makes it <b style="color:var(--text)">parallel exactly where parallel is safe</b></div>
+  <div class="cap" style="left:116px;top:1020px">🔗 parallel <b style="color:var(--text)">exactly where parallel is safe</b></div>
 
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
@@ -111,20 +111,17 @@
       </marker>
     </defs>
     <!-- band 2: both-start marker at t=0 -->
-    <line x1="480" y1="502" x2="480" y2="594" stroke="#6B6B6B" stroke-width="1.5" stroke-dasharray="4 6"/>
-    <text x="466" y="508" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#9B9B9B" text-anchor="end">t=0: both START →</text>
+    <line x1="480" y1="528" x2="480" y2="634" stroke="#6B6B6B" stroke-width="1.5" stroke-dasharray="4 6"/>
+    <text x="466" y="591" font-family="'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="19" fill="#9B9B9B" text-anchor="end">t=0 — both START →</text>
 
     <!-- band 3: start marker + ref() cable from upstream finish to downstream start -->
-    <line x1="480" y1="782" x2="480" y2="874" stroke="#6B6B6B" stroke-width="1.5" stroke-dasharray="4 6"/>
-    <text x="466" y="790" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#9B9B9B" text-anchor="end">t=0 →</text>
-    <path d="M 902 807 L 920 807 L 920 847 L 930 847" fill="none" stroke="#FF694B" stroke-width="3.5"
+    <line x1="480" y1="840" x2="480" y2="946" stroke="#6B6B6B" stroke-width="1.5" stroke-dasharray="4 6"/>
+    <text x="466" y="903" font-family="'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="19" fill="#9B9B9B" text-anchor="end">t=0 →</text>
+    <path d="M 926 871 L 945 871 L 945 925 L 950 925" fill="none" stroke="#FF694B" stroke-width="3.5"
       stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
-    <text x="940" y="812" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="15" font-weight="700" fill="#FF694B">ref()</text>
+    <text x="962" y="880" font-family="'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="21" font-weight="700" fill="#FF694B">ref()</text>
   </svg>
 
-  <div style="position:absolute;left:76px;bottom:24px;font-size:17.5px;color:var(--faint)">
-    the sneaky sequel: rerun prod and the error <i>vanishes</i> — run #1's leftover job_postings masks the bug (delete the database and it's back). rerunning isn't fixing — ref() is
-  </div>
 </div>
 </body>
 </html>

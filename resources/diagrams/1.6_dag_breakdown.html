@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <title>1.6 — Breaking down a DAG</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
     --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
@@ -12,7 +13,7 @@
     --blue:#58A6FF;
     /* status pair — pass/fail semantics only (mirrors dbt's terminal OK/ERROR) */
     --ok:#57AB5A; --err:#E5534B;
-    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
@@ -23,42 +24,42 @@
       radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
       var(--bg);}
   .mono{font-family:var(--mono)}
-  .panel{position:absolute;top:260px;width:552px;height:640px;background:var(--zone);
+  .panel{position:absolute;top:160px;width:552px;height:850px;background:var(--zone);
     border:1.5px solid var(--line);border-radius:18px}
-  .ptitle{text-align:center;font-size:30px;font-weight:800;color:var(--blue);margin-top:24px}
-  .tag{font-size:17px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-  .lbl{font-size:16.5px;color:var(--muted);text-align:center}
+  .ptitle{text-align:center;font-family:var(--mono);font-size:34px;font-weight:800;
+    color:var(--blue);margin-top:26px}
+  .ptitle b{color:#FFFFFF}
+  .tag{position:absolute;font-size:21px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .lbl{position:absolute;font-size:21px;color:var(--muted);text-align:center}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div style="position:absolute;left:76px;top:54px">
-    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Breaking down a DAG</div>
-    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:14px 0 12px"></div>
-    <div style="font-size:20px;color:var(--muted)"><b style="color:var(--text)">D</b>irected · <b style="color:var(--text)">A</b>cyclic · <b style="color:var(--text)">G</b>raph — the shape every dbt project has</div>
-  </div>
+  <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em">
+    Breaking down a DAG</div>
 
-  <!-- panels -->
-  <div class="panel" style="left:76px"><div class="ptitle">Directed</div></div>
-  <div class="panel" style="left:684px"><div class="ptitle">Acyclic</div></div>
-  <div class="panel" style="left:1292px"><div class="ptitle">Graph</div></div>
+  <!-- panels — first letter of each title carries the acronym -->
+  <div class="panel" style="left:76px"><div class="ptitle"><b>D</b>irected</div></div>
+  <div class="panel" style="left:684px"><div class="ptitle"><b>A</b>cyclic</div></div>
+  <div class="panel" style="left:1292px"><div class="ptitle"><b>G</b>raph</div></div>
 
-  <!-- wrong/right tags: Directed -->
-  <div class="tag" style="position:absolute;left:130px;top:392px;color:var(--err)">wrong</div>
-  <div class="lbl" style="position:absolute;left:200px;top:520px;width:300px">which way does the data flow?</div>
-  <div class="tag" style="position:absolute;left:130px;top:640px;color:var(--ok)">right</div>
-  <div class="lbl" style="position:absolute;left:200px;top:768px;width:300px">A builds, then B — arrows carry order</div>
+  <!-- Directed panel -->
+  <div class="tag" style="left:136px;top:268px;color:var(--err)">wrong</div>
+  <div class="lbl" style="left:152px;top:480px;width:400px">❓ which way does data flow?</div>
+  <div class="tag" style="left:136px;top:618px;color:var(--ok)">right</div>
+  <div class="lbl" style="left:152px;top:852px;width:400px">→ arrows carry build order</div>
 
-  <!-- wrong/right tags: Acyclic -->
-  <div class="tag" style="position:absolute;left:730px;top:370px;color:var(--err)">wrong</div>
-  <div class="lbl" style="position:absolute;left:712px;top:800px;width:240px">loops forever</div>
-  <div class="tag" style="position:absolute;left:1030px;top:370px;color:var(--ok)">right</div>
-  <div class="lbl" style="position:absolute;left:990px;top:800px;width:240px">runs once, top to bottom</div>
+  <!-- Acyclic panel -->
+  <div class="tag" style="left:744px;top:290px;color:var(--err)">wrong</div>
+  <div class="lbl" style="left:700px;top:810px;width:270px">🔁 loops forever</div>
+  <div class="tag" style="left:1050px;top:290px;color:var(--ok)">right</div>
+  <div class="lbl" style="left:970px;top:810px;width:270px">runs once, top to bottom</div>
 
-  <!-- Graph caption -->
-  <div class="lbl" style="position:absolute;left:1420px;top:800px;width:300px">nodes + connections — that's all a graph is</div>
+  <!-- Graph panel -->
+  <div class="lbl" style="left:1380px;top:870px;width:380px;font-size:22px">🔗 just nodes + connections</div>
 
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
@@ -68,65 +69,59 @@
       <marker id="er" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
         <path d="M0 0 L10 5 L0 10 z" fill="#E5534B"/>
       </marker>
-      <marker id="bl" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-        <path d="M0 0 L10 5 L0 10 z" fill="#58A6FF"/>
-      </marker>
     </defs>
 
     <!-- ============ DIRECTED panel ============ -->
     <!-- wrong: undirected A — B -->
     <g stroke="#E5534B" stroke-width="2.5" fill="none">
-      <circle cx="300" cy="450" r="34"/><circle cx="460" cy="450" r="34"/>
-      <line x1="334" y1="450" x2="426" y2="450"/>
+      <circle cx="262" cy="390" r="48"/><circle cx="442" cy="390" r="48"/>
+      <line x1="310" y1="390" x2="394" y2="390"/>
     </g>
-    <g font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="22" font-weight="700" fill="#E5534B" text-anchor="middle">
-      <text x="300" y="458">A</text><text x="460" y="458">B</text>
+    <g font-family="'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="28" font-weight="700" fill="#E5534B" text-anchor="middle">
+      <text x="262" y="400">A</text><text x="442" y="400">B</text>
     </g>
     <!-- right: A → B -->
     <g stroke="#57AB5A" stroke-width="2.5" fill="none">
-      <circle cx="300" cy="698" r="34"/><circle cx="460" cy="698" r="34"/>
-      <line x1="334" y1="698" x2="418" y2="698" marker-end="url(#ok)"/>
+      <circle cx="262" cy="750" r="48"/><circle cx="442" cy="750" r="48"/>
+      <line x1="310" y1="750" x2="382" y2="750" marker-end="url(#ok)"/>
     </g>
-    <g font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="22" font-weight="700" fill="#57AB5A" text-anchor="middle">
-      <text x="300" y="706">A</text><text x="460" y="706">B</text>
+    <g font-family="'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="28" font-weight="700" fill="#57AB5A" text-anchor="middle">
+      <text x="262" y="760">A</text><text x="442" y="760">B</text>
     </g>
 
     <!-- ============ ACYCLIC panel ============ -->
     <!-- wrong: cycle A → B → C → A -->
     <g stroke="#E5534B" stroke-width="2.5" fill="none">
-      <circle cx="790" cy="470" r="32"/><circle cx="930" cy="470" r="32"/><circle cx="860" cy="640" r="32"/>
-      <line x1="822" y1="470" x2="890" y2="470" marker-end="url(#er)"/>
-      <line x1="915" y1="499" x2="880" y2="605" marker-end="url(#er)"/>
-      <line x1="838" y1="613" x2="800" y2="508" marker-end="url(#er)"/>
+      <circle cx="776" cy="470" r="40"/><circle cx="908" cy="470" r="40"/><circle cx="842" cy="700" r="40"/>
+      <line x1="816" y1="470" x2="860" y2="470" marker-end="url(#er)"/>
+      <line x1="897" y1="508" x2="855" y2="654" marker-end="url(#er)"/>
+      <line x1="831" y1="662" x2="789" y2="516" marker-end="url(#er)"/>
     </g>
-    <g font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="21" font-weight="700" fill="#E5534B" text-anchor="middle">
-      <text x="790" y="478">A</text><text x="930" y="478">B</text><text x="860" y="648">C</text>
+    <g font-family="'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="26" font-weight="700" fill="#E5534B" text-anchor="middle">
+      <text x="776" y="479">A</text><text x="908" y="479">B</text><text x="842" y="709">C</text>
     </g>
     <!-- right: A → B, A → C -->
     <g stroke="#57AB5A" stroke-width="2.5" fill="none">
-      <circle cx="1080" cy="500" r="32"/><circle cx="1190" cy="440" r="32"/><circle cx="1190" cy="620" r="32"/>
-      <line x1="1110" y1="486" x2="1150" y2="460" marker-end="url(#ok)"/>
-      <line x1="1108" y1="518" x2="1152" y2="598" marker-end="url(#ok)"/>
+      <circle cx="1046" cy="540" r="40"/><circle cx="1160" cy="460" r="40"/><circle cx="1160" cy="700" r="40"/>
+      <line x1="1079" y1="517" x2="1121" y2="488" marker-end="url(#ok)"/>
+      <line x1="1069" y1="573" x2="1132" y2="661" marker-end="url(#ok)"/>
     </g>
-    <g font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="21" font-weight="700" fill="#57AB5A" text-anchor="middle">
-      <text x="1080" y="508">A</text><text x="1190" y="448">B</text><text x="1190" y="628">C</text>
+    <g font-family="'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="26" font-weight="700" fill="#57AB5A" text-anchor="middle">
+      <text x="1046" y="549">A</text><text x="1160" y="469">B</text><text x="1160" y="709">C</text>
     </g>
 
     <!-- ============ GRAPH panel ============ -->
     <g stroke="#58A6FF" stroke-width="2.5" fill="none">
-      <circle cx="1470" cy="470" r="36"/><circle cx="1680" cy="470" r="36"/><circle cx="1575" cy="670" r="36"/>
-      <line x1="1506" y1="470" x2="1644" y2="470"/>
-      <line x1="1492" y1="503" x2="1554" y2="638"/>
-      <line x1="1658" y1="503" x2="1596" y2="638"/>
+      <circle cx="1445" cy="480" r="50"/><circle cx="1695" cy="480" r="50"/><circle cx="1570" cy="770" r="50"/>
+      <line x1="1495" y1="480" x2="1645" y2="480"/>
+      <line x1="1465" y1="526" x2="1550" y2="724"/>
+      <line x1="1675" y1="526" x2="1590" y2="724"/>
     </g>
-    <g font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="23" font-weight="700" fill="#58A6FF" text-anchor="middle">
-      <text x="1470" y="479">A</text><text x="1680" y="479">B</text><text x="1575" y="679">C</text>
+    <g font-family="'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="28" font-weight="700" fill="#58A6FF" text-anchor="middle">
+      <text x="1445" y="490">A</text><text x="1695" y="490">B</text><text x="1570" y="780">C</text>
     </g>
   </svg>
 
-  <div style="position:absolute;left:76px;bottom:26px;font-size:17.5px;color:var(--faint)">
-    you've been building one since your second model: <span class="mono" style="color:var(--muted)">job_postings → jobs_per_month · top_locations</span> — directed by ref(), no loops, a graph
-  </div>
 </div>
 </body>
 </html>

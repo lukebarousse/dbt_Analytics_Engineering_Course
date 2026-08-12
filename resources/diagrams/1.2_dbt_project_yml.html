@@ -3,29 +3,29 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>1.2 — Inside dbt_project.yml</title>
+<title>Inside dbt_project.yml</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
     --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
     --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
-    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
-  a{color:var(--blue);text-decoration:none}a:hover{color:var(--duck)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
     background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
   .mono{font-family:var(--mono)}
-  .filebox{position:absolute;left:76px;top:196px;width:900px;height:818px;background:var(--panel);border:1.5px solid var(--line);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
-  .fhead{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--muted);padding:15px 28px;border-bottom:1.5px solid var(--line)}
-  .cl{position:absolute;left:118px;font-family:var(--mono);font-size:18.5px;white-space:pre;line-height:30px}
-  .dim{color:#5C5C5C}
-  .rowhl{position:absolute;left:78px;width:896px;height:32px;background:rgba(255,105,75,.07)}
-  .gut{position:absolute;left:78px;width:4px;height:26px;border-radius:2px;background:var(--dbt)}
-  .note{position:absolute;left:1040px;width:804px;box-sizing:border-box;padding:12px 18px;background:var(--zone);border:1.5px solid var(--line);border-radius:10px;font-size:17px;color:var(--muted);line-height:1.42}
+  .filebox{position:absolute;left:76px;top:152px;width:960px;height:884px;background:var(--panel);border:1.5px solid var(--line);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .fhead{font-family:var(--mono);font-size:21px;font-weight:700;color:var(--muted);padding:16px 28px;border-bottom:1.5px solid var(--line)}
+  .cl{position:absolute;left:120px;font-family:var(--mono);font-size:23px;white-space:pre;line-height:34px}
+  .dim{color:#616161}
+  .rowhl{position:absolute;left:78px;width:956px;height:40px;background:rgba(255,105,75,.07)}
+  .gut{position:absolute;left:78px;width:4px;height:32px;border-radius:2px;background:var(--dbt)}
+  .note{position:absolute;left:1080px;width:764px;box-sizing:border-box;padding:14px 20px;background:var(--zone);border:1.5px solid var(--line);border-radius:10px;font-size:22px;color:var(--muted);line-height:1.45}
   .note b{color:var(--text)}
-  .pill{display:inline-block;font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-radius:5px;padding:2px 8px;margin-right:9px;vertical-align:2px}
+  .pill{display:inline-block;font-family:var(--mono);font-size:16px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border-radius:5px;padding:3px 10px;margin-right:10px;vertical-align:2px}
   .pill.req{color:var(--dbt);background:rgba(255,105,75,.14);border:1px solid rgba(255,105,75,.4)}
   .pill.opt{color:var(--faint);background:rgba(155,155,155,.08);border:1px solid #3d3d3d}
   svg.art{position:absolute;inset:0;pointer-events:none}
@@ -34,55 +34,57 @@
 <body>
 <div class="stage">
 
-  <div style="position:absolute;left:76px;top:50px">
-    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Inside dbt_project.yml</div>
-    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:12px 0 10px"></div>
-    <div style="font-size:20px;color:var(--muted)">line by line — only <b style="color:var(--dbt)">two lines</b> are required; dbt init wrote the rest for you</div>
-  </div>
+  <!-- title (video-first: centered, mono, white) -->
+  <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center;
+       font-family:var(--mono);font-weight:700;font-size:54px;color:#FFFFFF;letter-spacing:-.01em">Inside dbt_project.yml</div>
 
-  <div class="filebox"><div class="fhead">job_postings/dbt_project.yml <span style="color:var(--faint);font-weight:400">· comments trimmed</span></div></div>
+  <div class="filebox"><div class="fhead">📄 job_postings/dbt_project.yml <span style="color:var(--faint);font-weight:400">· comments trimmed</span></div></div>
 
   <!-- required row highlights + gutter bars -->
-  <div class="rowhl" style="top:263px"></div><div class="gut" style="top:266px"></div>
-  <div class="rowhl" style="top:374px"></div><div class="gut" style="top:377px"></div>
+  <div class="rowhl" style="top:229px"></div><div class="gut" style="top:233px"></div>
+  <div class="rowhl" style="top:349px"></div><div class="gut" style="top:353px"></div>
 
-  <!-- code lines (30px line, 37px pitch, start y=264) -->
-  <div class="cl" style="top:264px"><span style="color:var(--dbt);font-weight:700">name:</span> 'job_postings'</div>
-  <div class="cl dim" style="top:301px">version: '1.0.0'</div>
-  <div class="cl" style="top:375px"><span style="color:var(--dbt);font-weight:700">profile:</span> 'job_postings'</div>
-  <div class="cl dim" style="top:449px">model-paths: ["models"]</div>
-  <div class="cl dim" style="top:486px">analysis-paths: ["analyses"]</div>
-  <div class="cl dim" style="top:523px">test-paths: ["tests"]</div>
-  <div class="cl dim" style="top:560px">seed-paths: ["seeds"]</div>
-  <div class="cl dim" style="top:597px">macro-paths: ["macros"]</div>
-  <div class="cl dim" style="top:634px">snapshot-paths: ["snapshots"]</div>
-  <div class="cl dim" style="top:704px">clean-targets:</div>
-  <div class="cl dim" style="top:741px">  - "target"</div>
-  <div class="cl dim" style="top:778px">  - "dbt_packages"</div>
-  <div class="cl" style="top:848px;color:var(--muted)">models:</div>
-  <div class="cl" style="top:885px;color:var(--muted)">  job_postings:</div>
-  <div class="cl dim" style="top:922px">    example:</div>
-  <div class="cl dim" style="top:959px">      +materialized: view</div>
+  <!-- code lines (34px line, 40px pitch, start y=232) -->
+  <div class="cl" style="top:232px"><span style="color:var(--dbt);font-weight:700">name:</span> 'job_postings'</div>
+  <div class="cl dim" style="top:272px">version: '1.0.0'</div>
+  <div class="cl" style="top:352px"><span style="color:var(--dbt);font-weight:700">profile:</span> 'job_postings'</div>
+  <div class="cl dim" style="top:432px">model-paths: ["models"]</div>
+  <div class="cl dim" style="top:472px">analysis-paths: ["analyses"]</div>
+  <div class="cl dim" style="top:512px">test-paths: ["tests"]</div>
+  <div class="cl dim" style="top:552px">seed-paths: ["seeds"]</div>
+  <div class="cl dim" style="top:592px">macro-paths: ["macros"]</div>
+  <div class="cl dim" style="top:632px">snapshot-paths: ["snapshots"]</div>
+  <div class="cl dim" style="top:712px">clean-targets:</div>
+  <div class="cl dim" style="top:752px">  - "target"</div>
+  <div class="cl dim" style="top:792px">  - "dbt_packages"</div>
+  <div class="cl" style="top:872px;color:var(--muted)">models:</div>
+  <div class="cl" style="top:912px;color:var(--muted)">  job_postings:</div>
+  <div class="cl dim" style="top:952px">    example:</div>
+  <div class="cl dim" style="top:992px">      +materialized: view</div>
 
   <!-- notes -->
-  <div class="note" style="top:252px"><span class="pill req">required</span><b>name</b> — what this project is called; configs below refer back to it</div>
-  <div class="note" style="top:351px;border-color:rgba(255,105,75,.45)"><span class="pill req">required</span><b style="color:var(--dbt)">profile</b> — which connection in <span class="mono">~/.dbt/profiles.yml</span> to use: the one cable between this project and your warehouse</div>
-  <div class="note" style="top:499px"><span class="pill opt">optional</span><b>*-paths</b> — where dbt looks for the six folders. These ARE the defaults — delete every one of these lines and nothing changes</div>
-  <div class="note" style="top:712px"><span class="pill opt">optional</span><b>clean-targets</b> — what <span class="mono">dbt clean</span> deletes. Without it, clean removes only target/ — this line ADDS dbt_packages to the list</div>
-  <div class="note" style="top:856px"><span class="pill opt">optional — but useful</span><b>models:</b> — materialization defaults for the whole project or one folder; a model's own <span class="mono">config()</span> overrides it. The <span class="mono">example:</span> lines configure dbt's demo folder — they leave when the demo does</div>
+  <div class="note" style="top:222px"><span class="pill req">required</span><b>name</b> — what this project is called; configs refer back to it</div>
+  <div class="note" style="top:334px;border-color:rgba(255,105,75,.45)"><span class="pill req">required</span><b style="color:var(--dbt)">profile</b> — 🔗 connection in <span class="mono">~/.dbt/profiles.yml</span> → your warehouse</div>
+  <div class="note" style="top:496px"><span class="pill opt">optional</span><b>*-paths</b> — 📁 these ARE the defaults; delete them, nothing changes</div>
+  <div class="note" style="top:730px"><span class="pill opt">optional</span><b>clean-targets</b> — 🗑 what <span class="mono">dbt clean</span> deletes; adds dbt_packages</div>
+  <div class="note" style="top:856px"><span class="pill opt">optional</span><b>models:</b> — ⚙️ materialization defaults; <span class="mono">config()</span> overrides
+    <div style="font-size:20px;color:var(--faint);margin-top:6px"><span class="mono">example:</span> → dbt's demo folder</div></div>
 
+  <!-- code row → note connectors (dotted) -->
   <svg class="art" viewBox="0 0 1920 1080">
-    <line x1="980" y1="279" x2="1034" y2="279" stroke="#FF694B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <line x1="980" y1="390" x2="1034" y2="390" stroke="#FF694B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <line x1="980" y1="545" x2="1034" y2="545" stroke="#6B6B6B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <line x1="980" y1="749" x2="1034" y2="749" stroke="#6B6B6B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <line x1="980" y1="899" x2="1034" y2="899" stroke="#6B6B6B" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="1040" y1="249" x2="1076" y2="249" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="1040" y1="369" x2="1076" y2="369" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="1040" y1="529" x2="1076" y2="529" stroke="#6B6B6B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="1040" y1="769" x2="1076" y2="769" stroke="#6B6B6B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="1040" y1="929" x2="1076" y2="929" stroke="#6B6B6B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
   </svg>
 
-  <div style="position:absolute;left:76px;bottom:24px;right:76px;display:flex;gap:24px;font-size:17.5px;color:var(--faint)">
-    <span>lives IN the project, committed to git — it describes WHAT the pipeline is</span>
-    <span style="margin-left:auto">truly required: <b class="mono" style="color:var(--dbt)">name</b> + <b class="mono" style="color:var(--dbt)">profile</b> — everything grey was written by dbt init</span>
+  <!-- where-it-lives strip (designed element, not a footer) -->
+  <div style="position:absolute;left:1080px;top:972px;width:764px;height:60px;border:1.5px solid rgba(88,166,255,.5);
+       border-radius:10px;background:rgba(88,166,255,.07);display:flex;align-items:center;justify-content:center;box-sizing:border-box">
+    <span style="font-size:21px;color:var(--text)">📄 lives in the project — committed to git <span style="color:var(--muted)">(unlike <span class="mono">~/.dbt/profiles.yml</span>)</span></span>
   </div>
+
 </div>
 </body>
 </html>

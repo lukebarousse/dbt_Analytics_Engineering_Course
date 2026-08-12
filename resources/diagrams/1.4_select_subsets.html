@@ -5,12 +5,13 @@
 <meta charset="utf-8">
 <title>1.4 — Picking your subset with --select</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
     --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
     --dbt:#FF694B; --duck:#F2C94C;
     --blue:#58A6FF;
-    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
@@ -21,45 +22,44 @@
       radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
       var(--bg);}
   .mono{font-family:var(--mono)}
-  .panel{position:absolute;top:250px;width:552px;height:660px;background:var(--zone);
+  .panel{position:absolute;top:170px;width:552px;height:700px;background:var(--zone);
     border:1.5px solid var(--line);border-radius:18px}
-  .cmd{font-family:var(--mono);font-weight:700;font-size:20px;color:var(--text);
-    background:#191919;border-radius:10px;padding:12px 18px;margin:24px 24px 0;text-align:center}
-  .node{position:absolute;width:230px;height:64px;border-radius:12px;display:flex;
-    align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:18px}
+  .cmd{font-family:var(--mono);font-weight:700;font-size:22px;color:var(--text);
+    background:#191919;border-radius:10px;padding:14px 12px;margin:26px 24px 0;text-align:center}
+  .node{position:absolute;width:240px;height:68px;border-radius:12px;display:flex;
+    align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:21px}
   .on{background:rgba(88,166,255,.14);border:2px solid var(--blue);color:var(--blue)}
   .off{background:transparent;border:1.5px dashed #3A3A3A;color:#5A5A5A}
-  .count{position:absolute;bottom:70px;width:100%;text-align:center;font-family:var(--mono);
-    font-weight:700;font-size:19px;color:var(--blue)}
-  .caption{position:absolute;bottom:34px;width:100%;text-align:center;font-size:16.5px;color:var(--muted)}
+  .count{position:absolute;bottom:88px;width:100%;text-align:center;font-family:var(--mono);
+    font-weight:700;font-size:24px;color:var(--blue)}
+  .caption{position:absolute;bottom:40px;width:100%;text-align:center;font-size:21px;color:var(--muted)}
   svg.edges{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div style="position:absolute;left:76px;top:54px">
-    <div style="font-size:46px;font-weight:800;letter-spacing:-.01em">Picking your subset with --select</div>
-    <div style="width:112px;height:6px;border-radius:3px;background:var(--blue);margin:14px 0 12px"></div>
-    <div style="font-size:20px;color:var(--muted)">same project, same command — three different scopes</div>
+  <!-- title -->
+  <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center">
+    <div class="mono" style="font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em">Picking your subset with --select</div>
   </div>
 
   <!-- panel 1 -->
   <div class="panel" style="left:76px">
     <div class="cmd">dbt run --select top_locations</div>
-    <div class="node off" style="left:161px;top:170px">job_postings</div>
-    <div class="node off" style="left:36px;top:400px">jobs_per_month</div>
-    <div class="node on"  style="left:286px;top:400px">top_locations</div>
+    <div class="node off" style="left:156px;top:160px">job_postings</div>
+    <div class="node off" style="left:26px;top:430px">jobs_per_month</div>
+    <div class="node on"  style="left:286px;top:430px">top_locations</div>
     <div class="count">1 of 1</div>
-    <div class="caption">just the model you named</div>
+    <div class="caption">🎯 just the model you named</div>
   </div>
 
   <!-- panel 2 -->
   <div class="panel" style="left:684px">
     <div class="cmd">dbt run --select +top_locations</div>
-    <div class="node on"  style="left:161px;top:170px">job_postings</div>
-    <div class="node off" style="left:36px;top:400px">jobs_per_month</div>
-    <div class="node on"  style="left:286px;top:400px">top_locations</div>
+    <div class="node on"  style="left:156px;top:160px">job_postings</div>
+    <div class="node off" style="left:26px;top:430px">jobs_per_month</div>
+    <div class="node on"  style="left:286px;top:430px">top_locations</div>
     <div class="count">1 of 2, 2 of 2</div>
     <div class="caption">+ in front: "…and everything it needs"</div>
   </div>
@@ -67,34 +67,34 @@
   <!-- panel 3 -->
   <div class="panel" style="left:1292px">
     <div class="cmd">dbt run --select job_postings+</div>
-    <div class="node on" style="left:161px;top:170px">job_postings</div>
-    <div class="node on" style="left:36px;top:400px">jobs_per_month</div>
-    <div class="node on" style="left:286px;top:400px">top_locations</div>
+    <div class="node on" style="left:156px;top:160px">job_postings</div>
+    <div class="node on" style="left:26px;top:430px">jobs_per_month</div>
+    <div class="node on" style="left:286px;top:430px">top_locations</div>
     <div class="count">1 of 3 … 3 of 3</div>
     <div class="caption">+ behind: "…and everything that needs it"</div>
   </div>
 
-  <!-- edges (drawn once per panel, over the stage) -->
+  <!-- edges (stage coordinates, routed between nodes) -->
   <svg class="edges" viewBox="0 0 1920 1080">
     <defs>
-      <marker id="e" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <marker id="eg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
         <path d="M0 0 L10 5 L0 10 z" fill="#5A5A5A"/>
+      </marker>
+      <marker id="eb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#58A6FF"/>
       </marker>
     </defs>
     <!-- panel 1: x offset 76 -->
-    <path d="M 320 484 C 280 540, 240 580, 200 646" fill="none" stroke="#5A5A5A" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round" marker-end="url(#e)"/>
-    <path d="M 356 484 C 396 540, 436 580, 476 646" fill="none" stroke="#5A5A5A" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round" marker-end="url(#e)"/>
+    <path d="M 332 402 C 295 470, 262 525, 230 590" fill="none" stroke="#5A5A5A" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#eg)"/>
+    <path d="M 372 402 C 409 470, 442 525, 474 590" fill="none" stroke="#5A5A5A" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#eg)"/>
     <!-- panel 2: x offset 684 -->
-    <path d="M 928 484 C 888 540, 848 580, 808 646" fill="none" stroke="#5A5A5A" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round" marker-end="url(#e)"/>
-    <path d="M 964 484 C 1004 540, 1044 580, 1084 646" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round" marker-end="url(#e)"/>
+    <path d="M 940 402 C 903 470, 870 525, 838 590" fill="none" stroke="#5A5A5A" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#eg)"/>
+    <path d="M 980 402 C 1017 470, 1050 525, 1082 590" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#eb)"/>
     <!-- panel 3: x offset 1292 -->
-    <path d="M 1536 484 C 1496 540, 1456 580, 1416 646" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round" marker-end="url(#e)"/>
-    <path d="M 1572 484 C 1612 540, 1652 580, 1692 646" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round" marker-end="url(#e)"/>
+    <path d="M 1548 402 C 1511 470, 1478 525, 1446 590" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#eb)"/>
+    <path d="M 1588 402 C 1625 470, 1658 525, 1690 590" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#eb)"/>
   </svg>
 
-  <div style="position:absolute;left:76px;bottom:26px;font-size:17.5px;color:var(--faint)">
-    arrows mean "feeds into" — drawn by <span class="mono" style="color:var(--muted)">ref()</span>, read by <span class="mono" style="color:var(--muted)">--select</span>. this picture has a name — coming up
-  </div>
 </div>
 </body>
 </html>

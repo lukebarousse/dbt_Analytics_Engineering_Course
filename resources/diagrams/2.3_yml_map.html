@@ -1,0 +1,117 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>2.3 — Every YAML in the pipeline</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+               radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;left:0;top:36px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .tree{position:absolute;left:76px;top:140px;width:620px;height:900px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .tl{position:absolute;font-family:var(--mono);font-size:23px;white-space:pre;color:var(--text)}
+  .num{display:inline-flex;width:34px;height:34px;border-radius:50%;border:2.5px solid var(--blue);
+    color:var(--blue);font-weight:800;font-size:19px;align-items:center;justify-content:center;
+    font-family:var(--sans);vertical-align:-6px}
+  .card{position:absolute;box-sizing:border-box;width:552px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;padding:16px 20px}
+  .card .fn{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--text)}
+  .card .why{font-size:21px;color:var(--muted);margin-top:6px}
+  .card pre{margin:10px 0 0;font-family:var(--mono);font-size:19px;line-height:29px;color:var(--faint);white-space:pre}
+  .chip{position:absolute;top:16px;right:18px;font-family:var(--mono);font-size:19px;font-weight:700;
+    border-radius:8px;padding:5px 12px}
+  .chip.ok{color:var(--ok);border:1.5px solid rgba(87,171,90,.5)}
+  .chip.no{color:var(--err);border:1.5px solid rgba(229,83,75,.5)}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">every YAML in the pipeline</div>
+
+  <!-- ============ LEFT: the tree ============ -->
+  <div class="tree"></div>
+  <div class="tl" style="left:116px;top:180px;font-size:25px;font-weight:700">📁 your-repo/</div>
+  <div class="tl" style="left:116px;top:236px">├─ 📁 .github/workflows/</div>
+  <div class="tl" style="left:116px;top:280px">│    └─ <span style="color:var(--blue);font-weight:700">dbt_build.yml</span>  <span class="num">4</span></div>
+  <div class="tl" style="left:116px;top:340px">├─ 📁 ci/</div>
+  <div class="tl" style="left:116px;top:384px">│    └─ <span style="color:var(--blue);font-weight:700">profiles.yml</span>  <span class="num">5</span></div>
+  <div class="tl" style="left:116px;top:444px">├─ 📁 data/  <span style="color:var(--faint)">(gitignored)</span></div>
+  <div class="tl" style="left:116px;top:488px">├─ 📁 docs/  <span style="color:var(--faint)">(the docs site)</span></div>
+  <div class="tl" style="left:116px;top:548px">└─ 📁 job_postings/</div>
+  <div class="tl" style="left:116px;top:592px">     ├─ <span style="color:var(--dbt);font-weight:700">dbt_project.yml</span>  <span class="num">1</span></div>
+  <div class="tl" style="left:116px;top:652px">     └─ 📁 models/</div>
+  <div class="tl" style="left:116px;top:696px">          ├─ <span style="color:var(--dbt);font-weight:700">sources.yml</span>  <span class="num">2</span></div>
+  <div class="tl" style="left:116px;top:740px">          └─ <span style="color:var(--dbt);font-weight:700">schema.yml</span>  <span class="num">3</span></div>
+  <div class="tl" style="left:116px;top:850px;color:var(--muted)">outside the repo, on YOUR machine:</div>
+  <div class="tl" style="left:116px;top:900px">🏠 ~/.dbt/<span style="color:var(--duck);font-weight:700">profiles.yml</span>  <span class="num">6</span></div>
+
+  <!-- ============ RIGHT: purpose cards (2 cols × 3 rows) ============ -->
+  <div class="card" style="left:736px;top:140px;height:180px">
+    <span class="num">1</span>&ensp;<span class="fn" style="color:var(--dbt)">dbt_project.yml</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">the badge: WHAT this project is</div>
+    <pre>name: 'job_postings'
+profile: 'job_postings'</pre>
+  </div>
+  <div class="card" style="left:1308px;top:140px;height:200px">
+    <span class="num">2</span>&ensp;<span class="fn" style="color:var(--dbt)">models/sources.yml</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">WHAT raw data exists + where to read it</div>
+    <pre>sources:
+  - name: raw
+    external_location: "…"</pre>
+  </div>
+
+  <div class="card" style="left:736px;top:400px;height:200px">
+    <span class="num">3</span>&ensp;<span class="fn" style="color:var(--dbt)">models/schema.yml</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">WHAT dbt builds: descriptions + tests</div>
+    <pre>models:
+  - name: top_companies
+    data_tests: [not_null]</pre>
+  </div>
+  <div class="card" style="left:1308px;top:400px;height:200px">
+    <span class="num">4</span>&ensp;<span class="fn" style="color:var(--blue)">dbt_build.yml</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">the robot's to-do list: build → test → publish</div>
+    <pre>on: [push, schedule]
+  dbt build --target prod
+  gh release upload …</pre>
+  </div>
+
+  <div class="card" style="left:736px;top:660px;height:200px">
+    <span class="num">5</span>&ensp;<span class="fn" style="color:var(--blue)">ci/profiles.yml</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">the ROBOT's WHERE — paths, no secrets</div>
+    <pre>prod:
+  type: duckdb
+  path: ../data/prod.duckdb</pre>
+  </div>
+  <div class="card" style="left:1308px;top:660px;height:235px">
+    <span class="num">6</span>&ensp;<span class="fn" style="color:var(--duck);font-size:21px">~/.dbt/profiles.yml</span>
+    <span class="chip no">✗ never committed</span>
+    <div class="why">YOUR WHERE — yours alone, outside the repo</div>
+    <pre>dev:
+  path: ../data/dev.duckdb
+prod:
+  path: ../data/prod.duckdb</pre>
+  </div>
+
+</div>
+</body>
+</html>

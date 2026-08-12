@@ -1,0 +1,24 @@
+name: dbt build & publish
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'    # Mondays — the pipeline runs while you sleep
+  workflow_dispatch:        # …and a manual Run button
+permissions:
+  contents: write           # lets the workflow update the release
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - run: uv run python scripts/download_data.py
+      - run: uv run dbt build --target prod --profiles-dir ../ci
+        working-directory: job_postings
+      - run: |
+          gh release create warehouse --notes "Warehouse — auto-built by dbt" || true
+          gh release upload warehouse data/prod.duckdb --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
