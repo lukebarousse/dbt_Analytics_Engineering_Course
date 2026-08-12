@@ -11,29 +11,31 @@ Data Nerds! This repo contains all the files needed to follow along my free cour
 
 You already know SQL. This course teaches you to turn scattered SQL scripts into a tested, documented, version-controlled data pipeline with dbt. It's the **T in ELT**: data engineers extract and load the raw data (that part already happened); analytics engineers transform it inside the warehouse. That's the job this course trains.
 
-You'll build one project the whole way through: transforming a year of real data job postings (~500k jobs) from raw files into a tested, documented star schema, first locally with DuckDB, then deployed to BigQuery in the cloud.
+You'll build **two portfolio projects**: a local, tested, automated job-market pipeline on DuckDB (published with GitHub Actions), then a production-grade rebuild on BigQuery — a year of real job postings (~692k rows) from raw files to a documented star schema.
 
-## Table of Contents
+## What's in this repo
 
-| Module | Concepts |
+Lesson notes live in the course itself — this repo holds the code:
+
+| Folder | What it is |
 | --- | --- |
-| [0. Intro](0_intro/) | What dbt is, prerequisites, the data and project overview |
-| [1. Basics](1_basics/) | Setup, models, `ref`, sources, the DAG & docs, materializations, tests |
-| [2. Project #1](2_project_1/) | Build & publish the local job-market pipeline |
-| [3. Advanced](3_advanced/) | To the cloud, data modeling, the refactor, macros, tests pt 2, snapshots |
-| [4. Project #2](4_project_2/) | Incremental, dev vs prod, capstone on BigQuery |
+| [project_1/](project_1/) | Reference implementation of Project #1 (dbt + DuckDB, the finished repo you build in the course) |
+| [project_2/](project_2/) | Reference implementation of Project #2 (dbt + BigQuery) |
+| [scripts/](scripts/) | `download_data.py` — fetches the course dataset |
+| [img/](img/) | Diagrams & images used in the course READMEs |
+
+Each project folder is self-contained with its own `uv` environment (Project #1 uses the DuckDB adapter, Project #2 the BigQuery adapter).
 
 ## Setup
 
-Requires [uv](https://docs.astral.sh/uv/) (Part 1 of the bootcamp covers it). Then:
+Requires [uv](https://docs.astral.sh/uv/) (Part 1 of the bootcamp covers it). In the course you build your own repo from scratch — to run a reference project directly:
 
 ```bash
 git clone https://github.com/lukebarousse/dbt_Analytics_Engineering_Course.git
 cd dbt_Analytics_Engineering_Course
-uv sync                                      # installs dbt (DuckDB + BigQuery adapters)
-uv run scripts/download_data.py                 # downloads the course dataset (~85MB)
-cd project_1
-uv run dbt debug                             # verify everything works
+python scripts/download_data.py              # downloads the course dataset (~85MB)
+cd project_1 && uv sync                      # per-project env: dbt + DuckDB adapter
+cd job_postings && uv run dbt debug          # verify everything works
 ```
 
 ## The dataset
