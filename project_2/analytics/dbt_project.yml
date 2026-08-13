@@ -1,5 +1,5 @@
 name: 'analytics'
-profile: 'analytics'
+profile: 'databricks'
 
 models:
   analytics:
