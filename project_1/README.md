@@ -9,7 +9,7 @@ A public dbt + DuckDB pipeline over ~692k real job postings. Every push rebuilds
 
 | What this demonstrates | Where to look |
 | --- | --- |
-| **dbt pipeline** — sources → cleaned model → insight marts | [`job_postings/models/`](job_postings/models/) |
+| **dbt pipeline** — sources → cleaned model → insight marts | [`analytics/models/`](analytics/models/) |
 | **Hosted dbt docs** — lineage, descriptions, column tests | [Live docs site](https://YOU.github.io/REPO) |
 | **Public CI** — build + test + publish on every push | [Actions workflow](https://github.com/YOU/REPO/actions/workflows/dbt_build.yml) |
 
@@ -33,10 +33,10 @@ Most “dbt portfolio” repos stop at `dbt run` on a laptop. This one is meant 
 
 | Practice | Implementation |
 | --- | --- |
-| Declared sources (no hardcoded paths in SQL) | [`sources.yml`](job_postings/models/sources.yml) + `source('raw', 'job_postings')` |
+| Declared sources (no hardcoded paths in SQL) | [`sources.yml`](analytics/models/sources.yml) + `source('raw', 'job_postings')` |
 | Model dependencies | `ref()` everywhere downstream; dbt resolves order and parallelism |
 | Materializations | project default `table`; staging override to `view` |
-| Data tests | `unique` / `not_null` on mart grains in [`schema.yml`](job_postings/models/schema.yml) |
+| Data tests | `unique` / `not_null` on mart grains in [`schema.yml`](analytics/models/schema.yml) |
 | Environments | local `dev` vs CI `prod` targets ([`ci/profiles.yml`](ci/profiles.yml)) |
 
 `dbt build` compiles SQL, materializes models, and fails the run if any test fails — same command locally and in CI.
@@ -107,7 +107,7 @@ SELECT * FROM jobs.main.monthly_summary;
 ```bash
 uv sync
 uv run python scripts/download_data.py
-cd job_postings && uv run dbt build
+cd analytics && uv run dbt build
 ```
 
 Optional docs locally:
@@ -127,7 +127,7 @@ uv run dbt docs serve
 ├── ci/profiles.yml                   # prod DuckDB target for Actions
 ├── data/                             # raw + warehouses (gitignored; CI regenerates)
 ├── docs/                             # dbt docs site (GitHub Pages)
-├── job_postings/
+├── analytics/
 │   ├── dbt_project.yml
 │   └── models/                       # sources, staging, marts, schema.yml
 └── scripts/download_data.py          # fetch raw parquet before build

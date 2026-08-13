@@ -1,4 +1,4 @@
-job_postings:
+analytics:
   target: prod
   outputs:
     prod:

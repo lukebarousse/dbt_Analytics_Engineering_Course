@@ -16,7 +16,7 @@ jobs:
       - run: uv sync
       - run: uv run python scripts/download_data.py
       - run: uv run dbt build --target prod --profiles-dir ../ci
-        working-directory: job_postings
+        working-directory: analytics
       - run: |
           gh release create warehouse --notes "Warehouse — auto-built by dbt" || true
           gh release upload warehouse data/prod.duckdb --clobber

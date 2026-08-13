@@ -2,6 +2,8 @@
 
 Data Nerds! This repo contains all the files needed to follow along my free course: dbt for Data Analysts & Engineers <!-- TODO: course link + thumbnail badge at launch -->
 
+![dbt for Data Analysts & Engineers](img/dbt_youtube.png)
+
 ## Team Members 👥
 
 **🙋🏼‍♂️ Course Leader:** [Luke Barousse](https://www.linkedin.com/in/luke-b)
@@ -35,7 +37,7 @@ git clone https://github.com/lukebarousse/dbt_Analytics_Engineering_Course.git
 cd dbt_Analytics_Engineering_Course
 python scripts/download_data.py              # downloads the course dataset (~85MB)
 cd project_1 && uv sync                      # per-project env: dbt + DuckDB adapter
-cd job_postings && uv run dbt debug          # verify everything works
+cd analytics && uv run dbt debug          # verify everything works
 ```
 
 ## The dataset
