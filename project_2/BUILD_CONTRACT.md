@@ -329,7 +329,7 @@ Staging extracts `salary_currency` (leading currency code, NULL = assumed USD) �
 | (m) posted_date floor | max "N months ago" = 1; min search_date 2025-07-01 → min posted_date ≈ 2025-06. No deep-past parsing risk | ✅ |
 | (n) quotables | dup profile behind 63,207: 2×=38,778 jobs · 3×=10,099 · 4–10×=10,961 · 11–50×=3,016 · **51+×=353** (max 365). Pre-filter relationships failure count = 0 (dead, see (c)) | ✅ |
 
-### REDESIGN NOTE — the orphan arc (PENDING LUKE'S DECISION)
+### REDESIGN NOTE — the orphan arc (DECIDED: Plan A, PROVISIONAL — Luke, 2026-08-13: "go with A but I really won't know until I start testing and building this out" — revisit at lesson walkthrough)
 Item (c) kills the contracted red-test arc (3.71 relationships red → 3.72 assert_no_orphan_skills red
 → bridge redemption → 4.22 warn→error halting). Verified replacement candidates, both REAL:
 - **accepted_values on job_schedule_type**: 17 distinct values incl. combos — the "obvious" 4-value
