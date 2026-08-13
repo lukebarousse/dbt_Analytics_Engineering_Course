@@ -34,10 +34,10 @@ Requires [uv](https://docs.astral.sh/uv/) (Part 1 of the bootcamp covers it). In
 
 ```bash
 git clone https://github.com/lukebarousse/dbt_Analytics_Engineering_Course.git
-cd dbt_Analytics_Engineering_Course
-python scripts/download_data.py              # downloads the course dataset (~85MB)
-cd project_1 && uv sync                      # per-project env: dbt + DuckDB adapter
-cd analytics && uv run dbt debug          # verify everything works
+cd dbt_Analytics_Engineering_Course/project_1
+python scripts/download_data.py              # downloads the course dataset (~85MB) into project_1/data/
+uv sync                                      # per-project env: dbt + DuckDB adapter
+cd analytics && uv run dbt debug             # verify everything works
 ```
 
 ## The dataset
