@@ -12,6 +12,27 @@ chapter-3 numbering. Translation to current course numbering:
   contract 3.51->3.61 3.52->3.62 3.61->3.71 3.62->3.72 3.63->3.73 3.71->3.81 ; 4.x unchanged.
 -->
 
+<!-- AMENDMENTS (2026-08-13 — Luke's flag decisions + the BigQuery purge):
+INVESTIGATION (flag 6): NOTHING in P2 was built on BigQuery. All BQ references in this
+contract trace to TWO stale Notion rows (the old "3.12 BigQuery setup & load" and
+"3.13 Warehouse portability & the swap") that the extraction phase read mid-restructure.
+The build is Databricks-only: bronze is live on the course workspace, every verification
+ran on Databricks, the repo's only adapter is dbt-databricks.
+PURGED from this contract: the BQ side-load beat (3.12 row), the entire portability-swap
+lesson (3.13 row — already deleted in the ch3 restructure), "green in both warehouses"
+framing, and `bq mk`. The dbt.date_trunc dialect-break beat is RETIRED from core with the
+portability lesson (adapter portability stays a 3.22 mention; cross-warehouse = bonus-tier
+candidate). The monolith's table-not-found-on-BQ beat dies with it; its hardcoding sins
+are still taught by the refactor itself.
+FLAG DECISIONS (Luke): 1 KEEP dim_company (paste-not-type; first cut if capstone runs
+long) · 2 orphan tests AS CONTRACTED · 3 fct dedupe lands at the 157k lesson's CLOSE ·
+4 MOOT (BQ purged; 'bronze' naming already implemented) · 5 keep 'Data Engineer'
+hardcoded in v1 BUT the capstone generalization must give students a pick-your-role
+mechanism (var('job_title') or role-parameterized mart — decide at build; ties to P1's
+personalization) · 6 ACCEPT — reworded "green in dev, prod, and on a schedule" ·
+7 verify-then-script (MetricFlow demo shape locked by verification item (i)).
+-->
+
 # P2 Build Contract — SILVER + GOLD Layers (REVISED)
 **dbt reference pipeline for the dbt Analytics Engineering course (Project #2, Databricks Free Edition)**
 
