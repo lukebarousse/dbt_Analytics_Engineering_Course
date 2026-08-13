@@ -1,4 +1,4 @@
-# bronze = the raw landing zone, created ONCE by setup/01_create_bronze.sql —
+# bronze = the raw landing zone, created ONCE by scripts/load_bronze.py (the ingestion notebook) —
 # dbt didn't build it, so it's declared as a source (the 1.5 lesson, cloud edition)
 sources:
   - name: bronze
