@@ -1,0 +1,177 @@
+models:
+  - name: fct_job_postings
+    description: >
+      One row per job posting — latest scrape wins. Incremental (merge on job_id):
+      re-scrapes update in place, new jobs insert.
+    config:
+      meta:
+        owner: luke
+        tier: gold
+    columns:
+      - name: job_id
+        description: Posting id from the scraper; the grain and the merge key.
+        data_tests:
+          - not_null
+          - unique
+      - name: job_title
+        description: Title as posted.
+      - name: search_term
+        description: >
+          Search that found the posting. Latest scrape wins, so a job re-scraped
+          under a different search carries its most recent term.
+      - name: company_name
+        description: Employer, trimmed upstream; natural key into dim_company.
+      - name: job_location
+        description: Location text as posted.
+      - name: source_platform
+        description: Posting platform; the scraper's "via " prefix stripped upstream.
+      - name: job_schedule_type
+        description: Schedule as posted; null when the posting didn't say.
+      - name: job_work_from_home
+        description: True when the posting is flagged remote.
+      - name: posted_date
+        description: >
+          Posting date, resolved from relative text ("3 days ago") against scrape
+          time; null when the source text was absent or unparseable.
+      - name: posted_at
+        description: Timestamp version of posted_date, same resolution rules.
+      - name: search_date
+        description: Date of the winning (latest) scrape; the incremental high-water mark.
+      - name: salary_min
+        description: Lower bound parsed from the raw salary text; null when absent or unparseable.
+      - name: salary_max
+        description: Upper bound parsed from the raw salary text; null when absent or unparseable.
+      - name: salary_period
+        description: Pay period parsed from the raw salary text (year, month, week, day, hour).
+      - name: salary_currency
+        description: Leading currency code when present; null means assumed USD.
+      - name: salary_year_avg
+        description: >
+          Annualized average salary, USD rows only (hourly x 2080) — computed once
+          in the intermediate layer, inherited here.
+      - name: has_health_insurance
+        description: Posting extensions mention health insurance.
+      - name: has_dental_insurance
+        description: Posting extensions mention dental insurance.
+      - name: has_paid_time_off
+        description: Posting extensions mention paid time off.
+      - name: has_no_degree_mentioned
+        description: Posting extensions mention no degree required.
+
+  - name: dim_company
+    description: One row per company, aggregated from fct_job_postings.
+    columns:
+      - name: company_name
+        description: Natural key; trimmed upstream in staging.
+        data_tests:
+          - not_null
+          - unique
+      - name: total_job_postings
+        description: Jobs posted by the company (fct is one row per job, so count(*) counts jobs).
+      - name: first_posted_date
+        description: Earliest resolved posting date.
+      - name: last_posted_date
+        description: Latest resolved posting date.
+      - name: avg_salary_year
+        description: >
+          Average annualized salary across the company's USD-parsed postings;
+          null when none parsed.
+
+  - name: dim_skill
+    description: One row per skill; the seed provides the taxonomy, the data provides the counts.
+    columns:
+      - name: skill_id
+        description: Skill key from the seed.
+        data_tests:
+          - not_null
+          - unique
+      - name: display_name
+        description: Human-readable skill name.
+      - name: category
+        description: Skill category from the seed taxonomy.
+      - name: subcategory
+        description: Skill subcategory from the seed taxonomy.
+      - name: postings_with_skill
+        description: >
+          Distinct postings observed with this skill; 0 when a seeded skill
+          never appears in the data.
+
+  - name: job_skills_bridge
+    description: >
+      One row per (job_id, skill_id) for jobs present in fct_job_postings —
+      referential integrity guaranteed by construction. search_date rides along
+      from fct as the bridge's agg time dimension for the metrics layer.
+    columns:
+      - name: job_id
+        description: Job carrying the skill; every value exists in fct_job_postings.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_job_postings')
+                field: job_id
+      - name: skill_id
+        description: Skill observed on the job; every value exists in dim_skill.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_skill')
+                field: skill_id
+      - name: skill_keyword
+        description: Raw skill keyword, trimmed upstream.
+      - name: search_date
+        description: Winning-scrape date carried from fct_job_postings.
+
+  - name: top_paying_jobs
+    description: Q1 — the 100 best-paying postings with a parsed annual salary.
+    columns:
+      - name: job_id
+        description: Posting id; one row per job by construction.
+        data_tests:
+          - not_null
+          - unique
+
+  - name: top_paying_job_skills
+    description: Q2 — skill frequency among the top payers; a mart built on a mart.
+    columns:
+      - name: skill_id
+        description: One row per skill observed in the top-paying set.
+        data_tests:
+          - not_null
+          - unique
+
+  - name: in_demand_skills
+    description: >
+      Q3, capstone form — demand per skill across all roles by default; the
+      job_title var narrows it to one role (--vars 'job_title: Data Analyst').
+    columns:
+      - name: skill_id
+        description: One row per skill observed on fct jobs.
+        data_tests:
+          - not_null
+          - unique
+      - name: demand_count
+        description: Distinct fct jobs mentioning the skill.
+      - name: demand_pct
+        description: demand_count over all fct jobs in scope.
+
+  - name: top_skills_by_salary
+    description: >
+      Q4 — average annualized salary per skill; the USD rule is inherited
+      from the intermediate layer, never restated here.
+    columns:
+      - name: skill_id
+        description: One row per skill observed on salaried fct jobs.
+        data_tests:
+          - not_null
+          - unique
+
+  - name: optimal_skills
+    description: Q5 — skills that are both in demand (floor of 100 jobs) and well paid.
+    columns:
+      - name: skill_id
+        description: One row per qualifying skill.
+        data_tests:
+          - not_null
+          - unique

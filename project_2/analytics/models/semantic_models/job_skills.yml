@@ -1,0 +1,40 @@
+# the bridge carries search_date for exactly this file: MetricFlow rejects any
+# semantic model that has measures but no agg time dimension
+semantic_models:
+  - name: job_skills
+    description: One row per (job, skill) pair, fct jobs only — the bridge guarantees every job here exists in fct.
+    model: ref('job_skills_bridge')
+    defaults:
+      agg_time_dimension: search_date
+    # the grain is the (job, skill) PAIR — no single column is primary, so the
+    # primary entity is declared virtually instead of pointing at a column
+    primary_entity: job_skill
+    entities:
+      - name: job
+        type: foreign
+        expr: job_id
+      - name: skill
+        type: foreign
+        expr: skill_id
+    dimensions:
+      - name: search_date
+        type: time
+        type_params:
+          time_granularity: day
+    measures:
+      - name: skill_mentions
+        description: Bridge rows are distinct (job, skill) pairs, so counting rows counts mentions.
+        expr: 1
+        agg: sum
+        # ratio inputs must be metrics, not measures; this exposes skill_mentions
+        # as one without adding a third entry to the metrics block
+        create_metric: true
+
+metrics:
+  - name: skill_demand_pct
+    label: "Skill demand %"
+    description: Share of jobs mentioning a skill — the USD and dedupe rules live upstream, so no WHERE clause is restated here.
+    type: ratio
+    type_params:
+      numerator: skill_mentions
+      denominator: total_job_postings

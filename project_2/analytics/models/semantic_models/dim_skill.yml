@@ -1,0 +1,17 @@
+# no measures, so no agg time dimension required — this model exists so
+# queries can group by skill__category / skill__subcategory at all
+semantic_models:
+  - name: dim_skill
+    description: One row per skill; seed categories plus observed posting counts.
+    model: ref('dim_skill')
+    entities:
+      - name: skill
+        type: primary
+        expr: skill_id
+    dimensions:
+      - name: display_name
+        type: categorical
+      - name: category
+        type: categorical
+      - name: subcategory
+        type: categorical

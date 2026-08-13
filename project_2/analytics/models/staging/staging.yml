@@ -1,0 +1,99 @@
+models:
+  - name: stg_job_postings
+    description: >
+      One row per posting per scrape day; a job re-scraped across days keeps every row
+      (the snapshot depends on them; fct_job_postings dedupes to one row per job).
+      685,695 rows after the null-id filter, which drops all 151,147 scraper-error rows
+      plus 6,255 id-less postings from the incident window (157,402 total).
+    columns:
+      - name: job_id
+        description: >
+          The scraper's posting id. Not unique at this grain by design; uniqueness is
+          promised, and tested, at fct_job_postings.
+        data_tests:
+          - not_null
+      - name: search_term
+        description: The role the scraper searched for; exactly three values by construction.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Data Engineer', 'Data Analyst', 'Data Scientist']
+      - name: search_date
+        description: Scrape day; doubles as the incremental high-water mark in fct_job_postings.
+      - name: searched_at
+        description: Scrape timestamp (search_time cast); anchors posted_at and the snapshot's updated_at.
+      - name: search_location
+        description: Location parameter the scraper searched under.
+      - name: job_title
+        description: Posting title as scraped.
+      - name: company_name
+        description: Employer name, trimmed; the natural key into dim_company.
+      - name: job_location
+        description: Posting location as scraped.
+      - name: source_platform
+        description: Posting platform (job_via with the 'via ' scraper artifact stripped, ~6.3k rows).
+      - name: job_schedule_type
+        description: >
+          As scraped; 12,252 nulls stay null (documented, not fixed). 17 distinct values in
+          the wild, including combos like 'Full-time and Part-time' (25,242 rows), so the naive
+          four-value test below fails 28,776 rows by design: the 3.71 finding, kept visible at
+          warn severity instead of silently "fixed".
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Full-time', 'Part-time', 'Contractor', 'Internship']
+              config:
+                severity: warn
+      - name: job_work_from_home
+        description: True when the posting is flagged remote.
+      - name: job_posted_at
+        description: Raw relative posted time ('10 hours ago'); kept for reference next to the parsed columns.
+      - name: posted_at
+        description: >
+          Posting timestamp, resolved from the relative text against searched_at; null when the
+          raw text is null or an unrecognized shape (14,878 rows pass through as null).
+      - name: posted_date
+        description: posted_at as a date.
+      - name: job_salary
+        description: Raw salary text, kept unparsed; the snapshot lesson diffs it across scrapes.
+      - name: salary_min
+        description: Lower bound parsed from the salary text; the single value when no range is given.
+      - name: salary_max
+        description: Upper bound parsed from the salary text; the single value when no range is given.
+      - name: salary_period
+        description: "Pay period parsed from the salary text: year, hour, month, day, or week."
+      - name: salary_currency
+        description: >
+          Leading currency marker ('PKR', 'CA$', '₱'); null means USD. The annualization rule in
+          int_job_postings_enriched only trusts null-currency rows.
+      - name: has_health_insurance
+        description: Posting lists Health insurance among its extensions.
+      - name: has_dental_insurance
+        description: Posting lists Dental insurance among its extensions.
+      - name: has_paid_time_off
+        description: Posting lists Paid time off among its extensions.
+      - name: has_no_degree_mentioned
+        description: Posting lists No degree mentioned among its extensions.
+
+  - name: stg_job_skills
+    description: >
+      One row per (job_id, skill_id) pair, straight off the raw table. Deliberately boring;
+      rename, order, trim is the staging discipline working.
+    columns:
+      - name: job_id
+        description: >
+          Every pair's parent exists in stg_job_postings; the course export's join guarantees
+          it, so the relationships test passes by construction. Same assertion the datanerd
+          pipeline runs nightly in production, where integrity is a real risk.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_job_postings')
+                field: job_id
+      - name: skill_id
+        description: Skill key; categorized by the skill_categories seed via dim_skill.
+        data_tests:
+          - not_null
+      - name: skill_keyword
+        description: Skill text as extracted, trimmed.

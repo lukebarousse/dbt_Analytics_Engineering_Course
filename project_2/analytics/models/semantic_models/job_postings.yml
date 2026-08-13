@@ -1,0 +1,44 @@
+# search_date is the agg time default on purpose: posted_date has NULLs, and
+# rows with a NULL agg time silently drop from time-grouped queries
+semantic_models:
+  - name: job_postings
+    description: One row per job (fct grain — the 3.63 dedupe already applied).
+    model: ref('fct_job_postings')
+    defaults:
+      agg_time_dimension: search_date
+    entities:
+      - name: job
+        type: primary
+        expr: job_id
+      - name: company
+        description: Natural FK to dim_company.
+        type: foreign
+        expr: company_name
+    dimensions:
+      - name: search_term
+        type: categorical
+      - name: company_name
+        type: categorical
+      - name: search_date
+        description: Latest scrape date; never NULL, so it's safe as the agg time default.
+        type: time
+        type_params:
+          time_granularity: day
+      - name: posted_date
+        description: Resolved posting date; NULL where the posting carried no relative time (~14.9k rows at scrape grain).
+        type: time
+        type_params:
+          time_granularity: day
+    measures:
+      - name: job_count
+        description: fct is one row per job, so counting rows counts jobs.
+        expr: 1
+        agg: sum
+
+metrics:
+  - name: total_job_postings
+    label: Total job postings
+    description: Distinct jobs — inherits the dedupe and job_id filters encoded upstream.
+    type: simple
+    type_params:
+      measure: job_count

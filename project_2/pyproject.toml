@@ -4,6 +4,7 @@ version = "1.0.0"
 description = "Project #2 — production dbt pipeline on Databricks"
 requires-python = ">=3.11"
 dependencies = [
-    "dbt-core>=1.12",
+    "dbt-core>=1.10",
     "dbt-databricks>=1.10",
+    "dbt-metricflow[databricks]>=0.13.0",
 ]
