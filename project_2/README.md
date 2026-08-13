@@ -1,3 +1,3 @@
 # Project #2 — reference build (Databricks)
 
-Built during the Advanced section (2.1 onward). Lands here as the reference/completed version once the course build reaches it.
+Built across the Advanced section and Project #2 (lessons 3.1 through 4.3). This is the reference/completed version students compare against.
