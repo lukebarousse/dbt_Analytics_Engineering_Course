@@ -3,9 +3,9 @@
 -- the question: which skills do Data Engineer postings ask for most,
 -- and how many of those postings even bother to post a salary?
 --
--- written at 3.11 the way you'd hack it out in a SQL editor: one giant query,
+-- written at 3.14 the way you'd hack it out in a SQL editor: one giant query,
 -- nested subqueries, everything hardcoded. it produced the course's first real
--- answer at 3.12, and every sin in it is load-bearing for a later lesson:
+-- answer there, and every sin in it is load-bearing for a later lesson:
 --   * catalog paths hardcoded 3 times (the 3.41 refactor swaps in source())
 --   * the same WHERE clause copy-pasted into two branches
 --   * 'Data Engineer' as a magic string, twice

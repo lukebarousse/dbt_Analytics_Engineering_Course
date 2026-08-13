@@ -2,7 +2,7 @@
 # rows with a NULL agg time silently drop from time-grouped queries
 semantic_models:
   - name: job_postings
-    description: One row per job (fct grain — the 3.63 dedupe already applied).
+    description: One row per job (fct grain — the 3.73 dedupe already applied).
     model: ref('fct_job_postings')
     defaults:
       agg_time_dimension: search_date

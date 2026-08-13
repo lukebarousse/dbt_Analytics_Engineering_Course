@@ -7,7 +7,7 @@
 --
 -- 2026-08 (the 3.51 demotion): one_big_query.sql left models/, so ref() can't see
 -- it anymore, and dbt parses every ref in analyses. the old side now points at the
--- leftover relation dbt built back in 3.12 and never dropped. a hardcoded reference
+-- leftover relation dbt built back in 3.21 and never dropped. a hardcoded reference
 -- for the hardcoded-era query; this file is a record of the refactor, not part of
 -- the pipeline.
 -- 4.31: validated the 3.41 carve; superseded by the capstone generalization.

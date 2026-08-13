@@ -314,7 +314,7 @@ Staging extracts `salary_currency` (leading currency code, NULL = assumed USD) �
 
 | Item | Result | Status |
 |---|---|---|
-| (a) salary changers | **2,756 jobs** change salary TEXT across scrapes (6,421 incl. null↔value; 7,484 any-field). HERO: Fraser Health Senior DE `1318ef9f…` posted **CA$1.06M–1.22M** on 2025-09-01, corrected to **CA$104K–145K** on 2025-09-11. Runner-up: Ace1Media intern CA$16K–17.6K → CA$104K–130.9K. | ✅ snapshot payoff SOLID |
+| (a) salary changers | **2,756 jobs** change salary TEXT across scrapes (6,421 incl. null↔value; 7,484 any-field). HERO: Fraser Health Senior DE `1318ef9f0edbfd2dda647fcff660e013` posted **CA$1.06M–1.22M** on 2025-09-01, corrected to **CA$104K–145K** on 2025-09-11. Runner-up: Ace1Media intern CA$16K–17.6K → CA$104K–130.9K. | ✅ snapshot payoff SOLID |
 | (b) skill_ids ⊆ seed | observed 960, seed 1,422, **0 outside seed** — Plan B (FULL OUTER JOIN) not needed | ✅ |
 | (c) orphans | **ZERO orphan skill-pairs, pre- AND post-filter.** The ~13% claim was datanerd-production lore; the course export's JOIN guaranteed integrity. **CONTRACT PREMISE FALSE** — see redesign note below | ❌ REDESIGN |
 | (d) incident histogram | Databricks reproduces exactly: 66 / 2,191 / 955 / 2,938 / 105 (2025-12→2026-04) | ✅ |
