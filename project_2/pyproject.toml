@@ -1,5 +1,5 @@
 [project]
-name = "p2-job-market"
+name = "p2-analytics"
 version = "1.0.0"
 description = "Project #2 — production dbt pipeline on Databricks"
 requires-python = ">=3.11"

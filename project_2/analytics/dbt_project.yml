@@ -1,8 +1,8 @@
-name: 'job_market'
-profile: 'job_market'
+name: 'analytics'
+profile: 'analytics'
 
 models:
-  job_market:
+  analytics:
     +persist_docs:
       relation: true
       columns: true
@@ -17,5 +17,5 @@ models:
       +schema: gold
 
 seeds:
-  job_market:
+  analytics:
     +schema: silver
