@@ -1,0 +1,11 @@
+# bronze = the raw landing zone, created ONCE by setup/01_create_bronze.sql —
+# dbt didn't build it, so it's declared as a source (the 1.5 lesson, cloud edition)
+sources:
+  - name: bronze
+    database: workspace
+    schema: bronze
+    tables:
+      - name: raw_job_postings
+        description: Raw scraped postings, one row per posting per scrape day. As landed.
+      - name: raw_job_skills
+        description: Pre-extracted skill keywords per job_id. As landed.

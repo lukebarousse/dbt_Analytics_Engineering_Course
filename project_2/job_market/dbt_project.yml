@@ -1,0 +1,21 @@
+name: 'job_market'
+profile: 'job_market'
+
+models:
+  job_market:
+    +persist_docs:
+      relation: true
+      columns: true
+    staging:
+      +materialized: view
+      +schema: silver
+    marts:
+      +materialized: table
+      +schema: gold
+    utilities:
+      +materialized: table
+      +schema: gold
+
+seeds:
+  job_market:
+    +schema: silver

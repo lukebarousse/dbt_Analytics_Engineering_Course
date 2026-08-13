@@ -1,0 +1,11 @@
+models:
+  - name: time_spine
+    description: Daily calendar spanning the dataset; required by the metrics layer.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day
+        data_tests:
+          - not_null
+          - unique
