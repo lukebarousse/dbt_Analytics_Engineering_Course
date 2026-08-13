@@ -308,3 +308,36 @@ Staging extracts `salary_currency` (leading currency code, NULL = assumed USD) �
 - **4.22** — "`build --target prod` = the command a scheduler runs every day" → "a scheduler runs this exact build under a target it names itself — see 4.23."
 - **3.32** — conditional on (g): "encodings fixed" phrasing → "text-consistency fixed" if no genuine encoding case exists.
 - ~~3.52 "across staging models"~~ — **no longer needs an edit**: the TRIM echo in stg_job_skills makes the line true as written.
+---
+
+## APPENDIX — VERIFICATION QUEUE RESULTS (run live on workspace bronze, 2026-08-13)
+
+| Item | Result | Status |
+|---|---|---|
+| (a) salary changers | **2,756 jobs** change salary TEXT across scrapes (6,421 incl. null↔value; 7,484 any-field). HERO: Fraser Health Senior DE `1318ef9f…` posted **CA$1.06M–1.22M** on 2025-09-01, corrected to **CA$104K–145K** on 2025-09-11. Runner-up: Ace1Media intern CA$16K–17.6K → CA$104K–130.9K. | ✅ snapshot payoff SOLID |
+| (b) skill_ids ⊆ seed | observed 960, seed 1,422, **0 outside seed** — Plan B (FULL OUTER JOIN) not needed | ✅ |
+| (c) orphans | **ZERO orphan skill-pairs, pre- AND post-filter.** The ~13% claim was datanerd-production lore; the course export's JOIN guaranteed integrity. **CONTRACT PREMISE FALSE** — see redesign note below | ❌ REDESIGN |
+| (d) incident histogram | Databricks reproduces exactly: 66 / 2,191 / 955 / 2,938 / 105 (2025-12→2026-04) | ✅ |
+| (e) accepted_values search_term | ALL 843,097 rows = exactly Data Engineer 460,643 · Data Analyst 226,791 · Data Scientist 155,663; zero NULL/other even in error rows | ✅ passes green as contracted |
+| (f) sim month extent | 2025-07-01 → 2026-06-30; final month 2026-06 = **58,933 rows** (the append-month rows-affected number) | ✅ |
+| (g) mojibake | **113 real rows** with `â€"`-class double-encoding (e.g. "DATA ANALYST â€“ ERP & REPORTING") — genuine 3.42 cleanup material, small enough to be safe | ✅ |
+| (h) identical-timestamp dupes | exactly **1 job_id** with two identical search_time rows — deterministic tiebreaker still required, barely | ✅ |
+| (i) MetricFlow grouped ratio | deferred to built DAG (by definition) | ⏳ build |
+| (j) persist_docs on views | **VIEW column comments DO persist** to information_schema.columns (dbt-databricks 1.10.9, verified live) | ✅ |
+| (k) full-DAG re-timing | deferred to build completion (by definition) | ⏳ build |
+| (l) search_term drift | **11,923 jobs** scraped under >1 search_term — latest-scrape-wins consequence is real and quotable | ✅ |
+| (m) posted_date floor | max "N months ago" = 1; min search_date 2025-07-01 → min posted_date ≈ 2025-06. No deep-past parsing risk | ✅ |
+| (n) quotables | dup profile behind 63,207: 2×=38,778 jobs · 3×=10,099 · 4–10×=10,961 · 11–50×=3,016 · **51+×=353** (max 365). Pre-filter relationships failure count = 0 (dead, see (c)) | ✅ |
+
+### REDESIGN NOTE — the orphan arc (PENDING LUKE'S DECISION)
+Item (c) kills the contracted red-test arc (3.71 relationships red → 3.72 assert_no_orphan_skills red
+→ bridge redemption → 4.22 warn→error halting). Verified replacement candidates, both REAL:
+- **accepted_values on job_schedule_type**: 17 distinct values incl. combos — the "obvious" 4-value
+  list fails on ~28.8k rows ('Full-time and Part-time' 25,242 … plus 'Part-time and Full-time' 7 —
+  same meaning, different order). Natural 3.71 red.
+- **assert_salaries_sane singular test**: red on real garbage (Fraser Health CA$1.06M–1.22M),
+  and the SAME rows are the snapshot lesson's hero (corrected 10 days later). Natural 3.72 red,
+  double-duty with 3.81.
+Relationships still taught at 3.71 — passing green, with production-parity narration. Bridge keeps
+its structural role (fct grain + search_date for MetricFlow); "redemption arc" framing retires.
+dim_skill's "runs ~13% hot" doc line retires. 4.22 halting mechanic flips whichever red test lands.
