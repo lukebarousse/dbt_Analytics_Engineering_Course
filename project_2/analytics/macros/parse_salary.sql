@@ -1,4 +1,4 @@
-{#- the flagship 3.52 macro: written twice verbatim at 3.32 (min, then max),
+{#- the flagship 3.62 macro: written twice verbatim at 3.42 (min, then max),
     extracted once here. expects the raw job_salary column in scope.
     handles: en-dash ranges ('100K–186K a year'), single values (both bounds),
     K/M suffixes, thousands commas + decimals, currency prefixes (ignored here;
