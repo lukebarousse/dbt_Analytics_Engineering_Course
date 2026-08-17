@@ -5,7 +5,7 @@
 with source as (
 
     select *
-    from {{ source('bronze', 'raw_job_skills') }}
+    from {{ source('jobs', 'raw_job_skills') }}
 
 ),
 

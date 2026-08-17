@@ -1,9 +1,9 @@
-# bronze = the raw landing zone, created ONCE by scripts/load_bronze.py (the ingestion notebook) —
+# raw.jobs = the landing zone (schema named for the SOURCE SYSTEM, dbt convention), created ONCE by scripts/load_bronze.py (the ingestion notebook) —
 # dbt didn't build it, so it's declared as a source (the 1.5 lesson, cloud edition)
 sources:
-  - name: bronze
+  - name: jobs
     database: raw
-    schema: bronze
+    schema: jobs
     tables:
       - name: raw_job_postings
         description: Raw scraped postings, one row per posting per scrape day. As landed.

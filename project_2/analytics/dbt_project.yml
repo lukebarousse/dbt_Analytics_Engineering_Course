@@ -8,17 +8,17 @@ models:
       columns: true
     staging:
       +materialized: view
-      +schema: silver
+      +schema: staging
     intermediate:
       +materialized: view
-      +schema: silver
+      +schema: intermediate
     marts:
       +materialized: table
-      +schema: gold
+      +schema: marts
     utilities:
       +materialized: table
-      +schema: gold
+      +schema: marts
 
 seeds:
   analytics:
-    +schema: silver
+    +schema: seeds

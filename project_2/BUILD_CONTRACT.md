@@ -46,6 +46,17 @@ job's catalog dropdown now simply selects prod). Lesson 3.2 also restructured
 same day: 3.21 env · 3.22 profile (+ CREATE CATALOG dev) · 3.23 connect via
 dbt init --profile databricks · 3.24 local test (dbt show round trip); CLI topic
 deleted. dbt init taught with --profile flag (collision beat retired).
+
+AMENDMENT (2026-08-17, later — Luke: ONE NAMING LANGUAGE, dbt conventions win):
+Warehouse schemas now MIRROR the repo folders — dev/prod catalogs contain
+staging, intermediate, marts (+utilities→marts), seeds, snapshots. Medallion
+(bronze/silver/gold) is DEMOTED to vocabulary, taught once at 3.31 as the
+Databricks dialect for the same layers — objects never use it. Landing zone:
+raw.jobs (schema named for the SOURCE SYSTEM per dbt convention; source name
+'jobs'; volume /Volumes/raw/jobs/files; tables keep scraper names). Verified
+live: notebook end-to-end as job (counts exact), dev catalog reset + full
+rebuild green (PASS=46 WARN=2), dev schemas = staging/intermediate/marts/
+seeds/snapshots. SUPERSEDES all silver/gold schema references in this file.
 -->
 
 # P2 Build Contract — SILVER + GOLD Layers (REVISED)

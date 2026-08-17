@@ -2,7 +2,7 @@
 
 {{
     config(
-        schema='silver',
+        schema='snapshots',
         unique_key='job_id',
         strategy='check',
         check_cols=[

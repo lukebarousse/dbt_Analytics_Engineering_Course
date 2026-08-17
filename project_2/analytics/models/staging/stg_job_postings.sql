@@ -6,7 +6,7 @@
 with source as (
 
     select *
-    from {{ source('bronze', 'raw_job_postings') }}
+    from {{ source('jobs', 'raw_job_postings') }}
     -- null ids are unusable: this one filter drops all 151,147 scraper-error rows
     -- plus 6,255 id-less incident-window postings (157,402 total)
     where job_id is not null
