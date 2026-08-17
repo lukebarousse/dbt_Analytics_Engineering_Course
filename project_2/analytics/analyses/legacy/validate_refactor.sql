@@ -16,7 +16,7 @@ select
     'old' as pipeline,
     count(*) as row_count,
     sum(mention_count) as total_mentions
-from workspace.default.one_big_query
+from dev.default.one_big_query
 
 union all
 
