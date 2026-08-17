@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Load bronze — the EL step (run once)
+# MAGIC # Load raw — the EL step (run once)
 # MAGIC Downloads the course dataset from GitHub **directly into a Unity Catalog Volume**
 # MAGIC (no local files, no drag-and-drop), then lands it as bronze tables.
 # MAGIC

@@ -1,4 +1,4 @@
-# raw.jobs = the landing zone (schema named for the SOURCE SYSTEM, dbt convention), created ONCE by scripts/load_bronze.py (the ingestion notebook) —
+# raw.jobs = the landing zone (schema named for the SOURCE SYSTEM, dbt convention), created ONCE by scripts/load_raw.py (the ingestion notebook) —
 # dbt didn't build it, so it's declared as a source (the 1.5 lesson, cloud edition)
 sources:
   - name: jobs
