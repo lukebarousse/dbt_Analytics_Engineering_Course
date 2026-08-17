@@ -1,13 +1,10 @@
-{#- only the dev target gets sandboxed (dev_silver, dev_gold); every other
-    target — prod, and the name a Databricks job invents for its generated
-    profile — owns the clean medallion names. bronze is OUTSIDE dbt
-    (raw landing, shared by all targets). -#}
+{#- dbt's default glues the profile schema onto layer names (dev_silver
+    becomes default_silver etc). this override says: use MY names exactly.
+    environments are separated by CATALOG (dev/prod in the profile), the
+    Databricks-recommended pattern — bronze stays in workspace, shared. -#}
 {% macro generate_schema_name(custom_schema_name, node) -%}
-    {%- set default_schema = target.schema -%}
     {%- if custom_schema_name is none -%}
-        {{ default_schema }}
-    {%- elif target.name == 'dev' -%}
-        dev_{{ custom_schema_name | trim }}
+        {{ target.schema }}
     {%- else -%}
         {{ custom_schema_name | trim }}
     {%- endif -%}
