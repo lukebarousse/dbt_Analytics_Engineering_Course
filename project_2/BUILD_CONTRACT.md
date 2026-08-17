@@ -31,6 +31,21 @@ hardcoded in v1 BUT the capstone generalization must give students a pick-your-r
 mechanism (var('job_title') or role-parameterized mart — decide at build; ties to P1's
 personalization) · 6 ACCEPT — reworded "green in dev, prod, and on a schedule" ·
 7 verify-then-script (MetricFlow demo shape locked by verification item (i)).
+
+AMENDMENT (2026-08-17 — Luke's catalog-per-environment redesign, VERIFIED live):
+Environments moved from schema prefixes to CATALOGS. dev/prod catalogs created on
+Free Edition (CREATE CATALOG works); profile targets differ by ONE line (catalog:
+dev vs prod; schema: default on both — nothing lands there, every model declares
+its layer). generate_schema_name shrank to the 5-line no-env-logic docs version.
+Layer schemas CLEAN in both envs (dev.silver/dev.gold, prod.silver/prod.gold);
+bronze stays workspace.bronze (shared, notebook-owned, sources.yml unchanged).
+Full DAG re-verified green into the dev catalog (PASS=46 WARN=2, 2026-08-17);
+prod target connection verified. SUPERSEDES: the contract §0 dev_-prefix pin, the
+4.21 bare-schema reveal, the 4.23 generated-profile prefix concern (moot — the
+job's catalog dropdown now simply selects prod). Lesson 3.2 also restructured
+same day: 3.21 env · 3.22 profile (+ CREATE CATALOG dev) · 3.23 connect via
+dbt init --profile databricks · 3.24 local test (dbt show round trip); CLI topic
+deleted. dbt init taught with --profile flag (collision beat retired).
 -->
 
 # P2 Build Contract — SILVER + GOLD Layers (REVISED)
