@@ -5,14 +5,11 @@
 # MAGIC (no local files, no drag-and-drop), then lands it as bronze tables.
 # MAGIC
 # MAGIC Import this notebook (Workspace → Import → URL) and **Run all**.
-# MAGIC
-# MAGIC 🎁 Supporters: point `TAG` at the monthly-updating dataset release and re-run
-# MAGIC after the 5th — or schedule it as Task 1 of your pipeline job.
 
 # COMMAND ----------
 
 REPO = "lukebarousse/dbt_Analytics_Engineering_Course"
-TAG = "dataset-v1"                       # supporters: the updating release tag goes here
+TAG = "dataset-v1"                       # the course dataset release (pinned)
 VOLUME = "/Volumes/workspace/bronze/raw"
 
 MONTHS = [
