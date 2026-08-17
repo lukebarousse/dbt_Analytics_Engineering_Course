@@ -10,7 +10,7 @@
 
 REPO = "lukebarousse/dbt_Analytics_Engineering_Course"
 TAG = "dataset-v1"                       # the course dataset release (pinned)
-VOLUME = "/Volumes/workspace/bronze/raw"
+VOLUME = "/Volumes/raw/bronze/files"
 
 MONTHS = [
     "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12",
@@ -20,9 +20,11 @@ FILES = [f"raw_job_postings_{m}.parquet" for m in MONTHS] + ["raw_job_skills.par
 
 # COMMAND ----------
 
-# the landing zone: a schema for bronze + a Volume for the raw files
-spark.sql("CREATE SCHEMA IF NOT EXISTS workspace.bronze")
-spark.sql("CREATE VOLUME IF NOT EXISTS workspace.bronze.raw")
+# the landing zone: the raw catalog + a schema for bronze + a Volume for the files
+# (raw has ONE owner — this notebook; dev and prod both read it)
+spark.sql("CREATE CATALOG IF NOT EXISTS raw")
+spark.sql("CREATE SCHEMA IF NOT EXISTS raw.bronze")
+spark.sql("CREATE VOLUME IF NOT EXISTS raw.bronze.files")
 
 # COMMAND ----------
 
@@ -43,11 +45,11 @@ print("Done.")
 
 # land the bronze tables — raw, untouched, exactly as the scraper delivered them
 spark.sql(f"""
-    CREATE OR REPLACE TABLE workspace.bronze.raw_job_postings AS
+    CREATE OR REPLACE TABLE raw.bronze.raw_job_postings AS
     SELECT * FROM read_files('{VOLUME}/raw_job_postings_*.parquet', format => 'parquet')
 """)
 spark.sql(f"""
-    CREATE OR REPLACE TABLE workspace.bronze.raw_job_skills AS
+    CREATE OR REPLACE TABLE raw.bronze.raw_job_skills AS
     SELECT * FROM read_files('{VOLUME}/raw_job_skills.parquet', format => 'parquet')
 """)
 
@@ -55,7 +57,7 @@ spark.sql(f"""
 
 # sanity check — expect 843,097 postings and 3,304,574 skill rows
 display(spark.sql("""
-    SELECT 'raw_job_postings' AS table, COUNT(*) AS rows FROM workspace.bronze.raw_job_postings
+    SELECT 'raw_job_postings' AS table, COUNT(*) AS rows FROM raw.bronze.raw_job_postings
     UNION ALL
-    SELECT 'raw_job_skills', COUNT(*) FROM workspace.bronze.raw_job_skills
+    SELECT 'raw_job_skills', COUNT(*) FROM raw.bronze.raw_job_skills
 """))

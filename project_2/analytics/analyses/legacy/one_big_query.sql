@@ -39,7 +39,7 @@ FROM
                     search_term,
                     search_date,
                     error
-                FROM workspace.bronze.raw_job_postings
+                FROM raw.bronze.raw_job_postings
                 WHERE error = false AND search_term = 'Data Engineer'
             ) AS postings
         INNER JOIN
@@ -48,7 +48,7 @@ FROM
                     job_id,
                     skill_id,
                     skill_keyword
-                FROM workspace.bronze.raw_job_skills
+                FROM raw.bronze.raw_job_skills
             ) AS skills
             ON postings.job_id = skills.job_id
         GROUP BY
@@ -72,7 +72,7 @@ CROSS JOIN
                     search_term,
                     search_date,
                     error
-                FROM workspace.bronze.raw_job_postings
+                FROM raw.bronze.raw_job_postings
                 WHERE error = false AND search_term = 'Data Engineer'
             ) AS de_postings
     ) AS totals

@@ -2,7 +2,7 @@
 # dbt didn't build it, so it's declared as a source (the 1.5 lesson, cloud edition)
 sources:
   - name: bronze
-    database: workspace
+    database: raw
     schema: bronze
     tables:
       - name: raw_job_postings
