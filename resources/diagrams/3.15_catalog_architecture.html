@@ -1,0 +1,97 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3.15 — Environments as catalogs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --ink:#EDEDED;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
+  .mono{font-family:var(--mono)}
+  .btitle{position:absolute;top:28px;left:0;width:1920px;font-family:var(--hand);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
+  .hand{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;background:transparent}
+  .hand.dotted{border-style:dashed;border-radius:25px;border-width:2px;border-color:#8a8a8a}
+  .chip{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
+    border-radius:15px 225px 15px 255px/255px 15px 225px 15px;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    font-family:var(--mono);font-size:27px;font-weight:600;color:var(--ink)}
+  .chip.ghost{border-style:dashed;border-width:2px;color:var(--muted);border-color:#7a7a7a}
+  .lbl{position:absolute;font-family:var(--hand);font-size:30px;color:var(--ink);text-align:center}
+  .small{font-size:24px;color:var(--muted)}
+  .cat{position:absolute;font-family:var(--mono);font-size:42px;font-weight:700}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="btitle">environments as catalogs</div>
+
+  <!-- ============ dev (top) ============ -->
+  <div class="hand" style="left:140px;top:170px;width:1180px;height:320px;transform:rotate(-.4deg)"></div>
+  <div class="cat" style="left:190px;top:192px;color:var(--blue)">dev</div>
+  <div class="lbl" style="left:300px;top:200px;width:420px;text-align:left">— chapter 3: your sandbox</div>
+
+  <div class="chip" style="left:200px;top:290px;width:300px;height:88px;transform:rotate(.3deg)">marts</div>
+  <div class="chip" style="left:560px;top:290px;width:300px;height:88px;transform:rotate(-.3deg)">intermediate</div>
+  <div class="chip" style="left:920px;top:290px;width:300px;height:88px;transform:rotate(.2deg)">staging</div>
+  <div class="lbl small" style="left:200px;top:402px;width:1020px">+ seeds · snapshots — the catalog tree is your repo tree</div>
+
+  <!-- ============ prod (bottom) ============ -->
+  <div class="hand" style="left:140px;top:560px;width:1180px;height:320px;transform:rotate(.35deg)"></div>
+  <div class="cat" style="left:190px;top:582px;color:var(--ok)">prod</div>
+  <div class="lbl" style="left:330px;top:590px;width:640px;text-align:left">— chapter 4: the real thing <span class="small">(empty until 4.21)</span></div>
+
+  <div class="chip ghost" style="left:200px;top:680px;width:300px;height:88px;transform:rotate(-.2deg)">marts</div>
+  <div class="chip ghost" style="left:560px;top:680px;width:300px;height:88px;transform:rotate(.25deg)">intermediate</div>
+  <div class="chip ghost" style="left:920px;top:680px;width:300px;height:88px;transform:rotate(-.3deg)">staging</div>
+  <div class="lbl small" style="left:200px;top:792px;width:1020px">same names, nothing in them yet — promotion is one line</div>
+
+  <!-- ============ raw (far right, shared) ============ -->
+  <div class="hand" style="left:1480px;top:170px;width:380px;height:710px;transform:rotate(.3deg)"></div>
+  <div class="cat" style="left:1520px;top:196px;color:var(--duck)">raw</div>
+  <div class="lbl" style="left:1490px;top:262px;width:360px;text-align:center">the landing zone</div>
+  <div class="lbl" style="left:1490px;top:330px;width:360px;font-size:64px">🗄</div>
+  <div class="lbl" style="left:1490px;top:430px;width:360px"><span class="mono" style="font-size:24px;color:var(--duck)">jobs</span><br>
+    <span class="mono" style="font-size:20px;color:var(--text)">raw_job_postings<br>raw_job_skills</span><br>
+    <span class="mono" style="font-size:20px;color:var(--muted)">files/ · 13 parquet</span></div>
+  <div class="lbl small" style="left:1490px;top:640px;width:360px">owned by the ingest<br>notebook (3.14)</div>
+  <div class="lbl small" style="left:1490px;top:760px;width:360px">both environments<br>read the same raw</div>
+
+  <!-- ============ workspace ghost + warehouse note ============ -->
+  <div class="chip ghost" style="left:140px;top:950px;width:640px;height:70px;font-size:22px">workspace — Databricks' default · stays empty</div>
+  <div class="lbl small" style="left:700px;top:966px;width:1160px;text-align:right">⚡ one Serverless Warehouse computes all of it — the environment is the catalog, never the compute</div>
+
+  <!-- ============ arrows (flow: raw → staging → intermediate → marts) ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+    </defs>
+    <!-- raw → dev.staging -->
+    <path d="M 1480 334 C 1400 334, 1320 334, 1232 334" fill="none" stroke="#EDEDED" stroke-width="3.5" marker-end="url(#ah)"/>
+    <!-- raw → prod.staging -->
+    <path d="M 1480 724 C 1400 724, 1320 724, 1232 724" fill="none" stroke="#EDEDED" stroke-width="3.5" marker-end="url(#ah)"/>
+    <!-- dev: staging → intermediate → marts -->
+    <path d="M 916 334 C 898 334, 884 334, 868 334" fill="none" stroke="#EDEDED" stroke-width="3.5" marker-end="url(#ah)"/>
+    <path d="M 556 334 C 538 334, 524 334, 508 334" fill="none" stroke="#EDEDED" stroke-width="3.5" marker-end="url(#ah)"/>
+    <!-- prod: staging → intermediate → marts (ghosted) -->
+    <path d="M 916 724 C 898 724, 884 724, 868 724" fill="none" stroke="#8a8a8a" stroke-width="3" stroke-dasharray="8 7" marker-end="url(#ah)"/>
+    <path d="M 556 724 C 538 724, 524 724, 508 724" fill="none" stroke="#8a8a8a" stroke-width="3" stroke-dasharray="8 7" marker-end="url(#ah)"/>
+  </svg>
+
+</div>
+</body>
+</html>
