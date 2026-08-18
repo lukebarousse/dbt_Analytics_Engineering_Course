@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>3.31 — Who reads it decides: views vs tables</title>
+<title>3.31 — View or table?</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
@@ -17,60 +17,67 @@
   html,body{margin:0;padding:0;background:var(--bg)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
   .mono{font-family:var(--mono)}
-  .title{position:absolute;top:40px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
-  .hand{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
-    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;background:transparent}
+  .title{position:absolute;top:36px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
+  .zone{position:absolute;box-sizing:border-box;border:2px dashed #8a8a8a;border-radius:25px}
+  .ztitle{position:absolute;font-family:var(--mono);font-size:46px;font-weight:700;text-align:center}
   .chip{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
     border-radius:15px 225px 15px 255px/255px 15px 225px 15px;
     display:flex;align-items:center;justify-content:center;
     font-family:var(--mono);font-size:27px;font-weight:600;color:var(--ink)}
   .lbl{position:absolute;font-family:var(--hand);font-size:30px;color:var(--ink);text-align:center}
   .small{font-size:24px;color:var(--muted)}
-  .big{font-size:38px;font-weight:700}
+  .sect{position:absolute;font-family:var(--hand);font-size:26px;color:var(--faint);text-align:center;letter-spacing:.03em}
+  /* view icon: a saved query card */
+  .qcard{position:absolute;width:190px;height:120px;border:2px solid var(--blue);border-radius:8px;background:#1d2430;
+    font-family:var(--mono);font-size:19px;color:var(--blue);padding:12px 14px;box-sizing:border-box;line-height:1.6}
+  /* table icon */
+  .tbl{position:absolute;width:110px;height:76px;border:2px solid var(--duck);border-radius:6px;background:#2a2415}
+  .tbl:before{content:"";position:absolute;left:0;right:0;top:0;height:17px;background:var(--duck);opacity:.8;border-radius:4px 4px 0 0}
+  .tbl:after{content:"";position:absolute;left:10px;right:10px;top:26px;height:40px;
+    background:repeating-linear-gradient(#4a4028 0 7px, transparent 7px 15px)}
+  .rule{position:absolute;font-family:var(--hand);font-size:26px;line-height:1.5;text-align:left}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div class="title">who reads it decides</div>
+  <div class="title">view or table?</div>
 
-  <!-- ============ ONE reader zone (left): views ============ -->
-  <div class="hand" style="left:100px;top:180px;width:1010px;height:600px;transform:rotate(-.2deg);border-style:dashed;border-width:2px;border-color:#8a8a8a;border-radius:25px"></div>
-  <div class="lbl big" style="left:100px;top:206px;width:1010px">one reader: ⚙️ dbt, at build time</div>
+  <!-- ==================== LEFT ZONE: VIEW ==================== -->
+  <div class="zone" style="left:60px;top:140px;width:880px;height:800px"></div>
+  <div class="ztitle" style="left:60px;top:170px;width:880px;color:var(--blue)">VIEW</div>
 
-  <div class="chip" style="left:170px;top:330px;width:300px;height:96px;transform:rotate(.3deg)">staging</div>
-  <div class="chip" style="left:560px;top:330px;width:300px;height:96px;transform:rotate(-.3deg)">intermediate</div>
+  <div class="sect" style="left:60px;top:250px;width:880px">— what it is —</div>
+  <div class="qcard" style="left:250px;top:300px">SELECT<br>&nbsp;&nbsp;...<br>FROM ...</div>
+  <div class="lbl" style="left:480px;top:320px;width:400px;text-align:left">a saved <b>question</b><br><span class="small">re-asked every time you read it</span></div>
 
-  <div class="lbl" style="left:170px;top:470px;width:690px">nobody queries these but the pipeline —<br>storing them buys <b>nothing</b></div>
-  <div class="chip" style="left:280px;top:600px;width:470px;height:96px;transform:rotate(.2deg);color:var(--blue);border-color:var(--blue)">VIEW</div>
-  <div class="lbl small" style="left:170px;top:712px;width:690px">💾 free to store · always fresh · recomputes when read</div>
+  <div class="sect" style="left:60px;top:470px;width:880px">— choose it when —</div>
+  <div class="lbl" style="left:160px;top:520px;width:680px">🔄 freshness beats speed<br>⚙️ readers are few — or automated<br>💾 storing a copy buys you nothing</div>
 
-  <!-- ============ MANY readers zone (right): tables ============ -->
-  <div class="hand" style="left:1190px;top:180px;width:630px;height:600px;transform:rotate(.25deg);border-style:dashed;border-width:2px;border-color:#8a8a8a;border-radius:25px"></div>
-  <div class="lbl big" style="left:1190px;top:206px;width:630px">many readers, all day</div>
-  <div class="lbl" style="left:1190px;top:280px;width:630px;font-size:52px">📊 👤 🤖 👤 📈</div>
-  <div class="lbl small" style="left:1190px;top:356px;width:630px">dashboards · analysts · AI — again and again</div>
+  <div class="sect" style="left:60px;top:690px;width:880px">— ours —</div>
+  <div class="chip" style="left:130px;top:740px;width:320px;height:92px;transform:rotate(.3deg)">staging</div>
+  <div class="chip" style="left:490px;top:740px;width:320px;height:92px;transform:rotate(-.3deg)">intermediate</div>
+  <div class="lbl small" style="left:60px;top:856px;width:880px">only dbt reads these — once per build ⚙️</div>
 
-  <div class="chip" style="left:1355px;top:430px;width:300px;height:96px;transform:rotate(-.25deg)">marts</div>
+  <!-- ==================== RIGHT ZONE: TABLE ==================== -->
+  <div class="zone" style="left:980px;top:140px;width:880px;height:800px"></div>
+  <div class="ztitle" style="left:980px;top:170px;width:880px;color:var(--duck)">TABLE</div>
 
-  <div class="chip" style="left:1355px;top:600px;width:300px;height:96px;transform:rotate(.2deg);color:var(--duck);border-color:var(--duck)">TABLE</div>
-  <div class="lbl small" style="left:1190px;top:712px;width:630px">🗄 built once · every read is fast</div>
+  <div class="sect" style="left:980px;top:250px;width:880px">— what it is —</div>
+  <div class="tbl" style="left:1230px;top:308px"></div>
+  <div class="tbl" style="left:1310px;top:330px"></div>
+  <div class="lbl" style="left:1450px;top:320px;width:380px;text-align:left">stored <b>rows</b><br><span class="small">computed once, read instantly</span></div>
 
-  <!-- ============ the rule ============ -->
-  <div class="hand" style="left:420px;top:850px;width:1080px;height:130px;transform:rotate(-.2deg)"></div>
-  <div class="lbl big" style="left:420px;top:884px;width:1080px">one reader → <span class="mono" style="color:var(--blue)">view</span> &nbsp;·&nbsp; many readers → <span class="mono" style="color:var(--duck)">table</span></div>
+  <div class="sect" style="left:980px;top:470px;width:880px">— choose it when —</div>
+  <div class="lbl" style="left:1080px;top:520px;width:680px">📊 read again and again, all day<br>⚡ speed per read matters<br>👥 people are waiting on it</div>
 
-  <!-- flow arrows: staging → intermediate → marts -->
-  <svg class="art" viewBox="0 0 1920 1080">
-    <defs>
-      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#F2C94C"/>
-      </marker>
-    </defs>
-    <path d="M 474 378 C 500 378, 520 378, 548 378" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
-    <path d="M 864 378 C 1050 378, 1150 420, 1343 470" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
-  </svg>
+  <div class="sect" style="left:980px;top:690px;width:880px">— ours —</div>
+  <div class="chip" style="left:1260px;top:740px;width:320px;height:92px;transform:rotate(.25deg)">marts</div>
+  <div class="lbl small" style="left:980px;top:856px;width:880px">dashboards · analysts · AI 📊👤🤖 — again and again</div>
+
+  <!-- ==================== the rule ==================== -->
+  <div class="lbl" style="left:0px;top:980px;width:1920px;font-size:34px">one reader → <span class="mono" style="color:var(--blue)">view</span> &nbsp;·&nbsp; many readers → <span class="mono" style="color:var(--duck)">table</span></div>
 
 </div>
 </body>

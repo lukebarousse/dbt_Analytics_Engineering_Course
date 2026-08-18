@@ -131,3 +131,8 @@ the mono-title and no-subtitle rules — for this style only:
 - **Minimal text:** icons carry the meaning; at most one mono label per glyph
   (≥18px). Star schemas are drawn (center table + dims + dashed joins), not
   described.
+
+- **Decision diagrams (Luke, 2026-08-18):** when a diagram chooses between
+  two options, the OPTIONS are the zone titles (mono, their semantic colors).
+  Flow inside each zone, top to bottom: what it is (icon) → choose it when →
+  where OURS lands. The unifying rule reads once at the bottom.
