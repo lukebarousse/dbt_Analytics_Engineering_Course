@@ -1,0 +1,120 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3.3 — Anatomy of the P2 project</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+               radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
+  .title{position:absolute;left:0;top:36px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .tree{position:absolute;left:60px;top:140px;width:660px;height:900px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .tl{position:absolute;font-family:var(--mono);font-size:23px;white-space:pre;color:var(--text)}
+  .num{display:inline-flex;width:34px;height:34px;border-radius:50%;border:2.5px solid var(--blue);
+    color:var(--blue);font-weight:800;font-size:19px;align-items:center;justify-content:center;
+    font-family:var(--sans);vertical-align:-6px}
+  .card{position:absolute;box-sizing:border-box;width:552px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;padding:16px 20px}
+  .card .fn{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--text)}
+  .card .why{font-size:21px;color:var(--muted);margin-top:6px}
+  .card pre{margin:10px 0 0;font-family:var(--mono);font-size:19px;line-height:29px;color:var(--faint);white-space:pre}
+  .chip{position:absolute;top:16px;right:18px;font-family:var(--mono);font-size:19px;font-weight:700;
+    border-radius:8px;padding:5px 12px}
+  .chip.ok{color:var(--ok);border:1.5px solid rgba(87,171,90,.5)}
+  .chip.no{color:var(--err);border:1.5px solid rgba(229,83,75,.5)}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">anatomy of the P2 project</div>
+
+  <!-- ============ LEFT: the tree ============ -->
+  <div class="tree"></div>
+  <div class="tl" style="left:100px;top:180px;font-size:25px;font-weight:700">📁 dbt_project_2/</div>
+  <div class="tl" style="left:100px;top:232px">└─ 📁 analytics/</div>
+  <div class="tl" style="left:100px;top:280px">     ├─ <span style="color:var(--dbt);font-weight:700">dbt_project.yml</span>  <span class="num">1</span></div>
+  <div class="tl" style="left:100px;top:336px">     ├─ 📁 models/</div>
+  <div class="tl" style="left:100px;top:384px">     │    ├─ <span style="color:var(--dbt);font-weight:700">sources.yml</span>  <span class="num">2</span></div>
+  <div class="tl" style="left:100px;top:440px">     │    ├─ 📁 staging/  <span class="num">3</span></div>
+  <div class="tl" style="left:100px;top:488px">     │    │    ├─ stg_job_postings.sql</div>
+  <div class="tl" style="left:100px;top:532px">     │    │    ├─ stg_job_skills.sql</div>
+  <div class="tl" style="left:100px;top:576px">     │    │    └─ staging.yml</div>
+  <div class="tl" style="left:100px;top:628px">     │    ├─ 📁 intermediate/  <span style="color:var(--faint)">(next lesson)</span></div>
+  <div class="tl" style="left:100px;top:676px">     │    └─ 📁 marts/  <span style="color:var(--faint)">(next lesson)</span></div>
+  <div class="tl" style="left:100px;top:728px">     ├─ 📁 macros/</div>
+  <div class="tl" style="left:100px;top:776px">     │    └─ <span style="color:var(--dbt);font-weight:700">generate_schema_name.sql</span>  <span class="num">4</span></div>
+  <div class="tl" style="left:100px;top:828px">     └─ 📁 seeds/ snapshots/ analyses/ tests/  <span style="color:var(--faint)">(.gitkeep)</span></div>
+  <div class="tl" style="left:100px;top:920px;color:var(--muted)">outside the repo, on YOUR machine:</div>
+  <div class="tl" style="left:100px;top:968px">🏠 ~/.dbt/<span style="color:var(--duck);font-weight:700">profiles.yml</span>  <span class="num">5</span></div>
+
+  <!-- ============ RIGHT: purpose cards ============ -->
+  <div class="card" style="left:760px;top:140px;height:230px">
+    <span class="num">1</span>&ensp;<span class="fn" style="color:var(--dbt)">dbt_project.yml</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">the LAYER CONFIG: each folder → materialization + schema</div>
+    <pre>staging:       view  → dev.staging
+intermediate:  view  → dev.intermediate
+marts:         table → dev.marts
++persist_docs: docs → the warehouse</pre>
+  </div>
+
+  <div class="card" style="left:1340px;top:140px;height:230px">
+    <span class="num">2</span>&ensp;<span class="fn" style="color:var(--dbt)">models/sources.yml</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">the READ side: where raw data lives + what it is</div>
+    <pre>sources:
+  - name: jobs
+    database: raw   # dbt reads,
+    schema: jobs    # never writes</pre>
+  </div>
+
+  <div class="card" style="left:760px;top:410px;height:230px">
+    <span class="num">3</span>&ensp;<span class="fn" style="color:var(--dbt)">models/&lt;layer&gt;/</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">one folder per layer — the catalog tree mirrors this tree</div>
+    <pre>models/staging/       dev.staging
+models/intermediate/  dev.intermediate
+models/marts/         dev.marts</pre>
+  </div>
+
+  <div class="card" style="left:1340px;top:410px;height:230px">
+    <span class="num">4</span>&ensp;<span class="fn" style="color:var(--dbt)">generate_schema_name</span>
+    <span class="chip ok">✓ committed</span>
+    <div class="why">5 lines: "use MY names" — stops dbt gluing default_ onto layers</div>
+    <pre>custom schema declared?
+  → use EXACTLY that name
+none? → profile default</pre>
+  </div>
+
+  <div class="card" style="left:760px;top:680px;height:230px">
+    <span class="num">5</span>&ensp;<span class="fn" style="color:var(--duck)">~/.dbt/profiles.yml</span>
+    <span class="chip no">✗ never committed</span>
+    <div class="why">the WRITE side: your connection + your environment</div>
+    <pre>catalog: dev     # WHERE builds land
+schema: default  # nothing lands here
+host · http_path · token (PAT)</pre>
+  </div>
+
+  <div class="card" style="left:1340px;top:680px;height:230px">
+    <span class="num" style="border-color:var(--duck);color:var(--duck)">⇄</span>&ensp;<span class="fn" style="color:var(--duck)">the two sides meet</span>
+    <div class="why">READ from raw.jobs (sources.yml) · WRITE into dev (profile) · one warehouse computes both</div>
+    <pre>raw.jobs ──reads──▶ models ──writes──▶ dev.*</pre>
+  </div>
+
+</div>
+</body>
+</html>
