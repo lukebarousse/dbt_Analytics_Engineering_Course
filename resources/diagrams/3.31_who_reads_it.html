@@ -1,0 +1,77 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3.31 — Who reads it decides: views vs tables</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ink:#EDEDED;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;top:40px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
+  .hand{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
+    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;background:transparent}
+  .chip{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
+    border-radius:15px 225px 15px 255px/255px 15px 225px 15px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:27px;font-weight:600;color:var(--ink)}
+  .lbl{position:absolute;font-family:var(--hand);font-size:30px;color:var(--ink);text-align:center}
+  .small{font-size:24px;color:var(--muted)}
+  .big{font-size:38px;font-weight:700}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">who reads it decides</div>
+
+  <!-- ============ ONE reader zone (left): views ============ -->
+  <div class="hand" style="left:100px;top:180px;width:1010px;height:600px;transform:rotate(-.2deg);border-style:dashed;border-width:2px;border-color:#8a8a8a;border-radius:25px"></div>
+  <div class="lbl big" style="left:100px;top:206px;width:1010px">one reader: ⚙️ dbt, at build time</div>
+
+  <div class="chip" style="left:170px;top:330px;width:300px;height:96px;transform:rotate(.3deg)">staging</div>
+  <div class="chip" style="left:560px;top:330px;width:300px;height:96px;transform:rotate(-.3deg)">intermediate</div>
+
+  <div class="lbl" style="left:170px;top:470px;width:690px">nobody queries these but the pipeline —<br>storing them buys <b>nothing</b></div>
+  <div class="chip" style="left:280px;top:600px;width:470px;height:96px;transform:rotate(.2deg);color:var(--blue);border-color:var(--blue)">VIEW</div>
+  <div class="lbl small" style="left:170px;top:712px;width:690px">💾 free to store · always fresh · recomputes when read</div>
+
+  <!-- ============ MANY readers zone (right): tables ============ -->
+  <div class="hand" style="left:1190px;top:180px;width:630px;height:600px;transform:rotate(.25deg);border-style:dashed;border-width:2px;border-color:#8a8a8a;border-radius:25px"></div>
+  <div class="lbl big" style="left:1190px;top:206px;width:630px">many readers, all day</div>
+  <div class="lbl" style="left:1190px;top:280px;width:630px;font-size:52px">📊 👤 🤖 👤 📈</div>
+  <div class="lbl small" style="left:1190px;top:356px;width:630px">dashboards · analysts · AI — again and again</div>
+
+  <div class="chip" style="left:1355px;top:430px;width:300px;height:96px;transform:rotate(-.25deg)">marts</div>
+
+  <div class="chip" style="left:1355px;top:600px;width:300px;height:96px;transform:rotate(.2deg);color:var(--duck);border-color:var(--duck)">TABLE</div>
+  <div class="lbl small" style="left:1190px;top:712px;width:630px">🗄 built once · every read is fast</div>
+
+  <!-- ============ the rule ============ -->
+  <div class="hand" style="left:420px;top:850px;width:1080px;height:130px;transform:rotate(-.2deg)"></div>
+  <div class="lbl big" style="left:420px;top:884px;width:1080px">one reader → <span class="mono" style="color:var(--blue)">view</span> &nbsp;·&nbsp; many readers → <span class="mono" style="color:var(--duck)">table</span></div>
+
+  <!-- flow arrows: staging → intermediate → marts -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#F2C94C"/>
+      </marker>
+    </defs>
+    <path d="M 474 378 C 500 378, 520 378, 548 378" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <path d="M 864 378 C 1050 378, 1150 420, 1343 470" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+  </svg>
+
+</div>
+</body>
+</html>
