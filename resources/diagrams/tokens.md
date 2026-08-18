@@ -118,3 +118,16 @@ the mono-title and no-subtitle rules — for this style only:
   so the 18px floor doesn't apply).
 - **One muted in-panel attribution line per panel** allowed — inside the
   zone; page-level footers remain banned.
+
+### Poster iconography (Luke, 2026-08-18 — v4 of the medallion poster)
+
+- **Distinct glyphs per section — never repeat one glyph everywhere.** Each
+  card's icons tell ITS story: files → tables → connected star on the data
+  side; folders + .sql/.yml file glyphs on the code side.
+- **Code-side vs data-side framing:** comparison posters pair "where it
+  starts" (code: folder/file glyphs) with "what materializes" (data:
+  file/table/star glyphs). CAUSE panel LEFT, EFFECT panel RIGHT — arrows read
+  "becomes"; a read-only relationship (sources) ghosts its arrow.
+- **Minimal text:** icons carry the meaning; at most one mono label per glyph
+  (≥18px). Star schemas are drawn (center table + dims + dashed joins), not
+  described.

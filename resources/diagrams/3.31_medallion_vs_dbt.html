@@ -11,7 +11,6 @@
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
     --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
     --ink:#EDEDED;
-    /* medallion metal trio — tier identity (semantic) */
     --bronzeT:#D89A5B; --bronzeB:#4a2f15;
     --silverT:#C9CED6; --silverB:#3a3d42;
     --goldT:#E3B341;  --goldB:#4a3a10;
@@ -21,7 +20,7 @@
   html,body{margin:0;padding:0;background:var(--bg)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
   .mono{font-family:var(--mono)}
-  .ptitle{position:absolute;font-family:var(--hand);font-size:64px;font-weight:700;color:#F4F4F4;text-align:center;letter-spacing:.01em}
+  .ptitle{position:absolute;font-family:var(--hand);font-size:64px;font-weight:700;color:#F4F4F4;text-align:center}
   .psub{position:absolute;font-family:var(--hand);font-size:30px;color:var(--muted);text-align:center}
   .zone{position:absolute;box-sizing:border-box;border:2px dashed #4A7DBB;border-radius:22px}
   .tier{position:absolute;box-sizing:border-box;border-radius:16px}
@@ -31,96 +30,131 @@
   .tier .bar.obj{font-family:var(--mono);font-size:28px;font-weight:700}
   .tier .cap{position:absolute;left:0;right:0;top:84px;text-align:center;font-family:var(--hand);font-size:25px}
   .attr{position:absolute;font-family:var(--hand);font-size:26px;color:var(--faint);text-align:center}
-  .tbl{position:absolute;width:82px;height:56px;border:1.5px solid #8f8f8f;border-radius:5px;background:#1f1f1f;opacity:.85}
-  .tbl:before{content:"";position:absolute;left:0;right:0;top:0;height:13px;background:#8f8f8f;border-radius:3px 3px 0 0}
+  /* table glyph (textless) */
+  .tbl{position:absolute;width:82px;height:56px;border:1.5px solid #b9b9b9;border-radius:5px;background:#1f1f1f}
+  .tbl:before{content:"";position:absolute;left:0;right:0;top:0;height:13px;background:#b9b9b9;border-radius:3px 3px 0 0}
   .tbl:after{content:"";position:absolute;left:8px;right:8px;top:20px;height:26px;
     background:repeating-linear-gradient(#383838 0 5px, transparent 5px 11px)}
+  .tbl.sm{width:64px;height:46px}
+  .tbl.sm:before{height:10px}
+  .tbl.sm:after{left:6px;right:6px;top:15px;height:22px}
+  /* file glyph with folded corner + mono label */
+  .file{position:absolute;width:104px;height:74px;border:1.5px solid #b9b9b9;border-radius:5px;background:#1f1f1f;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;box-sizing:border-box;
+    font-family:var(--mono);font-size:18px;color:#cfcfcf}
+  .file:before{content:"";position:absolute;right:-1px;top:-1px;width:0;height:0;
+    border-style:solid;border-width:0 22px 22px 0;border-color:transparent #141414 transparent transparent}
+  .file:after{content:"";position:absolute;right:0px;top:0px;width:0;height:0;
+    border-style:solid;border-width:22px 0 0 22px;border-color:#b9b9b9 transparent transparent transparent;opacity:.5}
+  .file.data{border-color:rgba(242,201,76,.65);color:var(--duck)}
+  /* folder glyph */
+  .folder{position:absolute;width:130px;height:84px;border:1.5px solid #b9b9b9;border-radius:6px;background:#232323;
+    display:flex;align-items:center;justify-content:center;box-sizing:border-box;
+    font-family:var(--mono);font-size:19px;color:#dcdcdc}
+  .folder:before{content:"";position:absolute;left:-1px;top:-14px;width:52px;height:14px;
+    background:#b9b9b9;border-radius:5px 5px 0 0;opacity:.75}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <!-- ================= LEFT: medallion ================= -->
-  <div class="ptitle" style="left:40px;top:44px;width:880px">The Medallion Architecture</div>
-  <div class="psub" style="left:40px;top:122px;width:880px">the dialect you say — spoken, never written into object names</div>
+  <!-- ================= LEFT: dbt convention (the code — where it starts) ================= -->
+  <div class="ptitle" style="left:40px;top:44px;width:880px">dbt Project Convention</div>
+  <div class="psub" style="left:40px;top:122px;width:880px">where it starts — the code you write</div>
   <div class="zone" style="left:60px;top:180px;width:840px;height:850px"></div>
 
-  <div class="tier" style="left:110px;top:230px;width:740px;height:210px;background:rgba(216,154,91,.06);border:1.5px solid rgba(216,154,91,.45)">
-    <div class="bar" style="background:var(--bronzeB);color:var(--bronzeT)">Bronze</div>
-    <div class="cap" style="color:var(--bronzeT)">raw data, as-is from the source</div>
+  <!-- bronze tier: sources (read, not built) -->
+  <div class="tier" style="left:110px;top:230px;width:740px;height:210px;background:rgba(216,154,91,.05);border:1.5px dashed rgba(216,154,91,.45)">
+    <div class="bar obj" style="background:var(--bronzeB);color:var(--bronzeT)">sources</div>
+    <div class="cap" style="color:var(--bronzeT)">not built — just declared: dbt only reads it</div>
   </div>
-  <div class="tbl" style="left:190px;top:352px"></div>
-  <div class="tbl" style="left:330px;top:340px"></div>
-  <div class="tbl" style="left:470px;top:356px"></div>
-  <div class="tbl" style="left:640px;top:344px"></div>
-
-  <div class="tier" style="left:110px;top:490px;width:740px;height:230px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
-    <div class="bar" style="background:var(--silverB);color:var(--silverT)">Silver</div>
-    <div class="cap" style="color:var(--silverT)">cleaned and validated — one tier, TWO dbt layers</div>
-  </div>
-  <div class="tbl" style="left:250px;top:620px"></div>
-  <div class="tbl" style="left:430px;top:608px"></div>
-  <div class="tbl" style="left:600px;top:624px"></div>
-
-  <div class="tier" style="left:110px;top:770px;width:740px;height:220px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
-    <div class="bar" style="background:var(--goldB);color:var(--goldT)">Gold</div>
-    <div class="cap" style="color:var(--goldT)">business-ready star schemas</div>
-  </div>
-  <div class="tbl" style="left:280px;top:896px"></div>
-  <div class="tbl" style="left:440px;top:882px"></div>
-  <div class="tbl" style="left:600px;top:900px"></div>
-
-  <div class="attr" style="left:60px;top:986px;width:840px">popularized by Databricks — the names your warehouse tour already used</div>
-
-  <!-- ================= RIGHT: dbt convention ================= -->
-  <div class="ptitle" style="left:1000px;top:44px;width:880px">dbt Project Convention</div>
-  <div class="psub" style="left:1000px;top:122px;width:880px">the names you write — folders, schemas, real objects</div>
-  <div class="zone" style="left:1020px;top:180px;width:840px;height:850px"></div>
-
-  <!-- bronze tier: sources -->
-  <div class="tier" style="left:1070px;top:230px;width:740px;height:210px;background:rgba(216,154,91,.05);border:1.5px dashed rgba(216,154,91,.45)">
-    <div class="bar obj" style="background:var(--bronzeB);color:var(--bronzeT)">sources · raw.jobs</div>
-    <div class="cap" style="color:var(--bronzeT)">dbt only READS it — sources.yml points at the landing zone</div>
-  </div>
-  <div class="tbl" style="left:1270px;top:352px"></div>
-  <div class="tbl" style="left:1470px;top:346px"></div>
+  <div class="file" style="left:390px;top:344px;width:180px">sources.yml</div>
 
   <!-- silver tier: staging + intermediate -->
-  <div class="tier" style="left:1070px;top:490px;width:352px;height:230px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
+  <div class="tier" style="left:110px;top:490px;width:352px;height:230px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
     <div class="bar obj" style="background:var(--silverB);color:var(--silverT)">staging</div>
     <div class="cap" style="color:var(--silverT)">rename · cast · clean</div>
   </div>
-  <div class="tbl" style="left:1160px;top:620px"></div>
-  <div class="tbl" style="left:1270px;top:630px"></div>
-  <div class="tier" style="left:1458px;top:490px;width:352px;height:230px;background:rgba(201,206,214,.04);border:1.5px dashed rgba(201,206,214,.4)">
+  <div class="folder" style="left:150px;top:614px">staging/</div>
+  <div class="file" style="left:310px;top:622px">.sql</div>
+
+  <div class="tier" style="left:498px;top:490px;width:352px;height:230px;background:rgba(201,206,214,.04);border:1.5px dashed rgba(201,206,214,.4)">
     <div class="bar obj" style="background:var(--silverB);color:var(--silverT);opacity:.75">intermediate</div>
-    <div class="cap" style="color:var(--silverT)">optional — add when thinking repeats</div>
+    <div class="cap" style="color:var(--silverT)">optional — when thinking repeats</div>
   </div>
-  <div class="tbl" style="left:1590px;top:624px"></div>
+  <div class="folder" style="left:540px;top:614px">int…/</div>
+  <div class="file" style="left:700px;top:622px">.sql</div>
 
   <!-- gold tier: marts -->
-  <div class="tier" style="left:1070px;top:770px;width:740px;height:220px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
+  <div class="tier" style="left:110px;top:770px;width:740px;height:220px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
     <div class="bar obj" style="background:var(--goldB);color:var(--goldT)">marts</div>
-    <div class="cap" style="color:var(--goldT)">the star schema people query</div>
+    <div class="cap" style="color:var(--goldT)">what people query</div>
   </div>
-  <div class="tbl" style="left:1240px;top:896px"></div>
-  <div class="tbl" style="left:1400px;top:880px"></div>
-  <div class="tbl" style="left:1560px;top:900px"></div>
+  <div class="folder" style="left:250px;top:892px">marts/</div>
+  <div class="file" style="left:420px;top:898px">fct_*.sql</div>
+  <div class="file" style="left:560px;top:892px">dim_*.sql</div>
 
-  <div class="attr" style="left:1020px;top:986px;width:840px">what dbt's own docs recommend — and what recruiters see in your repo</div>
+  <div class="attr" style="left:60px;top:986px;width:840px">what dbt's own docs recommend — and what recruiters see in your repo</div>
 
-  <!-- ================= cross-panel mapping ================= -->
+  <!-- ================= RIGHT: medallion (the data — what materializes) ================= -->
+  <div class="ptitle" style="left:1000px;top:44px;width:880px">The Medallion Architecture</div>
+  <div class="psub" style="left:1000px;top:122px;width:880px">what materializes — the data in the warehouse</div>
+  <div class="zone" style="left:1020px;top:180px;width:840px;height:850px"></div>
+
+  <div class="tier" style="left:1070px;top:230px;width:740px;height:210px;background:rgba(216,154,91,.06);border:1.5px solid rgba(216,154,91,.45)">
+    <div class="bar" style="background:var(--bronzeB);color:var(--bronzeT)">Bronze</div>
+    <div class="cap" style="color:var(--bronzeT)">raw files, as they arrived</div>
+  </div>
+  <div class="file data" style="left:1150px;top:356px">parquet</div>
+  <div class="file data" style="left:1300px;top:348px">parquet</div>
+  <div class="file data" style="left:1450px;top:360px">parquet</div>
+  <div class="file data" style="left:1600px;top:352px">parquet</div>
+
+  <div class="tier" style="left:1070px;top:490px;width:740px;height:230px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
+    <div class="bar" style="background:var(--silverB);color:var(--silverT)">Silver</div>
+    <div class="cap" style="color:var(--silverT)">cleaned tables, ready to combine</div>
+  </div>
+  <div class="tbl" style="left:1230px;top:618px"></div>
+  <div class="tbl" style="left:1410px;top:606px"></div>
+  <div class="tbl" style="left:1580px;top:622px"></div>
+
+  <div class="tier" style="left:1070px;top:770px;width:740px;height:220px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
+    <div class="bar" style="background:var(--goldB);color:var(--goldT)">Gold</div>
+    <div class="cap" style="color:var(--goldT)">the star schema, connected</div>
+  </div>
+  <!-- mini star: center fct + 4 dims, dashed joins drawn in svg -->
+  <div class="tbl" style="left:1400px;top:884px"></div>
+  <div class="tbl sm" style="left:1240px;top:868px"></div>
+  <div class="tbl sm" style="left:1240px;top:936px"></div>
+  <div class="tbl sm" style="left:1600px;top:868px"></div>
+  <div class="tbl sm" style="left:1600px;top:936px"></div>
+
+  <div class="attr" style="left:1020px;top:986px;width:840px">popularized by Databricks — the names your warehouse tour already used</div>
+
+  <!-- ================= mapping: code becomes data ================= -->
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
       <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
       </marker>
+      <marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#8f8f8f"/>
+      </marker>
     </defs>
-    <path d="M 852 335 C 930 335, 960 335, 1058 335" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 852 600 C 930 600, 960 585, 1058 575" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 852 618 C 980 700, 1240 768, 1500 730" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- sources READS bronze (ghosted) -->
+    <path d="M 852 335 C 930 335, 960 335, 1058 335" fill="none" stroke="#8f8f8f" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahg)"/>
+    <!-- intermediate → Silver (straight) -->
+    <path d="M 852 585 C 930 585, 960 588, 1058 592" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- staging → Silver (dips under intermediate) -->
+    <path d="M 464 655 C 660 775, 950 715, 1058 630" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- marts → Gold -->
     <path d="M 852 878 C 930 878, 960 878, 1058 878" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- gold mini-star joins (dashed) -->
+    <line x1="1400" y1="902" x2="1306" y2="892" stroke="#8f8f8f" stroke-width="2" stroke-dasharray="6 6"/>
+    <line x1="1400" y1="918" x2="1306" y2="958" stroke="#8f8f8f" stroke-width="2" stroke-dasharray="6 6"/>
+    <line x1="1484" y1="902" x2="1598" y2="892" stroke="#8f8f8f" stroke-width="2" stroke-dasharray="6 6"/>
+    <line x1="1484" y1="918" x2="1598" y2="958" stroke="#8f8f8f" stroke-width="2" stroke-dasharray="6 6"/>
   </svg>
 
 </div>
