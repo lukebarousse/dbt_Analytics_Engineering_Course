@@ -1,11 +1,16 @@
-# raw.jobs = the landing zone (schema named for the SOURCE SYSTEM, dbt convention), created ONCE by scripts/load_raw.py (the ingestion notebook) —
-# dbt didn't build it, so it's declared as a source (the 1.5 lesson, cloud edition)
+# raw.jobs = the landing zone (schema named for the SOURCE SYSTEM, dbt convention),
+# created ONCE by scripts/load_raw.py (the ingestion notebook) — dbt reads it, never writes it
 sources:
   - name: jobs
-    database: raw
+    description: >
+      The landing zone: raw job-market data landed by the ingestion notebook
+      (scripts/load_raw.py). One owner — dbt only reads it.
+    database: raw        # the catalog the notebook owns
     schema: jobs
     tables:
       - name: raw_job_postings
-        description: Raw scraped postings, one row per posting per scrape day. As landed.
+        description: >
+          One row per posting per scrape event, exactly as scraped — error rows,
+          text salaries, relative dates and all. Cleaning it is the pipeline's job.
       - name: raw_job_skills
-        description: Pre-extracted skill keywords per job_id. As landed.
+        description: One row per (job, skill) pair extracted from the postings.
