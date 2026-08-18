@@ -95,3 +95,26 @@ absolute floor 18.
    changes are the spec (same live-state rule as Notion).
 4. Tracker: "Diagrams - dbt" page under the Notion course hub; rows carry
    "## Diagrams Needed" sections.
+
+## Poster style (Luke, 2026-08-18 — for comparison/architecture posters)
+
+Matched to Luke's reference format (first used: `3.31_medallion_vs_dbt`).
+When a diagram is a side-by-side comparison poster, this style SUPERSEDES
+the mono-title and no-subtitle rules — for this style only:
+
+- **Panel titles in Caveat** (60–66, white, centered over each panel) + ONE
+  muted hand-font subtitle line under each title.
+- **Outer zones:** 2px dashed `#4A7DBB`, radius 22 — one per panel.
+- **Tier/section cards:** body = tier color at 5–8% alpha + 1.5px tier-tinted
+  border; header = dark lozenge (tier dark fill, tier-light text). Dashed
+  border/lozenge opacity = optional/ghost.
+- **Medallion metal trio** sanctioned as SEMANTIC tier identity (never
+  decorative elsewhere): bronze `#D89A5B` on `#4a2f15` · silver `#C9CED6` on
+  `#3a3d42` · gold `#E3B341` on `#4a3a10`.
+- **Connectors in this style:** 3px dashed `9 8`, white, WITH arrowheads
+  (the dotted `2 10` cable style stays the rule everywhere else). Still
+  routed around cards, never across content.
+- **Textless mini-table glyphs** allowed as ERD texture (they carry no text,
+  so the 18px floor doesn't apply).
+- **One muted in-panel attribution line per panel** allowed — inside the
+  zone; page-level footers remain banned.

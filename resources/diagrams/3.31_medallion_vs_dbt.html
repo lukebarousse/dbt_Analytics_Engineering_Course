@@ -7,87 +7,120 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
-    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --bg:#141414; --panel:#202020; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
     --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
-    --ok:#57AB5A; --err:#E5534B;
     --ink:#EDEDED;
+    /* medallion metal trio — tier identity (semantic) */
+    --bronzeT:#D89A5B; --bronzeB:#4a2f15;
+    --silverT:#C9CED6; --silverB:#3a3d42;
+    --goldT:#E3B341;  --goldB:#4a3a10;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --hand:'Caveat',cursive;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
   .mono{font-family:var(--mono)}
-  .title{position:absolute;top:40px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
-  .hand{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
-    border-radius:255px 15px 225px 15px/15px 225px 15px 255px;background:transparent}
-  .chip{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
-    border-radius:15px 225px 15px 255px/255px 15px 225px 15px;
+  .ptitle{position:absolute;font-family:var(--hand);font-size:64px;font-weight:700;color:#F4F4F4;text-align:center;letter-spacing:.01em}
+  .psub{position:absolute;font-family:var(--hand);font-size:30px;color:var(--muted);text-align:center}
+  .zone{position:absolute;box-sizing:border-box;border:2px dashed #4A7DBB;border-radius:22px}
+  .tier{position:absolute;box-sizing:border-box;border-radius:16px}
+  .tier .bar{position:absolute;left:14px;right:14px;top:12px;height:62px;border-radius:12px;
     display:flex;align-items:center;justify-content:center;
-    font-family:var(--mono);font-size:28px;font-weight:600;color:var(--ink)}
-  .chip.ghost{border-style:dashed;border-width:2px;color:var(--muted);border-color:#8a8a8a}
-  .lbl{position:absolute;font-family:var(--hand);font-size:30px;color:var(--ink);text-align:center}
-  .small{font-size:24px;color:var(--muted)}
-  .med{position:absolute;font-family:var(--hand);font-size:52px;font-weight:700;text-align:center}
+    font-family:var(--hand);font-size:38px;font-weight:700}
+  .tier .bar.obj{font-family:var(--mono);font-size:28px;font-weight:700}
+  .tier .cap{position:absolute;left:0;right:0;top:84px;text-align:center;font-family:var(--hand);font-size:25px}
+  .attr{position:absolute;font-family:var(--hand);font-size:26px;color:var(--faint);text-align:center}
+  .tbl{position:absolute;width:82px;height:56px;border:1.5px solid #8f8f8f;border-radius:5px;background:#1f1f1f;opacity:.85}
+  .tbl:before{content:"";position:absolute;left:0;right:0;top:0;height:13px;background:#8f8f8f;border-radius:3px 3px 0 0}
+  .tbl:after{content:"";position:absolute;left:8px;right:8px;top:20px;height:26px;
+    background:repeating-linear-gradient(#383838 0 5px, transparent 5px 11px)}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div class="title">two dialects, one architecture</div>
+  <!-- ================= LEFT: medallion ================= -->
+  <div class="ptitle" style="left:40px;top:44px;width:880px">The Medallion Architecture</div>
+  <div class="psub" style="left:40px;top:122px;width:880px">the dialect you say — spoken, never written into object names</div>
+  <div class="zone" style="left:60px;top:180px;width:840px;height:850px"></div>
 
-  <div class="lbl small" style="left:0px;top:130px;width:1920px">the medallion names you already know — spoken, not written: nothing in the project is named bronze, silver, or gold</div>
+  <div class="tier" style="left:110px;top:230px;width:740px;height:210px;background:rgba(216,154,91,.06);border:1.5px solid rgba(216,154,91,.45)">
+    <div class="bar" style="background:var(--bronzeB);color:var(--bronzeT)">Bronze</div>
+    <div class="cap" style="color:var(--bronzeT)">raw data, as-is from the source</div>
+  </div>
+  <div class="tbl" style="left:190px;top:352px"></div>
+  <div class="tbl" style="left:330px;top:340px"></div>
+  <div class="tbl" style="left:470px;top:356px"></div>
+  <div class="tbl" style="left:640px;top:344px"></div>
 
-  <!-- ============ medallion lane (vocabulary — handwritten) ============ -->
-  <div class="hand" style="left:150px;top:210px;width:400px;height:170px;transform:rotate(-.4deg)"></div>
-  <div class="med" style="left:150px;top:236px;width:400px">Bronze 🥉</div>
-  <div class="lbl small" style="left:150px;top:314px;width:400px">raw, as scraped</div>
+  <div class="tier" style="left:110px;top:490px;width:740px;height:230px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
+    <div class="bar" style="background:var(--silverB);color:var(--silverT)">Silver</div>
+    <div class="cap" style="color:var(--silverT)">cleaned and validated — one tier, TWO dbt layers</div>
+  </div>
+  <div class="tbl" style="left:250px;top:620px"></div>
+  <div class="tbl" style="left:430px;top:608px"></div>
+  <div class="tbl" style="left:600px;top:624px"></div>
 
-  <div class="hand" style="left:640px;top:210px;width:770px;height:170px;transform:rotate(.3deg)"></div>
-  <div class="med" style="left:640px;top:236px;width:770px">Silver 🥈</div>
-  <div class="lbl small" style="left:640px;top:314px;width:770px">cleaned &amp; shaped — one tier, TWO dbt layers</div>
+  <div class="tier" style="left:110px;top:770px;width:740px;height:220px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
+    <div class="bar" style="background:var(--goldB);color:var(--goldT)">Gold</div>
+    <div class="cap" style="color:var(--goldT)">business-ready star schemas</div>
+  </div>
+  <div class="tbl" style="left:280px;top:896px"></div>
+  <div class="tbl" style="left:440px;top:882px"></div>
+  <div class="tbl" style="left:600px;top:900px"></div>
 
-  <div class="hand" style="left:1500px;top:210px;width:340px;height:170px;transform:rotate(-.3deg)"></div>
-  <div class="med" style="left:1500px;top:236px;width:340px">Gold 🥇</div>
-  <div class="lbl small" style="left:1500px;top:314px;width:340px">business-ready</div>
+  <div class="attr" style="left:60px;top:986px;width:840px">popularized by Databricks — the names your warehouse tour already used</div>
 
-  <!-- ============ project lane (object names — mono) ============ -->
-  <div class="lbl" style="left:0px;top:520px;width:1920px">what the project actually names — the dbt dialect, in real code</div>
+  <!-- ================= RIGHT: dbt convention ================= -->
+  <div class="ptitle" style="left:1000px;top:44px;width:880px">dbt Project Convention</div>
+  <div class="psub" style="left:1000px;top:122px;width:880px">the names you write — folders, schemas, real objects</div>
+  <div class="zone" style="left:1020px;top:180px;width:840px;height:850px"></div>
 
-  <div class="chip" style="left:150px;top:610px;width:400px;height:100px;transform:rotate(.3deg);color:var(--duck);border-color:var(--duck)">raw.jobs</div>
-  <div class="lbl small" style="left:150px;top:724px;width:400px">landed by ingest — OUTSIDE dbt</div>
+  <!-- bronze tier: sources -->
+  <div class="tier" style="left:1070px;top:230px;width:740px;height:210px;background:rgba(216,154,91,.05);border:1.5px dashed rgba(216,154,91,.45)">
+    <div class="bar obj" style="background:var(--bronzeB);color:var(--bronzeT)">sources · raw.jobs</div>
+    <div class="cap" style="color:var(--bronzeT)">dbt only READS it — sources.yml points at the landing zone</div>
+  </div>
+  <div class="tbl" style="left:1270px;top:352px"></div>
+  <div class="tbl" style="left:1470px;top:346px"></div>
 
-  <div class="chip" style="left:640px;top:610px;width:340px;height:100px;transform:rotate(-.25deg)">staging</div>
-  <div class="lbl small" style="left:640px;top:724px;width:340px">rename · cast · clean</div>
+  <!-- silver tier: staging + intermediate -->
+  <div class="tier" style="left:1070px;top:490px;width:352px;height:230px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
+    <div class="bar obj" style="background:var(--silverB);color:var(--silverT)">staging</div>
+    <div class="cap" style="color:var(--silverT)">rename · cast · clean</div>
+  </div>
+  <div class="tbl" style="left:1160px;top:620px"></div>
+  <div class="tbl" style="left:1270px;top:630px"></div>
+  <div class="tier" style="left:1458px;top:490px;width:352px;height:230px;background:rgba(201,206,214,.04);border:1.5px dashed rgba(201,206,214,.4)">
+    <div class="bar obj" style="background:var(--silverB);color:var(--silverT);opacity:.75">intermediate</div>
+    <div class="cap" style="color:var(--silverT)">optional — add when thinking repeats</div>
+  </div>
+  <div class="tbl" style="left:1590px;top:624px"></div>
 
-  <div class="chip ghost" style="left:1070px;top:610px;width:340px;height:100px;transform:rotate(.25deg)">intermediate</div>
-  <div class="lbl small" style="left:1070px;top:724px;width:340px">optional — add when thinking repeats</div>
+  <!-- gold tier: marts -->
+  <div class="tier" style="left:1070px;top:770px;width:740px;height:220px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
+    <div class="bar obj" style="background:var(--goldB);color:var(--goldT)">marts</div>
+    <div class="cap" style="color:var(--goldT)">the star schema people query</div>
+  </div>
+  <div class="tbl" style="left:1240px;top:896px"></div>
+  <div class="tbl" style="left:1400px;top:880px"></div>
+  <div class="tbl" style="left:1560px;top:900px"></div>
 
-  <div class="chip" style="left:1500px;top:610px;width:340px;height:100px;transform:rotate(-.2deg)">marts</div>
-  <div class="lbl small" style="left:1500px;top:724px;width:340px">the star schema people query</div>
+  <div class="attr" style="left:1020px;top:986px;width:840px">what dbt's own docs recommend — and what recruiters see in your repo</div>
 
-  <!-- ============ the fine print of the mapping ============ -->
-  <div class="lbl" style="left:150px;top:850px;width:400px">🥉 = data dbt only READS<br><span class="small">sources.yml points at it</span></div>
-  <div class="lbl" style="left:640px;top:850px;width:770px">🥈 = one word, two layers<br><span class="small">the dialects don't tile 1:1 — why objects use ONE language</span></div>
-  <div class="lbl" style="left:1500px;top:850px;width:340px">🥇 = marts, exactly<br><span class="small">the only clean 1:1</span></div>
-
-  <!-- ============ connectors ============ -->
+  <!-- ================= cross-panel mapping ================= -->
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
-      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#F2C94C"/>
+      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
       </marker>
     </defs>
-    <!-- vocabulary braces: medallion card → project chips (ink, dotted) -->
-    <line x1="350" y1="382" x2="350" y2="602" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <line x1="1025" y1="382" x2="810" y2="602" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <line x1="1025" y1="382" x2="1240" y2="602" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <line x1="1670" y1="382" x2="1670" y2="602" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <!-- data flow along the project lane (duck, dotted) -->
-    <path d="M 552 660 C 580 660, 600 660, 628 660" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
-    <path d="M 982 660 C 1010 660, 1030 660, 1058 660" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
-    <path d="M 1412 660 C 1440 660, 1460 660, 1488 660" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <path d="M 852 335 C 930 335, 960 335, 1058 335" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 852 600 C 930 600, 960 585, 1058 575" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 852 618 C 980 700, 1240 768, 1500 730" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 852 878 C 930 878, 960 878, 1058 878" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
   </svg>
 
 </div>
