@@ -1,5 +1,5 @@
--- the ingest lesson's load-validation query, promoted to a model: how many
--- distinct jobs did each scrape month bring in?
+-- the monthly volume check — a QUESTION, so it lives in analyses (compiled,
+-- never materialized): how many distinct jobs did each scrape month bring in?
 -- refs int, never fct, on purpose: count(distinct job_id) at scrape grain ignores
 -- re-scrapes, so these numbers never moved when fct started deduping. monthly
 -- deduped-per-job counts are fct_job_postings' grain to serve, not this model's claim.

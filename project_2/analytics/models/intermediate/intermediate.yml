@@ -21,36 +21,3 @@ models:
           hourly pay averages the range x 2080, and month/day/week periods stay null
           rather than guessed. Downstream models filter salary_year_avg is not null;
           none of them restate this rule.
-
-  - name: jobs_per_month
-    description: >
-      Distinct jobs scraped per month; the ingest lesson's load-validation query,
-      promoted to a model. Rides int_job_postings_enriched at scrape grain, so its
-      numbers stayed put when fct_job_postings started deduping; monthly
-      deduped-per-job counts are fct's grain to serve, not this model's claim.
-    config:
-      meta:
-        owner: luke
-        tier: silver
-    columns:
-      - name: month
-        description: Scrape month (date_trunc of search_date).
-        data_tests:
-          - not_null
-          - unique
-      - name: postings
-        description: Distinct job_ids scraped in the month.
-
-  - name: jobs_pivot
-    description: >
-      One-row pivot of distinct jobs per search role, written by a Jinja loop; read
-      the compiled file for the SQL dbt wrote. Time-free by design: role columns
-      over all history, because a month axis would count re-scraped jobs once per
-      month.
-    columns:
-      - name: data_analyst_postings
-        description: Distinct jobs found by the 'Data Analyst' search.
-      - name: data_engineer_postings
-        description: Distinct jobs found by the 'Data Engineer' search.
-      - name: data_scientist_postings
-        description: Distinct jobs found by the 'Data Scientist' search.
