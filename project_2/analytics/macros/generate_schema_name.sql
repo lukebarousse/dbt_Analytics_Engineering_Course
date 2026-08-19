@@ -1,7 +1,8 @@
-{#- dbt's default glues the profile schema onto layer names (dev_silver
-    becomes default_silver etc). this override says: use MY names exactly.
-    environments are separated by CATALOG (dev/prod in the profile), the
-    Databricks-recommended pattern — bronze stays in workspace, shared. -#}
+{#- dbt's default glues the profile schema onto declared layer names
+    (staging becomes default_staging — the wart lives on screen from 3.33
+    until this fix opens 3.43). this override says: use MY names exactly.
+    environments are separated by CATALOG (dev/prod in the profile);
+    raw keeps its own shared catalog. -#}
 {% macro generate_schema_name(custom_schema_name, node) -%}
     {%- if custom_schema_name is none -%}
         {{ target.schema }}
