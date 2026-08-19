@@ -1,7 +1,7 @@
 -- DEMOTED TO BONUS 2026-08-19 (Luke): not needed by the final model; candidate
 -- for the supporter "advanced macros/jinja" tier. Lives outside analytics/ so
 -- dbt never parses it. To resurrect: drop into models/marts/ and restore the
--- yml block preserved at the bottom of this file. 3.61's core loop example is
+-- yml block preserved at the bottom of this file. 3.42's core loop example is
 -- now staging's has_* flags.
 --
 -- the jinja-loop walkthrough artifact: you write the loop, dbt writes the sql.

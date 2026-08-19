@@ -1,3 +1,7 @@
+-- BONUS 2026-08-19 (Luke's famous-five split): Q4 lives in the supporter tier.
+-- Q1+Q3 are core analyses (3.71), Q5 is the capstone mart, Q2+Q4 are here.
+-- original marts.yml block preserved at the bottom of this file.
+
 {{ config(materialized='view') }}
 
 -- Q4: average annual salary per skill; the USD rule is inherited from int,
@@ -28,3 +32,16 @@ inner join job_postings using (job_id)
 inner join skills using (skill_id)
 group by skills.skill_id, skills.display_name, skills.category
 order by avg_salary_year desc
+
+{#- preserved marts.yml block (restore alongside the model):
+  - name: top_skills_by_salary
+    description: >
+      Q4 — average annualized salary per skill; the USD rule is inherited
+      from the intermediate layer, never restated here.
+    columns:
+      - name: skill_id
+        description: One row per skill observed on salaried fct jobs.
+        data_tests:
+          - not_null
+          - unique
+-#}

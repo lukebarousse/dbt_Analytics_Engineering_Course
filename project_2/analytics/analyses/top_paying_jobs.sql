@@ -1,6 +1,6 @@
-{{ config(materialized='view') }}
-
--- Q1: the 100 best-paying postings with a usable annual salary
+-- Q1: the 100 best-paying postings with a usable annual salary.
+-- a QUESTION, not a model — it lives in analyses/ (3.71): dbt compiles it,
+-- the SQL editor runs it, and it never ships as a table.
 
 with job_postings as (
     select * from {{ ref('fct_job_postings') }}

@@ -1,7 +1,7 @@
-{{ config(materialized='view') }}
-
--- Q3, capstone form: all roles by default; pick yours with
---   dbt build --select in_demand_skills --vars 'job_title: Data Analyst'
+-- Q3: skill demand across the whole star (fct ⋈ bridge ⋈ dim_skill).
+-- a QUESTION, not a model — it lives in analyses/ (3.71). all roles by default;
+-- pick yours with:
+--   dbt compile --select in_demand_skills --vars 'job_title: Data Analyst'
 
 with job_postings as (
 

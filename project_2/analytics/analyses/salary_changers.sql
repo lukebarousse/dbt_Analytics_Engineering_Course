@@ -1,4 +1,4 @@
--- which postings changed their salary between scrapes? the 3.81 payoff, kept as a
+-- which postings changed their salary between scrapes? the 3.91 payoff, kept as a
 -- rerunnable QA artifact. needs `dbt snapshot` run at least twice (two as_of points)
 -- before any job has a second version to compare.
 -- hero rows: Fraser Health's senior Data Engineer, CA$1.06M–1.22M on 2025-09-01,

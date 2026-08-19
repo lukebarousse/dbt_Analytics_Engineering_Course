@@ -36,7 +36,7 @@ models:
         description: >
           As scraped; 12,252 nulls stay null (documented, not fixed). 17 distinct values in
           the wild, including combos like 'Full-time and Part-time' (25,242 rows), so the naive
-          four-value test below fails 28,776 rows by design: the 3.71 finding, kept visible at
+          four-value test below fails 28,776 rows by design: the 3.81 finding, kept visible at
           warn severity instead of silently "fixed".
         data_tests:
           - accepted_values:
