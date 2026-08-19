@@ -3,8 +3,9 @@ models:
     description: >
       One row per posting per scrape day; a job re-scraped across days keeps every row
       (the snapshot depends on them; fct_job_postings dedupes to one row per job).
-      685,695 rows after the null-id filter, which drops all 151,147 scraper-error rows
-      plus 6,255 id-less postings from the incident window (157,402 total).
+      685,695 rows after two cuts: the door-drop (151,147 scraper-flagged error rows —
+      staging's first cleanup, 3.34) and the test-earned null-id cut (6,255 id-less
+      incident-window postings, 3.83).
     columns:
       - name: job_id
         description: >

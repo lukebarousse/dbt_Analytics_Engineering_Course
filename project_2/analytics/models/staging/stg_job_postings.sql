@@ -7,9 +7,13 @@ with source as (
 
     select *
     from {{ source('jobs', 'raw_job_postings') }}
-    -- null ids are unusable: this one filter drops all 151,147 scraper-error rows
-    -- plus 6,255 id-less incident-window postings (157,402 total)
-    where job_id is not null
+    -- staging's door (3.34): the scraper flags its own failures — error is TRUE
+    -- on the 151,147 failure rows and NULL otherwise, so IS NOT TRUE keeps the
+    -- good rows (= false would null-compare them all away). raw keeps the record.
+    where error is not true
+    -- the earned cut (3.83): 6,255 id-less incident-window postings — real rows,
+    -- dropped with eyes open; an id-less row can't be deduped or joined
+      and job_id is not null
 
 ),
 
