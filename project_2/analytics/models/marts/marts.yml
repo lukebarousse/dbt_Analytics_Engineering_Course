@@ -175,17 +175,3 @@ models:
         data_tests:
           - not_null
           - unique
-
-  - name: jobs_pivot
-    description: >
-      One-row pivot of distinct jobs per search role, written by a Jinja loop; read
-      the compiled file for the SQL dbt wrote. Time-free by design: role columns
-      over all history, because a month axis would count re-scraped jobs once per
-      month.
-    columns:
-      - name: data_analyst_postings
-        description: Distinct jobs found by the 'Data Analyst' search.
-      - name: data_engineer_postings
-        description: Distinct jobs found by the 'Data Engineer' search.
-      - name: data_scientist_postings
-        description: Distinct jobs found by the 'Data Scientist' search.
