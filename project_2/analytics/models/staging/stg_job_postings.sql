@@ -3,38 +3,38 @@
 
 {% set extension_keywords = ['Health insurance', 'Dental insurance', 'Paid time off', 'No degree mentioned'] %}
 
-with source as (
+WITH source AS (
 
-    select *
-    from {{ source('jobs', 'raw_job_postings') }}
+    SELECT *
+    FROM {{ source('jobs', 'raw_job_postings') }}
     -- staging's door (3.33): the scraper flags its own failures — error is TRUE
     -- on the 151,147 failure rows and NULL otherwise, so IS NOT TRUE keeps the
     -- good rows (= false would null-compare them all away). raw keeps the record.
-    where error is not true
+    WHERE error IS NOT TRUE
     -- the earned cut (3.83): 6,255 id-less incident-window postings — real rows,
     -- dropped with eyes open; an id-less row can't be deduped or joined
-      and job_id is not null
+      AND job_id IS NOT NULL
 
 ),
 
 -- pull 'n units ago' apart once. serverless runs ansi mode, and regexp_extract
 -- returns '' (not null) on no match, so every cast is guarded: unprofiled shapes
 -- degrade to null instead of killing the model
-parsed as (
+parsed AS (
 
-    select
+    SELECT
         *,
-        cast(search_time as timestamp) as searched_at,
-        try_cast(nullif(regexp_extract(job_posted_at, '^([0-9]+)', 1), '') as int) as posted_qty,
-        regexp_extract(job_posted_at, '(minute|hour|day|month)', 1) as posted_unit
+        CAST(search_time AS TIMESTAMP) AS searched_at,
+        TRY_CAST(NULLIF(REGEXP_EXTRACT(job_posted_at, '^([0-9]+)', 1), '') AS INT) AS posted_qty,
+        REGEXP_EXTRACT(job_posted_at, '(minute|hour|day|month)', 1) AS posted_unit
 
-    from source
+    FROM source
 
 ),
 
-renamed as (
+renamed AS (
 
-    select
+    SELECT
         -- ids + scrape metadata
         job_id,
         search_term,
@@ -44,36 +44,36 @@ renamed as (
 
         -- posting attributes
         job_title,
-        trim(company_name) as company_name,
+        TRIM(company_name) AS company_name,
         job_location,
-        regexp_replace(job_via, '^via ', '') as source_platform,  -- 'via LinkedIn' scraper artifact, ~6.3k rows
+        REGEXP_REPLACE(job_via, '^via ', '') AS source_platform,  -- 'via LinkedIn' scraper artifact, ~6.3k rows
         job_schedule_type,
         job_work_from_home,
 
         -- relative posted time resolved against the scrape time
         job_posted_at,
-        case posted_unit
-            when 'minute' then timestampadd(minute, -posted_qty, searched_at)
-            when 'hour' then timestampadd(hour, -posted_qty, searched_at)
-            when 'day' then timestampadd(day, -posted_qty, searched_at)
-            when 'month' then timestampadd(month, -posted_qty, searched_at)
-        end as posted_at,
-        cast(posted_at as date) as posted_date,  -- lateral alias: reuses posted_at from the line above
+        CASE posted_unit
+            WHEN 'minute' THEN TIMESTAMPADD(minute, -posted_qty, searched_at)
+            WHEN 'hour' THEN TIMESTAMPADD(hour, -posted_qty, searched_at)
+            WHEN 'day' THEN TIMESTAMPADD(day, -posted_qty, searched_at)
+            WHEN 'month' THEN TIMESTAMPADD(month, -posted_qty, searched_at)
+        END AS posted_at,
+        CAST(posted_at AS DATE) AS posted_date,  -- lateral alias: reuses posted_at from the line above
 
         -- salary text to numbers; raw text kept, the snapshot lesson diffs it across scrapes
         job_salary,
-        {{ parse_salary('min') }} as salary_min,
-        {{ parse_salary('max') }} as salary_max,
-        nullif(regexp_extract(job_salary, 'an? (year|hour|month|day|week)$', 1), '') as salary_period,
-        nullif(trim(regexp_extract(job_salary, '^([^0-9]+)', 1)), '') as salary_currency,  -- 'PKR', 'CA$', '₱', ...; null = usd
+        {{ parse_salary('min') }} AS salary_min,
+        {{ parse_salary('max') }} AS salary_max,
+        NULLIF(REGEXP_EXTRACT(job_salary, 'an? (year|hour|month|day|week)$', 1), '') AS salary_period,
+        NULLIF(TRIM(REGEXP_EXTRACT(job_salary, '^([^0-9]+)', 1)), '') AS salary_currency,  -- 'PKR', 'CA$', '₱', ...; null = usd
 
         -- one boolean per extension keyword: the loop writes the sql, slugify names the columns
         {% for keyword in extension_keywords %}
-        array_contains(from_json(job_extensions_raw, 'array<string>'), '{{ keyword }}') as has_{{ slugify(keyword) }}{{ "," if not loop.last }}
+        ARRAY_CONTAINS(FROM_JSON(job_extensions_raw, 'array<string>'), '{{ keyword }}') AS has_{{ slugify(keyword) }}{{ "," if not loop.last }}
         {% endfor %}
 
-    from parsed
+    FROM parsed
 
 )
 
-select * from renamed
+SELECT * FROM renamed

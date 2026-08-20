@@ -6,9 +6,9 @@
 -- dbt.date_trunc is the cross-warehouse spelling; on databricks it compiles to
 -- plain date_trunc (read the compiled file)
 
-select
-    {{ dbt.date_trunc('month', 'search_date') }} as month,
-    count(distinct job_id) as postings
-from {{ ref('int_job_postings_enriched') }}
-group by all
-order by month
+SELECT
+    {{ dbt.date_trunc('month', 'search_date') }} AS month,
+    COUNT(DISTINCT job_id) AS postings
+FROM {{ ref('int_job_postings_enriched') }}
+GROUP BY ALL
+ORDER BY month

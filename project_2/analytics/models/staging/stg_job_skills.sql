@@ -2,22 +2,22 @@
 -- the deliberately boring one: some staging models just rename, order, and trim,
 -- and that is the discipline working.
 
-with source as (
+WITH source AS (
 
-    select *
-    from {{ source('jobs', 'raw_job_skills') }}
+    SELECT *
+    FROM {{ source('jobs', 'raw_job_skills') }}
 
 ),
 
-renamed as (
+renamed AS (
 
-    select
+    SELECT
         job_id,
         skill_id,
-        trim(skill_keyword) as skill_keyword  -- same cleanup shape as company_name in stg_job_postings
+        TRIM(skill_keyword) AS skill_keyword  -- same cleanup shape as company_name in stg_job_postings
 
-    from source
+    FROM source
 
 )
 
-select * from renamed
+SELECT * FROM renamed

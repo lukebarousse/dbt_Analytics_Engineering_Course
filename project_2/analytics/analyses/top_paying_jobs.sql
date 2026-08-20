@@ -2,11 +2,11 @@
 -- a QUESTION, not a model — it lives in analyses/ (3.71): dbt compiles it,
 -- the SQL editor runs it, and it never ships as a table.
 
-with job_postings as (
-    select * from {{ ref('fct_job_postings') }}
+WITH job_postings AS (
+    SELECT * FROM {{ ref('fct_job_postings') }}
 )
 
-select
+SELECT
     job_id,
     job_title,
     company_name,
@@ -18,7 +18,7 @@ select
     has_dental_insurance,
     has_paid_time_off,
     has_no_degree_mentioned
-from job_postings
-where salary_year_avg is not null
-order by salary_year_avg desc
-limit 100
+FROM job_postings
+WHERE salary_year_avg IS NOT NULL
+ORDER BY salary_year_avg DESC
+LIMIT 100

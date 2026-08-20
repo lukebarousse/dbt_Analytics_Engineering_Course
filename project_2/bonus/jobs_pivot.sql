@@ -12,13 +12,13 @@
 
 {% set roles = ['Data Analyst', 'Data Engineer', 'Data Scientist'] %}
 
-select
+SELECT
     {%- for role in roles %}
-    count(distinct case when search_term = '{{ role }}' then job_id end)
-        as {{ slugify(role) }}_postings
+    COUNT(DISTINCT CASE WHEN search_term = '{{ role }}' THEN job_id END)
+        AS {{ slugify(role) }}_postings
         {%- if not loop.last %},{% endif %}
     {%- endfor %}
-from {{ ref('int_job_postings_enriched') }}
+FROM {{ ref('int_job_postings_enriched') }}
 
 {#- preserved marts.yml block (was the last entry; restore alongside the model):
   - name: jobs_pivot

@@ -12,7 +12,7 @@
 
 {{ config(severity = 'warn') }}
 
-select
+SELECT
     job_id,
     company_name,
     job_title,
@@ -21,6 +21,6 @@ select
     salary_period,
     salary_currency,
     searched_at
-from {{ ref('int_job_postings_enriched') }}
-where salary_period = 'year'
-  and coalesce(salary_max, salary_min) > 1000000
+FROM {{ ref('int_job_postings_enriched') }}
+WHERE salary_period = 'year'
+  AND COALESCE(salary_max, salary_min) > 1000000

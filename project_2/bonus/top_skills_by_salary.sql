@@ -7,31 +7,31 @@
 -- Q4: average annual salary per skill; the USD rule is inherited from int,
 -- never restated — marts only ever filter salary_year_avg is not null
 
-with bridge as (
-    select * from {{ ref('job_skills_bridge') }}
+WITH bridge AS (
+    SELECT * FROM {{ ref('job_skills_bridge') }}
 ),
 
-job_postings as (
-    select job_id, salary_year_avg
-    from {{ ref('fct_job_postings') }}
-    where salary_year_avg is not null
+job_postings AS (
+    SELECT job_id, salary_year_avg
+    FROM {{ ref('fct_job_postings') }}
+    WHERE salary_year_avg IS NOT NULL
 ),
 
-skills as (
-    select * from {{ ref('dim_skill') }}
+skills AS (
+    SELECT * FROM {{ ref('dim_skill') }}
 )
 
-select
+SELECT
     skills.skill_id,
     skills.display_name,
     skills.category,
-    round(avg(job_postings.salary_year_avg), 0) as avg_salary_year,
-    count(*) as salaried_postings
-from bridge
-inner join job_postings using (job_id)
-inner join skills using (skill_id)
-group by skills.skill_id, skills.display_name, skills.category
-order by avg_salary_year desc
+    ROUND(AVG(job_postings.salary_year_avg), 0) AS avg_salary_year,
+    COUNT(*) AS salaried_postings
+FROM bridge
+INNER JOIN job_postings USING (job_id)
+INNER JOIN skills USING (skill_id)
+GROUP BY skills.skill_id, skills.display_name, skills.category
+ORDER BY avg_salary_year DESC
 
 {#- preserved marts.yml block (restore alongside the model):
   - name: top_skills_by_salary

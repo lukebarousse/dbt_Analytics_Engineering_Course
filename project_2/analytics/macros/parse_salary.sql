@@ -10,10 +10,10 @@
     {%- else -%}
         {%- set segment = "element_at(split(job_salary, '–'), -1)" -%}
     {%- endif -%}
-    try_cast(replace(regexp_extract({{ segment }}, '([0-9][0-9,.]*)', 1), ',', '') as decimal(15, 2))
-        * case upper(regexp_extract({{ segment }}, '[0-9][0-9,.]*([KkMm])', 1))
-            when 'K' then 1000
-            when 'M' then 1000000
-            else 1
-          end
+    TRY_CAST(REPLACE(REGEXP_EXTRACT({{ segment }}, '([0-9][0-9,.]*)', 1), ',', '') AS DECIMAL(15, 2))
+        * CASE UPPER(REGEXP_EXTRACT({{ segment }}, '[0-9][0-9,.]*([KkMm])', 1))
+            WHEN 'K' THEN 1000
+            WHEN 'M' THEN 1000000
+            ELSE 1
+          END
 {%- endmacro %}

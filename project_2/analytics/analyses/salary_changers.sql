@@ -4,15 +4,15 @@
 -- hero rows: Fraser Health's senior Data Engineer, CA$1.06M–1.22M on 2025-09-01,
 -- corrected to CA$104K–145K on 2025-09-11 — the same rows assert_salaries_sane flags.
 
-with versions as (
+WITH versions AS (
 
-    select * from {{ ref('job_postings_snapshot') }}
+    SELECT * FROM {{ ref('job_postings_snapshot') }}
 
 ),
 
-with_previous as (
+with_previous AS (
 
-    select
+    SELECT
         job_id,
         job_title,
         company_name,
@@ -20,14 +20,14 @@ with_previous as (
         salary_max,
         salary_currency,
         dbt_valid_from,
-        lag(dbt_valid_from) over (partition by job_id order by dbt_valid_from) as prev_valid_from,
-        lag(salary_min) over (partition by job_id order by dbt_valid_from) as prev_salary_min,
-        lag(salary_max) over (partition by job_id order by dbt_valid_from) as prev_salary_max
-    from versions
+        LAG(dbt_valid_from) OVER (PARTITION BY job_id ORDER BY dbt_valid_from) AS prev_valid_from,
+        LAG(salary_min) OVER (PARTITION BY job_id ORDER BY dbt_valid_from) AS prev_salary_min,
+        LAG(salary_max) OVER (PARTITION BY job_id ORDER BY dbt_valid_from) AS prev_salary_max
+    FROM versions
 
 )
 
-select
+SELECT
     job_id,
     job_title,
     company_name,
@@ -36,11 +36,11 @@ select
     salary_min,
     salary_max,
     salary_currency,
-    dbt_valid_from as changed_at
-from with_previous
-where prev_valid_from is not null  -- only rows that have an earlier version to differ from
-  and (
-    salary_min is distinct from prev_salary_min
-    or salary_max is distinct from prev_salary_max
+    dbt_valid_from AS changed_at
+FROM with_previous
+WHERE prev_valid_from IS NOT NULL  -- only rows that have an earlier version to differ from
+  AND (
+    salary_min IS DISTINCT FROM prev_salary_min
+    OR salary_max IS DISTINCT FROM prev_salary_max
   )
-order by abs(coalesce(salary_max, 0) - coalesce(prev_salary_max, 0)) desc
+ORDER BY ABS(COALESCE(salary_max, 0) - COALESCE(prev_salary_max, 0)) DESC

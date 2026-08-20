@@ -6,30 +6,30 @@
 -- demand counts ALL jobs, the salary average only the salaried ones (avg()
 -- skips nulls itself). Q1/Q3 live in analyses/, Q2/Q4 in the supporter bonus.
 
-with bridge as (
-    select * from {{ ref('job_skills_bridge') }}
+WITH bridge AS (
+    SELECT * FROM {{ ref('job_skills_bridge') }}
 ),
 
-job_postings as (
-    select job_id, salary_year_avg
-    from {{ ref('fct_job_postings') }}
+job_postings AS (
+    SELECT job_id, salary_year_avg
+    FROM {{ ref('fct_job_postings') }}
 ),
 
-skills as (
-    select * from {{ ref('dim_skill') }}
+skills AS (
+    SELECT * FROM {{ ref('dim_skill') }}
 )
 
-select
+SELECT
     skills.skill_id,
     skills.display_name,
     skills.category,
-    count(distinct bridge.job_id) as demand_count,
-    round(count(distinct bridge.job_id) / (select count(*) from job_postings), 4) as demand_pct,
-    round(avg(job_postings.salary_year_avg), 0) as avg_salary_year
-from bridge
-inner join job_postings using (job_id)
-inner join skills using (skill_id)
-group by skills.skill_id, skills.display_name, skills.category
-having count(distinct bridge.job_id) >= 100
-   and avg(job_postings.salary_year_avg) is not null
-order by avg_salary_year desc, demand_count desc
+    COUNT(DISTINCT bridge.job_id) AS demand_count,
+    ROUND(COUNT(DISTINCT bridge.job_id) / (SELECT COUNT(*) FROM job_postings), 4) AS demand_pct,
+    ROUND(AVG(job_postings.salary_year_avg), 0) AS avg_salary_year
+FROM bridge
+INNER JOIN job_postings USING (job_id)
+INNER JOIN skills USING (skill_id)
+GROUP BY skills.skill_id, skills.display_name, skills.category
+HAVING COUNT(DISTINCT bridge.job_id) >= 100
+   AND AVG(job_postings.salary_year_avg) IS NOT NULL
+ORDER BY avg_salary_year DESC, demand_count DESC

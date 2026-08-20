@@ -33,14 +33,14 @@
 --   dbt snapshot --vars '{as_of: <early>}' -> <mid> -> no var = today.
 -- in production this var doesn't exist; every nightly run IS a new as_of.
 
-select * from {{ ref('stg_job_postings') }}
+SELECT * FROM {{ ref('stg_job_postings') }}
 -- explicit cast: run_started_at renders with a +00:00 offset
-where searched_at <= cast('{{ var("as_of", run_started_at) }}' as timestamp)
+WHERE searched_at <= CAST('{{ var("as_of", run_started_at) }}' AS TIMESTAMP)
 -- 3.83's dedupe pattern, new job: pick the current row as of the cutoff.
 -- job_title tiebreaker: one job_id carries two rows with identical searched_at
-qualify row_number() over (
-    partition by job_id
-    order by searched_at desc, job_title
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY job_id
+    ORDER BY searched_at DESC, job_title
 ) = 1
 
 {% endsnapshot %}
