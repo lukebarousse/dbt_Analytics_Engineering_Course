@@ -1,0 +1,155 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3.3 — The build map</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --bronzeT:#D89A5B; --bronzeB:#4a2f15;
+    --silverT:#C9CED6; --silverB:#3a3d42;
+    --goldT:#E3B341;  --goldB:#4a3a10;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:34px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .tier{position:absolute;box-sizing:border-box;border-radius:16px}
+  .tier .bar{position:absolute;left:12px;right:12px;top:10px;height:54px;border-radius:11px;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    font-family:var(--mono);font-size:26px;font-weight:700}
+  .tier .cap{position:absolute;left:8px;right:8px;top:74px;text-align:center;font-family:var(--hand);font-size:25px;line-height:1.25}
+  .num{display:inline-flex;flex:none;width:34px;height:34px;border-radius:50%;border:2.5px solid var(--blue);
+    color:var(--blue);font-weight:800;font-size:19px;align-items:center;justify-content:center;
+    font-family:ui-sans-serif,-apple-system,sans-serif;background:var(--bg)}
+  .card{position:absolute;box-sizing:border-box;height:56px;border-radius:10px;background:var(--panel);
+    border:1.5px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 14px;
+    font-family:var(--mono);font-size:20px;font-weight:600;color:var(--text)}
+  .card.ghost{border-style:dashed;background:transparent;color:var(--muted)}
+  .g-tbl{position:relative;width:34px;height:26px;border:1.5px solid #b9b9b9;border-radius:3px;background:#1f1f1f;flex:none}
+  .g-tbl:before{content:"";position:absolute;left:0;right:0;top:0;height:7px;background:#b9b9b9;border-radius:2px 2px 0 0}
+  .g-tbl:after{content:"";position:absolute;left:4px;right:4px;top:10px;height:11px;
+    background:repeating-linear-gradient(#383838 0 3px, transparent 3px 6px)}
+  .g-tbl.bronze{border-color:rgba(216,154,91,.75)} .g-tbl.bronze:before{background:var(--bronzeT)}
+  .g-tbl.gold{border-color:rgba(227,179,65,.75)} .g-tbl.gold:before{background:var(--goldT)}
+  .g-view{position:relative;width:34px;height:26px;border:1.5px solid var(--blue);border-radius:3px;background:#1d2430;flex:none}
+  .g-view:before{content:"";position:absolute;left:5px;top:5px;width:16px;height:2.5px;background:var(--blue)}
+  .g-view:after{content:"";position:absolute;left:5px;top:11px;width:22px;height:2.5px;background:rgba(88,166,255,.55);
+    box-shadow:0 6px 0 rgba(88,166,255,.35)}
+  .g-file{position:relative;width:26px;height:32px;border:1.5px solid #b9b9b9;border-radius:3px;background:#1f1f1f;flex:none}
+  .g-file:before{content:"";position:absolute;right:-1px;top:-1px;width:0;height:0;
+    border-style:solid;border-width:0 10px 10px 0;border-color:transparent var(--bg) transparent transparent}
+  .g-file:after{content:"";position:absolute;right:0;top:0;width:0;height:0;
+    border-style:solid;border-width:10px 0 0 10px;border-color:#b9b9b9 transparent transparent transparent;opacity:.5}
+  .g-file.q{border-color:rgba(88,166,255,.65)}
+  .g-file.csv{border-color:rgba(242,201,76,.65)}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">the build map</div>
+
+  <!-- ============ RAW (bronze) ============ -->
+  <div class="tier" style="left:30px;top:150px;width:260px;height:660px;background:rgba(216,154,91,.05);border:1.5px solid rgba(216,154,91,.45)">
+    <div class="bar" style="background:var(--bronzeB);color:var(--bronzeT)">raw.jobs</div>
+    <div class="cap" style="color:var(--bronzeT)">landed by the notebook 🗄<br>dbt only reads</div>
+  </div>
+  <div class="card" style="left:44px;top:320px;width:232px;font-size:18px"><span class="g-tbl bronze"></span>raw_job_postings</div>
+  <div class="card" style="left:44px;top:500px;width:232px;font-size:18px"><span class="g-tbl bronze"></span>raw_job_skills</div>
+
+  <!-- ============ STAGING (silver) ① ============ -->
+  <div class="tier" style="left:338px;top:150px;width:320px;height:660px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
+    <div class="bar" style="background:var(--silverB);color:var(--silverT)"><span class="num">1</span>staging</div>
+    <div class="cap" style="color:var(--silverT)">rename · cast · clean — then stop</div>
+  </div>
+  <div class="card" style="left:366px;top:320px;width:264px"><span class="g-view"></span>stg_job_postings</div>
+  <div class="card" style="left:366px;top:500px;width:264px"><span class="g-view"></span>stg_job_skills</div>
+
+  <!-- ============ INTERMEDIATE (silver) ② ============ -->
+  <div class="tier" style="left:706px;top:150px;width:340px;height:660px;background:rgba(201,206,214,.04);border:1.5px solid rgba(201,206,214,.4)">
+    <div class="bar" style="background:var(--silverB);color:var(--silverT)"><span class="num">2</span>intermediate</div>
+    <div class="cap" style="color:var(--silverT)">the thinking, stated once 💡</div>
+  </div>
+  <div class="card" style="left:726px;top:400px;width:300px;font-size:18px"><span class="g-view"></span>int_job_postings_enriched</div>
+
+  <!-- ============ MARTS (gold) ③④ ============ -->
+  <div class="tier" style="left:1094px;top:150px;width:390px;height:660px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
+    <div class="bar" style="background:var(--goldB);color:var(--goldT)">marts</div>
+    <div class="cap" style="color:var(--goldT)">the star ⭐ what people query</div>
+  </div>
+  <div class="card" style="left:1124px;top:290px;width:300px;border-color:rgba(227,179,65,.55)"><span class="g-tbl gold"></span>fct_job_postings<span class="num">3</span></div>
+  <div class="card" style="left:1114px;top:440px;width:176px;font-size:18px"><span class="g-tbl gold"></span>dim_company</div>
+  <div class="card" style="left:1306px;top:440px;width:158px;font-size:18px"><span class="g-tbl gold"></span>dim_skill</div>
+  <div class="card" style="left:1124px;top:580px;width:292px;font-size:18px"><span class="g-tbl gold"></span>job_skills_bridge<span class="num">4</span></div>
+
+  <!-- ============ THE QUESTIONS (analyses) ⑤ ============ -->
+  <div class="tier" style="left:1532px;top:150px;width:356px;height:660px;background:rgba(88,166,255,.05);border:1.5px solid rgba(88,166,255,.4)">
+    <div class="bar" style="background:#1d3050;color:var(--blue)"><span class="num">5</span>analyses</div>
+    <div class="cap" style="color:var(--blue)">questions, not models ❓<br>compiled, never shipped</div>
+  </div>
+  <div class="card" style="left:1560px;top:300px;width:250px;font-size:18px"><span class="g-file q"></span>top_paying_jobs</div>
+  <div class="card" style="left:1560px;top:440px;width:250px;font-size:18px"><span class="g-file q"></span>in_demand_skills</div>
+  <div class="card" style="left:1560px;top:580px;width:250px;font-size:18px"><span class="g-file q"></span>jobs_per_month</div>
+
+  <!-- ============ bottom band: the time machine · the seed · the graduate ============ -->
+  <div class="card ghost" style="left:366px;top:892px;width:300px;font-size:18px;border-color:rgba(201,206,214,.45)"><span class="g-tbl"></span>job_postings_snapshot</div>
+  <div class="cap" style="position:absolute;left:366px;top:952px;width:300px;text-align:center;font-family:var(--hand);font-size:24px;color:var(--muted)">🕰 history, captured later</div>
+
+  <div class="card" style="left:1114px;top:892px;width:250px;font-size:18px"><span class="g-file csv"></span>skill_categories</div>
+  <div class="cap" style="position:absolute;left:1114px;top:952px;width:250px;text-align:center;font-family:var(--hand);font-size:24px;color:var(--duck)">the taxonomy, from a CSV 📄</div>
+
+  <div class="card ghost" style="left:1560px;top:892px;width:250px;font-size:18px;border-color:rgba(227,179,65,.5)"><span class="g-tbl gold"></span>optimal_skills</div>
+  <div class="cap" style="position:absolute;left:1560px;top:952px;width:250px;text-align:center;font-family:var(--hand);font-size:24px;color:var(--goldT)">🎓 one question graduates, in the finale</div>
+
+  <!-- ============ the flow ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+      <marker id="ahy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#F2C94C"/>
+      </marker>
+      <marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#8f8f8f"/>
+      </marker>
+    </defs>
+    <!-- raw → staging -->
+    <path d="M 278 348 L 362 348" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 278 528 L 362 528" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- stg_job_postings → int -->
+    <path d="M 632 348 C 692 348, 678 428, 722 428" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- int → fct -->
+    <path d="M 1028 428 C 1092 428, 1078 318, 1120 318" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- fct → dim_company (straight down) · fct → bridge (thread the left edge) -->
+    <path d="M 1200 348 L 1200 436" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1150 348 C 1104 400, 1104 520, 1156 576" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- stg_job_skills → bridge (corridor lane 1) -->
+    <path d="M 540 528 C 552 770, 570 826, 650 826 L 1170 826 C 1240 826, 1266 796, 1268 642" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- stg_job_skills → dim_skill (corridor lane 2, up the gap, in through the window) -->
+    <path d="M 580 528 C 592 790, 610 846, 690 846 L 1440 846 C 1492 846, 1500 800, 1500 700 L 1500 552 C 1500 528, 1478 510, 1448 500" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- seed → dim_skill (yellow, through the same window) -->
+    <path d="M 1300 890 C 1400 870, 1520 800, 1520 700 L 1520 560 C 1520 534, 1494 516, 1462 504" fill="none" stroke="#F2C94C" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahy)"/>
+    <!-- marts → the questions -->
+    <path d="M 1426 318 C 1494 318, 1494 328, 1556 328" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1466 468 L 1556 468" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1418 604 C 1480 596, 1530 520, 1556 484" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- int → jobs_per_month (corridor lane 3, in from below) -->
+    <path d="M 876 458 C 876 760, 890 866, 970 866 L 1620 866 C 1680 866, 1700 830, 1700 760 L 1700 642" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- ghosts: stg → snapshot · star → optimal -->
+    <path d="M 400 378 C 352 560, 350 780, 430 890" fill="none" stroke="#8f8f8f" stroke-width="3" stroke-dasharray="6 8" stroke-linecap="round" marker-end="url(#ahg)"/>
+    <path d="M 1452 812 C 1510 848, 1530 878, 1560 904" fill="none" stroke="#8f8f8f" stroke-width="3" stroke-dasharray="6 8" stroke-linecap="round" marker-end="url(#ahg)"/>
+  </svg>
+
+</div>
+</body>
+</html>
