@@ -1,5 +1,5 @@
-{#- the flagship 3.43 macro: written twice verbatim at 3.41 (min, then max),
-    extracted once here. expects the raw job_salary column in scope.
+{#- the flagship macro: built at 3.51, installed twice at 3.52 (min, then
+    max), extracted once here. expects the raw job_salary column in scope.
     handles: en-dash ranges ('100K–186K a year'), single values (both bounds),
     K/M suffixes, thousands commas + decimals, currency prefixes (ignored here;
     salary_currency owns them). serverless runs ansi mode, so every cast is a
