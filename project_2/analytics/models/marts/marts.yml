@@ -29,12 +29,6 @@ models:
         description: Schedule as posted; null when the posting didn't say.
       - name: job_work_from_home
         description: True when the posting is flagged remote.
-      - name: posted_date
-        description: >
-          Posting date, resolved from relative text ("3 days ago") against scrape
-          time; null when the source text was absent or unparseable.
-      - name: posted_at
-        description: Timestamp version of posted_date, same resolution rules.
       - name: search_date
         description: Date of the winning (latest) scrape; the incremental high-water mark.
       - name: salary_min
@@ -68,10 +62,10 @@ models:
           - unique
       - name: total_job_postings
         description: Jobs posted by the company (fct is one row per job, so count(*) counts jobs).
-      - name: first_posted_date
-        description: Earliest resolved posting date.
-      - name: last_posted_date
-        description: Latest resolved posting date.
+      - name: first_seen_date
+        description: Earliest scrape date for the company (search_date is the course's time axis).
+      - name: last_seen_date
+        description: Latest scrape date for the company.
       - name: avg_salary_year
         description: >
           Average annualized salary across the company's USD-parsed postings;

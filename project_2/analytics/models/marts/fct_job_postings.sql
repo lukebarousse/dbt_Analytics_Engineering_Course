@@ -19,8 +19,6 @@ SELECT
     source_platform,
     job_schedule_type,
     job_work_from_home,
-    posted_date,
-    posted_at,
     search_date,
     salary_min,
     salary_max,

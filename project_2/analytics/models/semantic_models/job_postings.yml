@@ -1,5 +1,4 @@
-# search_date is the agg time default on purpose: posted_date has NULLs, and
-# rows with a NULL agg time silently drop from time-grouped queries
+# search_date is the agg time dimension: never NULL, and the course's one time axis
 semantic_models:
   - name: job_postings
     description: One row per job (fct grain — the 3.83 dedupe already applied).
@@ -21,11 +20,6 @@ semantic_models:
         type: categorical
       - name: search_date
         description: Latest scrape date; never NULL, so it's safe as the agg time default.
-        type: time
-        type_params:
-          time_granularity: day
-      - name: posted_date
-        description: Resolved posting date; NULL where the posting carried no relative time (~14.9k rows at scrape grain).
         type: time
         type_params:
           time_granularity: day

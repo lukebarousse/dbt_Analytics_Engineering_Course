@@ -17,21 +17,6 @@ WITH source AS (
 
 ),
 
--- pull 'n units ago' apart once. serverless runs ansi mode, and regexp_extract
--- returns '' (not null) on no match, so every cast is guarded: unprofiled shapes
--- degrade to null instead of killing the model
-parsed AS (
-
-    SELECT
-        *,
-        CAST(search_time AS TIMESTAMP) AS searched_at,
-        TRY_CAST(NULLIF(REGEXP_EXTRACT(job_posted_at, '^([0-9]+)', 1), '') AS INT) AS posted_qty,
-        REGEXP_EXTRACT(job_posted_at, '(minute|hour|day|month)', 1) AS posted_unit
-
-    FROM source
-
-),
-
 renamed AS (
 
     SELECT
@@ -39,7 +24,7 @@ renamed AS (
         job_id,
         search_term,
         search_date,
-        searched_at,
+        CAST(search_time AS TIMESTAMP) AS searched_at,
         search_location,
 
         -- posting attributes
@@ -50,15 +35,10 @@ renamed AS (
         job_schedule_type,
         job_work_from_home,
 
-        -- relative posted time resolved against the scrape time
+        -- relative posted time, kept RAW: search_date carries the course's time
+        -- axis (~95% of rows are scraped within a day of posting, so the two
+        -- nearly agree); parsing this precisely is a supporter exercise
         job_posted_at,
-        CASE posted_unit
-            WHEN 'minute' THEN TIMESTAMPADD(minute, -posted_qty, searched_at)
-            WHEN 'hour' THEN TIMESTAMPADD(hour, -posted_qty, searched_at)
-            WHEN 'day' THEN TIMESTAMPADD(day, -posted_qty, searched_at)
-            WHEN 'month' THEN TIMESTAMPADD(month, -posted_qty, searched_at)
-        END AS posted_at,
-        CAST(posted_at AS DATE) AS posted_date,  -- lateral alias: reuses posted_at from the line above
 
         -- salary text to numbers; raw text kept, the snapshot lesson diffs it across scrapes
         job_salary,
@@ -72,7 +52,7 @@ renamed AS (
         ARRAY_CONTAINS(FROM_JSON(job_extensions_raw, 'array<string>'), '{{ keyword }}') AS has_{{ slugify(keyword) }}{{ "," if not loop.last }}
         {% endfor %}
 
-    FROM parsed
+    FROM source
 
 )
 

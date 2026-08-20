@@ -25,7 +25,7 @@
 }}
 
 -- SCD2 history of each posting's own fields (2,756 jobs change salary text across scrapes).
--- check_cols is posting content only: scrape-derived columns (searched_at, posted_at, search_*)
+-- check_cols is posting content only: scrape-derived columns (searched_at, search_*)
 -- shift on every re-scrape and would version every row. updated_at makes dbt_valid_from/to
 -- carry data time, not run time, so the as_of replays below write honest history.
 --

@@ -12,7 +12,7 @@ SELECT
     company_name,
     job_location,
     search_term,
-    posted_date,
+    search_date,
     salary_year_avg,
     has_health_insurance,
     has_dental_insurance,

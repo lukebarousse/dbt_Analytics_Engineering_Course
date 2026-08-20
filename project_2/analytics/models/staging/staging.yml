@@ -22,7 +22,7 @@ models:
       - name: search_date
         description: Scrape day; doubles as the incremental high-water mark in fct_job_postings.
       - name: searched_at
-        description: Scrape timestamp (search_time cast); anchors posted_at and the snapshot's updated_at.
+        description: Scrape timestamp (search_time cast); anchors the snapshot's updated_at.
       - name: search_location
         description: Location parameter the scraper searched under.
       - name: job_title
@@ -48,13 +48,10 @@ models:
       - name: job_work_from_home
         description: True when the posting is flagged remote.
       - name: job_posted_at
-        description: Raw relative posted time ('10 hours ago'); kept for reference next to the parsed columns.
-      - name: posted_at
         description: >
-          Posting timestamp, resolved from the relative text against searched_at; null when the
-          raw text is null or an unrecognized shape (14,878 rows pass through as null).
-      - name: posted_date
-        description: posted_at as a date.
+          Raw relative posted time ('10 hours ago'), kept unparsed — search_date carries the
+          course's time axis (~95% of rows are scraped within a day of posting); parsing this
+          precisely is a supporter exercise.
       - name: job_salary
         description: Raw salary text, kept unparsed; the snapshot lesson diffs it across scrapes.
       - name: salary_min
