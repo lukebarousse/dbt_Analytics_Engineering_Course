@@ -1,11 +1,53 @@
 models:
   - name: job_postings
-    description: Cleaned postings; scraper error rows removed.
+    description: Cleaned postings; scraper error rows removed. SELECT * behind the filter, so every raw column rides.
     columns:
+      - name: job_id
+        description: The scraper's posting id; re-scraped postings repeat it.
       - name: job_title
         description: Posting title as scraped; blank on the scraper's error rows.
         data_tests:
           - not_null
+      - name: company_name
+        description: Employer name as scraped.
+      - name: job_location
+        description: Posting location as scraped.
+      - name: job_via
+        description: Posting platform as scraped ('via LinkedIn' — the prefix is the scraper's artifact).
+      - name: job_posted_at
+        description: Relative posted time as scraped ('10 hours ago'), unparsed.
+      - name: job_salary
+        description: Raw salary text, unparsed.
+      - name: job_schedule_type
+        description: Schedule as posted; null when the posting didn't say.
+      - name: job_work_from_home
+        description: True when the posting is flagged remote.
+      - name: job_extensions_raw
+        description: Raw extensions JSON — benefits and perks live in here.
+      - name: job_detected_extensions_raw
+        description: Scraper-detected extensions JSON, raw.
+      - name: search_time
+        description: Scrape timestamp.
+      - name: search_date
+        description: Scrape day.
+      - name: search_term
+        description: Role the scraper searched for.
+      - name: search_location
+        description: Location parameter the scraper searched under.
+      - name: error
+        description: Scraper failure flag; always null here — the model's filter removed the failures.
+      - name: error_message
+        description: Scraper failure detail; always null here for the same reason.
+
+  - name: jobs_per_month
+    description: Monthly posting counts by role.
+    columns:
+      - name: month
+        description: Posting month, truncated from search_date.
+      - name: role
+        description: Search role (search_term).
+      - name: postings
+        description: Postings counted for the role that month.
 
   - name: monthly_summary
     description: Monthly summary of job postings.
