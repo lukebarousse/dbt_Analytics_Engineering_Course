@@ -50,48 +50,81 @@ models:
         description: Postings counted for the role that month.
 
   - name: monthly_summary
-    description: Monthly summary of job postings.
+    description: Monthly summary of job postings; one row per month.
     columns:
       - name: month
         description: Year and month of the summary.
         data_tests:
           - not_null
           - unique
+      - name: total_postings
+        description: All postings that month (summed from jobs_per_month).
+      - name: remote_postings
+        description: Postings flagged remote that month.
+      - name: pct_remote
+        description: Share of the month's postings flagged remote, percent.
+
   - name: top_companies
-    description: Ten most active employers by posting count.
+    description: Top 50 employers by posting count.
     columns:
       - name: company_name
+        description: Employer; the grain.
         data_tests:
           - not_null
           - unique
+      - name: postings
+        description: Postings counted for the employer.
+
+  - name: top_locations
+    description: Top 10 locations by posting count.
+    columns:
+      - name: job_location
+        description: Posting location; the grain. (2,472 null-location rows exist upstream; the top-10 cut keeps them out.)
+        data_tests:
+          - not_null
+          - unique
+      - name: postings
+        description: Postings counted for the location.
 
   - name: remote_by_role
     description: Share of remote postings per search role.
     columns:
       - name: role
+        description: Search role; the grain.
         data_tests:
           - not_null
           - unique
+      - name: pct_remote
+        description: Share of the role's postings flagged remote, percent.
 
   - name: platform_share
     description: Top posting platforms, cleaned of the "via " prefix artifact.
     columns:
       - name: platform
+        description: Posting platform, artifact stripped; the grain.
         data_tests:
           - not_null
           - unique
+      - name: postings
+        description: Postings counted for the platform.
 
   - name: schedule_mix
     description: Posting counts by schedule type; nulls labeled Not specified.
     columns:
       - name: schedule
+        description: Schedule type, nulls labeled 'Not specified'; the grain.
         data_tests:
           - not_null
           - unique
+      - name: postings
+        description: Postings counted for the schedule.
 
   - name: salary_transparency
     description: One-row summary of how many postings disclose salary.
     columns:
       - name: pct_with_salary
+        description: Share of postings whose salary text is present, percent.
         data_tests:
           - not_null
+      - name: total_postings
+        description: All postings counted.
