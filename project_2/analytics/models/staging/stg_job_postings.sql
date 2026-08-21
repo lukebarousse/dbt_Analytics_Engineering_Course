@@ -1,7 +1,12 @@
 -- grain: one row per posting per SCRAPE DAY, not per job. re-scrapes stay in;
 -- the snapshot replays them, and fct_job_postings owns the dedupe to one row per job.
 
-{% set extension_keywords = ['Health insurance', 'Dental insurance', 'Paid time off', 'No degree mentioned'] %}
+{% set extension_keywords = [
+    'Health insurance',
+    'Dental insurance',
+    'Paid time off',
+    'No degree mentioned'
+] %}
 
 WITH source AS (
 
@@ -14,6 +19,16 @@ WITH source AS (
     -- the earned cut (3.83): 6,255 id-less incident-window postings — real rows,
     -- dropped with eyes open; an id-less row can't be deduped or joined
       AND job_id IS NOT NULL
+
+),
+
+-- parse the extensions JSON once; the loop below probes the parsed array
+parsed AS (
+
+    SELECT
+        *,
+        FROM_JSON(job_extensions_raw, 'array<string>') AS job_extensions
+    FROM source
 
 ),
 
@@ -47,12 +62,17 @@ renamed AS (
         NULLIF(REGEXP_EXTRACT(job_salary, 'an? (year|hour|month|day|week)$', 1), '') AS salary_period,
         NULLIF(TRIM(REGEXP_EXTRACT(job_salary, '^([^0-9]+)', 1)), '') AS salary_currency,  -- 'PKR', 'CA$', '₱', ...; null = usd
 
-        -- one boolean per extension keyword: the loop writes the sql, slugify names the columns
+        -- one boolean per extension keyword: the loop probes the parsed
+        -- array, slugify names the columns
         {% for keyword in extension_keywords %}
-        ARRAY_CONTAINS(FROM_JSON(job_extensions_raw, 'array<string>'), '{{ keyword }}') AS has_{{ slugify(keyword) }}{{ "," if not loop.last }}
+        ARRAY_CONTAINS(
+            job_extensions,
+            '{{ keyword }}'
+        ) AS has_{{ slugify(keyword) }}
+        {{ "," if not loop.last }}
         {% endfor %}
 
-    FROM source
+    FROM parsed
 
 )
 
