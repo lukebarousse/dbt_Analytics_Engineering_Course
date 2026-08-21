@@ -12,11 +12,11 @@ WITH source AS (
 
     SELECT *
     FROM {{ source('jobs', 'raw_job_postings') }}
-    -- staging's door (3.33): the scraper flags its own failures — error is TRUE
+    -- staging's door (3.03.3): the scraper flags its own failures — error is TRUE
     -- on the 151,147 failure rows and NULL otherwise, so IS NOT TRUE keeps the
     -- good rows (= false would null-compare them all away). raw keeps the record.
     WHERE error IS NOT TRUE
-    -- the earned cut (3.83): 6,255 id-less incident-window postings — real rows,
+    -- the earned cut (3.09.3): 6,255 id-less incident-window postings — real rows,
     -- dropped with eyes open; an id-less row can't be deduped or joined
       AND job_id IS NOT NULL
 

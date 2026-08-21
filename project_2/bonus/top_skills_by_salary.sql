@@ -1,5 +1,5 @@
 -- BONUS 2026-08-19 (Luke's famous-five split): Q4 lives in the supporter tier.
--- Q1+Q3 are core analyses (3.71), Q5 is the capstone mart, Q2+Q4 are here.
+-- Q1+Q3 are core analyses (3.08.1), Q5 is the capstone mart, Q2+Q4 are here.
 -- original marts.yml block preserved at the bottom of this file.
 
 {{ config(materialized='view') }}
