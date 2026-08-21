@@ -1,0 +1,179 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3.06 — Parsing job_salary</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:34px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+
+  /* ---- the hero string, split into its pieces ---- */
+  .hero{position:absolute;left:0;top:112px;width:1920px;display:flex;justify-content:center;align-items:flex-start}
+  .seg{display:flex;flex-direction:column;align-items:center}
+  .seg .t{font-family:var(--mono);font-size:46px;font-weight:700;color:#FFFFFF;line-height:1.1;white-space:pre;padding:0 5px}
+  .seg.q .t{color:var(--faint);padding:0}
+  .seg.lit .t{border-bottom:4px solid var(--blue);padding-bottom:4px}
+  .seg .l{margin-top:8px;font-family:var(--hand);font-size:27px;font-weight:600;color:var(--blue);white-space:nowrap;line-height:1.1}
+
+  /* ---- lanes ---- */
+  .lane{position:absolute;top:296px;height:720px;box-sizing:border-box;border-radius:16px;
+    background:rgba(88,166,255,.04);border:1.5px solid rgba(88,166,255,.32)}
+  .lane .bar{position:absolute;left:12px;right:12px;top:10px;height:52px;border-radius:11px;
+    background:rgba(88,166,255,.14);color:var(--blue);display:flex;align-items:center;justify-content:center;gap:12px;
+    font-family:var(--mono);font-size:26px;font-weight:700}
+  .card{position:absolute;box-sizing:border-box;height:110px;border-radius:10px;background:var(--panel);
+    border:1.5px solid var(--line);padding:11px 18px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+  .card .op{font-family:var(--mono);font-size:19px;font-weight:600;color:var(--muted);line-height:1.25;white-space:pre}
+  .card .val{font-family:var(--mono);font-size:30px;font-weight:800;color:#FFFFFF;line-height:1.1;display:flex;align-items:baseline;gap:14px;white-space:nowrap}
+  .card .val .cap{font-family:var(--hand);font-size:23px;font-weight:600;color:var(--muted)}
+  .card .val .cap b{color:var(--ok);font-weight:700}
+  .card .val .cap i{color:var(--err);font-style:normal;font-weight:700}
+  .card.result{height:82px;border-color:rgba(88,166,255,.6);background:rgba(88,166,255,.08);flex-direction:row;align-items:center;justify-content:space-between;gap:12px}
+  .card.result .name{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)}
+  .card.result .val{font-size:36px;color:var(--blue)}
+  .down{position:absolute;width:100px;text-align:center;font-family:var(--mono);font-size:26px;color:var(--faint);line-height:1}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">job_salary → four columns</div>
+
+  <!-- ============ the hero string ============ -->
+  <div class="hero">
+    <div class="seg q"><div class="t">'</div></div>
+    <div class="seg lit"><div class="t">€</div><div class="l">currency</div></div>
+    <div class="seg lit"><div class="t">45K</div><div class="l">min</div></div>
+    <div class="seg"><div class="t">–</div><div class="l">✂️ split</div></div>
+    <div class="seg lit"><div class="t">€60K</div><div class="l">max</div></div>
+    <div class="seg lit"><div class="t"> a year</div><div class="l">period</div></div>
+    <div class="seg q"><div class="t">'</div></div>
+  </div>
+
+  <!-- ============ lane 1: currency ============ -->
+  <div class="lane" style="left:30px;width:420px"><div class="bar">💱 currency</div></div>
+  <div class="card" style="left:50px;top:370px;width:380px">
+    <div class="op">REGEXP_EXTRACT(job_salary,
+  '^([^0-9]+)', 1)</div>
+    <div class="val">€<span class="cap">text before the first digit</span></div>
+  </div>
+  <div class="down" style="left:190px;top:498px">↓</div>
+  <div class="card" style="left:50px;top:550px;width:380px">
+    <div class="op">'SGD 3.2K–SGD 4.8K a month'</div>
+    <div class="val">SGD<span class="cap">TRIM drops the space</span></div>
+  </div>
+  <div class="down" style="left:190px;top:678px">↓</div>
+  <div class="card" style="left:50px;top:730px;width:380px">
+    <div class="op">'122K–225K a year'</div>
+    <div class="val">NULL<span class="cap">no prefix → USD</span></div>
+  </div>
+  <div class="down" style="left:190px;top:858px">↓</div>
+  <div class="card result" style="left:50px;top:916px;width:380px">
+    <div class="name">salary_currency</div><div class="val">'€'</div>
+  </div>
+
+  <!-- ============ lane 2: min side ============ -->
+  <div class="lane" style="left:470px;width:450px"><div class="bar">🔢 min side</div></div>
+  <div class="card" style="left:490px;top:370px;width:410px">
+    <div class="op">SPLIT(job_salary, '–')[0]</div>
+    <div class="val">€45K<span class="cap">the first piece</span></div>
+  </div>
+  <div class="down" style="left:645px;top:498px">↓</div>
+  <div class="card" style="left:490px;top:506px;width:410px">
+    <div class="op">REGEXP_EXTRACT(…,
+  '([0-9][0-9,.]*)', 1)</div>
+    <div class="val">45<span class="cap">just the number, still text</span></div>
+  </div>
+  <div class="down" style="left:645px;top:634px">↓</div>
+  <div class="card" style="left:490px;top:642px;width:410px">
+    <div class="op">TRY_CAST(REPLACE(…, ',', '')
+  AS DECIMAL)</div>
+    <div class="val">45.00<span class="cap">'' → NULL <b>✓</b> · CAST('') <i>✗</i></span></div>
+  </div>
+  <div class="down" style="left:645px;top:770px">↓</div>
+  <div class="card" style="left:490px;top:778px;width:410px">
+    <div class="op">× CASE suffix
+  K ×1,000 · M ×1,000,000</div>
+    <div class="val">45000</div>
+  </div>
+  <div class="down" style="left:645px;top:884px">↓</div>
+  <div class="card result" style="left:490px;top:916px;width:410px">
+    <div class="name">salary_min</div><div class="val">45000</div>
+  </div>
+
+  <!-- ============ lane 3: max side ============ -->
+  <div class="lane" style="left:940px;width:450px"><div class="bar">🔢 max side</div></div>
+  <div class="card" style="left:960px;top:370px;width:410px">
+    <div class="op">ELEMENT_AT(
+  SPLIT(job_salary, '–'), -1)</div>
+    <div class="val">€60K a year<span class="cap">the last piece</span></div>
+  </div>
+  <div class="down" style="left:1115px;top:498px">↓</div>
+  <div class="card" style="left:960px;top:506px;width:410px">
+    <div class="op">REGEXP_EXTRACT(…,
+  '([0-9][0-9,.]*)', 1)</div>
+    <div class="val">60</div>
+  </div>
+  <div class="down" style="left:1115px;top:634px">↓</div>
+  <div class="card" style="left:960px;top:642px;width:410px">
+    <div class="op">TRY_CAST(REPLACE(…, ',', '')
+  AS DECIMAL)</div>
+    <div class="val">60.00<span class="cap">107,707 → 107707</span></div>
+  </div>
+  <div class="down" style="left:1115px;top:770px">↓</div>
+  <div class="card" style="left:960px;top:778px;width:410px">
+    <div class="op">× CASE suffix
+  K ×1,000 · M ×1,000,000</div>
+    <div class="val">60000</div>
+  </div>
+  <div class="down" style="left:1115px;top:884px">↓</div>
+  <div class="card result" style="left:960px;top:916px;width:410px">
+    <div class="name">salary_max</div><div class="val">60000</div>
+  </div>
+
+  <!-- ============ lane 4: period ============ -->
+  <div class="lane" style="left:1410px;width:480px"><div class="bar">📅 period</div></div>
+  <div class="card" style="left:1430px;top:370px;width:440px">
+    <div class="op">REGEXP_EXTRACT(job_salary,
+  'an? (year|hour|month|day|week)$', 1)</div>
+    <div class="val">year<span class="cap">the rate word at the end</span></div>
+  </div>
+  <div class="down" style="left:1600px;top:498px">↓</div>
+  <div class="card" style="left:1430px;top:550px;width:440px">
+    <div class="op">'95–115 an hour'</div>
+    <div class="val">hour<span class="cap">'an' counts too</span></div>
+  </div>
+  <div class="down" style="left:1600px;top:678px">↓</div>
+  <div class="card" style="left:1430px;top:730px;width:440px">
+    <div class="op">NULLIF(…, '')</div>
+    <div class="val">NULL<span class="cap">no rate word → NULL, not ''</span></div>
+  </div>
+  <div class="down" style="left:1600px;top:858px">↓</div>
+  <div class="card result" style="left:1430px;top:916px;width:440px">
+    <div class="name">salary_period</div><div class="val">'year'</div>
+  </div>
+
+  <!-- ============ cables: each piece of the string drops into its lane ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <path d="M 697 208 C 697 262, 240 236, 240 292" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 780 208 C 780 252, 695 250, 695 292" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 961 208 C 961 252, 1165 250, 1165 292" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 1140 208 C 1140 262, 1650 236, 1650 292" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+  </svg>
+
+</div>
+</body>
+</html>
