@@ -78,11 +78,16 @@ absolute floor 18.
 
 ## Naming + content rules (Luke, 2026-08-06)
 
-- **Filenames are prefixed by the lesson video**: `1.2_anatomy_dbt_project.html`,
-  `1.7_view_vs_table.html` — the number IS the lesson (X.Y).
+- **Filenames are prefixed by the lesson video**: `1.02_anatomy_dbt_project.html`,
+  `1.07_view_vs_table.html` — the number IS the lesson, zero-padded (X.YY,
+  the 2026-08-21 scheme). Lesson-level, not topic-level: a diagram keeps its
+  name when topics shuffle inside its lesson.
 - **NO lesson/topic numbers inside diagrams** — they churn with every
   restructure and go stale in recorded/exported assets. Luke calls numbers
   out while filming; Notion notes carry them. Diagrams stay evergreen.
+  This includes the `<title>` tag — 16 files carried a `1.4 — ` style prefix
+  there until the 2026-08-21 renumber stripped them. Title = the diagram's
+  name, never its address.
 
 ## Workflow
 
@@ -98,7 +103,7 @@ absolute floor 18.
 
 ## Poster style (Luke, 2026-08-18 — for comparison/architecture posters)
 
-Matched to Luke's reference format (first used: `3.31_medallion_vs_dbt`).
+Matched to Luke's reference format (first used: `3.03_medallion_vs_dbt`).
 When a diagram is a side-by-side comparison poster, this style SUPERSEDES
 the mono-title and no-subtitle rules — for this style only:
 
