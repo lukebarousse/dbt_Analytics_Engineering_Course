@@ -7,7 +7,7 @@
 }}
 
 WITH job_postings AS (
-    SELECT * FROM {{ ref('int_job_postings_enriched') }}
+    SELECT * FROM {{ ref('stg_job_postings') }}
 )
 
 SELECT
@@ -22,9 +22,9 @@ SELECT
     search_date,
     salary_min,
     salary_max,
+    salary_avg,
     salary_period,
     salary_currency,
-    salary_year_avg,
     has_health_insurance,
     has_dental_insurance,
     has_paid_time_off,

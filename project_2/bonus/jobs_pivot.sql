@@ -18,7 +18,7 @@ SELECT
         AS {{ slugify(role) }}_postings
         {%- if not loop.last %},{% endif %}
     {%- endfor %}
-FROM {{ ref('int_job_postings_enriched') }}
+FROM {{ ref('stg_job_postings') }}
 
 {#- preserved marts.yml block (was the last entry; restore alongside the model):
   - name: jobs_pivot

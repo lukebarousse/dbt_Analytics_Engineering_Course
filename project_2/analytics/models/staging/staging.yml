@@ -58,12 +58,19 @@ models:
         description: Lower bound parsed from the salary text; the single value when no range is given.
       - name: salary_max
         description: Upper bound parsed from the salary text; the single value when no range is given.
+      - name: salary_avg
+        description: >
+          THE standard salary measure: midpoint of the parsed range (a single value is its
+          own range). Deliberately unit-agnostic — always pair it with salary_period and
+          salary_currency filters; averaging across periods or currencies is mixing units.
       - name: salary_period
         description: "Pay period parsed from the salary text: year, hour, month, day, or week."
       - name: salary_currency
         description: >
-          Leading currency marker ('PKR', 'CA$', '₱'); null means USD. The annualization rule in
-          int_job_postings_enriched only trusts null-currency rows.
+          Currency of the salary columns. Leading marker when present ('PKR', 'CA$', '₱');
+          a salaried row with no marker is stamped 'USD' — an explicit, documented assumption
+          (the scraper's locations are US-dominant) rather than a null you must remember the
+          meaning of. Null only when the row has no salary at all.
       - name: has_health_insurance
         description: Posting lists Health insurance among its extensions.
       - name: has_dental_insurance

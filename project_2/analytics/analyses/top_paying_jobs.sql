@@ -13,12 +13,16 @@ SELECT
     job_location,
     search_term,
     search_date,
-    salary_year_avg,
+    salary_avg,
     has_health_insurance,
     has_dental_insurance,
     has_paid_time_off,
     has_no_degree_mentioned
 FROM job_postings
-WHERE salary_year_avg IS NOT NULL
-ORDER BY salary_year_avg DESC
+-- only like units rank: USD yearly. the unit columns make the filter explicit
+-- instead of hiding it inside a precomputed column
+WHERE salary_currency = 'USD'
+  AND salary_period = 'year'
+  AND salary_avg IS NOT NULL
+ORDER BY salary_avg DESC
 LIMIT 100

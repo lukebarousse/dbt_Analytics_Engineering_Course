@@ -1,23 +1,18 @@
 models:
-  - name: int_job_postings_enriched
+  - name: int_skill_observations
     description: >
-      The "do the thinking once" layer: stg_job_postings passed through at scrape
-      grain (one row per posting per scrape day) plus salary_year_avg, the one
-      business rule every downstream model inherits instead of restating. All other
-      columns arrive unchanged from staging and are documented there. Tested by
-      assert_salaries_sane (singular, warn), which reads this model because only
-      scrape grain still shows garbage rows that fct's latest-scrape-wins dedupe
-      would hide.
+      One row per skill_id observed in the raw pairs: the "do the thinking once"
+      layer re-grains 3,304,574 (job, skill) rows into per-skill demand counts.
+      Aggregates staging, not the star, so the counts include orphan pairs whose
+      job never made fct — observed in the wild, documented rather than hidden.
+      dim_skill joins these counts onto the seed taxonomy and serves them.
     columns:
-      - name: job_id
+      - name: skill_id
+        description: Skill key; the grain.
+        data_tests:
+          - not_null
+          - unique
+      - name: postings_with_skill
         description: >
-          Posting id; still repeats across scrape days here. Uniqueness is promised,
-          and tested, at fct_job_postings.
-      - name: salary_year_avg
-        description: >
-          Annualized average salary in USD, computed here and only here: rows with an
-          explicit currency marker are excluded (null salary_currency = assumed USD),
-          yearly pay averages the parsed range (a single value is its own range),
-          hourly pay averages the range x 2080, and month/day/week periods stay null
-          rather than guessed. Downstream models filter salary_year_avg is not null;
-          none of them restate this rule.
+          Distinct jobs observed with this skill in staging. Runs hot versus any
+          bridge-based count (~13%): orphan pairs are in, by design.

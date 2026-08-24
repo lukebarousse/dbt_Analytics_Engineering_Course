@@ -4,17 +4,19 @@
 
 {{ config(materialized='view') }}
 
--- Q4: average annual salary per skill; the USD rule is inherited from int,
--- never restated — marts only ever filter salary_year_avg is not null
+-- Q4: average annual salary per skill; comparable pay = USD yearly, filtered
+-- on the unit columns (salary_currency, salary_period) the fct table carries
 
 WITH bridge AS (
     SELECT * FROM {{ ref('job_skills_bridge') }}
 ),
 
 job_postings AS (
-    SELECT job_id, salary_year_avg
+    SELECT job_id, salary_avg
     FROM {{ ref('fct_job_postings') }}
-    WHERE salary_year_avg IS NOT NULL
+    WHERE salary_currency = 'USD'
+      AND salary_period = 'year'
+      AND salary_avg IS NOT NULL
 ),
 
 skills AS (
@@ -25,7 +27,7 @@ SELECT
     skills.skill_id,
     skills.display_name,
     skills.category,
-    ROUND(AVG(job_postings.salary_year_avg), 0) AS avg_salary_year,
+    ROUND(AVG(job_postings.salary_avg), 0) AS avg_salary_year,
     COUNT(*) AS salaried_postings
 FROM bridge
 INNER JOIN job_postings USING (job_id)

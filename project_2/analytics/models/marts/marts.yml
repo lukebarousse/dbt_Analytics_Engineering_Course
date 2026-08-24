@@ -35,14 +35,17 @@ models:
         description: Lower bound parsed from the raw salary text; null when absent or unparseable.
       - name: salary_max
         description: Upper bound parsed from the raw salary text; null when absent or unparseable.
+      - name: salary_avg
+        description: >
+          Midpoint of the parsed salary range, unit-agnostic — pair with salary_period
+          and salary_currency filters (the course convention: currency = 'USD' and
+          period = 'year' for comparable annual pay).
       - name: salary_period
         description: Pay period parsed from the raw salary text (year, month, week, day, hour).
       - name: salary_currency
-        description: Leading currency code when present; null means assumed USD.
-      - name: salary_year_avg
         description: >
-          Annualized average salary, USD rows only (hourly x 2080) — computed once
-          in the intermediate layer, inherited here.
+          Currency of the salary columns; 'USD' when no marker was present (documented
+          assumption), null only when the posting has no salary.
       - name: has_health_insurance
         description: Posting extensions mention health insurance.
       - name: has_dental_insurance
@@ -68,8 +71,9 @@ models:
         description: Latest scrape date for the company.
       - name: avg_salary_year
         description: >
-          Average annualized salary across the company's USD-parsed postings;
-          null when none parsed.
+          Average salary_avg across the company's USD yearly postings (conditional
+          aggregation — the filter lives in the AVG, so total_job_postings still
+          counts every job); null when none qualify.
 
   - name: dim_skill
     description: One row per skill; the seed provides the taxonomy, the data provides the counts.
