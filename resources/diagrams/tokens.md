@@ -141,3 +141,24 @@ the mono-title and no-subtitle rules — for this style only:
   two options, the OPTIONS are the zone titles (mono, their semantic colors).
   Flow inside each zone, top to bottom: what it is (icon) → choose it when →
   where OURS lands. The unifying rule reads once at the bottom.
+
+
+## Claude Design sync (how repo ↔ canvas actually works — written 2026-08-24)
+
+NOTHING syncs automatically. The Claude Design project "dbt Course Diagrams"
+holds its own copies; this folder holds its own copies; bytes move only when
+Claude runs DesignSync (pull: get_file → write here; push: finalize_plan →
+write_files). The 2026-08-24 audit found the two sides had drifted since
+~08-21: pushes had happened, pulls never had, and one diagram
+(the P2 yml map) was born ON canvas and had no repo copy at all.
+
+The protocol:
+- Luke edits on canvas freely. Canvas edits are the spec.
+- Claude PULLS + DIFFS before touching any diagram locally.
+- Claude PUSHES after any local diagram change.
+- A diagram born on canvas gets pulled into the repo promptly.
+- Names currently differ by design (Luke, 2026-08-24): canvas keeps the OLD
+  pre-renumber filenames for now; the repo is on X.YY. The mapping is
+  mechanical (1.4_→1.04_, 3.15_→3.01_, 3.31_/3.3_→3.03_, 2.1_→2.02_,
+  3.3_full_build→3.01_, 3.3_yml_map→3.06_). Do not "fix" canvas names
+  without Luke's go.
