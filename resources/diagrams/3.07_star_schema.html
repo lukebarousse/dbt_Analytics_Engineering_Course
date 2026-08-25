@@ -1,0 +1,137 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The star schema</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --goldT:#E3B341; --goldB:#4a3a10;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 50% -8%, rgba(227,179,65,.04), transparent 60%),var(--bg)}
+  .title{position:absolute;left:0;top:34px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .tbl{position:absolute;box-sizing:border-box;background:var(--panel);border:1.5px solid rgba(227,179,65,.5);
+    border-radius:14px;overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .tbl .hd{height:56px;display:flex;align-items:center;gap:12px;padding:0 20px;background:var(--goldB)}
+  .tbl .hd .nm{font-family:var(--mono);font-size:25px;font-weight:700;color:var(--goldT)}
+  .tbl .grain{height:30px;display:flex;align-items:center;padding:0 20px;background:var(--panel2);
+    font-size:17px;color:var(--muted);font-style:italic;border-bottom:1px solid var(--line)}
+  .col{height:30px;display:flex;align-items:center;gap:10px;padding:0 20px;font-family:var(--mono);font-size:18px}
+  .col:nth-child(odd){background:rgba(255,255,255,.015)}
+  .col .ty{margin-left:auto;color:var(--faint);font-size:16px}
+  .key{flex:none;font-family:var(--mono);font-size:13px;font-weight:800;letter-spacing:.05em;
+    border-radius:4px;padding:1.5px 7px}
+  .key.pk{color:var(--dbt);border:1.5px solid rgba(255,105,75,.55);background:rgba(255,105,75,.1)}
+  .key.fk{color:var(--blue);border:1.5px solid rgba(88,166,255,.5);background:rgba(88,166,255,.08)}
+  .sep{height:1px;background:var(--line);margin:4px 14px}
+  .tbl.ghost{border-style:dashed;border-color:rgba(201,206,214,.4);background:transparent}
+  .tbl.ghost .hd{background:transparent;border-bottom:1px dashed var(--line)}
+  .tbl.ghost .hd .nm{color:var(--muted)}
+  .cap{position:absolute;font-size:19px;color:var(--muted)}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+  svg.art text{font-family:var(--mono);font-size:21px;font-weight:700;fill:var(--muted)}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">the star schema</div>
+
+
+  <!-- ============ fct_job_postings (the center) ============ -->
+  <div class="tbl" style="left:710px;top:170px;width:500px">
+    <div class="hd"><span class="nm">fct_job_postings</span></div>
+    <div class="grain">one row per job — latest scrape wins</div>
+    <div class="col"><span class="key pk">PK</span>job_id<span class="ty">string</span></div>
+    <div class="col"><span class="key fk">FK</span>company_name<span class="ty">string</span></div>
+    <div class="col">job_title<span class="ty">string</span></div>
+    <div class="col">search_term<span class="ty">string</span></div>
+    <div class="col">job_location<span class="ty">string</span></div>
+    <div class="col">source_platform<span class="ty">string</span></div>
+    <div class="col">job_schedule_type<span class="ty">string</span></div>
+    <div class="col">job_work_from_home<span class="ty">boolean</span></div>
+    <div class="col"><span class="key fk">FK</span>search_date<span class="ty">date</span></div>
+    <div class="col">salary_min<span class="ty">decimal</span></div>
+    <div class="col">salary_max<span class="ty">decimal</span></div>
+    <div class="col">salary_avg<span class="ty">decimal</span></div>
+    <div class="col">salary_period<span class="ty">string</span></div>
+    <div class="col">salary_currency<span class="ty">string</span></div>
+    <div class="col">has_health_insurance<span class="ty">boolean</span></div>
+    <div class="col">has_dental_insurance<span class="ty">boolean</span></div>
+    <div class="col">has_paid_time_off<span class="ty">boolean</span></div>
+    <div class="col">has_no_degree_mentioned<span class="ty">boolean</span></div>
+  </div>
+
+  <!-- ============ dim_company ============ -->
+  <div class="tbl" style="left:110px;top:240px;width:440px">
+    <div class="hd"><span class="nm">dim_company</span></div>
+    <div class="grain">one row per company</div>
+    <div class="col"><span class="key pk">PK</span>company_name<span class="ty">string</span></div>
+    <div class="col">total_job_postings<span class="ty">bigint</span></div>
+    <div class="col">first_seen_date<span class="ty">date</span></div>
+    <div class="col">last_seen_date<span class="ty">date</span></div>
+    <div class="col">avg_salary_year<span class="ty">decimal</span></div>
+  </div>
+
+  <!-- ============ dim_skill ============ -->
+  <div class="tbl" style="left:1430px;top:170px;width:400px">
+    <div class="hd"><span class="nm">dim_skill</span></div>
+    <div class="grain">one row per skill</div>
+    <div class="col"><span class="key pk">PK</span>skill_id<span class="ty">string</span></div>
+    <div class="col">display_name<span class="ty">string</span></div>
+    <div class="col">category<span class="ty">string</span></div>
+    <div class="col">subcategory<span class="ty">string</span></div>
+    <div class="col">postings_with_skill<span class="ty">bigint</span></div>
+  </div>
+
+  <!-- ============ job_skills_bridge ============ -->
+  <div class="tbl" style="left:1390px;top:540px;width:460px">
+    <div class="hd"><span class="nm">job_skills_bridge</span></div>
+    <div class="grain">one row per (job, skill) pair</div>
+    <div class="col"><span class="key fk">FK</span>job_id<span class="ty">string</span></div>
+    <div class="col"><span class="key fk">FK</span>skill_id<span class="ty">string</span></div>
+    <div class="col">skill_keyword<span class="ty">string</span></div>
+    <div class="col">search_date<span class="ty">date</span></div>
+  </div>
+  <div class="cap" style="left:1390px;top:772px;width:460px;text-align:center">the many-to-many, resolved — a job has many skills, a skill many jobs</div>
+
+  <!-- ============ time_spine (ghost — the finale) ============ -->
+  <div class="tbl ghost" style="left:140px;top:700px;width:380px">
+    <div class="hd"><span class="nm">time_spine</span></div>
+    <div class="grain">one row per calendar day</div>
+    <div class="col"><span class="key pk">PK</span>date_day<span class="ty">date</span></div>
+  </div>
+  <div class="cap" style="left:140px;top:872px;width:380px;text-align:center">🎓 arrives in the finale — the metrics layer's calendar</div>
+
+  <!-- ============ relationships ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <!-- dim_company 1 → ∞ fct (company_name) -->
+    <path d="M 552 343 C 620 343, 640 303, 706 303" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round"/>
+    <text x="570" y="332">1</text>
+    <text x="666" y="294">∞</text>
+    <!-- fct 1 → ∞ bridge (job_id) -->
+    <path d="M 1212 273 C 1330 280, 1350 540, 1386 643" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round"/>
+    <text x="1232" y="262">1</text>
+    <text x="1344" y="640">∞</text>
+    <!-- dim_skill 1 → ∞ bridge (skill_id) -->
+    <path d="M 1832 273 C 1902 340, 1902 580, 1854 673" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round"/>
+    <text x="1852" y="258">1</text>
+    <text x="1868" y="700">∞</text>
+    <!-- time_spine 1 → ∞ fct (search_date), ghosted -->
+    <path d="M 522 775 C 620 775, 640 560, 706 517" fill="none" stroke="#8f8f8f" stroke-width="3" stroke-dasharray="6 8" stroke-linecap="round"/>
+    <text x="540" y="762" fill="#8f8f8f">1</text>
+    <text x="662" y="512" fill="#8f8f8f">∞</text>
+  </svg>
+
+</div>
+</body>
+</html>
