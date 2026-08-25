@@ -77,7 +77,7 @@
     <div class="bar" style="background:var(--silverB);color:var(--silverT)"><span class="num">2</span>intermediate</div>
     <div class="cap" style="color:var(--silverT)">the thinking, stated once 💡</div>
   </div>
-  <div class="card" style="left:882px;top:400px;width:346px;font-size:19px"><span class="g-view"></span>int_job_postings_enriched</div>
+  <div class="card" style="left:882px;top:400px;width:346px;font-size:19px"><span class="g-view"></span>int_skill_observations</div>
 
   <!-- ============ MARTS (gold) ③④ ============ -->
   <div class="tier" style="left:1300px;top:150px;width:580px;height:660px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
@@ -109,16 +109,17 @@
     <!-- raw → staging -->
     <path d="M 360 350 L 458 350" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <path d="M 360 530 L 458 530" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- stg_job_postings → int -->
-    <path d="M 774 350 C 840 350, 830 430, 878 430" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- int → fct -->
-    <path d="M 1230 430 C 1330 430, 1310 320, 1396 320" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- stg_job_postings → fct (staging feeds the star directly) -->
+    <path d="M 774 350 C 1000 338, 1250 324, 1396 320" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- stg_job_skills → int (the re-grain) -->
+    <path d="M 774 530 C 830 530, 834 452, 878 438" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- int → dim_skill (the counts, served) -->
+    <path d="M 1230 430 C 1350 422, 1490 432, 1556 456" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- fct → dim_company (down) · fct → bridge (the right swing) -->
     <path d="M 1450 352 C 1440 390, 1436 410, 1436 436" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <path d="M 1712 352 C 1790 430, 1760 540, 1632 578" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- stg_job_skills → bridge (corridor lane 1) · → dim_skill (lane 2) -->
+    <!-- stg_job_skills → bridge (corridor lane) -->
     <path d="M 600 562 C 612 780, 640 838, 730 838 L 1400 838 C 1470 838, 1494 800, 1495 644" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 680 562 C 692 800, 720 862, 810 862 L 1620 862 C 1670 862, 1688 820, 1690 700 L 1690 506" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- seed → dim_skill (yellow, the long ride up) -->
     <path d="M 362 962 C 700 950, 1400 930, 1600 890 C 1650 878, 1660 700, 1662 506" fill="none" stroke="#F2C94C" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahy)"/>
   </svg>
