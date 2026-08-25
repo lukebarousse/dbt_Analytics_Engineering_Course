@@ -20,3 +20,6 @@ uv.lock
 # os
 .DS_Store
 .claude/
+
+# random
+tokens.md
