@@ -5,9 +5,6 @@ WITH job_postings AS (
 SELECT
     company_name,
     COUNT(*) AS total_job_postings,
-    -- scrape dates, not posting dates: search_date is the course's time axis
-    MIN(search_date) AS first_seen_date,
-    MAX(search_date) AS last_seen_date,
     -- conditional aggregation, not a WHERE: filtering the query would drop
     -- salary-less postings from total_job_postings. only like units average —
     -- USD yearly — the rest stay out rather than guessed

@@ -65,10 +65,6 @@ models:
           - unique
       - name: total_job_postings
         description: Jobs posted by the company (fct is one row per job, so count(*) counts jobs).
-      - name: first_seen_date
-        description: Earliest scrape date for the company (search_date is the course's time axis).
-      - name: last_seen_date
-        description: Latest scrape date for the company.
       - name: avg_salary_year
         description: >
           Average salary_avg across the company's USD yearly postings (conditional
