@@ -1,7 +1,7 @@
--- BONUS 2026-08-19 (Luke's famous-five split): Q2 lives in the supporter tier.
--- Q1+Q3 are core analyses (3.08.1), Q5 is the capstone mart, Q2+Q4 are here.
--- ⚠️ resurrection note: ref('top_paying_jobs') now points at an ANALYSIS —
--- to run this, inline Q1 as a CTE (or restore it as a model first).
+-- BONUS 2026-08-19, split v2 2026-08-26: Q2 lives in the supporter tier.
+-- Q3+Q4 are core analyses (3.08.1), Q5 is the capstone mart, Q1 is here too.
+-- ⚠️ resurrection note: ref('top_paying_jobs') resolves only if Q1 (next door)
+-- is installed as a model alongside this one — or inline Q1 as a CTE.
 -- original marts.yml block preserved at the bottom of this file.
 
 {{ config(materialized='view') }}
