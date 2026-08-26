@@ -93,8 +93,7 @@ models:
   - name: bridge_job_skills
     description: >
       One row per (job_id, skill_id) for jobs present in fct_job_postings —
-      referential integrity guaranteed by construction. search_date rides along
-      from fct as the bridge's agg time dimension for the metrics layer.
+      referential integrity guaranteed by construction.
     columns:
       - name: job_id
         description: Job carrying the skill; every value exists in fct_job_postings.
@@ -114,8 +113,6 @@ models:
                 field: skill_id
       - name: skill_keyword
         description: Raw skill keyword, trimmed upstream.
-      - name: search_date
-        description: Winning-scrape date carried from fct_job_postings.
 
   - name: optimal_skills
     description: Q5 — skills that are both in demand (floor of 100 jobs) and well paid.

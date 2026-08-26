@@ -15,10 +15,6 @@ models:
     marts:
       +materialized: table
       +schema: marts
-    utilities:
-      +materialized: table
-      +schema: marts
-
 seeds:
   analytics:
     +schema: seeds

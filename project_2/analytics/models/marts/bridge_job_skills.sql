@@ -11,8 +11,6 @@ job_postings AS (
 SELECT
     job_id,
     skill_id,
-    skill_keyword,
-    -- carried from fct: the metrics layer needs an agg time dimension on the bridge
-    job_postings.search_date
+    skill_keyword
 FROM job_skills
 INNER JOIN job_postings USING (job_id)

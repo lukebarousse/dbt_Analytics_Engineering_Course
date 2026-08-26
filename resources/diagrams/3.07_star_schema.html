@@ -59,7 +59,7 @@
     <div class="col">source_platform<span class="ty">string</span></div>
     <div class="col">job_schedule_type<span class="ty">string</span></div>
     <div class="col">job_work_from_home<span class="ty">boolean</span></div>
-    <div class="col"><span class="key fk">FK</span>search_date<span class="ty">date</span></div>
+    <div class="col">search_date<span class="ty">date</span></div>
     <div class="col">salary_min<span class="ty">decimal</span></div>
     <div class="col">salary_max<span class="ty">decimal</span></div>
     <div class="col">salary_avg<span class="ty">decimal</span></div>
@@ -102,14 +102,6 @@
   </div>
   <div class="cap" style="left:1390px;top:772px;width:460px;text-align:center">the many-to-many, resolved — a job has many skills, a skill many jobs</div>
 
-  <!-- ============ time_spine (ghost — the finale) ============ -->
-  <div class="tbl ghost" style="left:140px;top:580px;width:380px">
-    <div class="hd"><span class="nm">time_spine</span></div>
-    <div class="grain">one row per calendar day</div>
-    <div class="col"><span class="key pk">PK</span>date_day<span class="ty">date</span></div>
-  </div>
-  <div class="cap" style="left:140px;top:724px;width:380px;text-align:center">🎓 arrives in the finale — the metrics layer's calendar</div>
-
   <!-- ============ relationships ============ -->
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
@@ -119,12 +111,6 @@
       <marker id="many" viewBox="0 0 30 30" markerWidth="30" markerHeight="30" refX="25" refY="15" orient="auto" markerUnits="userSpaceOnUse">
         <path d="M3 15 L25 4 M3 15 L25 15 M3 15 L25 26" stroke="#EDEDED" stroke-width="3" fill="none" stroke-linecap="round"/>
       </marker>
-      <marker id="oneG" viewBox="0 0 26 26" markerWidth="26" markerHeight="26" refX="13" refY="13" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
-        <path d="M13 5 L13 21" stroke="#8f8f8f" stroke-width="3" fill="none" stroke-linecap="round"/>
-      </marker>
-      <marker id="manyG" viewBox="0 0 30 30" markerWidth="30" markerHeight="30" refX="25" refY="15" orient="auto" markerUnits="userSpaceOnUse">
-        <path d="M3 15 L25 4 M3 15 L25 15 M3 15 L25 26" stroke="#8f8f8f" stroke-width="3" fill="none" stroke-linecap="round"/>
-      </marker>
     </defs>
     <!-- dim_company 1 → ∞ fct (company_name) -->
     <path d="M 552 343 C 620 343, 640 303, 706 303" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-start="url(#one)" marker-end="url(#many)"/>
@@ -132,8 +118,6 @@
     <path d="M 1212 273 C 1330 273, 1290 643, 1386 643" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-start="url(#one)" marker-end="url(#many)"/>
     <!-- dim_skill 1 → ∞ bridge (skill_id) -->
     <path d="M 1832 273 C 1908 273, 1908 673, 1854 673" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-start="url(#one)" marker-end="url(#many)"/>
-    <!-- time_spine 1 → ∞ fct (search_date), ghosted -->
-    <path d="M 522 655 C 620 655, 616 497, 706 497" fill="none" stroke="#8f8f8f" stroke-width="3" stroke-dasharray="6 8" stroke-linecap="round" marker-start="url(#oneG)" marker-end="url(#manyG)"/>
   </svg>
 
 </div>
