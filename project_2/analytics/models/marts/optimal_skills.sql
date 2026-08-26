@@ -4,7 +4,7 @@
 -- one-posting salary outliers out of the ranking.
 -- the capstone mart — self-contained on the star (fct ⋈ bridge ⋈ dim_skill):
 -- demand counts ALL jobs, the salary average only the salaried ones (avg()
--- skips nulls itself). Q1/Q3 live in analyses/, Q2/Q4 in the supporter bonus.
+-- skips nulls itself). Q3/Q4 live in analyses/, Q1/Q2 in the supporter bonus.
 
 WITH bridge AS (
     SELECT * FROM {{ ref('bridge_job_skills') }}
