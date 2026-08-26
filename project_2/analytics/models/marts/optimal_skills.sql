@@ -27,16 +27,15 @@ skills AS (
 )
 
 SELECT
-    skills.skill_id,
     skills.display_name,
     skills.category,
     COUNT(DISTINCT bridge.job_id) AS demand_count,
-    ROUND(COUNT(DISTINCT bridge.job_id) / (SELECT COUNT(*) FROM job_postings), 4) AS demand_pct,
+    ROUND(demand_count / (SELECT COUNT(*) FROM job_postings) * 100, 1) AS demand_pct,
     ROUND(AVG(job_postings.salary_year_usd), 0) AS avg_salary_year
 FROM bridge
 INNER JOIN job_postings USING (job_id)
 INNER JOIN skills USING (skill_id)
-GROUP BY skills.skill_id, skills.display_name, skills.category
+GROUP BY skills.display_name, skills.category
 HAVING COUNT(DISTINCT bridge.job_id) >= 100
    AND AVG(job_postings.salary_year_usd) IS NOT NULL
 ORDER BY avg_salary_year DESC, demand_count DESC
