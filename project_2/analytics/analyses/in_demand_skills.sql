@@ -22,13 +22,12 @@ skills AS (
 )
 
 SELECT
-    skills.skill_id,
-    skills.display_name,
-    skills.category,
-    COUNT(DISTINCT bridge.job_id) AS demand_count,
-    ROUND(COUNT(DISTINCT bridge.job_id) / (SELECT COUNT(*) FROM job_postings), 4) AS demand_pct
+    display_name,
+    category,
+    COUNT(DISTINCT job_id) AS demand_count,
+    ROUND(demand_count / (SELECT COUNT(*) FROM job_postings) * 100, 1) AS demand_pct
 FROM bridge
-INNER JOIN job_postings USING (job_id)
 INNER JOIN skills USING (skill_id)
-GROUP BY skills.skill_id, skills.display_name, skills.category
+INNER JOIN job_postings USING (job_id)
+GROUP BY skill_id, skills.display_name, skills.category
 ORDER BY demand_count DESC
