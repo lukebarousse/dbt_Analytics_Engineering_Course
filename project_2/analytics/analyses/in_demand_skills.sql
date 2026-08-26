@@ -25,7 +25,7 @@ SELECT
     display_name,
     category,
     COUNT(DISTINCT job_id) AS demand_count,
-    ROUND(demand_count / (SELECT COUNT(*) FROM job_postings) * 100, 1) AS demand_pct
+    ROUND(demand_count / (SELECT COUNT(DISTINCT job_id) FROM job_postings) * 100, 1) AS demand_pct
 FROM bridge
 INNER JOIN skills USING (skill_id)
 INNER JOIN job_postings USING (job_id)

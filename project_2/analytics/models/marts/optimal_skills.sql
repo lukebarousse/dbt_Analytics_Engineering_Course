@@ -30,7 +30,7 @@ SELECT
     skills.display_name,
     skills.category,
     COUNT(DISTINCT bridge.job_id) AS demand_count,
-    ROUND(demand_count / (SELECT COUNT(*) FROM job_postings) * 100, 1) AS demand_pct,
+    ROUND(demand_count / (SELECT COUNT(DISTINCT job_id) FROM job_postings) * 100, 1) AS demand_pct,
     ROUND(AVG(job_postings.salary_year_usd), 0) AS avg_salary_year
 FROM bridge
 INNER JOIN job_postings USING (job_id)
