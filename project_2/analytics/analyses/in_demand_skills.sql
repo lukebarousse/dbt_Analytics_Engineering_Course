@@ -14,7 +14,7 @@ WITH job_postings AS (
 ),
 
 bridge AS (
-    SELECT * FROM {{ ref('job_skills_bridge') }}
+    SELECT * FROM {{ ref('bridge_job_skills') }}
 ),
 
 skills AS (

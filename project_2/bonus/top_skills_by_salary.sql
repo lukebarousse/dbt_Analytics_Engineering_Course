@@ -8,7 +8,7 @@
 -- on the unit columns (salary_currency, salary_period) the fct table carries
 
 WITH bridge AS (
-    SELECT * FROM {{ ref('job_skills_bridge') }}
+    SELECT * FROM {{ ref('bridge_job_skills') }}
 ),
 
 job_postings AS (

@@ -7,7 +7,7 @@
 -- skips nulls itself). Q1/Q3 live in analyses/, Q2/Q4 in the supporter bonus.
 
 WITH bridge AS (
-    SELECT * FROM {{ ref('job_skills_bridge') }}
+    SELECT * FROM {{ ref('bridge_job_skills') }}
 ),
 
 job_postings AS (

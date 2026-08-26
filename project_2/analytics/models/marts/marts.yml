@@ -90,7 +90,7 @@ models:
           Distinct postings observed with this skill; 0 when a seeded skill
           never appears in the data.
 
-  - name: job_skills_bridge
+  - name: bridge_job_skills
     description: >
       One row per (job_id, skill_id) for jobs present in fct_job_postings —
       referential integrity guaranteed by construction. search_date rides along

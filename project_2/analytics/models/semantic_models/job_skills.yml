@@ -3,7 +3,7 @@
 semantic_models:
   - name: job_skills
     description: One row per (job, skill) pair, fct jobs only — the bridge guarantees every job here exists in fct.
-    model: ref('job_skills_bridge')
+    model: ref('bridge_job_skills')
     defaults:
       agg_time_dimension: search_date
     # the grain is the (job, skill) PAIR — no single column is primary, so the
