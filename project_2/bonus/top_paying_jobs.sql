@@ -1,5 +1,5 @@
 -- BONUS 2026-08-26 (Luke's split, v2): Q1 lives in the supporter tier.
--- Q3+Q4 are the core analyses (3.08.1), Q5 is the capstone mart, Q2 is here too.
+-- Q3+Q4 are the core analyses (3.08.2/3.08.3), Q5 is the capstone mart, Q2 is here too.
 -- born a core analysis; body unchanged — runs as an analysis or installs as a model.
 
 WITH job_postings AS (

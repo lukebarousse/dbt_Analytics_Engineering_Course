@@ -1,5 +1,5 @@
 -- Q4: the highest-paying skills — average annual salary per skill.
--- a QUESTION, not a model — it lives in analyses/ (3.08.1): dbt compiles it,
+-- a QUESTION, not a model — it lives in analyses/ (3.08.3): dbt compiles it,
 -- the SQL editor runs it, and it never ships as a table.
 -- comparable pay = USD yearly, filtered on the unit columns
 -- (salary_currency, salary_period) the fct table carries.
