@@ -56,8 +56,12 @@ models:
         description: Raw salary text, kept unparsed; the snapshot lesson diffs it across scrapes.
       - name: salary_min
         description: Lower bound parsed from the salary text; the single value when no range is given.
+        data_tests:
+          - non_negative
       - name: salary_max
         description: Upper bound parsed from the salary text; the single value when no range is given.
+        data_tests:
+          - non_negative
       - name: salary_avg
         description: >
           THE standard salary measure: midpoint of the parsed range (a single value is its
