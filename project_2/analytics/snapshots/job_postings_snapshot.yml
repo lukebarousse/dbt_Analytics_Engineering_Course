@@ -6,6 +6,11 @@
 # current-row pick) lives in the ephemeral input model stg_job_postings_current.
 snapshots:
   - name: job_postings_snapshot
+    description: >
+      SCD2 history of posting content: one row per (job_id, version), with
+      dbt_valid_from/to carrying data time via updated_at. New version only
+      when a check_cols column changes; current row has dbt_valid_to null.
+      Queried by analyses/salary_changers.sql.
     relation: ref('stg_job_postings_current')
     config:
       schema: snapshots

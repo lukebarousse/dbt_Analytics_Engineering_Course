@@ -1,0 +1,11 @@
+# OPTIONAL — this file is not required for anything to run. Singular tests
+# accept description properties from dbt 1.9; docs-only. Not covered in the
+# lessons — kept as a reference pattern for going above and beyond.
+data_tests:
+  - name: assert_salaries_sane
+    description: >
+      Naive sanity bound on parsed yearly salaries (> 1,000,000 flags).
+      Runs at warn on purpose: most flags are the test's own USD assumption
+      meeting ₹/ZAR/PKR postings, and buried in them is real garbage — the
+      Fraser Health CA$1.06M–1.22M row later corrected to CA$104K–145K.
+      Points at staging because fct keeps only the corrected latest scrape.

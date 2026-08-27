@@ -1,0 +1,21 @@
+# OPTIONAL — this file is not required for anything to run. Descriptions only,
+# for `dbt docs generate`; deliberately no tests here (dim_skill's PK tests
+# already police skill_id downstream). Not covered in the lessons — kept as a
+# reference pattern for going above and beyond.
+seeds:
+  - name: skill_categories
+    description: >
+      Hand-maintained mapping of every skill_id to a display name and
+      category/subcategory rollup. The spine of dim_skill: a LEFT JOIN from
+      here guarantees every cataloged skill gets a row, observed in postings
+      or not. Loaded with dbt seed; students fetch the CSV from
+      lukeb.co/skill-categories.
+    columns:
+      - name: skill_id
+        description: Skill key; joins stg_job_skills and anchors dim_skill's PK.
+      - name: display_name
+        description: Human-readable skill name ('PostgreSQL', not 'postgresql').
+      - name: category
+        description: Top-level rollup (Programming, Cloud, Applications, ...).
+      - name: subcategory
+        description: Finer rollup within the category.
