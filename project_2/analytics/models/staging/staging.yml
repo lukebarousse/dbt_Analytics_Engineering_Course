@@ -84,6 +84,11 @@ models:
       - name: has_no_degree_mentioned
         description: Posting lists No degree mentioned among its extensions.
 
+  - name: stg_job_postings_current
+    description: >
+      Ephemeral snapshot input: each job's current row as of the as_of cutoff
+      (the time machine). Inlined into job_postings_snapshot; never built.
+
   - name: stg_job_skills
     description: >
       One row per (job_id, skill_id) pair, straight off the raw table. Deliberately boring;

@@ -1,0 +1,28 @@
+# SCD2 history of each posting's own fields (2,756 jobs change salary text
+# across scrapes). check_cols is posting content only: scrape-derived columns
+# (searched_at, search_*) shift on every re-scrape and would version every row.
+# updated_at makes dbt_valid_from/to carry data time, not run time, so the
+# as_of replays write honest history. custom SELECT logic (the time machine +
+# current-row pick) lives in the ephemeral input model stg_job_postings_current.
+snapshots:
+  - name: job_postings_snapshot
+    relation: ref('stg_job_postings_current')
+    config:
+      schema: snapshots
+      unique_key: job_id
+      strategy: check
+      check_cols:
+        - job_title
+        - company_name
+        - job_location
+        - job_schedule_type
+        - job_work_from_home
+        - salary_min
+        - salary_max
+        - salary_period
+        - salary_currency
+        - has_health_insurance
+        - has_dental_insurance
+        - has_paid_time_off
+        - has_no_degree_mentioned
+      updated_at: searched_at
