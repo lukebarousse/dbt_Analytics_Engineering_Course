@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Where dbt Goes Next</title>
+<title>What to Learn Next with dbt</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
@@ -32,9 +32,8 @@
   .card.dbt .hd{color:var(--dbt)}
   .card.blue{border-color:rgba(88,166,255,.5)}
   .card.blue .hd{color:var(--blue)}
-  .card.ghostcard{border:1.5px dashed rgba(255,105,75,.55);background:transparent;box-shadow:none}
-  .card.ghostcard .hd{color:var(--dbt)}
-  .row{display:flex;align-items:center;gap:12px;padding:5px 20px;font-family:var(--mono);font-size:20px;color:var(--text)}
+  .row{display:flex;align-items:center;gap:12px;padding:5px 20px;font-size:21px;color:var(--text)}
+  .row.code{font-family:var(--mono);font-size:19px;color:var(--muted)}
   .chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:19px;font-weight:600;
     color:var(--blue);border:1.5px solid rgba(88,166,255,.5);background:rgba(88,166,255,.08);
     border-radius:6px;padding:3px 12px}
@@ -46,7 +45,7 @@
 <body>
 <div class="stage">
 
-  <div class="title">Where dbt Goes Next</div>
+  <div class="title">What to Learn Next with dbt</div>
 
   <!-- ================= ZONE 1: what you built ================= -->
   <div class="zone solid" style="left:60px;top:190px;width:470px;height:800px"></div>
@@ -54,10 +53,10 @@
 
   <div class="card" style="left:100px;top:300px;width:390px;height:246px">
     <div class="hd">📁 the project</div>
-    <div class="row">🧱 models — staging → marts</div>
-    <div class="row">🌱 seeds &nbsp;·&nbsp; 📸 snapshots</div>
-    <div class="row"><span style="color:var(--ok)">✓</span> tests &nbsp;·&nbsp; 📖 docs</div>
-    <div class="row" style="color:var(--muted)">⚙️ macros &nbsp;·&nbsp; 🔍 analyses</div>
+    <div class="row mono" style="font-size:20px">🧱 models — staging → marts</div>
+    <div class="row mono" style="font-size:20px">🌱 seeds &nbsp;·&nbsp; 📸 snapshots</div>
+    <div class="row mono" style="font-size:20px"><span style="color:var(--ok)">✓</span> tests &nbsp;·&nbsp; 📖 docs</div>
+    <div class="row mono" style="font-size:20px;color:var(--muted)">⚙️ macros &nbsp;·&nbsp; 🔍 analyses</div>
   </div>
 
   <!-- mini star (textless glyph) -->
@@ -82,47 +81,42 @@
   <div class="zone ghost" style="left:650px;top:190px;width:560px;height:800px"></div>
   <div class="ztitle" style="left:650px;top:214px;width:560px;color:var(--dbt)">The Semantic Layer</div>
 
-  <div class="card dbt" style="left:695px;top:310px;width:470px;height:130px">
+  <div class="card dbt" style="left:695px;top:320px;width:470px;height:158px">
     <div class="hd">📐 semantic models</div>
-    <div class="row">entities · dimensions · measures</div>
-    <div class="row" style="color:var(--muted)">what your marts MEAN</div>
+    <div class="row">yml describing what marts mean</div>
+    <div class="row code">salary_avg → a measure</div>
+    <div class="row code">category → a dimension</div>
   </div>
 
-  <div class="card dbt" style="left:695px;top:510px;width:470px;height:96px">
+  <div class="card dbt" style="left:695px;top:558px;width:470px;height:128px">
     <div class="hd">🎯 metrics</div>
-    <div class="row" style="color:var(--muted)">every number defined once</div>
+    <div class="row">the numbers, defined once</div>
+    <div class="row code">avg_yearly_salary → one truth</div>
   </div>
 
-  <div class="card dbt" style="left:695px;top:676px;width:470px;height:96px">
+  <div class="card dbt" style="left:695px;top:766px;width:470px;height:128px">
     <div class="hd">⚙️ MetricFlow</div>
-    <div class="row" style="color:var(--muted)">writes the SQL for you</div>
+    <div class="row">you ask, it writes the SQL</div>
+    <div class="row code">avg_yearly_salary by skill</div>
   </div>
-
-  <div class="cap mono" style="left:650px;top:900px;width:560px;font-size:19px;color:var(--faint)">📁 bonus/semantic_layer — starter included</div>
 
   <!-- ================= ZONE 3: who consumes ================= -->
   <div class="zone solid" style="left:1330px;top:190px;width:530px;height:800px"></div>
   <div class="ztitle" style="left:1330px;top:214px;width:530px">Who Consumes</div>
 
-  <div class="card blue" style="left:1372px;top:310px;width:446px;height:150px">
+  <div class="card blue" style="left:1372px;top:340px;width:446px;height:158px">
     <div class="hd">📊 BI tools</div>
     <div class="row"><span class="chip">Tableau</span><span class="chip">Hex</span><span class="chip">Excel</span></div>
-    <div class="row" style="color:var(--muted)">every tool, one number</div>
+    <div class="row">every dashboard, one number</div>
   </div>
 
-  <div class="card blue" style="left:1372px;top:540px;width:446px;height:150px">
+  <div class="card blue" style="left:1372px;top:600px;width:446px;height:158px">
     <div class="hd">🤖 AI agents</div>
     <div class="row"><span class="chip">MCP server</span></div>
-    <div class="row" style="color:var(--muted)">no more guessed logic</div>
+    <div class="row">answers with YOUR definitions</div>
   </div>
 
-  <div class="cap" style="left:1330px;top:730px;width:530px">they query definitions, not tables</div>
-
-  <div class="card ghostcard" style="left:1372px;top:800px;width:446px;height:136px">
-    <div class="hd">🔗 exposures</div>
-    <div class="row">declared back in your project</div>
-    <div class="row" style="color:var(--muted)">lineage AI can't guess</div>
-  </div>
+  <div class="cap" style="left:1330px;top:830px;width:530px">they query definitions, not tables</div>
 
   <!-- ================= cables ================= -->
   <svg class="art" viewBox="0 0 1920 1080">
@@ -135,13 +129,13 @@
       </marker>
     </defs>
     <!-- star -> semantic models (warehouse data: gold) -->
-    <path d="M 484 752 C 590 752, 570 375, 688 375" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrY)"/>
+    <path d="M 484 752 C 600 752, 560 399, 688 399" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrY)"/>
     <!-- semantic models -> metrics -> MetricFlow (dbt machinery: orange) -->
-    <path d="M 930 442 L 930 506" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrO)"/>
-    <path d="M 930 608 L 930 672" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrO)"/>
+    <path d="M 930 478 L 930 554" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrO)"/>
+    <path d="M 930 686 L 930 762" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrO)"/>
     <!-- MetricFlow -> BI / AI -->
-    <path d="M 1167 724 C 1280 724, 1250 385, 1368 385" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrO)"/>
-    <path d="M 1167 724 C 1280 724, 1260 615, 1368 615" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrO)"/>
+    <path d="M 1167 830 C 1290 830, 1240 419, 1368 419" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrO)"/>
+    <path d="M 1167 830 C 1280 830, 1260 679, 1368 679" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#arrO)"/>
   </svg>
 
 </div>
