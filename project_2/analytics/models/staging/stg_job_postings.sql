@@ -16,7 +16,7 @@ WITH source AS (
     -- on the 151,147 failure rows and NULL otherwise, so IS NOT TRUE keeps the
     -- good rows (= false would null-compare them all away). raw keeps the record.
     WHERE error IS NOT TRUE
-    -- the earned cut (3.09.3): 6,255 id-less incident-window postings — real rows,
+    -- the earned cut (3.09.4): 6,255 id-less incident-window postings — real rows,
     -- dropped with eyes open; an id-less row can't be deduped or joined
       AND job_id IS NOT NULL
 

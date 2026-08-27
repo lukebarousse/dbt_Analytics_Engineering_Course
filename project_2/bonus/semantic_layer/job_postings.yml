@@ -1,7 +1,7 @@
 # search_date is the agg time dimension: never NULL, and the course's one time axis
 semantic_models:
   - name: job_postings
-    description: One row per job (fct grain — the 3.09.3 dedupe already applied).
+    description: One row per job (fct grain — the 3.09.4 dedupe already applied).
     model: ref('fct_job_postings')
     defaults:
       agg_time_dimension: search_date

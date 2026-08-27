@@ -36,7 +36,7 @@
 SELECT * FROM {{ ref('stg_job_postings') }}
 -- explicit cast: run_started_at renders with a +00:00 offset
 WHERE searched_at <= CAST('{{ var("as_of", run_started_at) }}' AS TIMESTAMP)
--- 3.09.3's dedupe pattern, new job: pick the current row as of the cutoff.
+-- 3.09.4's dedupe pattern, new job: pick the current row as of the cutoff.
 -- job_title tiebreaker: one job_id carries two rows with identical searched_at
 QUALIFY ROW_NUMBER() OVER (
     PARTITION BY job_id
