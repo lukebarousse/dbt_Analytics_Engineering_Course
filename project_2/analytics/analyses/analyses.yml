@@ -1,0 +1,26 @@
+# OPTIONAL — this file is not required for anything to run. Analyses are
+# compiled, never built or tested, so properties here are documentation only
+# (they surface in `dbt docs generate`). Not covered in the lessons — kept as
+# a reference pattern for going above and beyond.
+analyses:
+  - name: jinja_practice
+    description: >
+      The 3.04 Jinja scratchpad: compiled by dbt, never built. Where the
+      slugify macro got tested before it touched a real model.
+
+  - name: in_demand_skills
+    description: >
+      Q3 — skill demand across the whole star (fct ⋈ bridge ⋈ dim_skill).
+      A question, not a model; scope to one role with
+      --vars 'job_title: Data Analyst'.
+
+  - name: top_skills_by_salary
+    description: >
+      Q4 — highest-paying skills: average annual salary per skill, filtered
+      to comparable pay (USD + yearly) on the fct unit columns.
+
+  - name: salary_changers
+    description: >
+      The snapshot payoff: LAG over dbt_valid_from to list postings whose
+      salary changed between scrapes, biggest correction first. Needs the
+      snapshot run at two as_of points before any job has two versions.

@@ -1,0 +1,56 @@
+# OPTIONAL — this file is not required for anything to run. Macros work
+# undocumented; properties like these only feed `dbt docs generate`, so the
+# docs site can explain what each macro does and takes. Not covered in the
+# lessons — kept as a reference pattern for going above and beyond.
+macros:
+  - name: parse_salary
+    description: >
+      Renders the regex chain that parses one numeric bound out of raw salary
+      text ('$100K–$186K a year' → 100000 / 186000): en-dash ranges, single
+      values (both bounds), K/M suffixes, commas, decimals. Currency prefixes
+      are ignored here — salary_currency owns them. Every cast is a try_cast
+      so unprofiled shapes degrade to null instead of erroring. Expects the
+      raw job_salary column in scope.
+    arguments:
+      - name: part
+        type: string
+        description: "'min' or 'max' — which end of the range to extract."
+
+  - name: slugify
+    description: >
+      Lowercases a label and swaps spaces for underscores so it can name a
+      column ('Paid time off' → paid_time_off). Called by staging's
+      extension-keyword loop and the jinja_practice sandbox.
+    arguments:
+      - name: text
+        type: string
+        description: The raw label to turn into a column-safe slug.
+
+  - name: generate_schema_name
+    description: >
+      Override of dbt's built-in: the else-branch returns the declared schema
+      name exactly, instead of gluing it onto the profile schema
+      (default_staging → staging). Environments separate by catalog, so the
+      glue serves no purpose here. The name must match the built-in exactly —
+      that is what makes it an override.
+    arguments:
+      - name: custom_schema_name
+        type: string
+        description: The schema declared in config/dbt_project.yml, if any.
+      - name: node
+        type: object
+        description: The model being built (unused; kept for the built-in's signature).
+
+  - name: test_non_negative
+    description: >
+      The non_negative custom generic test (tests/generic/non_negative.sql).
+      A {% raw %}{% test x %}{% endraw %} block registers as macro test_x,
+      so it documents here like any macro. Returns rows where the column is
+      negative; zero rows = pass.
+    arguments:
+      - name: model
+        type: relation
+        description: Injected by dbt — the model under test.
+      - name: column_name
+        type: string
+        description: Injected by dbt — the column the test is attached to.
