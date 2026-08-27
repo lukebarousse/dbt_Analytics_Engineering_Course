@@ -41,6 +41,10 @@ macros:
         type: object
         description: The model being built (unused; kept for the built-in's signature).
 
+  # documented HERE, not tests/tests.yml: that file documents test NODES
+  # (the singular test, or generated instances). a generic test DEFINITION
+  # never becomes a node — the test block registers as macro test_x, so only
+  # macro properties can bind to it.
   - name: test_non_negative
     description: >
       The non_negative custom generic test (tests/generic/non_negative.sql).
