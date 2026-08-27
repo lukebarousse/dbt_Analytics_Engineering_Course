@@ -1,0 +1,54 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SCD Types</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --blue:#58A6FF;
+    --t0:#E5705B; --t1:#57AB5A; --t2:#58A6FF; --t3:#E8883A;
+    --t4:#B083F0; --t5:#45B8AC; --t6:#E06C9F;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:52px;width:1920px;text-align:center;
+    font-family:var(--hand);font-size:92px;font-weight:700;color:var(--blue)}
+  .num{position:absolute;width:380px;text-align:center;font-family:var(--hand);font-size:80px;font-weight:700;line-height:1}
+  .card{position:absolute;width:380px;height:150px;box-sizing:border-box;border:2.5px solid;border-radius:16px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    font-family:var(--hand);font-size:37px;font-weight:600;line-height:1.15}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Slowly Changing Dimensions</div>
+
+  <!-- row 1: types 0–3 -->
+  <div class="num" style="left:110px;top:268px;color:var(--t0)">0</div>
+  <div class="num" style="left:550px;top:268px;color:var(--t1)">1</div>
+  <div class="num" style="left:990px;top:268px;color:var(--t2)">2</div>
+  <div class="num" style="left:1430px;top:268px;color:var(--t3)">3</div>
+
+  <div class="card" style="left:110px;top:368px;border-color:var(--t0);color:var(--t0)"><span>Type 0:</span><span>Fixed Dimension</span></div>
+  <div class="card" style="left:550px;top:368px;border-color:var(--t1);color:var(--t1)"><span>Type 1:</span><span>Overwrite</span></div>
+  <div class="card" style="left:990px;top:368px;border-color:var(--t2);color:var(--t2)"><span>Type 2:</span><span>Add New Row</span></div>
+  <div class="card" style="left:1430px;top:368px;border-color:var(--t3);color:var(--t3)"><span>Type 3:</span><span>Add New Attribute</span></div>
+
+  <!-- row 2: types 4–6, centered -->
+  <div class="num" style="left:330px;top:648px;color:var(--t4)">4</div>
+  <div class="num" style="left:770px;top:648px;color:var(--t5)">5</div>
+  <div class="num" style="left:1210px;top:648px;color:var(--t6)">6</div>
+
+  <div class="card" style="left:330px;top:748px;border-color:var(--t4);color:var(--t4)"><span>Type 4:</span><span>History Table</span></div>
+  <div class="card" style="left:770px;top:748px;border-color:var(--t5);color:var(--t5)"><span>Type 5:</span><span>Type 1/2 Hybrid</span></div>
+  <div class="card" style="left:1210px;top:748px;border-color:var(--t6);color:var(--t6)"><span>Type 6:</span><span>Type 1/2/3 Hybrid</span></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SCD Examples: Types 3–4</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#4a4a4a;
+    --text:#D3D3D3; --muted:#9B9B9B; --blue:#58A6FF;
+    --t3:#E8883A; --t4:#B083F0;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:30px;width:1920px;text-align:center;
+    font-family:var(--hand);font-size:76px;font-weight:700;color:var(--blue)}
+  .sub{position:absolute;left:0;top:128px;width:1920px;text-align:center;
+    font-family:var(--hand);font-size:32px;font-weight:600;color:var(--muted)}
+  .lbl{position:absolute;left:70px;width:330px;font-family:var(--hand);font-weight:700;font-size:40px;line-height:1.1}
+  .lbl .cap{display:block;margin-top:10px;font-size:26px;font-weight:600;color:var(--muted)}
+  .tname{position:absolute;font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)}
+  table.d{position:absolute;border-collapse:collapse;font-family:var(--mono);font-size:20px}
+  table.d th{border:1.5px solid var(--line);background:#262626;color:#e8e8e8;font-weight:700;padding:10px 18px;text-align:left}
+  table.d td{border:1.5px solid var(--line);color:var(--text);padding:10px 18px;white-space:nowrap}
+  .rule{position:absolute;left:70px;right:70px;border-top:2px dotted #3d3d3d}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">SCD Table Examples</div>
+  <div class="sub">Types 3–4 · how each one records Facebook becoming Meta</div>
+
+  <!-- ============ Type 3 ============ -->
+  <div class="lbl" style="top:262px;color:var(--t3)">Type 3:<br>Add New Attribute<span class="cap">remembers exactly one change</span></div>
+  <div class="tname" style="left:440px;top:236px">dim_company</div>
+  <table class="d" style="left:440px;top:270px">
+    <tr><th>company_sk</th><th>company_id</th><th>current_name</th><th>previous_name</th><th>current_link</th><th>previous_link</th></tr>
+    <tr><td>101</td><td>C123</td><td>Meta</td><td>Facebook</td><td>https://meta.com</td><td>https://facebook.com</td></tr>
+  </table>
+
+  <div class="rule" style="top:438px"></div>
+
+  <!-- ============ Type 4 ============ -->
+  <div class="lbl" style="top:560px;color:var(--t4)">Type 4:<br>History Table<span class="cap">current stays small; versions live aside</span></div>
+  <div class="tname" style="left:440px;top:490px">dim_company — current only</div>
+  <table class="d" style="left:440px;top:524px">
+    <tr><th>company_sk</th><th>company_id</th><th>name</th><th>link</th></tr>
+    <tr><td>101</td><td>C123</td><td>Meta</td><td>https://meta.com</td></tr>
+  </table>
+  <div class="tname" style="left:440px;top:668px">dim_company_history — old versions</div>
+  <table class="d" style="left:440px;top:702px">
+    <tr><th>company_id</th><th>name</th><th>link</th><th>valid_from</th><th>valid_to</th></tr>
+    <tr><td>C123</td><td>Facebook</td><td>https://facebook.com</td><td>2004-02-04</td><td>2021-10-28</td></tr>
+  </table>
+
+</div>
+</body>
+</html>
