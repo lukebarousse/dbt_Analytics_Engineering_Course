@@ -1,0 +1,63 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Staging vs Snapshot</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#4a4a4a;
+    --text:#D3D3D3; --muted:#9B9B9B; --blue:#58A6FF;
+    --silverT:#C9CED6;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:30px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .sub{position:absolute;left:0;top:126px;width:1920px;text-align:center;
+    font-family:var(--hand);font-size:32px;font-weight:600;color:var(--muted)}
+  .lbl{position:absolute;left:70px;width:330px;font-family:var(--hand);font-weight:700;font-size:40px;line-height:1.1}
+  .lbl .cap{display:block;margin-top:10px;font-size:27px;font-weight:600;color:var(--muted)}
+  .tname{position:absolute;font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)}
+  table.d{position:absolute;border-collapse:collapse;font-family:var(--mono);font-size:20px}
+  table.d th{border:1.5px solid var(--line);background:#262626;color:#e8e8e8;font-weight:700;padding:10px 16px;text-align:left}
+  table.d th.new{background:#1d2a3d;color:var(--blue)}
+  table.d td{border:1.5px solid var(--line);color:var(--text);padding:10px 16px;white-space:nowrap}
+  table.d td.new{color:var(--blue);font-weight:700}
+  .note{position:absolute;font-family:var(--hand);font-size:26px;font-weight:600;color:var(--muted)}
+  .rule{position:absolute;left:70px;right:70px;border-top:2px dotted #3d3d3d}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">staging vs the snapshot</div>
+  <div class="sub">the same posting, in both tables</div>
+
+  <!-- ============ staging ============ -->
+  <div class="lbl" style="top:266px;color:var(--silverT)">staging<span class="cap">a pile of scrapes — nothing says which row is current</span></div>
+  <div class="tname" style="left:440px;top:220px">stg_job_postings</div>
+  <table class="d" style="left:440px;top:254px">
+    <tr><th>job_id</th><th>job_title</th><th>salary_min</th><th>salary_max</th><th>searched_at</th></tr>
+    <tr><td>1318ef…</td><td>Senior Data Engineer</td><td>1,060,000</td><td>1,220,000</td><td>2025-09-01</td></tr>
+    <tr><td>1318ef…</td><td>Senior Data Engineer</td><td>104,000</td><td>145,000</td><td>2025-09-11</td></tr>
+  </table>
+
+  <div class="rule" style="top:520px"></div>
+
+  <!-- ============ snapshot ============ -->
+  <div class="lbl" style="top:640px;color:var(--blue)">snapshot<span class="cap">every row knows WHEN it was true — NULL = current</span></div>
+  <div class="tname" style="left:440px;top:590px">job_postings_snapshot</div>
+  <table class="d" style="left:440px;top:624px">
+    <tr><th>job_id</th><th>job_title</th><th>salary_min</th><th>salary_max</th><th class="new">dbt_valid_from</th><th class="new">dbt_valid_to</th></tr>
+    <tr><td>1318ef…</td><td>Senior Data Engineer</td><td>1,060,000</td><td>1,220,000</td><td class="new">2025-09-01</td><td class="new">2025-09-11</td></tr>
+    <tr><td>1318ef…</td><td>Senior Data Engineer</td><td>104,000</td><td>145,000</td><td class="new">2025-09-11</td><td class="new">NULL</td></tr>
+  </table>
+  <div class="note" style="left:440px;top:840px">…every staging column rides along — plus the four dbt_ columns; the two that matter are highlighted</div>
+
+</div>
+</body>
+</html>
