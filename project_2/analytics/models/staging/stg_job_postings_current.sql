@@ -8,7 +8,8 @@ FROM {{ ref('stg_job_postings') }}
 -- explicit cast: run_started_at renders with a +00:00 offset
 WHERE searched_at <= CAST('{{ var("as_of", run_started_at) }}' AS TIMESTAMP)
 -- 3.09.4's dedupe pattern, new job: pick the current row as of the cutoff.
--- job_title tiebreaker: one job_id carries two rows with identical searched_at
+-- job_title tiebreaker: one broken source id carries TEN unrelated postings
+-- at the identical searched_at — without this, the survivor is arbitrary
 QUALIFY ROW_NUMBER() OVER (
     PARTITION BY job_id
     ORDER BY searched_at DESC, job_title
