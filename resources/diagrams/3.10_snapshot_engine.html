@@ -1,0 +1,131 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Inside a Snapshot Run</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#4a4a4a;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --dbt:#FF694B; --ok:#57AB5A;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:28px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .lbl{position:absolute;left:44px;width:270px;font-family:var(--hand);font-weight:700;font-size:40px;line-height:1.1;color:#E8E8E8}
+  .lbl .cap{display:block;margin-top:8px;font-size:25px;font-weight:600;color:var(--muted)}
+  .tname{position:absolute;font-family:var(--mono);font-size:20px;font-weight:600;color:var(--text)}
+  table.d{position:absolute;border-collapse:collapse;font-family:var(--mono);font-size:19px}
+  table.d th{border:1.5px solid var(--line);background:#262626;color:#e8e8e8;font-weight:700;padding:8px 14px;text-align:left}
+  table.d th.new{background:#1d2a3d;color:var(--blue)}
+  table.d td{border:1.5px solid var(--line);color:var(--text);padding:8px 14px;white-space:nowrap}
+  table.d td.new{color:var(--blue);font-weight:700}
+  table.d td.old{color:var(--muted)}
+  .engine{position:absolute;box-sizing:border-box;border:2px solid var(--dbt);border-radius:14px;background:rgba(255,105,75,.06);
+    padding:12px 20px;display:flex;flex-direction:column;gap:6px}
+  .engine .en{font-family:var(--mono);font-size:23px;font-weight:700;color:var(--dbt)}
+  .engine .ec{font-family:var(--hand);font-size:24px;font-weight:600;color:var(--text);line-height:1.15}
+  .verdict{position:absolute;box-sizing:border-box;border-radius:11px;padding:7px 16px;
+    font-family:var(--mono);font-size:20px;font-weight:700}
+  .rule{position:absolute;left:44px;right:44px;border-top:2px dotted #3d3d3d}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Inside a Snapshot Run</div>
+
+  <!-- ================= RUN 1 ================= -->
+  <div class="lbl" style="top:186px">Run 1<span class="cap">as_of Sept 5 — no table yet</span></div>
+
+  <div class="tname" style="left:340px;top:160px">input — current row per job</div>
+  <table class="d" style="left:340px;top:192px">
+    <tr><th>searched_at</th><th>salary_min</th></tr>
+    <tr><td>2025-09-01</td><td>1,060,000</td></tr>
+  </table>
+
+  <div class="engine" style="left:800px;top:158px;width:380px">
+    <span class="en">dbt snapshot</span>
+    <span class="ec">compare the 13 watched columns vs each job's current version</span>
+  </div>
+  <div class="verdict" style="left:800px;top:296px;background:#1d2a3d;border:1.5px solid rgba(88,166,255,.55);color:var(--blue)">no table yet → INSERT all</div>
+
+  <div class="tname" style="left:1280px;top:160px">job_postings_snapshot</div>
+  <table class="d" style="left:1280px;top:192px">
+    <tr><th>salary_min</th><th class="new">dbt_valid_from</th><th class="new">dbt_valid_to</th></tr>
+    <tr><td>1,060,000</td><td class="new">2025-09-01</td><td class="new">NULL ← current</td></tr>
+  </table>
+
+  <div class="rule" style="top:392px"></div>
+
+  <!-- ================= RUN 2 ================= -->
+  <div class="lbl" style="top:452px">Run 2<span class="cap">as_of Sept 15 — the correction arrived</span></div>
+
+  <div class="tname" style="left:340px;top:428px">input — current row per job</div>
+  <table class="d" style="left:340px;top:460px">
+    <tr><th>searched_at</th><th>salary_min</th></tr>
+    <tr><td>2025-09-11</td><td>104,000</td></tr>
+  </table>
+
+  <div class="engine" style="left:800px;top:426px;width:380px">
+    <span class="en">dbt snapshot</span>
+    <span class="ec">salary_min ≠ the current version</span>
+  </div>
+  <div class="verdict" style="left:800px;top:540px;background:rgba(255,105,75,.1);border:1.5px solid var(--dbt);color:var(--dbt)">≠ changed → CLOSE old + INSERT new</div>
+
+  <div class="tname" style="left:1280px;top:428px">job_postings_snapshot</div>
+  <table class="d" style="left:1280px;top:460px">
+    <tr><th>salary_min</th><th class="new">dbt_valid_from</th><th class="new">dbt_valid_to</th></tr>
+    <tr><td class="old">1,060,000</td><td class="old">2025-09-01</td><td class="new">2025-09-11 ← closed</td></tr>
+    <tr><td>104,000</td><td class="new">2025-09-11</td><td class="new">NULL ← current</td></tr>
+  </table>
+
+  <div class="rule" style="top:688px"></div>
+
+  <!-- ================= RUN 3 ================= -->
+  <div class="lbl" style="top:748px">Run 3<span class="cap">run it again — nothing new arrived</span></div>
+
+  <div class="tname" style="left:340px;top:724px">input — current row per job</div>
+  <table class="d" style="left:340px;top:756px">
+    <tr><th>searched_at</th><th>salary_min</th></tr>
+    <tr><td>2025-09-11</td><td>104,000</td></tr>
+  </table>
+
+  <div class="engine" style="left:800px;top:722px;width:380px">
+    <span class="en">dbt snapshot</span>
+    <span class="ec">every watched column = the current version</span>
+  </div>
+  <div class="verdict" style="left:800px;top:836px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok)">＝ unchanged → touch NOTHING</div>
+
+  <div class="tname" style="left:1280px;top:724px">job_postings_snapshot</div>
+  <table class="d" style="left:1280px;top:756px">
+    <tr><th>salary_min</th><th class="new">dbt_valid_from</th><th class="new">dbt_valid_to</th></tr>
+    <tr><td class="old">1,060,000</td><td class="old">2025-09-01</td><td class="old">2025-09-11</td></tr>
+    <tr><td>104,000</td><td>2025-09-11</td><td>NULL ← current</td></tr>
+  </table>
+  <div class="tname" style="left:1280px;top:918px;color:var(--faint);font-family:var(--hand);font-size:25px">unchanged — history at rest</div>
+
+  <!-- ============ cables ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+    </defs>
+    <path d="M 700 240 L 792 240" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1188 240 L 1272 240" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 700 508 L 792 508" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1188 508 L 1272 508" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 700 804 L 792 804" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1188 804 L 1272 804" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+  </svg>
+
+</div>
+</body>
+</html>
