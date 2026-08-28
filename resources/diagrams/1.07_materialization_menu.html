@@ -1,0 +1,150 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Materialization Menu</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+    font-family:var(--sans);color:var(--text);
+    background:
+      radial-gradient(900px 480px at 50% -8%, rgba(88,166,255,.05), transparent 60%),
+      var(--bg);}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
+  .mono{font-family:var(--mono)}
+  .mcard{position:absolute;top:235px;width:344px;height:700px;box-sizing:border-box;
+    background:var(--zone);border:1.5px solid var(--line);border-radius:18px;
+    display:flex;flex-direction:column;align-items:center;padding:26px 20px 24px;gap:0}
+  .mcard.ghost{border-style:dashed;border-color:#4a4a4a}
+  .mcard.ghost > *{opacity:.72}
+  .mname{font-family:var(--mono);font-size:29px;font-weight:800;color:var(--blue)}
+  .viz{width:300px;height:210px;margin-top:22px;flex:none}
+  .what{font-size:22px;text-align:center;margin-top:18px;line-height:1.35;min-height:60px}
+  .when{font-size:20px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.35}
+  .chip{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--text);
+    background:var(--panel2);border:1.5px solid var(--line);border-radius:8px;
+    padding:8px 12px;white-space:normal;text-align:center;line-height:1.35;margin-top:auto}
+  .chip .d{color:var(--faint);font-weight:400}
+  .chip.orange{color:var(--dbt);border-color:rgba(255,105,75,.5)}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">The Materialization Menu</div>
+
+  <!-- ============ view ============ -->
+  <div class="mcard" style="left:52px">
+    <div class="mname">view</div>
+    <svg class="viz" viewBox="0 0 300 210">
+      <rect x="95" y="15" width="110" height="150" rx="10" fill="none" stroke="#4a4433" stroke-width="2.5"/>
+      <text x="150" y="48" text-anchor="middle" font-family="'Source Code Pro',monospace" font-size="19" font-weight="700" fill="#9B9B9B">SELECT</text>
+      <line x1="115" y1="70" x2="185" y2="70" stroke="#6B6B6B" stroke-width="3" stroke-linecap="round"/>
+      <line x1="115" y1="94" x2="175" y2="94" stroke="#6B6B6B" stroke-width="3" stroke-linecap="round"/>
+      <line x1="115" y1="118" x2="185" y2="118" stroke="#6B6B6B" stroke-width="3" stroke-linecap="round"/>
+      <line x1="115" y1="142" x2="160" y2="142" stroke="#6B6B6B" stroke-width="3" stroke-linecap="round"/>
+      <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">🧾 the recipe, saved</text>
+    </svg>
+    <div class="what">a saved query — <b>zero rows stored</b></div>
+    <div class="when">fresh every read · every query re-computes<br>the default; most models</div>
+    <div class="chip">materialized='view' <span class="d">— the default</span></div>
+  </div>
+
+  <!-- ============ table ============ -->
+  <div class="mcard" style="left:420px">
+    <div class="mname">table</div>
+    <svg class="viz" viewBox="0 0 300 210">
+      <g stroke="#4a4a4a" stroke-width="2">
+        <rect x="60" y="25" width="180" height="30" fill="rgba(242,201,76,.16)"/>
+        <rect x="60" y="55" width="180" height="30" fill="rgba(242,201,76,.05)"/>
+        <rect x="60" y="85" width="180" height="30" fill="rgba(242,201,76,.05)"/>
+        <rect x="60" y="115" width="180" height="30" fill="rgba(242,201,76,.05)"/>
+        <line x1="120" y1="25" x2="120" y2="145"/>
+        <line x1="180" y1="25" x2="180" y2="145"/>
+      </g>
+      <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">🗄 real rows on disk</text>
+    </svg>
+    <div class="what">query results <b>written to storage</b></div>
+    <div class="when">fast reads · frozen until the next run<br>models dashboards hit hard</div>
+    <div class="chip orange">materialized='table'</div>
+  </div>
+
+  <!-- ============ ephemeral ============ -->
+  <div class="mcard" style="left:788px">
+    <div class="mname">ephemeral</div>
+    <svg class="viz" viewBox="0 0 300 210">
+      <rect x="20" y="45" width="80" height="100" rx="8" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <text x="60" y="102" text-anchor="middle" font-size="26" fill="#9B9B9B">👻</text>
+      <line x1="108" y1="95" x2="160" y2="95" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+      <path d="M158 88 L170 95 L158 102 z" fill="#58A6FF"/>
+      <rect x="178" y="25" width="105" height="140" rx="8" fill="none" stroke="#4a4a4a" stroke-width="2.5"/>
+      <rect x="190" y="42" width="81" height="44" rx="6" fill="rgba(88,166,255,.1)" stroke="#58A6FF" stroke-width="2" stroke-dasharray="5 5"/>
+      <text x="230" y="70" text-anchor="middle" font-family="'Source Code Pro',monospace" font-size="17" font-weight="700" fill="#58A6FF">CTE</text>
+      <line x1="196" y1="108" x2="264" y2="108" stroke="#6B6B6B" stroke-width="3" stroke-linecap="round"/>
+      <line x1="196" y1="130" x2="252" y2="130" stroke="#6B6B6B" stroke-width="3" stroke-linecap="round"/>
+      <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">inlined into whoever refs it</text>
+    </svg>
+    <div class="what"><b>nothing built</b> — becomes a CTE downstream</div>
+    <div class="when">in your repo, invisible in the warehouse<br>small helper logic</div>
+    <div class="chip orange">materialized='ephemeral'</div>
+  </div>
+
+  <!-- ============ incremental ============ -->
+  <div class="mcard" style="left:1156px">
+    <div class="mname">incremental</div>
+    <svg class="viz" viewBox="0 0 300 210">
+      <g stroke="#4a4a4a" stroke-width="2">
+        <rect x="60" y="15" width="180" height="28" fill="rgba(242,201,76,.16)"/>
+        <rect x="60" y="43" width="180" height="28" fill="rgba(242,201,76,.05)"/>
+        <rect x="60" y="71" width="180" height="28" fill="rgba(242,201,76,.05)"/>
+        <line x1="120" y1="15" x2="120" y2="99"/>
+        <line x1="180" y1="15" x2="180" y2="99"/>
+      </g>
+      <g stroke="#58A6FF" stroke-width="2">
+        <rect x="60" y="103" width="180" height="28" fill="rgba(88,166,255,.12)"/>
+        <rect x="60" y="131" width="180" height="28" fill="rgba(88,166,255,.12)"/>
+        <line x1="120" y1="103" x2="120" y2="159"/>
+        <line x1="180" y1="103" x2="180" y2="159"/>
+      </g>
+      <text x="38" y="124" text-anchor="middle" font-size="22" font-weight="700" fill="#58A6FF">+</text>
+      <text x="38" y="152" text-anchor="middle" font-size="22" font-weight="700" fill="#58A6FF">+</text>
+      <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">only NEW rows processed</text>
+    </svg>
+    <div class="what">a table that <b>only adds what's new</b></div>
+    <div class="when">skip re-building what hasn't changed<br>when the data gets big</div>
+    <div class="chip orange">materialized='incremental'</div>
+  </div>
+
+  <!-- ============ materialized_view ============ -->
+  <div class="mcard ghost" style="left:1524px">
+    <div class="mname" style="color:var(--muted)">materialized_view</div>
+    <svg class="viz" viewBox="0 0 300 210">
+      <g stroke="#4a4a4a" stroke-width="2">
+        <rect x="60" y="35" width="180" height="30" fill="rgba(155,155,155,.12)"/>
+        <rect x="60" y="65" width="180" height="30" fill="rgba(155,155,155,.04)"/>
+        <rect x="60" y="95" width="180" height="30" fill="rgba(155,155,155,.04)"/>
+        <line x1="120" y1="35" x2="120" y2="125"/>
+        <line x1="180" y1="35" x2="180" y2="125"/>
+      </g>
+      <text x="248" y="48" text-anchor="middle" font-size="44" font-weight="700" fill="#9B9B9B">↻</text>
+      <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">↻ refreshes itself</text>
+    </svg>
+    <div class="what">a table the <b>warehouse keeps fresh</b></div>
+    <div class="when">no re-run needed — the engine refreshes it<br>adapter-dependent · not in DuckDB</div>
+    <div class="chip">materialized=<br>'materialized_view'</div>
+  </div>
+
+</div>
+</body>
+</html>
