@@ -1,0 +1,99 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The is_incremental() Gotcha</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#4a4a4a;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --dbt:#FF694B; --ok:#57AB5A;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:28px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .lbl{position:absolute;left:44px;width:280px;font-family:var(--hand);font-weight:700;font-size:40px;line-height:1.1;color:#E8E8E8}
+  .lbl .cap{display:block;margin-top:8px;font-size:26px;font-weight:600;color:var(--muted)}
+  .tname{position:absolute;font-family:var(--mono);font-size:21px;font-weight:600;color:var(--text)}
+  .layer{position:absolute;width:400px;height:60px;box-sizing:border-box;border:1.5px solid #3a3a3a;border-radius:10px;
+    background:#1f1f1f;font-family:var(--mono);font-size:20px;font-weight:600;color:var(--muted);
+    display:flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap}
+  .layer.new{border-color:rgba(88,166,255,.65);background:#1d2a3d;color:var(--blue);font-weight:700}
+  .gate{position:absolute;z-index:2;box-sizing:border-box;border-radius:11px;padding:9px 18px;
+    font-family:var(--mono);font-size:20px;font-weight:700;white-space:nowrap}
+  .gate.missing{border:2px dashed #4a4a4a;color:var(--faint);background:var(--bg)}
+  .gate.on{border:1.5px solid rgba(88,166,255,.65);background:#1d2a3d;color:var(--blue)}
+  .runtag{position:absolute;z-index:2;border-radius:11px;padding:9px 18px;background:#251a16;
+    border:1.5px solid var(--dbt);color:var(--dbt);font-family:var(--mono);font-size:20px;font-weight:700;white-space:nowrap}
+  .note{position:absolute;font-family:var(--hand);font-size:28px;font-weight:600;color:var(--muted)}
+  .rule{position:absolute;left:44px;right:44px;border-top:2px dotted #3d3d3d}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">The is_incremental() Gotcha</div>
+
+  <!-- ================= BAND A: config only ================= -->
+  <div class="lbl" style="top:220px">Config only<span class="cap">merge — but no filter 😬</span></div>
+
+  <div class="tname" style="left:360px;top:140px">stg_job_postings · the whole year</div>
+  <div class="layer new" style="left:360px;top:178px">07-03 · 2,036</div>
+  <div class="layer new" style="left:360px;top:244px">07-02 · 2,638</div>
+  <div class="layer new" style="left:360px;top:310px">07-01 · 3,355</div>
+  <div class="tname" style="left:360px;top:378px;width:400px;text-align:center;color:var(--faint)">⋮ every day, all 491,140</div>
+
+  <div class="gate missing" style="left:800px;top:252px">no WHERE · reads it ALL</div>
+  <div class="runtag" style="left:1150px;top:252px">⚙️ MERGE</div>
+
+  <div class="tname" style="left:1380px;top:140px">fct_job_postings 🗄</div>
+  <div class="layer new" style="left:1380px;top:178px">07-03 · ↻ rewritten</div>
+  <div class="layer new" style="left:1380px;top:244px">07-02 · ↻ rewritten</div>
+  <div class="layer new" style="left:1380px;top:310px">07-01 · ↻ rewritten</div>
+  <div class="note" style="left:1380px;top:388px;width:400px;text-align:center">all 491,140 rewritten — EVERY run</div>
+
+  <div class="note" style="left:360px;top:452px;width:1160px;text-align:center;color:var(--faint)">same work, new costume — no benefit yet</div>
+
+  <div class="rule" style="top:540px"></div>
+
+  <!-- ================= BAND B: config + filter ================= -->
+  <div class="lbl" style="top:700px">Add the filter<span class="cap">now it knows what NEW means</span></div>
+
+  <div class="tname" style="left:360px;top:620px">stg_job_postings · the whole year</div>
+  <div class="layer new" style="left:360px;top:658px">07-03 · 2,036 ★ NEW</div>
+  <div class="layer" style="left:360px;top:724px">07-02 · 2,638 · in table</div>
+  <div class="layer" style="left:360px;top:790px">07-01 · 3,355 · in table</div>
+
+  <div class="gate on" style="left:800px;top:666px">🚪 is_incremental() WHERE</div>
+  <div class="runtag" style="left:1190px;top:666px">⚙️ MERGE</div>
+
+  <div class="tname" style="left:1380px;top:620px">fct_job_postings 🗄</div>
+  <div class="layer new" style="left:1380px;top:658px">07-03 · +2,036 ★ added</div>
+  <div class="layer" style="left:1380px;top:724px">07-02 · untouched</div>
+  <div class="layer" style="left:1380px;top:790px">07-01 · untouched</div>
+  <div class="note" style="left:1380px;top:868px;width:400px;text-align:center">only the new day moves ⚡</div>
+
+  <!-- ============ cables ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <!-- band A: every layer flows -->
+    <path d="M 765 208 L 1372 208" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 765 340 L 1372 340" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 765 274 L 1372 274" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <!-- band B: ONE layer flows -->
+    <path d="M 765 688 L 1372 688" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+  </svg>
+
+</div>
+</body>
+</html>
