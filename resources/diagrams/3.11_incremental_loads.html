@@ -3,13 +3,13 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Incremental in the Real World</title>
+<title>Only the New Day Loads</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
     --bg:#191919; --panel:#202020; --line:#4a4a4a;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
-    --blue:#58A6FF; --dbt:#FF694B; --ok:#57AB5A; --duck:#F2C94C;
+    --blue:#58A6FF; --dbt:#FF694B; --ok:#57AB5A;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --hand:'Caveat',cursive;
   }
@@ -17,94 +17,85 @@
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
   .title{position:absolute;left:0;top:30px;width:1920px;text-align:center;
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
-  .lbl{position:absolute;left:44px;width:280px;font-family:var(--hand);font-weight:700;font-size:40px;line-height:1.1;color:#E8E8E8}
-  .lbl .cap{display:block;margin-top:8px;font-size:26px;font-weight:600;color:var(--muted)}
-  .tname{position:absolute;font-family:var(--mono);font-size:21px;font-weight:600;color:var(--text)}
-  .mrow{position:absolute;height:44px;box-sizing:border-box;border:1.5px solid #3a3a3a;border-radius:8px;background:#1f1f1f;
-    font-family:var(--mono);font-size:20px;display:flex;align-items:center;gap:12px;padding:0 16px;color:var(--muted);white-space:nowrap}
-  .mrow.new{border-color:rgba(88,166,255,.6);color:var(--blue);font-weight:700;background:#1d2a3d}
-  .engine{position:absolute;box-sizing:border-box;border:2px solid var(--dbt);border-radius:14px;background:rgba(255,105,75,.06);
-    padding:14px 22px;display:flex;flex-direction:column;gap:8px}
-  .engine .en{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--dbt)}
-  .engine .ec{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--text);line-height:1.2}
-  .verdict{position:absolute;box-sizing:border-box;border-radius:11px;padding:8px 18px;
-    font-family:var(--mono);font-size:20px;font-weight:700}
-  .chip{position:absolute;box-sizing:border-box;border-radius:11px;padding:7px 16px;
-    font-family:var(--mono);font-size:19px;font-weight:700}
-  .rule{position:absolute;left:44px;right:44px;border-top:2px dotted #3d3d3d}
+  .day{position:absolute;width:400px;text-align:center;font-family:var(--hand);font-weight:700;font-size:42px;color:#E8E8E8}
+  .day .cap{display:block;margin-top:4px;font-size:26px;font-weight:600;color:var(--muted)}
+  .inbox{position:absolute;width:400px;display:flex;justify-content:center}
+  .inbox span{box-sizing:border-box;border-radius:11px;padding:9px 18px;background:#1d2a3d;
+    border:1.5px solid rgba(88,166,255,.55);color:var(--blue);font-family:var(--mono);font-size:20px;font-weight:700;white-space:nowrap}
+  .inbox.quiet span{background:#1f1f1f;border-color:#3a3a3a;color:var(--muted)}
+  .runtag{position:absolute;width:400px;display:flex;justify-content:center}
+  .runtag span{border-radius:9px;padding:5px 14px;background:rgba(255,105,75,.08);border:1.5px solid var(--dbt);
+    color:var(--dbt);font-family:var(--mono);font-size:19px;font-weight:700}
+  .layer{position:absolute;width:400px;height:66px;box-sizing:border-box;border:1.5px solid #3a3a3a;border-radius:10px;
+    background:#1f1f1f;font-family:var(--mono);font-size:21px;font-weight:600;color:var(--muted);
+    display:flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap}
+  .layer.new{border-color:rgba(88,166,255,.65);background:#1d2a3d;color:var(--blue);font-weight:700}
+  .tname{position:absolute;width:400px;text-align:center;font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)}
+  .note{position:absolute;width:400px;text-align:center;font-family:var(--hand);font-size:27px;font-weight:600;color:var(--muted)}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div class="title">Incremental in the Real World</div>
+  <div class="title">Only the New Day Loads</div>
 
-  <!-- ================= BAND 1: a new night ================= -->
-  <div class="lbl" style="top:196px">A new night<span class="cap">fresh postings scraped 🌙</span></div>
+  <!-- ============ DAY 1 ============ -->
+  <div class="day" style="left:110px;top:140px">July 1<span class="cap">first run 🌙</span></div>
+  <div class="inbox" style="left:110px;top:262px"><span>📥 3,355 postings scraped</span></div>
+  <div class="runtag" style="left:110px;top:420px"><span>⚙️ dbt run</span></div>
+  <div class="layer new" style="left:110px;top:826px">07-01 · 3,355 rows ★</div>
+  <div class="tname" style="left:110px;top:914px">fct_job_postings 🗄</div>
+  <div class="note" style="left:110px;top:958px">first run — everything loads</div>
 
-  <div class="tname" style="left:350px;top:162px">arriving scrapes · search_date</div>
-  <div class="mrow" style="left:350px;top:200px;width:380px">07-01 · 3,355 jobs ✓ in table</div>
-  <div class="mrow" style="left:350px;top:254px;width:380px">07-02 · 2,638 jobs ✓ in table</div>
-  <div class="mrow new" style="left:350px;top:308px;width:380px">07-03 · 2,036 jobs ★ NEW</div>
+  <!-- ============ DAY 2 ============ -->
+  <div class="day" style="left:560px;top:140px">July 2<span class="cap">new postings arrive 🌙</span></div>
+  <div class="inbox" style="left:560px;top:262px"><span>📥 2,638 new · 07-02</span></div>
+  <div class="runtag" style="left:560px;top:420px"><span>⚙️ dbt run</span></div>
+  <div class="layer new" style="left:560px;top:754px">07-02 · +2,638 ★ added</div>
+  <div class="layer" style="left:560px;top:826px">07-01 · 3,355 · untouched</div>
+  <div class="tname" style="left:560px;top:914px">fct_job_postings 🗄</div>
+  <div class="note" style="left:560px;top:958px">the table GROWS a layer</div>
 
-  <div class="engine" style="left:830px;top:196px;width:400px">
-    <span class="en">⚙️ dbt run</span>
-    <span class="ec">WHERE search_date ></span>
-    <span class="ec">(SELECT MAX(search_date)</span>
-    <span class="ec">FROM {{ this }})</span>
-  </div>
-  <div class="verdict" style="left:830px;top:386px;background:#1d2a3d;border:1.5px solid rgba(88,166,255,.55);color:var(--blue)">only 07-03 passes → merge</div>
+  <!-- ============ DAY 3 ============ -->
+  <div class="day" style="left:1010px;top:140px">July 3<span class="cap">new postings arrive 🌙</span></div>
+  <div class="inbox" style="left:1010px;top:262px"><span>📥 2,036 new · 07-03</span></div>
+  <div class="runtag" style="left:1010px;top:420px"><span>⚙️ dbt run</span></div>
+  <div class="layer new" style="left:1010px;top:682px">07-03 · +2,036 ★ added</div>
+  <div class="layer" style="left:1010px;top:754px">07-02 · 2,638 · untouched</div>
+  <div class="layer" style="left:1010px;top:826px">07-01 · 3,355 · untouched</div>
+  <div class="tname" style="left:1010px;top:914px">fct_job_postings 🗄</div>
+  <div class="note" style="left:1010px;top:958px">only the new day loads ⚡</div>
 
-  <div class="tname" style="left:1330px;top:162px">fct_job_postings 🗄</div>
-  <div class="mrow" style="left:1330px;top:200px;width:420px">rows through 07-02 · untouched</div>
-  <div class="mrow new" style="left:1330px;top:254px;width:420px">+ 2,036 rows · merged in</div>
-  <div class="chip" style="left:1330px;top:322px;background:rgba(242,201,76,.08);border:1.5px solid rgba(242,201,76,.5);color:var(--duck)">high-water mark → 07-03</div>
+  <!-- ============ RUN AGAIN ============ -->
+  <div class="day" style="left:1460px;top:140px">July 3, again<span class="cap">run it twice ↻</span></div>
+  <div class="inbox quiet" style="left:1460px;top:262px"><span>📥 nothing new</span></div>
+  <div class="runtag" style="left:1460px;top:420px"><span>⚙️ dbt run</span></div>
+  <div class="layer" style="left:1460px;top:682px">07-03 · 2,036 · untouched</div>
+  <div class="layer" style="left:1460px;top:754px">07-02 · 2,638 · untouched</div>
+  <div class="layer" style="left:1460px;top:826px">07-01 · 3,355 · untouched</div>
+  <div class="tname" style="left:1460px;top:914px">fct_job_postings 🗄</div>
+  <div class="note" style="left:1460px;top:958px">+0 rows — no rebuild</div>
 
-  <div class="rule" style="top:560px"></div>
-
-  <!-- ================= BAND 2: a quiet night ================= -->
-  <div class="lbl" style="top:700px">Run it again<span class="cap">nothing new arrived</span></div>
-
-  <div class="tname" style="left:350px;top:666px">arriving scrapes · search_date</div>
-  <div class="mrow" style="left:350px;top:704px;width:380px">07-01 · 3,355 jobs ✓ in table</div>
-  <div class="mrow" style="left:350px;top:758px;width:380px">07-02 · 2,638 jobs ✓ in table</div>
-  <div class="mrow" style="left:350px;top:812px;width:380px">07-03 · 2,036 jobs ✓ in table</div>
-
-  <div class="engine" style="left:830px;top:700px;width:400px">
-    <span class="en">⚙️ dbt run</span>
-    <span class="ec">WHERE search_date ></span>
-    <span class="ec">(SELECT MAX(search_date)</span>
-    <span class="ec">FROM {{ this }})</span>
-  </div>
-  <div class="verdict" style="left:830px;top:890px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok)">nothing passes → 0 rows moved</div>
-
-  <div class="tname" style="left:1330px;top:666px">fct_job_postings 🗄</div>
-  <div class="mrow" style="left:1330px;top:704px;width:420px">every row · untouched</div>
-  <div class="chip" style="left:1330px;top:772px;background:rgba(242,201,76,.08);border:1.5px solid rgba(242,201,76,.5);color:var(--duck)">high-water mark → 07-03</div>
-  <div class="tname" style="left:1330px;top:920px;color:var(--faint);font-family:var(--hand);font-size:26px">no rebuild — that's the feature ⚡</div>
-
-  <!-- ============ cables ============ -->
+  <!-- ============ cables: batch → run → top layer ============ -->
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
-      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
       </marker>
-      <marker id="ahy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#F2C94C"/>
+      <marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#6B6B6B"/>
       </marker>
     </defs>
-    <!-- band 1: arrivals → engine → table -->
-    <path d="M 740 262 L 820 262" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 1240 262 L 1320 262" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- band 1: the table reports its max back to the engine ({{ this }}) -->
-    <path d="M 1420 362 C 1420 470, 1300 440, 1244 300" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahy)"/>
-    <!-- band 2 -->
-    <path d="M 740 766 L 820 766" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 1240 766 L 1320 766" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 1420 812 C 1420 920, 1300 890, 1244 800" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahy)"/>
+    <path d="M 310 312 L 310 412" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 310 462 L 310 816" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 760 312 L 760 412" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 760 462 L 760 744" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 1210 312 L 1210 412" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 1210 462 L 1210 672" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 1660 312 L 1660 412" fill="none" stroke="#6B6B6B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 1660 462 L 1660 662" fill="none" stroke="#6B6B6B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahg)"/>
   </svg>
-  <div class="chip" style="left:1265px;top:452px;background:rgba(242,201,76,.08);border:1.5px solid rgba(242,201,76,.5);color:var(--duck)">the table tells dbt its max 🔗</div>
 
 </div>
 </body>
