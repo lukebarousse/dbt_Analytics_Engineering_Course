@@ -13,6 +13,5 @@ SELECT
 FROM {{ ref('job_postings_snapshot') }}
 WHERE salary_currency = 'USD'
 GROUP BY job_id, job_title, company_name  -- per-job grain; title + company for display
-HAVING salary_swing > 0
 ORDER BY salary_swing DESC
 LIMIT 10
