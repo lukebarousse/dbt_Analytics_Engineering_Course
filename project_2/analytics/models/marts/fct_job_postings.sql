@@ -37,9 +37,10 @@ FROM job_postings
 WHERE search_date > (SELECT MAX(search_date) FROM {{ this }})
 {% endif %}
 
--- one row per job: latest scrape wins; job_title breaks the single real
--- identical-searched_at tie in the data
+-- one row per job: latest scrape wins. ties stay arbitrary — one broken source
+-- id carries ten unrelated postings at an identical searched_at; accepted
+-- wobble (same ruling as the snapshot input model)
 QUALIFY ROW_NUMBER() OVER (
     PARTITION BY job_id
-    ORDER BY searched_at DESC, job_title
+    ORDER BY searched_at DESC
 ) = 1
