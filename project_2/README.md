@@ -1,5 +1,7 @@
 # Production Job-Postings Pipeline — dbt + Databricks
 
+[![dbt Docs](https://img.shields.io/badge/dbt_docs-live-blue)](https://YOU.github.io/REPO)
+
 A production dbt pipeline on Databricks over **843,097 raw job-posting scrapes**: medallion layers shaped into a star schema, tested at every grain, with SCD2 salary history and a **scheduled job that runs with zero secrets**.
 
 ![P2 pipeline architecture](img/p2_pipeline.png)
@@ -75,17 +77,18 @@ The pipeline's marts keep each job's **latest** scrape. The snapshot keeps **eve
 
 Structure, tests, and column descriptions were written along the way — the docs site is a rendering of work already done:
 
-```bash
-dbt docs generate && dbt docs serve                            # browse locally
-dbt docs generate --static                                     # single-file site → docs/index.html
-```
+**→ [Live docs on GitHub Pages](https://YOU.github.io/REPO)**
 
-**→ Live docs: `<your-username>.github.io/<repo>`** — generated once and hosted on GitHub Pages. (P1's CI republishes docs on every push; this project's automation muscle lives in the Databricks job instead.)
+A reviewer can open it and see:
+
+- the full **lineage graph** — raw → staging → intermediate → the star → snapshot
+- every **model and column description** from the YAMLs
+- which columns carry **tests**, without reading a line of SQL
 
 ![dbt lineage graph](img/lineage.png)
 <!-- screenshot: dbt docs → lineage graph, full DAG -->
 
-`persist_docs` also pushes model and column comments into Unity Catalog, so the descriptions show up in the warehouse UI itself.
+The same descriptions live in the warehouse itself — `persist_docs` pushes them into Unity Catalog, so Catalog Explorer shows them right next to the data.
 
 ---
 
