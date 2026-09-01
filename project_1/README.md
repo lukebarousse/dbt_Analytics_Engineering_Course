@@ -1,6 +1,6 @@
 # Automated dbt Pipeline for Job Postings
 
-[![dbt build & publish](https://github.com/lukebarousse/dbt-project1/actions/workflows/dbt_build.yml/badge.svg)](https://github.com/lukebarousse/dbt-project1/actions/workflows/dbt_build.yml)
+[![dbt build & publish](https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/actions/workflows/dbt_build.yml/badge.svg)](https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/actions/workflows/dbt_build.yml)
 [![dbt Docs](https://img.shields.io/badge/dbt_docs-live-blue)](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/)
 
 ![dbt pipeline diagram](img/dbt_pipeline.png)
@@ -11,7 +11,7 @@ A public dbt + DuckDB pipeline over ~692k real job postings. Every push rebuilds
 | --- | --- |
 | **dbt pipeline** — sources → cleaned model → insight marts | [`analytics/models/`](analytics/models/) |
 | **Hosted dbt docs** — lineage, descriptions, column tests | [Live docs site](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/) |
-| **Public CI** — build + test + publish on every push | [Actions workflow](https://github.com/lukebarousse/dbt-project1/actions/workflows/dbt_build.yml) |
+| **Public CI** — build + test + publish on every push | [Actions workflow](https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/actions/workflows/dbt_build.yml) |
 
 ---
 
