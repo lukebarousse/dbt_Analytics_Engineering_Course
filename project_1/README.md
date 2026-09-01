@@ -1,7 +1,7 @@
 # Automated dbt Pipeline for Job Postings
 
 [![dbt build & publish](https://github.com/lukebarousse/dbt-project1/actions/workflows/dbt_build.yml/badge.svg)](https://github.com/lukebarousse/dbt-project1/actions/workflows/dbt_build.yml)
-[![dbt Docs](https://img.shields.io/badge/dbt_docs-live-blue)](https://lukebarousse.github.io/dbt-project1)
+[![dbt Docs](https://img.shields.io/badge/dbt_docs-live-blue)](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/)
 
 ![dbt pipeline diagram](img/dbt_pipeline.png)
 
@@ -10,7 +10,7 @@ A public dbt + DuckDB pipeline over ~692k real job postings. Every push rebuilds
 | What this demonstrates | Where to look |
 | --- | --- |
 | **dbt pipeline** — sources → cleaned model → insight marts | [`analytics/models/`](analytics/models/) |
-| **Hosted dbt docs** — lineage, descriptions, column tests | [Live docs site](https://lukebarousse.github.io/dbt-project1) |
+| **Hosted dbt docs** — lineage, descriptions, column tests | [Live docs site](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/) |
 | **Public CI** — build + test + publish on every push | [Actions workflow](https://github.com/lukebarousse/dbt-project1/actions/workflows/dbt_build.yml) |
 
 ---
@@ -47,7 +47,7 @@ The project takes ~692k raw job postings through the full dbt workflow:
 
 Docs are generated with `dbt docs generate` and published to GitHub Pages:
 
-**→ [lukebarousse.github.io/dbt-project1](https://lukebarousse.github.io/dbt-project1)**
+**→ [lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/)**
 
 The site shows:
 
@@ -96,7 +96,7 @@ SELECT * FROM jobs.main.monthly_summary;
 - Remote remains a small share of data-role postings in this sample
 - Salary is sparse and often free-text when present — documented as-is rather than patched
 
-(Open the marts or the [docs site](https://lukebarousse.github.io/dbt-project1) for the exact numbers after the latest CI build.)
+(Open the marts or the [docs site](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/) for the exact numbers after the latest CI build.)
 
 ---
 

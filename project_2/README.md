@@ -1,6 +1,6 @@
 # Production Job-Postings Pipeline — dbt + Databricks
 
-[![dbt Docs](https://img.shields.io/badge/dbt_docs-live-blue)](https://lukebarousse.github.io/dbt-project2)
+[![dbt Docs](https://img.shields.io/badge/dbt_docs-live-blue)](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project2/)
 
 A production dbt pipeline on Databricks over **843,097 raw job-posting scrapes**: medallion layers shaped into a star schema, tested at every grain, with SCD2 salary history and a **scheduled job that runs with zero secrets**.
 
@@ -77,7 +77,7 @@ The pipeline's marts keep each job's **latest** scrape. The snapshot keeps **eve
 
 Structure, tests, and column descriptions were written along the way — the docs site is a rendering of work already done:
 
-**→ [Live docs on GitHub Pages](https://lukebarousse.github.io/dbt-project2)**
+**→ [Live docs on GitHub Pages](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project2/)**
 
 The site shows:
 
