@@ -1,0 +1,177 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>P2 Pipeline Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --line:#4a4a4a;
+    --text:#E8E8E8; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --dbt:#FF694B; --dbx:#FF3621; --ok:#57AB5A;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .ztitle{position:absolute;text-align:center;font-family:var(--hand);font-weight:700;font-size:46px;color:#FFFFFF}
+  .zouter{position:absolute;box-sizing:border-box;border:2.5px dotted #5a5a5a;border-radius:26px}
+  .zinner{position:absolute;box-sizing:border-box;border:2px solid #8a8a8a;border-radius:20px}
+  .hlbl{position:absolute;text-align:center;font-family:var(--hand);font-weight:700;font-size:33px;color:var(--text);line-height:1.1}
+  .hcap{position:absolute;text-align:center;font-family:var(--hand);font-weight:600;font-size:25px;color:var(--muted);line-height:1.15}
+  /* glossy cylinder */
+  .cyl{position:absolute}
+  .cyl .body{position:absolute;left:0;right:0;top:12px;bottom:10px;border-radius:14px/22px;
+    background:linear-gradient(180deg,#e8e8e8 0%,#b9bec6 30%,#8f959e 90%);box-shadow:inset 0 -8px 14px rgba(0,0,0,.25)}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:26px;border-radius:50%;
+    background:linear-gradient(180deg,#f6f6f6,#c9cdd4);box-shadow:0 1px 2px rgba(0,0,0,.35)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:22px;border-radius:50%;
+    background:linear-gradient(180deg,#9aa0a9,#7c828b)}
+  .cyl .dot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;
+    background:var(--dbt);display:flex;align-items:center;justify-content:center}
+  .cyl .dot i{display:block;background:#191919;border-radius:50%}
+  /* parquet file glyph */
+  .pfile{position:absolute;width:150px;height:190px;background:linear-gradient(180deg,#f2f2f2,#d8d8d8);
+    border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.45)}
+  .pfile:before{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 34px 34px 0;
+    border-color:transparent #191919 transparent transparent}
+  .pfile .rows{position:absolute;left:18px;right:18px;top:44px;height:80px;
+    background:repeating-linear-gradient(180deg,#aebcd8 0 10px,transparent 10px 22px)}
+  .pfile .tag{position:absolute;left:-10px;bottom:26px;background:#1d2a3d;border:2px solid rgba(88,166,255,.7);
+    color:var(--blue);font-family:var(--mono);font-weight:800;font-size:20px;padding:4px 12px;border-radius:8px}
+  /* small chips */
+  .chip{position:absolute;box-sizing:border-box;border-radius:12px;padding:8px 16px;text-align:center;
+    font-family:var(--hand);font-size:26px;font-weight:700;color:var(--text);background:#232323;border:2px solid #6a6a6a}
+  .chip.code{font-family:var(--mono);font-size:20px;font-weight:700}
+  /* serving marks */
+  .mark{position:absolute;width:54px;height:54px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-weight:800;font-size:28px}
+  .srow{position:absolute;font-family:var(--hand);font-size:30px;font-weight:700;color:var(--text)}
+  /* lockups */
+  .dbtlogo{position:absolute;text-align:center;font-family:var(--mono);font-weight:800;color:var(--dbt)}
+  .ghlogo{position:absolute;text-align:center;font-family:var(--mono);font-weight:800;color:#fff}
+  .ribbon{position:absolute;box-sizing:border-box;border:2px solid rgba(255,54,33,.55);border-radius:18px;
+    background:rgba(255,54,33,.06);display:flex;align-items:center;justify-content:center;gap:22px}
+  .bricks{display:inline-block;width:46px;height:40px;position:relative}
+  .bricks b{position:absolute;width:20px;height:12px;background:var(--dbx);transform:skewX(-18deg);border-radius:2px}
+  .jobchip{position:absolute;box-sizing:border-box;border-radius:16px;padding:12px 24px;background:#232323;
+    border:2px solid #7a7a7a;font-family:var(--hand);font-size:30px;font-weight:700;color:var(--text)}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ============ the nightly-job arc ============ -->
+  <div class="jobchip" style="left:1332px;top:84px">⏰ Databricks Job — nightly &nbsp;·&nbsp; 🔒 zero secrets</div>
+
+  <!-- ============ ZONE 1 : Data Source ============ -->
+  <div class="ztitle" style="left:50px;top:176px;width:330px">Data Source</div>
+  <div class="zouter" style="left:50px;top:240px;width:330px;height:640px"></div>
+  <div class="zinner" style="left:72px;top:262px;width:286px;height:426px"></div>
+  <div class="pfile" style="left:106px;top:296px"></div>
+  <div class="pfile" style="left:136px;top:326px"></div>
+  <div class="pfile" style="left:166px;top:356px"><div class="rows"></div><div class="tag">PARQUET</div></div>
+  <div class="hlbl" style="left:72px;top:582px;width:286px">Job Postings<br>monthly files</div>
+  <div class="ghlogo" style="left:50px;top:756px;width:330px;font-size:34px">GitHub</div>
+  <div class="hcap" style="left:50px;top:806px;width:330px">Releases</div>
+
+  <!-- ============ ZONE 2 : Ingestion ============ -->
+  <div class="ztitle" style="left:428px;top:176px;width:320px">Ingestion</div>
+  <div class="zouter" style="left:428px;top:240px;width:320px;height:640px"></div>
+  <div class="zinner" style="left:450px;top:262px;width:276px;height:426px"></div>
+  <div class="chip code" style="left:476px;top:306px;width:224px">📓 load_raw<br>notebook</div>
+  <div class="cyl" style="left:508px;top:448px;width:160px;height:150px">
+    <div class="body"></div><div class="top"></div><div class="bot"></div>
+  </div>
+  <div class="hlbl" style="left:450px;top:614px;width:276px">raw catalog</div>
+  <div class="hcap" style="left:428px;top:770px;width:320px">every scrape, kept forever</div>
+
+  <!-- ============ ZONE 3 : Transformation ============ -->
+  <div class="ztitle" style="left:788px;top:176px;width:640px">Transformation</div>
+  <div class="zouter" style="left:788px;top:240px;width:640px;height:640px"></div>
+  <div class="zinner" style="left:810px;top:262px;width:596px;height:456px"></div>
+  <!-- staging → int -->
+  <div class="chip" style="left:836px;top:322px;width:170px">staging<br><span style="font-size:22px;color:var(--muted)">clean · typed</span></div>
+  <div class="chip" style="left:836px;top:436px;width:170px">intermediate<br><span style="font-size:22px;color:var(--muted)">skills, one/row</span></div>
+  <!-- star cluster -->
+  <div class="cyl" style="left:1176px;top:352px;width:130px;height:120px">
+    <div class="body"></div><div class="top"></div><div class="bot"></div>
+    <div class="dot" style="width:52px;height:52px"><i style="width:20px;height:20px"></i></div>
+  </div>
+  <div class="hcap" style="left:1156px;top:478px;width:170px;font-weight:700;color:var(--text)">fct</div>
+  <div class="cyl" style="left:1092px;top:288px;width:84px;height:78px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+  <div class="cyl" style="left:1310px;top:288px;width:84px;height:78px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+  <div class="cyl" style="left:1310px;top:442px;width:84px;height:78px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+  <div class="hcap" style="left:1072px;top:266px;width:120px">dim</div>
+  <div class="hcap" style="left:1294px;top:266px;width:120px">dim</div>
+  <div class="hcap" style="left:1294px;top:524px;width:120px">bridge</div>
+  <div class="hlbl" style="left:1080px;top:560px;width:320px">the star schema</div>
+  <!-- snapshot + quality chips -->
+  <div class="cyl" style="left:864px;top:568px;width:110px;height:96px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+  <div class="hcap" style="left:806px;top:672px;width:230px;font-weight:700;color:var(--text)">snapshots · SCD2</div>
+  <div class="chip" style="left:1080px;top:636px;width:140px;font-size:24px">✓ tested</div>
+  <div class="chip" style="left:1240px;top:636px;width:170px;font-size:24px">📖 documented</div>
+  <div class="dbtlogo" style="left:788px;top:748px;width:640px;font-size:58px">dbt</div>
+
+  <!-- ============ ZONE 4 : Environments & Serving ============ -->
+  <div class="ztitle" style="left:1466px;top:176px;width:404px">Environments &amp; Serving</div>
+  <div class="zouter" style="left:1466px;top:240px;width:404px;height:640px"></div>
+  <div class="zinner" style="left:1488px;top:262px;width:360px;height:426px"></div>
+  <div class="cyl" style="left:1520px;top:296px;width:120px;height:104px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+  <div class="cyl" style="left:1692px;top:296px;width:120px;height:104px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+  <div class="hcap" style="left:1520px;top:404px;width:120px;font-family:var(--mono);font-weight:700;color:var(--text)">dev</div>
+  <div class="hcap" style="left:1692px;top:404px;width:120px;font-family:var(--mono);font-weight:700;color:var(--text)">prod</div>
+  <div class="hcap" style="left:1488px;top:442px;width:360px">promotion = one line</div>
+  <!-- serving rows -->
+  <div class="mark" style="left:1520px;top:496px;background:#1f1f1f;border:2px solid #5a5a5a;color:var(--text);font-size:22px">&gt;_</div>
+  <div class="srow" style="left:1592px;top:506px">SQL editor</div>
+  <div class="mark" style="left:1520px;top:560px;background:#217346;color:#fff">X</div>
+  <div class="srow" style="left:1592px;top:570px">Excel</div>
+  <div class="mark" style="left:1520px;top:624px;background:#2b2b2b;border:2px solid #F2C94C">
+    <svg width="34" height="30"><rect x="2" y="16" width="7" height="12" fill="#F2C94C"/><rect x="13" y="8" width="7" height="20" fill="#F2C94C"/><rect x="24" y="2" width="7" height="26" fill="#F2C94C"/></svg>
+  </div>
+  <div class="srow" style="left:1592px;top:634px">Power BI</div>
+  <div class="mark" style="left:1690px;top:560px;background:#2b2b2b;border:2px solid #4E79A7;color:#4E79A7;font-size:30px">✛</div>
+  <div class="srow" style="left:1760px;top:570px">Tableau</div>
+  <div class="mark" style="left:1690px;top:624px;background:#2b2b2b;border:2px solid #5a5a5a;font-size:26px">📖</div>
+  <div class="srow" style="left:1760px;top:634px">docs</div>
+  <div class="hcap" style="left:1466px;top:770px;width:404px">any BI tool connects to the warehouse</div>
+
+  <!-- ============ Databricks ribbon (platform spans it all) ============ -->
+  <div class="ribbon" style="left:428px;top:918px;width:1442px;height:78px">
+    <span class="bricks"><b style="left:0;top:4px"></b><b style="left:14px;top:14px"></b><b style="left:6px;top:24px"></b></span>
+    <span style="font-family:var(--mono);font-weight:800;font-size:34px;color:#fff">Databricks</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">one platform — storage · compute · schedule</span>
+  </div>
+
+  <!-- ============ arrows ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+    </defs>
+    <!-- zone flow -->
+    <path d="M 384 500 L 422 500" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 752 500 L 782 500" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1432 500 L 1462 500" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- inside zone 2: notebook → raw -->
+    <path d="M 588 396 L 588 440" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- inside zone 3: staging → int → star -->
+    <path d="M 921 410 L 921 430" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1012 480 L 1080 440" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- star joins (dashed, faint) -->
+    <path d="M 1176 380 L 1146 340" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1306 380 L 1340 340" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1306 440 L 1340 470" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <!-- staging → snapshot -->
+    <path d="M 848 412 C 812 470, 816 522, 888 566" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- the nightly arc: job chip → into the dbt zone -->
+    <path d="M 1330 116 C 1264 138, 1252 192, 1244 248" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+  </svg>
+
+</div>
+</body>
+</html>

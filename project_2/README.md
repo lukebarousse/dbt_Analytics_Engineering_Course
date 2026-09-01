@@ -2,8 +2,7 @@
 
 A production dbt pipeline on Databricks over **843,097 raw job-posting scrapes**: medallion layers shaped into a star schema, tested at every grain, with SCD2 salary history and a **scheduled job that runs with zero secrets**.
 
-![dbt lineage graph](img/lineage.png)
-<!-- screenshot: dbt docs → lineage graph, full DAG -->
+![P2 pipeline architecture](img/p2_pipeline.png)
 
 | What this demonstrates | Where to look |
 | --- | --- |
@@ -79,6 +78,11 @@ Structure, tests, and column descriptions were written along the way — the doc
 ```bash
 dbt docs generate && dbt docs serve
 ```
+
+**→ Live docs: `<your-username>.github.io/<repo>`** — generated once and hosted on GitHub Pages. (P1's CI republishes docs on every push; this project's automation muscle lives in the Databricks job instead.)
+
+![dbt lineage graph](img/lineage.png)
+<!-- screenshot: dbt docs → lineage graph, full DAG -->
 
 `persist_docs` also pushes model and column comments into Unity Catalog, so the descriptions show up in the warehouse UI itself.
 
