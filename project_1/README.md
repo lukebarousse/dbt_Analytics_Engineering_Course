@@ -87,6 +87,9 @@ SELECT * FROM jobs.main.top_companies;
 SELECT * FROM jobs.main.monthly_summary;
 ```
 
+> The short link is just a convenience — the database itself lives at the release asset URL, which works in `ATTACH` directly (use this form in your own README):
+> `https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/releases/download/warehouse/prod.duckdb`
+
 ---
 
 ## Headline findings (from the marts)
