@@ -1,0 +1,195 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>P2 Pipeline Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#0d1117; --line:#4a4a4a;
+    --text:#E8E8E8; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --dbt:#FF694B; --dbx:#FF3621;
+    --bronzeT:#D89A5B; --silverT:#C9CED6; --silverB:#3a3d42;
+    --goldT:#E3B341;  --goldB:#4a3a10;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .ztitle{position:absolute;text-align:center;font-family:var(--hand);font-weight:700;font-size:46px;color:#FFFFFF}
+  .frame{position:absolute;box-sizing:border-box;border-radius:30px}
+  .zouter{position:absolute;box-sizing:border-box;border:2.5px dotted #5a5a5a;border-radius:26px}
+  .zinner{position:absolute;box-sizing:border-box;border:2px solid #8a8a8a;border-radius:20px}
+  .hlbl{position:absolute;text-align:center;font-family:var(--hand);font-weight:700;font-size:33px;color:var(--text);line-height:1.1}
+  .hcap{position:absolute;text-align:center;font-family:var(--hand);font-weight:600;font-size:25px;color:var(--muted);line-height:1.15}
+  /* glossy cylinder — databases only */
+  .cyl{position:absolute}
+  .cyl .body{position:absolute;left:0;right:0;top:12px;bottom:10px;border-radius:14px/22px;
+    background:linear-gradient(180deg,#e8e8e8 0%,#b9bec6 30%,#8f959e 90%);box-shadow:inset 0 -8px 14px rgba(0,0,0,.25)}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:26px;border-radius:50%;
+    background:linear-gradient(180deg,#f6f6f6,#c9cdd4);box-shadow:0 1px 2px rgba(0,0,0,.35)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:22px;border-radius:50%;
+    background:linear-gradient(180deg,#9aa0a9,#7c828b)}
+  /* parquet file glyph */
+  .pfile{position:absolute;width:150px;height:190px;background:linear-gradient(180deg,#f2f2f2,#d8d8d8);
+    border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.45)}
+  .pfile:before{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 34px 34px 0;
+    border-color:transparent #0d1117 transparent transparent}
+  .pfile .rows{position:absolute;left:18px;right:18px;top:44px;height:80px;
+    background:repeating-linear-gradient(180deg,#aebcd8 0 10px,transparent 10px 22px)}
+  .pfile .tag{position:absolute;left:-10px;bottom:26px;background:#1d2a3d;border:2px solid rgba(88,166,255,.7);
+    color:var(--blue);font-family:var(--mono);font-weight:800;font-size:20px;padding:4px 12px;border-radius:8px}
+  /* tier boxes (medallion hint) */
+  .tier{position:absolute;box-sizing:border-box;border-radius:18px}
+  .tier .hdr{position:absolute;left:12px;right:12px;top:10px;height:46px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    font-family:var(--mono);font-size:24px;font-weight:700}
+  .tier .sub{position:absolute;left:12px;right:12px;top:60px;text-align:center;
+    font-family:var(--hand);font-size:23px;font-weight:600;color:var(--muted)}
+  /* table glyph — tables, not databases */
+  .tbl{position:absolute;box-sizing:border-box;border-radius:10px;background:#1f1f1f;overflow:hidden}
+  .tbl .name{height:32px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:19px;font-weight:700}
+  .tbl .r{height:12px;margin:6px 12px 0 12px;border-radius:4px;background:#333}
+  .tbl.silver{border:1.5px solid rgba(201,206,214,.55)} .tbl.silver .name{background:var(--silverB);color:var(--silverT)}
+  .tbl.gold{border:1.5px solid rgba(227,179,65,.6)} .tbl.gold .name{background:var(--goldB);color:var(--goldT)}
+  .tbl.fct{border-width:2.5px;box-shadow:0 0 22px rgba(227,179,65,.18)}
+  .tbl.snap{border:1.5px solid rgba(88,166,255,.6)} .tbl.snap .name{background:#1d2a3d;color:var(--blue)}
+  .tbl.seedt{border:1.5px solid rgba(87,171,90,.55)} .tbl.seedt .name{background:#17331c;color:#7ac57e}
+  .ghosttbl{position:absolute;box-sizing:border-box;border-radius:10px;border:1.5px solid rgba(88,166,255,.35);background:#20242c}
+  .seed{position:absolute;box-sizing:border-box;border-radius:12px;padding:7px 14px;background:#232323;text-align:center;
+    border:1.5px solid #6a6a6a;font-family:var(--hand);font-size:24px;font-weight:700;color:var(--text)}
+  /* lockups */
+  .dbtlogo{position:absolute;text-align:center;font-family:var(--mono);font-weight:800;color:var(--dbt)}
+  .lockrow{position:absolute;display:flex;align-items:center;justify-content:center;gap:20px}
+  .bricks{display:inline-block;width:46px;height:40px;position:relative}
+  .bricks b{position:absolute;width:20px;height:12px;background:var(--dbx);transform:skewX(-18deg);border-radius:2px}
+  .chip{position:absolute;box-sizing:border-box;border-radius:12px;padding:8px 16px;text-align:center;
+    font-family:var(--hand);font-size:26px;font-weight:700;color:var(--text);background:#232323;border:2px solid #6a6a6a}
+  .chip.code{font-family:var(--mono);font-size:20px;font-weight:700}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ============ GITHUB FRAME : Data Source ============ -->
+  <div class="ztitle" style="left:44px;top:130px;width:346px">Data Source</div>
+  <div class="frame" style="left:44px;top:112px;width:346px;height:880px;border:2.5px solid rgba(255,255,255,.3)"></div>
+  <div class="zinner" style="left:76px;top:230px;width:282px;height:430px"></div>
+  <div class="pfile" style="left:110px;top:264px"></div>
+  <div class="pfile" style="left:140px;top:294px"></div>
+  <div class="pfile" style="left:170px;top:324px"><div class="rows"></div><div class="tag">PARQUET</div></div>
+  <div class="hlbl" style="left:76px;top:550px;width:282px">Job Postings<br>monthly files</div>
+  <img src="../images/GitHub_White_Logo.png" alt="" style="position:absolute;left:44px;top:790px;width:346px;height:100px;object-fit:contain">
+  <div class="lockrow" style="left:44px;top:900px;width:346px">
+    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">Releases</span>
+  </div>
+
+  <!-- ============ DATABRICKS FRAME : Ingestion + Transformation ============ -->
+  <div class="frame" style="left:432px;top:112px;width:1452px;height:880px;border:2.5px solid rgba(255,54,33,.55);background:rgba(255,54,33,.03)"></div>
+
+  <!-- zone: Ingestion -->
+  <div class="ztitle" style="left:456px;top:130px;width:300px">Ingestion</div>
+  <div class="zouter" style="left:456px;top:216px;width:300px;height:640px"></div>
+  <div class="zinner" style="left:476px;top:238px;width:260px;height:426px;border-color:rgba(216,154,91,.45)"></div>
+  <div class="chip code" style="left:331px;top:382px;width:180px;font-size:18px;padding:6px 10px;z-index:3;position:absolute;opacity:.8">🐍 load_raw.py</div>
+  <div class="cyl" style="left:531px;top:330px;width:150px;height:190px">
+    <div class="body"></div><div class="top"></div><div class="bot"></div>
+  </div>
+  <div class="hlbl" style="left:476px;top:544px;width:260px;color:var(--bronzeT)">raw catalog</div>
+  <div class="hcap" style="left:456px;top:746px;width:300px">raw, unclean job postings</div>
+
+  <!-- zone: Transformation — dbt's box -->
+  <div class="ztitle" style="left:790px;top:130px;width:1002px">Transformation</div>
+  <div class="zouter" style="left:790px;top:216px;width:1062px;height:640px;border-color:rgba(255,105,75,.55);background:rgba(255,105,75,.035)"></div>
+  <div class="lockrow" style="left:814px;top:222px;justify-content:flex-start;gap:14px">
+    <img src="../images/dbt_logo.png" alt="" style="height:46px;width:auto">
+    <span style="font-family:var(--mono);font-weight:800;font-size:36px;color:var(--dbt)">dbt</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:26px;color:var(--muted)">models · tests · docs — all in git</span>
+  </div>
+
+  <!-- silver: staging -->
+  <div class="tier" style="left:818px;top:262px;width:280px;height:300px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
+    <div class="hdr" style="background:var(--silverB);color:var(--silverT)">staging</div>
+    <div class="sub">clean · typed · views</div>
+  </div>
+  <div class="tbl silver" style="left:836px;top:362px;width:244px;height:84px"><div class="name">stg_job_postings</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl silver" style="left:836px;top:460px;width:244px;height:84px"><div class="name">stg_job_skills</div><div class="r"></div><div class="r"></div></div>
+
+  <!-- silver: intermediate -->
+  <div class="tier" style="left:1142px;top:262px;width:268px;height:300px;background:rgba(201,206,214,.04);border:1.5px solid rgba(201,206,214,.4)">
+    <div class="hdr" style="background:var(--silverB);color:var(--silverT)">intermediate</div>
+    <div class="sub">skills · one per row</div>
+  </div>
+  <div class="tbl silver" style="left:1156px;top:400px;width:240px;height:84px"><div class="name" style="font-size:17px">int_skill_observations</div><div class="r"></div><div class="r"></div></div>
+
+  <!-- seed: its own input, NOT a mart -->
+  <div class="tier" style="left:1470px;top:715px;width:354px;height:132px;background:rgba(87,171,90,.05);border:1.5px solid rgba(87,171,90,.45)">
+    <div class="hdr" style="background:#17331c;color:#7ac57e;font-size:22px">🌱 seeds</div>
+  </div>
+  <div class="tbl seedt" style="left:1528px;top:776px;width:251px;height:59px"><div class="name" style="font-size:17px">skill_categories.csv</div><div class="r"></div></div>
+
+  <!-- gold: marts (the star) -->
+  <div class="tier" style="left:1454px;top:262px;width:378px;height:440px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
+    <div class="hdr" style="background:var(--goldB);color:var(--goldT)">marts · the star</div>
+    <div class="sub">tables · one row per grain</div>
+  </div>
+  <div class="tbl gold" style="left:1472px;top:362px;width:170px;height:80px"><div class="name">dim_company</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl gold fct" style="left:1648px;top:438px;width:170px;height:96px"><div class="name" style="font-size:16px">fct_job_postings</div><div class="r"></div><div class="r"></div><div class="r"></div></div>
+  <div class="chip code" style="left:1662px;top:399px;width:149px;font-size:16px;padding:5px 10px;border-color:rgba(255,105,75,.6);color:#FDA290;height:32px;opacity:.8">⚡ incremental</div>
+  <div class="tbl gold" style="left:1472px;top:502px;width:170px;height:80px"><div class="name">dim_skill</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl gold" style="left:1560px;top:616px;width:180px;height:80px"><div class="name" style="font-size:16px">bridge_job_skills</div><div class="r"></div><div class="r"></div></div>
+
+  <!-- snapshots strip -->
+  <div class="tier" style="left:818px;top:610px;width:592px;height:186px;background:rgba(88,166,255,.05);border:1.5px solid rgba(88,166,255,.45)">
+    <div class="hdr" style="background:#1d2a3d;color:var(--blue)">snapshots · SCD2</div>
+  </div>
+  <div class="ghosttbl" style="left:878px;top:698px;width:250px;height:80px;opacity:.35"></div>
+  <div class="ghosttbl" style="left:866px;top:688px;width:250px;height:80px;opacity:.6"></div>
+  <div class="tbl snap" style="left:854px;top:678px;width:250px;height:84px"><div class="name" style="font-size:17px">job_postings_snapshot</div><div class="r"></div><div class="r"></div></div>
+  <div class="hcap" style="left:1136px;top:687px;width:260px;text-align:left">posting history —<br>appends, never rebuilt</div>
+
+
+  <!-- Databricks lockup on the frame -->
+  <div class="lockrow" style="left:432px;top:884px;width:1452px">
+    <img src="../images/Databricks_logo.png" alt="" style="height:64px;width:auto">
+    <span style="font-family:var(--mono);font-weight:800;font-size:36px;color:#fff">Databricks</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted);white-space:nowrap">pipeline runs daily — the scheduled job runs dbt build</span>
+  </div>
+
+  <!-- ============ arrows ============ -->
+  <svg class="art" viewBox="0 0 1920 1080" style="left:-2px;top:0px;position:absolute">
+    <defs>
+      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+      <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
+      </marker>
+      <marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#57AB5A"/>
+      </marker>
+    </defs>
+    <!-- source → raw catalog, loaded by the script riding the arrow -->
+    <path d="M 332 470 C 420 470, 470 452, 520 432" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- raw → staging -->
+    <path d="M 728 428 C 772 428, 782 424, 812 424" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- staging → intermediate -->
+    <path d="M 1102 440 L 1136 440" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- intermediate → marts -->
+    <path d="M 1414 440 L 1448 440" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- seed → dim_skill (enters the marts box) -->
+    <path d="M 1548 708 L 1548 594" fill="none" stroke="#57AB5A" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahg)"/>
+    <!-- staging → snapshots (blue: the history path) -->
+    <path d="M 958 548 L 958 604" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <!-- star joins: fct↔dim_company · fct↔bridge · bridge↔dim_skill -->
+    <path d="M 1638 430 L 1654 446" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1716 538 L 1692 612" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1598 586 L 1612 612" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+  </svg>
+
+</div>
+</body>
+</html>
