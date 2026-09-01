@@ -10,8 +10,7 @@
     --bg:#191919; --line:#4a4a4a;
     --text:#E8E8E8; --muted:#9B9B9B; --faint:#6B6B6B;
     --blue:#58A6FF; --dbt:#FF694B; --dbx:#FF3621;
-    --bronzeT:#D89A5B; --bronzeB:#4a2f15;
-    --silverT:#C9CED6; --silverB:#3a3d42;
+    --bronzeT:#D89A5B; --silverT:#C9CED6; --silverB:#3a3d42;
     --goldT:#E3B341;  --goldB:#4a3a10;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --hand:'Caveat',cursive;
@@ -19,6 +18,7 @@
   html,body{margin:0;padding:0;background:var(--bg)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
   .ztitle{position:absolute;text-align:center;font-family:var(--hand);font-weight:700;font-size:46px;color:#FFFFFF}
+  .frame{position:absolute;box-sizing:border-box;border-radius:30px}
   .zouter{position:absolute;box-sizing:border-box;border:2.5px dotted #5a5a5a;border-radius:26px}
   .zinner{position:absolute;box-sizing:border-box;border:2px solid #8a8a8a;border-radius:20px}
   .hlbl{position:absolute;text-align:center;font-family:var(--hand);font-weight:700;font-size:33px;color:var(--text);line-height:1.1}
@@ -57,17 +57,13 @@
   .tbl.fct{border-width:2.5px;box-shadow:0 0 22px rgba(227,179,65,.18)}
   .tbl.snap{border:1.5px solid rgba(88,166,255,.6)} .tbl.snap .name{background:#1d2a3d;color:var(--blue)}
   .ghosttbl{position:absolute;box-sizing:border-box;border-radius:10px;border:1.5px solid rgba(88,166,255,.35);background:#20242c}
-  .seed{position:absolute;box-sizing:border-box;border-radius:12px;padding:7px 14px;background:#232323;
+  .seed{position:absolute;box-sizing:border-box;border-radius:12px;padding:7px 14px;background:#232323;text-align:center;
     border:1.5px solid #6a6a6a;font-family:var(--hand);font-size:24px;font-weight:700;color:var(--text)}
   /* lockups */
   .dbtlogo{position:absolute;text-align:center;font-family:var(--mono);font-weight:800;color:var(--dbt)}
-  .ghlogo{position:absolute;text-align:center;font-family:var(--mono);font-weight:800;color:#fff}
-  .ribbon{position:absolute;box-sizing:border-box;border:2px solid rgba(255,54,33,.55);border-radius:18px;
-    background:rgba(255,54,33,.06);display:flex;align-items:center;justify-content:center;gap:22px}
+  .lockrow{position:absolute;display:flex;align-items:center;justify-content:center;gap:20px}
   .bricks{display:inline-block;width:46px;height:40px;position:relative}
   .bricks b{position:absolute;width:20px;height:12px;background:var(--dbx);transform:skewX(-18deg);border-radius:2px}
-  .jobchip{position:absolute;box-sizing:border-box;border-radius:16px;padding:12px 24px;background:#232323;
-    border:2px solid #7a7a7a;font-family:var(--hand);font-size:30px;font-weight:700;color:var(--text)}
   .chip{position:absolute;box-sizing:border-box;border-radius:12px;padding:8px 16px;text-align:center;
     font-family:var(--hand);font-size:26px;font-weight:700;color:var(--text);background:#232323;border:2px solid #6a6a6a}
   .chip.code{font-family:var(--mono);font-size:20px;font-weight:700}
@@ -77,77 +73,81 @@
 <body>
 <div class="stage">
 
-  <!-- ============ the nightly-job arc ============ -->
-  <div class="jobchip" style="left:1332px;top:84px">⏰ Databricks Job — nightly &nbsp;·&nbsp; 🔒 zero secrets</div>
+  <!-- ============ GITHUB FRAME : Data Source ============ -->
+  <div class="ztitle" style="left:44px;top:130px;width:346px">Data Source</div>
+  <div class="frame" style="left:44px;top:192px;width:346px;height:800px;border:2.5px solid rgba(255,255,255,.3)"></div>
+  <div class="zinner" style="left:76px;top:230px;width:282px;height:430px"></div>
+  <div class="pfile" style="left:110px;top:264px"></div>
+  <div class="pfile" style="left:140px;top:294px"></div>
+  <div class="pfile" style="left:170px;top:324px"><div class="rows"></div><div class="tag">PARQUET</div></div>
+  <div class="hlbl" style="left:76px;top:550px;width:282px">Job Postings<br>monthly files</div>
+  <div class="lockrow" style="left:44px;top:884px;width:346px">
+    <span style="font-family:var(--mono);font-weight:800;font-size:34px;color:#fff">GitHub</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">Releases</span>
+  </div>
 
-  <!-- ============ ZONE 1 : Data Source ============ -->
-  <div class="ztitle" style="left:50px;top:176px;width:330px">Data Source</div>
-  <div class="zouter" style="left:50px;top:240px;width:330px;height:640px"></div>
-  <div class="zinner" style="left:72px;top:262px;width:286px;height:426px"></div>
-  <div class="pfile" style="left:106px;top:296px"></div>
-  <div class="pfile" style="left:136px;top:326px"></div>
-  <div class="pfile" style="left:166px;top:356px"><div class="rows"></div><div class="tag">PARQUET</div></div>
-  <div class="hlbl" style="left:72px;top:582px;width:286px">Job Postings<br>monthly files</div>
-  <div class="ghlogo" style="left:50px;top:756px;width:330px;font-size:34px">GitHub</div>
-  <div class="hcap" style="left:50px;top:806px;width:330px">Releases</div>
+  <!-- ============ DATABRICKS FRAME : Ingestion + Transformation ============ -->
+  <div class="frame" style="left:432px;top:192px;width:1452px;height:800px;border:2.5px solid rgba(255,54,33,.55);background:rgba(255,54,33,.03)"></div>
 
-  <!-- ============ ZONE 2 : Ingestion ============ -->
-  <div class="ztitle" style="left:428px;top:176px;width:300px">Ingestion</div>
-  <div class="zouter" style="left:428px;top:240px;width:300px;height:640px"></div>
-  <div class="zinner" style="left:448px;top:262px;width:260px;height:426px;border-color:rgba(216,154,91,.45)"></div>
-  <div class="chip code" style="left:470px;top:306px;width:216px">📓 load_raw<br>notebook</div>
-  <div class="cyl" style="left:500px;top:452px;width:156px;height:146px">
+  <!-- zone: Ingestion -->
+  <div class="ztitle" style="left:456px;top:130px;width:300px">Ingestion</div>
+  <div class="zouter" style="left:456px;top:216px;width:300px;height:640px"></div>
+  <div class="zinner" style="left:476px;top:238px;width:260px;height:426px;border-color:rgba(216,154,91,.45)"></div>
+  <div class="chip code" style="left:498px;top:282px;width:216px">📓 load_raw<br>notebook</div>
+  <div class="cyl" style="left:528px;top:428px;width:156px;height:146px">
     <div class="body"></div><div class="top"></div><div class="bot"></div>
   </div>
-  <div class="hlbl" style="left:448px;top:612px;width:260px;color:var(--bronzeT)">raw catalog</div>
-  <div class="hcap" style="left:428px;top:770px;width:300px">every scrape, kept forever</div>
+  <div class="hlbl" style="left:476px;top:588px;width:260px;color:var(--bronzeT)">raw catalog</div>
+  <div class="hcap" style="left:456px;top:746px;width:300px">raw, unclean job postings</div>
 
-  <!-- ============ ZONE 3 : Transformation ============ -->
-  <div class="ztitle" style="left:768px;top:176px;width:1102px">Transformation</div>
-  <div class="zouter" style="left:768px;top:240px;width:1102px;height:640px"></div>
-  <div class="dbtlogo" style="left:1730px;top:806px;width:120px;font-size:46px">dbt</div>
+  <!-- zone: Transformation — dbt's box -->
+  <div class="ztitle" style="left:790px;top:130px;width:1002px">Transformation</div>
+  <div class="dbtlogo" style="left:1490px;top:136px;width:110px;font-size:48px">dbt</div>
+  <div class="zouter" style="left:790px;top:216px;width:1062px;height:640px;border-color:rgba(255,105,75,.55);background:rgba(255,105,75,.035)"></div>
 
   <!-- silver: staging -->
-  <div class="tier" style="left:796px;top:292px;width:284px;height:300px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
+  <div class="tier" style="left:818px;top:262px;width:280px;height:300px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
     <div class="hdr" style="background:var(--silverB);color:var(--silverT)">staging</div>
     <div class="sub">clean · typed · views</div>
   </div>
-  <div class="tbl silver" style="left:816px;top:392px;width:244px;height:84px"><div class="name">stg_job_postings</div><div class="r"></div><div class="r"></div></div>
-  <div class="tbl silver" style="left:816px;top:490px;width:244px;height:84px"><div class="name">stg_job_skills</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl silver" style="left:836px;top:362px;width:244px;height:84px"><div class="name">stg_job_postings</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl silver" style="left:836px;top:460px;width:244px;height:84px"><div class="name">stg_job_skills</div><div class="r"></div><div class="r"></div></div>
 
   <!-- silver: intermediate -->
-  <div class="tier" style="left:1124px;top:292px;width:272px;height:300px;background:rgba(201,206,214,.04);border:1.5px solid rgba(201,206,214,.4)">
+  <div class="tier" style="left:1142px;top:262px;width:268px;height:300px;background:rgba(201,206,214,.04);border:1.5px solid rgba(201,206,214,.4)">
     <div class="hdr" style="background:var(--silverB);color:var(--silverT)">intermediate</div>
     <div class="sub">skills · one per row</div>
   </div>
-  <div class="tbl silver" style="left:1140px;top:430px;width:240px;height:84px"><div class="name" style="font-size:17px">int_skill_observations</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl silver" style="left:1156px;top:400px;width:240px;height:84px"><div class="name" style="font-size:17px">int_skill_observations</div><div class="r"></div><div class="r"></div></div>
+
+  <!-- seed: its own input, NOT a mart -->
+  <div class="seed" style="left:1478px;top:726px;width:224px">🌱 seed · skill taxonomy</div>
 
   <!-- gold: marts (the star) -->
-  <div class="tier" style="left:1440px;top:292px;width:404px;height:428px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
+  <div class="tier" style="left:1454px;top:262px;width:378px;height:440px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
     <div class="hdr" style="background:var(--goldB);color:var(--goldT)">marts · the star</div>
   </div>
-  <div class="tbl gold" style="left:1458px;top:360px;width:170px;height:80px"><div class="name">dim_company</div><div class="r"></div><div class="r"></div></div>
-  <div class="tbl gold" style="left:1458px;top:480px;width:170px;height:80px"><div class="name">dim_skill</div><div class="r"></div><div class="r"></div></div>
-  <div class="tbl gold fct" style="left:1646px;top:408px;width:186px;height:96px"><div class="name" style="font-size:17px">fct_job_postings</div><div class="r"></div><div class="r"></div><div class="r"></div></div>
-  <div class="tbl gold" style="left:1646px;top:560px;width:186px;height:80px"><div class="name" style="font-size:16px">bridge_job_skills</div><div class="r"></div><div class="r"></div></div>
-  <div class="seed" style="left:1458px;top:608px;width:170px">🌱 seed · taxonomy</div>
+  <div class="tbl gold" style="left:1472px;top:330px;width:170px;height:80px"><div class="name">dim_company</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl gold fct" style="left:1648px;top:414px;width:170px;height:96px"><div class="name" style="font-size:16px">fct_job_postings</div><div class="r"></div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl gold" style="left:1472px;top:474px;width:170px;height:80px"><div class="name">dim_skill</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl gold" style="left:1560px;top:596px;width:180px;height:80px"><div class="name" style="font-size:16px">bridge_job_skills</div><div class="r"></div><div class="r"></div></div>
 
   <!-- snapshots strip -->
-  <div class="tier" style="left:796px;top:634px;width:600px;height:186px;background:rgba(88,166,255,.05);border:1.5px solid rgba(88,166,255,.45)">
+  <div class="tier" style="left:818px;top:610px;width:592px;height:186px;background:rgba(88,166,255,.05);border:1.5px solid rgba(88,166,255,.45)">
     <div class="hdr" style="background:#1d2a3d;color:var(--blue)">snapshots · SCD2</div>
   </div>
-  <div class="ghosttbl" style="left:856px;top:722px;width:250px;height:80px;opacity:.35"></div>
-  <div class="ghosttbl" style="left:844px;top:712px;width:250px;height:80px;opacity:.6"></div>
-  <div class="tbl snap" style="left:832px;top:702px;width:250px;height:84px"><div class="name" style="font-size:17px">job_postings_snapshot</div><div class="r"></div><div class="r"></div></div>
-  <div class="hcap" style="left:1120px;top:712px;width:260px;text-align:left">appends every run —<br>the one table you can't rebuild</div>
+  <div class="ghosttbl" style="left:878px;top:698px;width:250px;height:80px;opacity:.35"></div>
+  <div class="ghosttbl" style="left:866px;top:688px;width:250px;height:80px;opacity:.6"></div>
+  <div class="tbl snap" style="left:854px;top:678px;width:250px;height:84px"><div class="name" style="font-size:17px">job_postings_snapshot</div><div class="r"></div><div class="r"></div></div>
+  <div class="hcap" style="left:1136px;top:688px;width:260px;text-align:left">posting history —<br>appends, never rebuilt</div>
 
-  <div class="hcap" style="left:768px;top:836px;width:1102px">models · tests · docs — all dbt, all in git</div>
+  <div class="hcap" style="left:790px;top:812px;width:1062px">models · tests · docs — all in git</div>
 
-  <!-- ============ Databricks ribbon ============ -->
-  <div class="ribbon" style="left:428px;top:918px;width:1442px;height:78px">
+  <!-- Databricks lockup on the frame -->
+  <div class="lockrow" style="left:432px;top:884px;width:1452px">
     <span class="bricks"><b style="left:0;top:4px"></b><b style="left:14px;top:14px"></b><b style="left:6px;top:24px"></b></span>
     <span style="font-family:var(--mono);font-weight:800;font-size:34px;color:#fff">Databricks</span>
-    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">one platform — storage · compute · schedule</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">one platform &nbsp;·&nbsp; ⏰ runs the nightly job &nbsp;·&nbsp; 🔒 zero secrets</span>
   </div>
 
   <!-- ============ arrows ============ -->
@@ -161,23 +161,21 @@
       </marker>
     </defs>
     <!-- source → ingestion -->
-    <path d="M 384 500 L 422 500" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 394 470 L 448 470" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- raw → staging -->
-    <path d="M 700 522 C 752 522, 756 470, 790 452" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 728 498 C 776 498, 782 444, 812 424" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- staging → intermediate -->
-    <path d="M 1084 470 L 1118 470" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1102 440 L 1136 440" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- intermediate → marts -->
-    <path d="M 1400 470 L 1434 470" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1414 440 L 1448 440" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- seed → dim_skill (enters the marts box) -->
+    <path d="M 1506 720 C 1478 660, 1494 604, 1536 562" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- staging → snapshots (blue: the history path) -->
-    <path d="M 940 578 L 940 628" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
-    <!-- star joins (dashed) -->
-    <path d="M 1642 448 L 1632 416" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
-    <path d="M 1642 476 L 1632 504" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
-    <path d="M 1739 508 L 1739 554" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
-    <!-- seed → dim_skill -->
-    <path d="M 1543 604 L 1543 566" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- nightly arc → into the zone -->
-    <path d="M 1500 150 C 1548 192, 1584 208, 1600 240" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 958 548 L 958 604" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <!-- star joins: fct↔dim_company · fct↔bridge · bridge↔dim_skill -->
+    <path d="M 1644 438 L 1646 396" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1712 514 L 1682 590" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1554 620 L 1600 560 M 1600 560 L 1600 560" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
   </svg>
 
 </div>
