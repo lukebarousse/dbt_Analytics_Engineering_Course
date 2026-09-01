@@ -82,8 +82,8 @@
   <div class="pfile" style="left:140px;top:294px"></div>
   <div class="pfile" style="left:170px;top:324px"><div class="rows"></div><div class="tag">PARQUET</div></div>
   <div class="hlbl" style="left:76px;top:550px;width:282px">Job Postings<br>monthly files</div>
-  <div class="lockrow" style="left:44px;top:884px;width:346px">
-    <span style="font-family:var(--mono);font-weight:800;font-size:34px;color:#fff">GitHub</span>
+  <img src="../uploads/GitHub_White_Logo.png" alt="" style="position:absolute;left:44px;top:790px;width:346px;height:100px;object-fit:contain">
+  <div class="lockrow" style="left:44px;top:900px;width:346px">
     <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">Releases</span>
   </div>
 
@@ -94,16 +94,21 @@
   <div class="ztitle" style="left:456px;top:130px;width:300px">Ingestion</div>
   <div class="zouter" style="left:456px;top:216px;width:300px;height:640px"></div>
   <div class="zinner" style="left:476px;top:238px;width:260px;height:426px;border-color:rgba(216,154,91,.45)"></div>
-  <div class="chip code" style="left:360px;top:446px;width:180px;font-size:18px;padding:6px 10px;z-index:3;position:absolute">🐍 load_raw.py</div>
-  <div class="cyl" style="left:528px;top:428px;width:156px;height:146px">
+  <div class="chip code" style="left:331px;top:382px;width:180px;font-size:18px;padding:6px 10px;z-index:3;position:absolute;opacity:.8">🐍 load_raw.py</div>
+  <div class="cyl" style="left:531px;top:330px;width:150px;height:190px">
     <div class="body"></div><div class="top"></div><div class="bot"></div>
   </div>
-  <div class="hlbl" style="left:476px;top:588px;width:260px;color:var(--bronzeT)">raw catalog</div>
+  <div class="hlbl" style="left:476px;top:544px;width:260px;color:var(--bronzeT)">raw catalog</div>
   <div class="hcap" style="left:456px;top:746px;width:300px">raw, unclean job postings</div>
 
   <!-- zone: Transformation — dbt's box -->
   <div class="ztitle" style="left:790px;top:130px;width:1002px">Transformation</div>
   <div class="zouter" style="left:790px;top:216px;width:1062px;height:640px;border-color:rgba(255,105,75,.55);background:rgba(255,105,75,.035)"></div>
+  <div class="lockrow" style="left:814px;top:222px;justify-content:flex-start;gap:14px">
+    <img src="../uploads/dbt_3d.png" alt="" style="height:46px;width:auto">
+    <span style="font-family:var(--mono);font-weight:800;font-size:36px;color:var(--dbt)">dbt</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:26px;color:var(--muted)">models · tests · docs — all in git</span>
+  </div>
 
   <!-- silver: staging -->
   <div class="tier" style="left:818px;top:262px;width:280px;height:300px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
@@ -121,10 +126,10 @@
   <div class="tbl silver" style="left:1156px;top:400px;width:240px;height:84px"><div class="name" style="font-size:17px">int_skill_observations</div><div class="r"></div><div class="r"></div></div>
 
   <!-- seed: its own input, NOT a mart -->
-  <div class="tier" style="left:1478px;top:706px;width:354px;height:118px;background:rgba(87,171,90,.05);border:1.5px solid rgba(87,171,90,.45)">
+  <div class="tier" style="left:1470px;top:715px;width:354px;height:132px;background:rgba(87,171,90,.05);border:1.5px solid rgba(87,171,90,.45)">
     <div class="hdr" style="background:#17331c;color:#7ac57e;font-size:22px">🌱 seeds</div>
   </div>
-  <div class="tbl seedt" style="left:1500px;top:762px;width:250px;height:50px"><div class="name" style="font-size:17px">skill_categories.csv</div><div class="r"></div></div>
+  <div class="tbl seedt" style="left:1528px;top:776px;width:251px;height:59px"><div class="name" style="font-size:17px">skill_categories.csv</div><div class="r"></div></div>
 
   <!-- gold: marts (the star) -->
   <div class="tier" style="left:1454px;top:262px;width:378px;height:440px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
@@ -133,7 +138,7 @@
   </div>
   <div class="tbl gold" style="left:1472px;top:362px;width:170px;height:80px"><div class="name">dim_company</div><div class="r"></div><div class="r"></div></div>
   <div class="tbl gold fct" style="left:1648px;top:438px;width:170px;height:96px"><div class="name" style="font-size:16px">fct_job_postings</div><div class="r"></div><div class="r"></div><div class="r"></div></div>
-  <div class="chip code" style="left:1662px;top:398px;width:166px;font-size:18px;padding:5px 10px;border-color:rgba(255,105,75,.6);color:var(--dbt)">⚡ incremental</div>
+  <div class="chip code" style="left:1662px;top:399px;width:149px;font-size:16px;padding:5px 10px;border-color:rgba(255,105,75,.6);color:#FDA290;height:32px;opacity:.8">⚡ incremental</div>
   <div class="tbl gold" style="left:1472px;top:502px;width:170px;height:80px"><div class="name">dim_skill</div><div class="r"></div><div class="r"></div></div>
   <div class="tbl gold" style="left:1560px;top:616px;width:180px;height:80px"><div class="name" style="font-size:16px">bridge_job_skills</div><div class="r"></div><div class="r"></div></div>
 
@@ -144,21 +149,18 @@
   <div class="ghosttbl" style="left:878px;top:698px;width:250px;height:80px;opacity:.35"></div>
   <div class="ghosttbl" style="left:866px;top:688px;width:250px;height:80px;opacity:.6"></div>
   <div class="tbl snap" style="left:854px;top:678px;width:250px;height:84px"><div class="name" style="font-size:17px">job_postings_snapshot</div><div class="r"></div><div class="r"></div></div>
-  <div class="hcap" style="left:1136px;top:688px;width:260px;text-align:left">posting history —<br>appends, never rebuilt</div>
+  <div class="hcap" style="left:1136px;top:687px;width:260px;text-align:left">posting history —<br>appends, never rebuilt</div>
 
-  <div class="lockrow" style="left:790px;top:792px;width:640px">
-    <span style="font-family:var(--mono);font-weight:800;font-size:42px;color:var(--dbt)">dbt</span>
-    <span style="font-family:var(--hand);font-weight:600;font-size:27px;color:var(--muted)">models · tests · docs — all in git</span>
-  </div>
 
   <!-- Databricks lockup on the frame -->
   <div class="lockrow" style="left:432px;top:884px;width:1452px">
+    <img src="../uploads/Databricks_logo.png" alt="" style="height:64px;width:auto">
     <span style="font-family:var(--mono);font-weight:800;font-size:36px;color:#fff">Databricks</span>
-    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">⏰ pipeline runs daily — the scheduled job runs dbt build</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted);white-space:nowrap">pipeline runs daily — the scheduled job runs dbt build</span>
   </div>
 
   <!-- ============ arrows ============ -->
-  <svg class="art" viewBox="0 0 1920 1080">
+  <svg class="art" viewBox="0 0 1920 1080" style="left:-2px;top:0px;position:absolute">
     <defs>
       <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
@@ -166,17 +168,20 @@
       <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
       </marker>
+      <marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#57AB5A"/>
+      </marker>
     </defs>
     <!-- source → raw catalog, loaded by the script riding the arrow -->
-    <path d="M 332 470 C 420 470, 468 478, 518 494" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 332 470 C 420 470, 470 452, 520 432" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- raw → staging -->
-    <path d="M 728 498 C 776 498, 782 444, 812 424" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 728 428 C 772 428, 782 424, 812 424" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- staging → intermediate -->
     <path d="M 1102 440 L 1136 440" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- intermediate → marts -->
     <path d="M 1414 440 L 1448 440" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- seed → dim_skill (enters the marts box) -->
-    <path d="M 1548 702 C 1532 664, 1532 626, 1534 590" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1548 708 L 1548 594" fill="none" stroke="#57AB5A" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahg)"/>
     <!-- staging → snapshots (blue: the history path) -->
     <path d="M 958 548 L 958 604" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
     <!-- star joins: fct↔dim_company · fct↔bridge · bridge↔dim_skill -->
