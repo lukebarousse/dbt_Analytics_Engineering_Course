@@ -79,11 +79,11 @@ Structure, tests, and column descriptions were written along the way — the doc
 
 **→ [Live docs on GitHub Pages](https://YOU.github.io/REPO)**
 
-A reviewer can open it and see:
+The site shows:
 
 - the full **lineage graph** — raw → staging → intermediate → the star → snapshot
 - every **model and column description** from the YAMLs
-- which columns carry **tests**, without reading a line of SQL
+- which columns carry **tests**
 
 ![dbt lineage graph](img/lineage.png)
 <!-- screenshot: dbt docs → lineage graph, full DAG -->

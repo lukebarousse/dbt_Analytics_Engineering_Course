@@ -15,13 +15,13 @@ A public dbt + DuckDB pipeline over ~692k real job postings. Every push rebuilds
 
 ---
 
-## Why this repo exists
+## What's in here
 
-Most “dbt portfolio” repos stop at `dbt run` on a laptop. This one is meant to show the full loop a hiring team actually cares about:
+The project takes ~692k raw job postings through the full dbt workflow:
 
-1. **Build a real pipeline** with `source()` / `ref()`, materializations, and grain tests
-2. **Ship documentation** so the DAG and column meaning are reviewable without cloning
-3. **Automate it in CI** so the green badge and published warehouse prove it still works
+1. **A tested pipeline** — `source()` / `ref()`, materializations, and grain tests
+2. **Published documentation** — the DAG and every column meaning, browsable without cloning
+3. **CI automation** — every push rebuilds, tests, and republishes the warehouse
 
 ---
 
@@ -49,17 +49,15 @@ Docs are generated with `dbt docs generate` and published to GitHub Pages:
 
 **→ [YOU.github.io/REPO](https://YOU.github.io/REPO)**
 
-A reviewer can open the site and see:
+The site shows:
 
 - The full **lineage graph** (sources → models → marts)
-- **Model and column descriptions** from YAML
-- Which columns have **tests** without reading SQL
-
-That is the difference between “I ran dbt once” and “I can hand someone the catalog.”
+- **Model and column descriptions** from the YAML
+- Which columns carry **tests**
 
 ---
 
-## 3. Public CI anyone can inspect
+## 3. CI: build, test, publish
 
 Workflow: [`.github/workflows/dbt_build.yml`](.github/workflows/dbt_build.yml)
 
@@ -76,7 +74,7 @@ On each run, Actions:
 3. Runs `dbt build --target prod`
 4. Publishes `prod.duckdb` as a GitHub Release asset
 
-Badge at the top of this README links straight to the latest runs — green means the pipeline and tests passed in public.
+The badge at the top of this README links to the latest runs.
 
 ### Query the published warehouse
 
@@ -96,7 +94,7 @@ SELECT * FROM jobs.main.monthly_summary;
 
 - Meta leads employer volume by a wide margin among active posters
 - Remote remains a small share of data-role postings in this sample
-- Salary is sparse and often free-text when present — a real data-quality signal, not just a chart
+- Salary is sparse and often free-text when present — documented as-is rather than patched
 
 (Open the marts or the [docs site](https://YOU.github.io/REPO) for the exact numbers after the latest CI build.)
 
