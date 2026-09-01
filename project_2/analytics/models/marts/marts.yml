@@ -113,12 +113,3 @@ models:
                 field: skill_id
       - name: skill_keyword
         description: Raw skill keyword, trimmed upstream.
-
-  - name: optimal_skills
-    description: Q5 — skills that are both in demand (floor of 100 jobs) and well paid.
-    columns:
-      - name: display_name
-        description: One row per qualifying skill.
-        data_tests:
-          - not_null
-          - unique
