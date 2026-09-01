@@ -75,7 +75,7 @@
 
   <!-- ============ GITHUB FRAME : Data Source ============ -->
   <div class="ztitle" style="left:44px;top:130px;width:346px">Data Source</div>
-  <div class="frame" style="left:44px;top:192px;width:346px;height:800px;border:2.5px solid rgba(255,255,255,.3)"></div>
+  <div class="frame" style="left:44px;top:112px;width:346px;height:880px;border:2.5px solid rgba(255,255,255,.3)"></div>
   <div class="zinner" style="left:76px;top:230px;width:282px;height:430px"></div>
   <div class="pfile" style="left:110px;top:264px"></div>
   <div class="pfile" style="left:140px;top:294px"></div>
@@ -87,7 +87,7 @@
   </div>
 
   <!-- ============ DATABRICKS FRAME : Ingestion + Transformation ============ -->
-  <div class="frame" style="left:432px;top:192px;width:1452px;height:800px;border:2.5px solid rgba(255,54,33,.55);background:rgba(255,54,33,.03)"></div>
+  <div class="frame" style="left:432px;top:112px;width:1452px;height:880px;border:2.5px solid rgba(255,54,33,.55);background:rgba(255,54,33,.03)"></div>
 
   <!-- zone: Ingestion -->
   <div class="ztitle" style="left:456px;top:130px;width:300px">Ingestion</div>
@@ -102,7 +102,6 @@
 
   <!-- zone: Transformation — dbt's box -->
   <div class="ztitle" style="left:790px;top:130px;width:1002px">Transformation</div>
-  <div class="dbtlogo" style="left:1490px;top:136px;width:110px;font-size:48px">dbt</div>
   <div class="zouter" style="left:790px;top:216px;width:1062px;height:640px;border-color:rgba(255,105,75,.55);background:rgba(255,105,75,.035)"></div>
 
   <!-- silver: staging -->
@@ -141,13 +140,15 @@
   <div class="tbl snap" style="left:854px;top:678px;width:250px;height:84px"><div class="name" style="font-size:17px">job_postings_snapshot</div><div class="r"></div><div class="r"></div></div>
   <div class="hcap" style="left:1136px;top:688px;width:260px;text-align:left">posting history —<br>appends, never rebuilt</div>
 
-  <div class="hcap" style="left:790px;top:812px;width:1062px">models · tests · docs — all in git</div>
+  <div class="lockrow" style="left:790px;top:792px;width:1062px">
+    <span style="font-family:var(--mono);font-weight:800;font-size:42px;color:var(--dbt)">dbt</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:27px;color:var(--muted)">models · tests · docs — all in git</span>
+  </div>
 
   <!-- Databricks lockup on the frame -->
   <div class="lockrow" style="left:432px;top:884px;width:1452px">
-    <span class="bricks"><b style="left:0;top:4px"></b><b style="left:14px;top:14px"></b><b style="left:6px;top:24px"></b></span>
-    <span style="font-family:var(--mono);font-weight:800;font-size:34px;color:#fff">Databricks</span>
-    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">one platform &nbsp;·&nbsp; ⏰ runs the nightly job &nbsp;·&nbsp; 🔒 zero secrets</span>
+    <span style="font-family:var(--mono);font-weight:800;font-size:36px;color:#fff">Databricks</span>
+    <span style="font-family:var(--hand);font-weight:600;font-size:28px;color:var(--muted)">⏰ pipeline runs daily — the scheduled job runs dbt build</span>
   </div>
 
   <!-- ============ arrows ============ -->
