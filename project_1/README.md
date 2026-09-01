@@ -81,7 +81,7 @@ The badge at the top of this README links to the latest runs.
 No clone required. From a local DuckDB session:
 
 ```sql
-ATTACH 'https://github.com/lukebarousse/dbt-project1/releases/download/warehouse/prod.duckdb'
+ATTACH 'https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/releases/download/warehouse/prod.duckdb'
   AS jobs (READ_ONLY);
 
 SELECT * FROM jobs.main.top_companies;
