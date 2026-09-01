@@ -1,4 +1,4 @@
--- Q3: skill demand across the whole star (fct ⋈ bridge ⋈ dim_skill).
+-- skill demand across the whole star (fct ⋈ bridge ⋈ dim_skill).
 -- a QUESTION, not a model — it lives in analyses/ (3.08.2). all roles by default;
 -- pick yours with:
 --   dbt compile --select in_demand_skills --vars 'job_title: Data Analyst'

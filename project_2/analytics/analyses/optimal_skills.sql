@@ -1,9 +1,9 @@
--- Q5: high demand AND high salary; the demand floor keeps
+-- high demand AND high salary; the demand floor keeps
 -- one-posting salary outliers out of the ranking. SUPPORTER BONUS attached to
 -- 3.08 (practice-problem tier, not filmed) — an analysis, not a mart: it ANSWERS
 -- a question on the star (fct ⋈ bridge ⋈ dim_skill), it doesn't serve one.
 -- demand counts ALL jobs, the salary average only the salaried ones (avg()
--- skips nulls itself). Q3/Q4 = the filmed analyses; Q1/Q2 = supporter bonus too.
+-- skips nulls itself).
 
 WITH bridge AS (
     SELECT * FROM {{ ref('bridge_job_skills') }}
