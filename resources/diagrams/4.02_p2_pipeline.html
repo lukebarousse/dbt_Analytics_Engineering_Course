@@ -93,10 +93,11 @@
   <div class="ztitle" style="left:456px;top:130px;width:300px">Ingestion</div>
   <div class="zouter" style="left:456px;top:216px;width:300px;height:640px"></div>
   <div class="zinner" style="left:476px;top:238px;width:260px;height:426px;border-color:rgba(216,154,91,.45)"></div>
-  <div class="chip code" style="left:498px;top:282px;width:216px">📓 load_raw<br>notebook</div>
+  <div class="chip code" style="left:490px;top:296px;width:232px">🐍 load_raw.py</div>
   <div class="cyl" style="left:528px;top:428px;width:156px;height:146px">
     <div class="body"></div><div class="top"></div><div class="bot"></div>
   </div>
+  <div class="hcap" style="left:620px;top:364px;width:120px;text-align:left">loads</div>
   <div class="hlbl" style="left:476px;top:588px;width:260px;color:var(--bronzeT)">raw catalog</div>
   <div class="hcap" style="left:456px;top:746px;width:300px">raw, unclean job postings</div>
 
@@ -125,11 +126,13 @@
   <!-- gold: marts (the star) -->
   <div class="tier" style="left:1454px;top:262px;width:378px;height:440px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
     <div class="hdr" style="background:var(--goldB);color:var(--goldT)">marts · the star</div>
+    <div class="sub">tables · one row per grain</div>
   </div>
-  <div class="tbl gold" style="left:1472px;top:330px;width:170px;height:80px"><div class="name">dim_company</div><div class="r"></div><div class="r"></div></div>
-  <div class="tbl gold fct" style="left:1648px;top:414px;width:170px;height:96px"><div class="name" style="font-size:16px">fct_job_postings</div><div class="r"></div><div class="r"></div><div class="r"></div></div>
-  <div class="tbl gold" style="left:1472px;top:474px;width:170px;height:80px"><div class="name">dim_skill</div><div class="r"></div><div class="r"></div></div>
-  <div class="tbl gold" style="left:1560px;top:596px;width:180px;height:80px"><div class="name" style="font-size:16px">bridge_job_skills</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl gold" style="left:1472px;top:362px;width:170px;height:80px"><div class="name">dim_company</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl gold fct" style="left:1648px;top:438px;width:170px;height:96px"><div class="name" style="font-size:16px">fct_job_postings</div><div class="r"></div><div class="r"></div><div class="r"></div></div>
+  <div class="chip code" style="left:1652px;top:546px;width:162px;font-size:17px;padding:5px 10px;border-color:rgba(255,105,75,.6);color:var(--dbt)">⚡ incremental</div>
+  <div class="tbl gold" style="left:1472px;top:502px;width:170px;height:80px"><div class="name">dim_skill</div><div class="r"></div><div class="r"></div></div>
+  <div class="tbl gold" style="left:1560px;top:616px;width:180px;height:80px"><div class="name" style="font-size:16px">bridge_job_skills</div><div class="r"></div><div class="r"></div></div>
 
   <!-- snapshots strip -->
   <div class="tier" style="left:818px;top:610px;width:592px;height:186px;background:rgba(88,166,255,.05);border:1.5px solid rgba(88,166,255,.45)">
@@ -161,6 +164,8 @@
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
       </marker>
     </defs>
+    <!-- notebook loads the raw catalog -->
+    <path d="M 606 348 L 606 418" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- source → ingestion -->
     <path d="M 394 470 L 448 470" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- raw → staging -->
@@ -170,13 +175,13 @@
     <!-- intermediate → marts -->
     <path d="M 1414 440 L 1448 440" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- seed → dim_skill (enters the marts box) -->
-    <path d="M 1506 720 C 1478 660, 1494 604, 1536 562" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1506 720 C 1478 668, 1492 620, 1534 586" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- staging → snapshots (blue: the history path) -->
     <path d="M 958 548 L 958 604" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
     <!-- star joins: fct↔dim_company · fct↔bridge · bridge↔dim_skill -->
-    <path d="M 1644 438 L 1646 396" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
-    <path d="M 1712 514 L 1682 590" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
-    <path d="M 1554 620 L 1600 560 M 1600 560 L 1600 560" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1638 430 L 1654 446" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1716 538 L 1692 612" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <path d="M 1598 586 L 1612 612" fill="none" stroke="#8a8a8a" stroke-width="2.5" stroke-dasharray="4 8" stroke-linecap="round"/>
   </svg>
 
 </div>
