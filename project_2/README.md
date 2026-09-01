@@ -1,10 +1,15 @@
 # Production Job Postings Pipeline (v2) - dbt + Databricks
 
 [![dbt Docs](https://img.shields.io/badge/dbt_docs-live-blue)](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project2/)
-
-A production dbt pipeline on Databricks over **843,097 raw job-posting scrapes**: medallion layers shaped into a star schema, tested at every grain, with SCD2 salary history and a **scheduled job that runs with zero secrets**.
+![Databricks](https://img.shields.io/badge/warehouse-Databricks-FF3621)
 
 ![P2 pipeline architecture](img/p2_pipeline.png)
+
+A production dbt pipeline on **Databricks** over 843,097 raw job-posting scrapes, rebuilt nightly by a scheduled job with zero secrets.
+
+- Shapes medallion layers into a tested star schema — 491,140 jobs at a declared grain
+- Tracks a year of salary history with SCD2 snapshots — 504,591 version rows
+- Loads incrementally and runs itself on a scheduled Databricks Job — no tokens anywhere
 
 | What this demonstrates | Where to look |
 | --- | --- |
@@ -19,21 +24,7 @@ A production dbt pipeline on Databricks over **843,097 raw job-posting scrapes**
 
 ---
 
-## The pipeline
-
-```
-raw.jobs (Databricks catalog — 843,097 scrapes, loaded by notebook)
-   │  scraper-flagged errors dropped at the door; 6,255 id-less rows cut with eyes open
-   ▼
-staging   views — typed, trimmed, benefits flags (jinja loop), salary parsed (macro)   685,695 rows
-   ▼
-intermediate   skills exploded to one observation per row
-   ▼
-marts   the star: fct_job_postings (491,140 jobs, deduped by QUALIFY — latest scrape wins)
-        ⋈ dim_company · dim_skill (seed taxonomy) · bridge_job_skills (3.3M pairs)
-   ▼
-snapshots   job_postings_snapshot — SCD2 over 13 watched columns, 504,591 version rows
-```
+## The dbt Pipeline
 
 **dbt practices used**
 
@@ -50,6 +41,8 @@ snapshots   job_postings_snapshot — SCD2 over 13 watched columns, 504,591 vers
 | Incremental | merge on `job_id`; `is_incremental()` + a `search_date` high-water filter |
 | Environments | `catalog: dev` vs `catalog: prod` — promotion is a one-line diff |
 
+`dbt build` compiles SQL, materializes models, and fails the run if any test fails — same command locally and in the scheduled job.
+
 ---
 
 ## History the warehouse would have lost
@@ -64,12 +57,13 @@ The pipeline's marts keep each job's **latest** scrape. The snapshot keeps **eve
 
 ## Production
 
-- **Two targets, one profile**: every build lands in `dev` until it's promoted — `dbt build --target prod` writes the same schemas into the `prod` catalog
-- **Scheduled Databricks Job** runs `dbt debug` → `dbt build` on cron, pulling the repo straight from GitHub
+**Databricks** owns the runtime — storage, compute, and the schedule, one platform:
+
+- **Two targets, one profile**: every build lands in the `dev` catalog until it's promoted — `dbt build --target prod` writes the same schemas into `prod`
+- **Scheduled Databricks Job** runs `dbt debug` → `dbt build` nightly, pulling the repo straight from GitHub
 - **Zero secrets**: the job generates a temporary-credentials profile against the attached warehouse and revokes it after the run — no tokens in the repo, no CI secrets
 
-![job run](img/job_run.png)
-<!-- screenshot: the job's green run with task timeline -->
+Any BI tool connects straight to the warehouse — SQL editor, Excel, Power BI, and Tableau all query the `prod` catalog directly.
 
 ---
 
@@ -77,22 +71,19 @@ The pipeline's marts keep each job's **latest** scrape. The snapshot keeps **eve
 
 Structure, tests, and column descriptions were written along the way — the docs site is a rendering of work already done:
 
-**→ [Live docs on GitHub Pages](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project2/)**
+**→ [lukebarousse.github.io/dbt_Analytics_Engineering_Course/project2/](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project2/)**
 
 The site shows:
 
-- the full **lineage graph** — raw → staging → intermediate → the star → snapshot
-- every **model and column description** from the YAMLs
-- which columns carry **tests**
-
-![dbt lineage graph](img/lineage.png)
-<!-- screenshot: dbt docs → lineage graph, full DAG -->
+- The full **lineage graph** (raw → staging → intermediate → the star → snapshot)
+- **Model and column descriptions** from the YAMLs
+- Which columns carry **tests**
 
 The same descriptions live in the warehouse itself — `persist_docs` pushes them into Unity Catalog, so Catalog Explorer shows them right next to the data.
 
 ---
 
-## How to run
+## Run it yourself
 
 ```bash
 uv sync && source .venv/bin/activate     # env
@@ -102,6 +93,24 @@ dbt snapshot                             # one SCD2 pass (nightly in production)
 ```
 
 Backfill a year of snapshot history in one query: paste [`scripts/backfill_job_postings_snapshot.sql`](scripts/backfill_job_postings_snapshot.sql) into the SQL editor — `dbt snapshot` takes over seamlessly afterwards.
+
+---
+
+## Project layout
+
+```text
+.
+├── analytics/
+│   ├── dbt_project.yml
+│   ├── models/                       # staging → intermediate → marts (the star)
+│   ├── snapshots/                    # SCD2: job_postings_snapshot
+│   ├── seeds/                        # the skill taxonomy
+│   ├── macros/                       # parse_salary + generate_schema_name
+│   ├── tests/                        # singular + custom generic
+│   └── analyses/                     # the questions
+├── scripts/                          # snapshot backfill (SQL editor, run once)
+└── img/                              # README assets
+```
 
 ---
 

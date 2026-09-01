@@ -5,27 +5,24 @@
 
 ![dbt pipeline diagram](img/dbt_pipeline.png)
 
-A public dbt + DuckDB pipeline over ~692k real job postings. Every push rebuilds the models, runs tests, and publishes artifacts anyone can open — no private warehouse, no credentials.
+A public dbt + DuckDB pipeline over ~692k real job postings, rebuilt and republished automatically on every push.
+
+- Models the raw postings into tested, documented insight marts
+- Publishes the docs site and the finished warehouse — open to anyone, no credentials
+- Runs itself on GitHub Actions: every push and every Monday
 
 | What this demonstrates | Where to look |
 | --- | --- |
 | **dbt pipeline** — sources → cleaned model → insight marts | [`analytics/models/`](analytics/models/) |
+| **Data tests** — `unique` / `not_null` on every mart grain | [`schema.yml`](analytics/models/schema.yml) |
 | **Hosted dbt docs** — lineage, descriptions, column tests | [Live docs site](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/) |
 | **Public CI** — build + test + publish on every push | [Actions workflow](https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/actions/workflows/dbt_build.yml) |
+| **Environments** — local `dev` vs CI `prod` targets | [`ci/profiles.yml`](ci/profiles.yml) |
+| **Published warehouse** — one `ATTACH`, queryable by anyone | [Query it](#query-the-published-warehouse) |
 
 ---
 
-## What's in here
-
-The project takes ~692k raw job postings through the full dbt workflow:
-
-1. **A tested pipeline** — `source()` / `ref()`, materializations, and grain tests
-2. **Published documentation** — the DAG and every column meaning, browsable without cloning
-3. **CI automation** — every push rebuilds, tests, and republishes the warehouse
-
----
-
-## 1. The dbt pipeline
+## The dbt Pipeline
 
 ![dbt dag diagram](img/dag_pipeline.png)
 
@@ -43,23 +40,9 @@ The project takes ~692k raw job postings through the full dbt workflow:
 
 ---
 
-## 2. Hosted dbt docs
+## Production
 
-Docs are generated with `dbt docs generate` and published to GitHub Pages:
-
-**→ [lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/)**
-
-The site shows:
-
-- The full **lineage graph** (sources → models → marts)
-- **Model and column descriptions** from the YAML
-- Which columns carry **tests**
-
----
-
-## 3. CI: build, test, publish
-
-Workflow: [`.github/workflows/dbt_build.yml`](.github/workflows/dbt_build.yml)
+GitHub Actions runs the whole pipeline — no laptop required: [`.github/workflows/dbt_build.yml`](.github/workflows/dbt_build.yml)
 
 | Trigger | What happens |
 | --- | --- |
@@ -76,7 +59,9 @@ On each run, Actions:
 
 The badge at the top of this README links to the latest runs.
 
-### Query the published warehouse
+---
+
+## Query the published warehouse
 
 No clone required. From a local DuckDB session:
 
@@ -92,13 +77,17 @@ SELECT * FROM jobs.main.monthly_summary;
 
 ---
 
-## Headline findings (from the marts)
+## Docs
 
-- Meta leads employer volume by a wide margin among active posters
-- Remote remains a small share of data-role postings in this sample
-- Salary is sparse and often free-text when present — documented as-is rather than patched
+Docs are generated with `dbt docs generate` and published to GitHub Pages:
 
-(Open the marts or the [docs site](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/) for the exact numbers after the latest CI build.)
+**→ [lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/)**
+
+The site shows:
+
+- The full **lineage graph** (sources → models → marts)
+- **Model and column descriptions** from the YAML
+- Which columns carry **tests**
 
 ---
 
@@ -132,3 +121,7 @@ uv run dbt docs serve
 │   └── models/                       # sources, staging, marts, schema.yml
 └── scripts/download_data.py          # fetch raw parquet before build
 ```
+
+---
+
+*Reference build for Project #1 of the [dbt for Data Analysts & Engineers course](https://www.lukebarousse.com) (lessons 1.01–2.03) — students build this repo themselves and compare against this version. Dataset: real job postings scraped daily.*
