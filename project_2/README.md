@@ -76,7 +76,8 @@ The pipeline's marts keep each job's **latest** scrape. The snapshot keeps **eve
 Structure, tests, and column descriptions were written along the way — the docs site is a rendering of work already done:
 
 ```bash
-dbt docs generate && dbt docs serve
+dbt docs generate && dbt docs serve                            # browse locally
+dbt docs generate --static                                     # single-file site → docs/index.html
 ```
 
 **→ Live docs: `<your-username>.github.io/<repo>`** — generated once and hosted on GitHub Pages. (P1's CI republishes docs on every push; this project's automation muscle lives in the Databricks job instead.)
