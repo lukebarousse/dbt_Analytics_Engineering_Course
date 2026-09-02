@@ -11,6 +11,8 @@ A public dbt + DuckDB pipeline over ~692k real job postings, rebuilt and republi
 - Publishes the docs site and the finished warehouse — open to anyone, no credentials
 - Runs itself on GitHub Actions: every push and every Monday
 
+> **Part 1 of 2** — this project keeps everything free and local-friendly: DuckDB as the warehouse, GitHub Actions as the scheduler. [Project #2](../project_2/) rebuilds the pipeline production-grade on Databricks.
+
 | What I Built | How I Implemented | Where to Look |
 | --- | --- | --- |
 | **dbt pipeline** | sources → cleaned model → insight marts | [`analytics/models/`](analytics/models/) |
@@ -65,7 +67,7 @@ The badge at the top of this README links to the latest runs.
 
 ## 🦆 Query the published warehouse
 
-No clone required. From a local DuckDB session:
+No clone required. [Install DuckDB](https://duckdb.org/docs/installation/) (`brew install duckdb`), then from a `duckdb` session:
 
 ```sql
 ATTACH 'https://lukeb.co/dbt-warehouse' AS jobs;

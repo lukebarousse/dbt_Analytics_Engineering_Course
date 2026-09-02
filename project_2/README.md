@@ -11,6 +11,8 @@ A production dbt pipeline on **Databricks** over 843,097 raw job-posting scrapes
 - Tracks a year of salary history with SCD2 snapshots — 504,591 version rows
 - Loads incrementally and runs itself on a scheduled Databricks Job — no tokens anywhere
 
+> **Part 2 of 2** — [Project #1](../project_1/) built the foundations on DuckDB + GitHub Actions. This project moves the same dataset to a real warehouse: Databricks, SCD2 history, incremental loads, a scheduled job.
+
 | What I Built | How I Implemented | Where to Look |
 | --- | --- | --- |
 | **Star schema** | fact + dims + bridge on a declared grain | [`analytics/models/marts/`](analytics/models/marts/) |
@@ -88,6 +90,8 @@ The same descriptions live in the warehouse itself — `persist_docs` pushes the
 ---
 
 ## 💻 Run it yourself
+
+Prerequisites: a Databricks workspace (the [Free Edition](https://www.databricks.com/learn/free-edition) works) with the raw job-postings data loaded into a `raw` catalog. Then:
 
 ```bash
 uv sync && source .venv/bin/activate     # env
