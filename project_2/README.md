@@ -11,7 +11,7 @@ A production dbt pipeline on **Databricks** over 843,097 raw job-posting scrapes
 - Tracks a year of salary history with SCD2 snapshots — 504,591 version rows
 - Loads incrementally and runs itself on a scheduled Databricks Job — no tokens anywhere
 
-> **Part 2 of 2** — [Project #1](../project_1/) built the foundations on DuckDB + GitHub Actions. This project moves the same dataset to a real warehouse: Databricks, SCD2 history, incremental loads, a scheduled job.
+> **v2 of this pipeline** — [v1](../project_1/) built the foundations on DuckDB + GitHub Actions. v2 moves the same dataset to a real warehouse: Databricks, SCD2 history, incremental loads, a scheduled job.
 
 | What I Built | How I Implemented | Where to Look |
 | --- | --- | --- |

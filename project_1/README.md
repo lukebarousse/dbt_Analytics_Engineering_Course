@@ -11,7 +11,7 @@ A public dbt + DuckDB pipeline over ~692k real job postings, rebuilt and republi
 - Publishes the docs site and the finished warehouse — open to anyone, no credentials
 - Runs itself on GitHub Actions: every push and every Monday
 
-> **Part 1 of 2** — this project keeps everything free and local-friendly: DuckDB as the warehouse, GitHub Actions as the scheduler. [Project #2](../project_2/) rebuilds the pipeline production-grade on Databricks.
+> **v1 of this pipeline** — everything free and local-friendly: DuckDB as the warehouse, GitHub Actions as the scheduler. [v2](../project_2/) rebuilds it production-grade on Databricks.
 
 | What I Built | How I Implemented | Where to Look |
 | --- | --- | --- |
