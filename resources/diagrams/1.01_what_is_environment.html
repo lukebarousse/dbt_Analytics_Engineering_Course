@@ -11,62 +11,62 @@ html,body{margin:0;padding:0;background:var(--bg)}
 .stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono)}
 .title{position:absolute;left:0;top:34px;width:1920px;text-align:center;font-family:var(--mono);font-size:54px;font-weight:700;color:#fff}
 .sub{position:absolute;left:0;top:112px;width:1920px;text-align:center;font-family:var(--hand);font-size:40px;font-weight:600;color:var(--blue)}
-.env{position:absolute;top:230px;width:480px;height:700px;box-sizing:border-box;border:2.5px dashed rgba(88,166,255,.55);border-radius:20px;background:rgba(88,166,255,.045)}
-.envhead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:var(--bg);padding:2px 22px;font-family:var(--mono);font-size:26px;font-weight:800;color:#fff;white-space:nowrap}
-.pylogo{position:absolute;top:52px;left:50%;transform:translateX(-50%);width:150px;height:150px}
-.pyver{position:absolute;top:216px;left:0;width:100%;text-align:center;font-family:var(--mono);font-size:30px;font-weight:800;color:#fff}
-.pkghead{position:absolute;top:286px;left:44px;font-family:var(--mono);font-size:20px;font-weight:700;color:var(--muted);letter-spacing:.06em}
-.pkg{position:absolute;left:44px;width:392px;height:70px;box-sizing:border-box;border-radius:12px;display:flex;align-items:center;gap:16px;padding:0 22px;font-family:var(--mono);font-size:24px;font-weight:800;box-shadow:0 3px 8px rgba(0,0,0,.35)}
-.pkg span{margin-left:auto;font-size:20px;font-weight:700;opacity:.8}
+.screen{position:absolute;left:144px;top:210px;width:1632px;height:640px;box-sizing:border-box;background:#101418;border:16px solid #3f3f42;border-bottom-width:22px;border-radius:26px 26px 6px 6px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.cam{position:absolute;left:50%;top:-11px;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:#191919}
+.base{position:absolute;left:70px;top:850px;width:1780px;height:36px;background:linear-gradient(#9a9a9e,#5c5c60);border-radius:4px 4px 20px 20px}
+.base:before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:170px;height:13px;background:#4a4a4e;border-radius:0 0 12px 12px}
+.env{position:absolute;top:64px;width:470px;height:500px;box-sizing:border-box;border:2.5px dashed rgba(88,166,255,.55);border-radius:20px;background:rgba(88,166,255,.045)}
+.envhead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:#101418;padding:2px 22px;font-family:var(--mono);font-size:25px;font-weight:800;color:#fff;white-space:nowrap}
+.pylogo{position:absolute;top:34px;left:50%;transform:translateX(-50%);width:108px;height:108px}
+.pyver{position:absolute;top:152px;left:0;width:100%;text-align:center;font-family:var(--mono);font-size:28px;font-weight:800;color:#fff}
+.pkghead{position:absolute;top:208px;left:44px;font-family:var(--mono);font-size:18px;font-weight:700;color:var(--muted);letter-spacing:.06em}
+.pkg{position:absolute;left:44px;width:382px;height:62px;box-sizing:border-box;border-radius:12px;display:flex;align-items:center;gap:16px;padding:0 22px;font-family:var(--mono);font-size:23px;font-weight:800;box-shadow:0 3px 8px rgba(0,0,0,.35)}
+.pkg span{margin-left:auto;font-size:19px;font-weight:700;opacity:.8}
 .pkg.dbt{background:#3d1d15;border:2px solid rgba(255,105,75,.8);color:#ffb3a3}
 .pkg.duck{background:#3d3110;border:2px solid rgba(242,201,76,.75);color:#f5d97e}
 .pkg.gray{background:#292929;border:2px solid #5c5c5c;color:#d0d0d0}
 .pkg.pandas{background:#2d1a3d;border:2px solid rgba(180,120,255,.75);color:#d9bfff}
-.note{position:absolute;font-family:var(--hand);font-weight:600;color:var(--text);line-height:1.15}
-svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 <div class="title">What Is an Environment</div>
-<div class="sub">each project gets its own box: a Python version + its packages</div>
+<div class="sub">each project gets its own box: a Python version + its packages — all on one computer</div>
 
-<div class="env" style="left:130px">
-  <div class="envhead">📁 dbt_course</div>
-  <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
-  <div class="pyver">Python 3.12</div>
-  <div class="pkghead">PACKAGES</div>
-  <div class="pkg dbt" style="top:330px">dbt<span>1.12</span></div>
-  <div class="pkg duck" style="top:418px">duckdb<span>1.1</span></div>
-  <div class="pkg pandas" style="top:506px">pandas<span>2.2</span></div>
+<div class="screen">
+  <div class="cam"></div>
+
+  <div class="env" style="left:52px">
+    <div class="envhead">📁 dbt_course</div>
+    <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
+    <div class="pyver">Python 3.12</div>
+    <div class="pkghead">PACKAGES</div>
+    <div class="pkg dbt" style="top:246px">dbt<span>1.12</span></div>
+    <div class="pkg duck" style="top:326px">duckdb<span>1.1</span></div>
+    <div class="pkg pandas" style="top:406px">pandas<span>2.2</span></div>
+  </div>
+
+  <div class="env" style="left:565px">
+    <div class="envhead">📁 client_work</div>
+    <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
+    <div class="pyver">Python 3.11</div>
+    <div class="pkghead">PACKAGES</div>
+    <div class="pkg dbt" style="top:246px">dbt<span>1.9</span></div>
+    <div class="pkg pandas" style="top:326px">pandas<span>1.5</span></div>
+  </div>
+
+  <div class="env" style="left:1078px">
+    <div class="envhead">📁 sales_report</div>
+    <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
+    <div class="pyver">Python 3.8</div>
+    <div class="pkghead">PACKAGES</div>
+    <div class="pkg pandas" style="top:246px">pandas<span>0.25</span></div>
+    <div class="pkg gray" style="top:326px">matplotlib<span>3.1</span></div>
+  </div>
+
 </div>
+<div class="base"></div>
 
-<div class="env" style="left:720px">
-  <div class="envhead">📁 client_work</div>
-  <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
-  <div class="pyver">Python 3.11</div>
-  <div class="pkghead">PACKAGES</div>
-  <div class="pkg dbt" style="top:330px">dbt<span>1.9</span></div>
-  <div class="pkg pandas" style="top:418px">pandas<span>1.5</span></div>
-</div>
-
-<div class="env" style="left:1310px">
-  <div class="envhead">📁 sales_report</div>
-  <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
-  <div class="pyver">Python 3.8</div>
-  <div class="pkghead">PACKAGES</div>
-  <div class="pkg pandas" style="top:330px">pandas<span>0.25</span></div>
-  <div class="pkg gray" style="top:418px">matplotlib<span>3.1</span></div>
-</div>
-
-<div class="note" style="left:130px;top:966px;width:660px;font-size:38px">different dbt versions live side by side — no conflicts ✓</div>
-<div class="note" style="left:1250px;top:966px;width:560px;text-align:right;font-size:38px">same laptop, three separate setups</div>
-
-<svg class="art" viewBox="0 0 1920 1080">
-  <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/></marker></defs>
-  <path d="M 400 962 C 380 920, 372 900, 370 872" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
-  <path d="M 1560 962 C 1580 920, 1588 900, 1590 872" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
-</svg>
 </div>
 </body>
 </html>
