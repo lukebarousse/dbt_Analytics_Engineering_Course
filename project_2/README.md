@@ -49,16 +49,6 @@ And the dbt features doing the work:
 
 ---
 
-## History the warehouse would have lost
-
-The pipeline's marts keep each job's **latest** scrape. The snapshot keeps **every version**:
-
-- **504,591** version rows across **491,140** jobs — **10,187** jobs with real change history
-- **2,756** postings changed their salary between scrapes
-- Analyses on top: [`top_posting_editors.sql`](analytics/analyses/top_posting_editors.sql) (Meta edits the most postings — 415) and [`salary_swings.sql`](analytics/analyses/salary_swings.sql) (a posting that went $60K → $1,000,000 — snapshots catch typos mid-edit)
-
----
-
 ## Production
 
 **Databricks** owns the runtime — storage, compute, and the schedule, one platform:
@@ -68,6 +58,16 @@ The pipeline's marts keep each job's **latest** scrape. The snapshot keeps **eve
 - **Zero secrets**: the job generates a temporary-credentials profile against the attached warehouse and revokes it after the run — no tokens in the repo, no CI secrets
 
 Any BI tool connects straight to the warehouse — SQL editor, Excel, Power BI, and Tableau all query the `prod` catalog directly.
+
+---
+
+## Snapshots
+
+The marts keep each job's **latest** scrape — the snapshot table keeps **every version**, SCD2 over 13 watched columns:
+
+- **504,591** version rows across **491,140** jobs — **10,187** jobs with real change history
+- **2,756** postings changed their salary between scrapes
+- Analyses on top: [`top_posting_editors.sql`](analytics/analyses/top_posting_editors.sql) (Meta edits the most postings — 415) and [`salary_swings.sql`](analytics/analyses/salary_swings.sql) (a posting that went $60K → $1,000,000 — snapshots catch typos mid-edit)
 
 ---
 
