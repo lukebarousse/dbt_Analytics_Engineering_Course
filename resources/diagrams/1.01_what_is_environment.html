@@ -1,0 +1,117 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>What Is an Environment</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --line:#4a4a4a;
+    --text:#E8E8E8; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:28px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .lbl{position:absolute;left:44px;width:290px;font-family:var(--hand);font-weight:700;font-size:40px;line-height:1.1;color:#E8E8E8}
+  .lbl .cap{display:block;margin-top:8px;font-size:26px;font-weight:600;color:var(--muted)}
+  .card{position:absolute;box-sizing:border-box;border:1.5px solid var(--line);border-radius:16px;background:#1E1E1E}
+  .cname{position:absolute;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text);text-align:center}
+  .pkg{position:absolute;box-sizing:border-box;border-radius:10px;padding:7px 14px;background:#232323;border:1.5px solid #5a5a5a;
+    font-family:var(--mono);font-size:19px;font-weight:700;color:var(--text);white-space:nowrap}
+  .pkg.clash{border-color:rgba(229,83,75,.75);color:#f0968f;background:#2a1b19}
+  .pkg.py{border-color:rgba(88,166,255,.55);color:var(--blue);background:#1d2a3d}
+  .venv{position:absolute;box-sizing:border-box;border:2px dashed rgba(88,166,255,.55);border-radius:12px;background:rgba(88,166,255,.04)}
+  .venvtag{position:absolute;font-family:var(--mono);font-size:18px;font-weight:700;color:var(--blue)}
+  .verdict{position:absolute;box-sizing:border-box;border-radius:11px;padding:8px 18px;
+    font-family:var(--mono);font-size:20px;font-weight:700}
+  .uvchip{position:absolute;box-sizing:border-box;border-radius:14px;padding:10px 24px;background:#232323;
+    border:2px solid rgba(88,166,255,.6);font-family:var(--mono);font-size:24px;font-weight:800;color:var(--text)}
+  .rule{position:absolute;left:44px;right:44px;border-top:2px dotted #3d3d3d}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">What Is an Environment</div>
+
+  <!-- ================= BAND A : without ================= -->
+  <div class="lbl" style="top:230px">Without<span class="cap">every project shares one Python 🌍</span></div>
+
+  <div class="card" style="left:350px;top:160px;width:250px;height:64px"></div>
+  <div class="cname" style="left:350px;top:178px;width:250px">📁 dbt_course</div>
+  <div class="card" style="left:350px;top:256px;width:250px;height:64px"></div>
+  <div class="cname" style="left:350px;top:274px;width:250px">📁 client_work</div>
+  <div class="card" style="left:350px;top:352px;width:250px;height:64px"></div>
+  <div class="cname" style="left:350px;top:370px;width:250px">📁 experiments</div>
+
+  <div class="card" style="left:790px;top:140px;width:600px;height:330px;border-color:#6a6a6a"></div>
+  <div class="cname" style="left:790px;top:162px;width:600px;font-size:24px">🌍 Python — one global toolbox</div>
+  <div class="pkg py" style="left:830px;top:216px">python 3.12</div>
+  <div class="pkg" style="left:1030px;top:216px">pandas 2.2</div>
+  <div class="pkg clash" style="left:830px;top:288px">dbt 1.12</div>
+  <div class="pkg clash" style="left:1010px;top:288px">dbt 1.9</div>
+  <div class="cname" style="left:960px;top:294px;width:60px;font-size:26px">⚡</div>
+  <div class="pkg" style="left:830px;top:360px">duckdb 1.1</div>
+  <div class="verdict" style="left:830px;top:414px;background:rgba(229,83,75,.08);border:1.5px solid var(--err);color:var(--err)">⚠️ one slot per package — versions fight</div>
+
+  <div class="rule" style="top:540px"></div>
+
+  <!-- ================= BAND B : with ================= -->
+  <div class="lbl" style="top:760px">With<span class="cap">a sealed box per project 📦</span></div>
+
+  <div class="uvchip" style="left:810px;top:596px">⚡ uv — builds the box, installs into it, pins versions</div>
+
+  <div class="card" style="left:370px;top:700px;width:440px;height:300px"></div>
+  <div class="cname" style="left:370px;top:722px;width:440px">📁 dbt_course</div>
+  <div class="venv" style="left:394px;top:764px;width:392px;height:210px"></div>
+  <div class="venvtag" style="left:414px;top:776px">.venv 📦</div>
+  <div class="pkg py" style="left:414px;top:812px">python 3.12</div>
+  <div class="pkg" style="left:414px;top:872px">dbt 1.12</div>
+  <div class="pkg" style="left:568px;top:872px">duckdb 1.1</div>
+  <div class="verdict" style="left:414px;top:924px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok);font-size:18px;padding:5px 12px">✓ isolated</div>
+
+  <div class="card" style="left:864px;top:700px;width:440px;height:300px"></div>
+  <div class="cname" style="left:864px;top:722px;width:440px">📁 client_work</div>
+  <div class="venv" style="left:888px;top:764px;width:392px;height:210px"></div>
+  <div class="venvtag" style="left:908px;top:776px">.venv 📦</div>
+  <div class="pkg py" style="left:908px;top:812px">python 3.11</div>
+  <div class="pkg" style="left:908px;top:872px">dbt 1.9</div>
+  <div class="verdict" style="left:908px;top:924px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok);font-size:18px;padding:5px 12px">✓ isolated</div>
+
+  <div class="card" style="left:1358px;top:700px;width:440px;height:300px"></div>
+  <div class="cname" style="left:1358px;top:722px;width:440px">📁 experiments</div>
+  <div class="venv" style="left:1382px;top:764px;width:392px;height:210px"></div>
+  <div class="venvtag" style="left:1402px;top:776px">.venv 📦</div>
+  <div class="pkg py" style="left:1402px;top:812px">python 3.13</div>
+  <div class="pkg" style="left:1402px;top:872px">pandas 2.2</div>
+  <div class="verdict" style="left:1402px;top:924px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok);font-size:18px;padding:5px 12px">✓ isolated</div>
+
+  <!-- ============ arrows ============ -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+      <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <!-- band A: every project grabs the same toolbox -->
+    <path d="M 604 192 C 700 192, 720 210, 782 232" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 604 288 L 782 296" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 604 384 C 700 384, 720 366, 782 350" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- band B: uv builds each box -->
+    <path d="M 880 652 C 700 660, 620 670, 592 694" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 1084 652 L 1084 694" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 1290 652 C 1470 660, 1550 670, 1578 694" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+  </svg>
+
+</div>
+</body>
+</html>
