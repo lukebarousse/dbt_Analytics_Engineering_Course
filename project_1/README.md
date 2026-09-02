@@ -28,7 +28,7 @@ A public dbt + DuckDB pipeline over ~692k real job postings, rebuilt and republi
 
 **dbt practices used**
 
-| Practice | Implementation |
+| dbt Feature | How I Used It |
 | --- | --- |
 | Declared sources (no hardcoded paths in SQL) | [`sources.yml`](analytics/models/sources.yml) + `source('raw', 'job_postings')` |
 | Model dependencies | `ref()` everywhere downstream; dbt resolves order and parallelism |
