@@ -24,7 +24,7 @@ A production dbt pipeline on **Databricks** over 843,097 raw job-posting scrapes
 
 ---
 
-## The dbt Pipeline
+## ⚙️ The dbt Pipeline
 
 Raw scrapes flow through the medallion layers — raw → staging → intermediate → the star-schema marts — while snapshots capture history off staging. The lineage graph below is every model dbt builds:
 
@@ -49,7 +49,7 @@ And the dbt features doing the work:
 
 ---
 
-## Production
+## 🚀 Production
 
 **Databricks** owns the runtime — storage, compute, and the schedule, one platform:
 
@@ -61,7 +61,7 @@ Any BI tool connects straight to the warehouse — SQL editor, Excel, Power BI, 
 
 ---
 
-## Snapshots
+## 📸 Snapshots
 
 The marts keep each job's **latest** scrape — the snapshot table keeps **every version**, SCD2 over 13 watched columns:
 
@@ -71,7 +71,7 @@ The marts keep each job's **latest** scrape — the snapshot table keeps **every
 
 ---
 
-## Docs
+## 📖 Docs
 
 Structure, tests, and column descriptions were written along the way — the docs site is a rendering of work already done:
 
@@ -87,7 +87,7 @@ The same descriptions live in the warehouse itself — `persist_docs` pushes the
 
 ---
 
-## Run it yourself
+## 💻 Run it yourself
 
 ```bash
 uv sync && source .venv/bin/activate     # env
@@ -100,7 +100,7 @@ Backfill a year of snapshot history in one query: paste [`scripts/backfill_job_p
 
 ---
 
-## Project layout
+## 📁 Project layout
 
 ```text
 .

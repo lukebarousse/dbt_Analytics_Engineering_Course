@@ -22,7 +22,7 @@ A public dbt + DuckDB pipeline over ~692k real job postings, rebuilt and republi
 
 ---
 
-## The dbt Pipeline
+## ⚙️ The dbt Pipeline
 
 Raw postings flow through three dbt layers — declared sources → cleaned staging views → insight marts — with tests gating every build. The DAG below is the whole flow:
 
@@ -42,7 +42,7 @@ And the dbt features doing the work:
 
 ---
 
-## Production
+## 🚀 Production
 
 GitHub Actions runs the whole pipeline — no laptop required: [`.github/workflows/dbt_build.yml`](.github/workflows/dbt_build.yml)
 
@@ -63,7 +63,7 @@ The badge at the top of this README links to the latest runs.
 
 ---
 
-## Query the published warehouse
+## 🦆 Query the published warehouse
 
 No clone required. From a local DuckDB session:
 
@@ -79,7 +79,7 @@ SELECT * FROM jobs.main.monthly_summary;
 
 ---
 
-## Docs
+## 📖 Docs
 
 Docs are generated with `dbt docs generate` and published to GitHub Pages:
 
@@ -93,7 +93,7 @@ The site shows:
 
 ---
 
-## Run it yourself
+## 💻 Run it yourself
 
 ```bash
 uv sync
@@ -110,7 +110,7 @@ uv run dbt docs serve
 
 ---
 
-## Project layout
+## 📁 Project layout
 
 ```text
 .
