@@ -11,16 +11,16 @@ A production dbt pipeline on **Databricks** over 843,097 raw job-posting scrapes
 - Tracks a year of salary history with SCD2 snapshots — 504,591 version rows
 - Loads incrementally and runs itself on a scheduled Databricks Job — no tokens anywhere
 
-| What this demonstrates | Where to look |
-| --- | --- |
-| **Star schema** — fact + dims + bridge on a declared grain | [`analytics/models/marts/`](analytics/models/marts/) |
-| **SCD2 snapshots** — a year of salary history, backfilled | [`analytics/snapshots/`](analytics/snapshots/) + [`scripts/`](scripts/) |
-| **Incremental fact** — merge on `job_id`, only new days load | [`fct_job_postings.sql`](analytics/models/marts/fct_job_postings.sql) |
-| **Macros** — a custom parser + an overridden built-in | [`analytics/macros/`](analytics/macros/) |
-| **Tests** — generic, singular, and custom generic | [`analytics/tests/`](analytics/tests/) + the properties YAMLs |
-| **Environments** — dev/prod as catalogs, one-line promotion | `~/.dbt/profiles.yml` targets |
-| **Orchestration** — scheduled Databricks Job, zero secrets | Databricks → Jobs & Pipelines |
-| **Analyses** — questions, kept next to the models that answer them | [`analytics/analyses/`](analytics/analyses/) |
+| What I Built | How I Implemented | Where to Look |
+| --- | --- | --- |
+| **Star schema** | fact + dims + bridge on a declared grain | [`analytics/models/marts/`](analytics/models/marts/) |
+| **SCD2 snapshots** | a year of salary history, backfilled | [`analytics/snapshots/`](analytics/snapshots/) + [`scripts/`](scripts/) |
+| **Incremental fact** | merge on `job_id`, only new days load | [`fct_job_postings.sql`](analytics/models/marts/fct_job_postings.sql) |
+| **Macros** | a custom parser + an overridden built-in | [`analytics/macros/`](analytics/macros/) |
+| **Tests** | generic, singular, and custom generic | [`analytics/tests/`](analytics/tests/) + the properties YAMLs |
+| **Environments** | dev/prod as catalogs, one-line promotion | `~/.dbt/profiles.yml` targets |
+| **Orchestration** | scheduled Databricks Job, zero secrets | Databricks → Jobs & Pipelines |
+| **Analyses** | questions, kept next to the models that answer them | [`analytics/analyses/`](analytics/analyses/) |
 
 ---
 

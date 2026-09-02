@@ -11,14 +11,14 @@ A public dbt + DuckDB pipeline over ~692k real job postings, rebuilt and republi
 - Publishes the docs site and the finished warehouse — open to anyone, no credentials
 - Runs itself on GitHub Actions: every push and every Monday
 
-| What this demonstrates | Where to look |
-| --- | --- |
-| **dbt pipeline** — sources → cleaned model → insight marts | [`analytics/models/`](analytics/models/) |
-| **Data tests** — `unique` / `not_null` on every mart grain | [`schema.yml`](analytics/models/schema.yml) |
-| **Hosted dbt docs** — lineage, descriptions, column tests | [Live docs site](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/) |
-| **Public CI** — build + test + publish on every push | [Actions workflow](https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/actions/workflows/dbt_build.yml) |
-| **Environments** — local `dev` vs CI `prod` targets | [`ci/profiles.yml`](ci/profiles.yml) |
-| **Published warehouse** — one `ATTACH`, queryable by anyone | [Query it](#query-the-published-warehouse) |
+| What I Built | How I Implemented | Where to Look |
+| --- | --- | --- |
+| **dbt pipeline** | sources → cleaned model → insight marts | [`analytics/models/`](analytics/models/) |
+| **Data tests** | `unique` / `not_null` on every mart grain | [`schema.yml`](analytics/models/schema.yml) |
+| **Hosted dbt docs** | lineage, descriptions, column tests | [Live docs site](https://lukebarousse.github.io/dbt_Analytics_Engineering_Course/project1/) |
+| **Public CI** | build + test + publish on every push | [Actions workflow](https://github.com/lukebarousse/dbt_Analytics_Engineering_Course/actions/workflows/dbt_build.yml) |
+| **Environments** | local `dev` vs CI `prod` targets | [`ci/profiles.yml`](ci/profiles.yml) |
+| **Published warehouse** | one `ATTACH`, queryable by anyone | [Query it](#query-the-published-warehouse) |
 
 ---
 
