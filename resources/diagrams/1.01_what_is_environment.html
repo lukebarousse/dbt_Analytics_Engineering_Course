@@ -9,7 +9,7 @@
   :root{
     --bg:#191919; --line:#4a4a4a;
     --text:#E8E8E8; --muted:#9B9B9B; --faint:#6B6B6B;
-    --blue:#58A6FF; --ok:#57AB5A; --err:#E5534B;
+    --blue:#58A6FF; --dbt:#FF694B; --duck:#F2C94C; --ok:#57AB5A; --err:#E5534B;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --hand:'Caveat',cursive;
   }
@@ -17,20 +17,31 @@
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
   .title{position:absolute;left:0;top:28px;width:1920px;text-align:center;
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
-  .lbl{position:absolute;left:44px;width:290px;font-family:var(--hand);font-weight:700;font-size:40px;line-height:1.1;color:#E8E8E8}
-  .lbl .cap{display:block;margin-top:8px;font-size:26px;font-weight:600;color:var(--muted)}
-  .card{position:absolute;box-sizing:border-box;border:1.5px solid var(--line);border-radius:16px;background:#1E1E1E}
-  .cname{position:absolute;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text);text-align:center}
-  .pkg{position:absolute;box-sizing:border-box;border-radius:10px;padding:7px 14px;background:#232323;border:1.5px solid #5a5a5a;
-    font-family:var(--mono);font-size:19px;font-weight:700;color:var(--text);white-space:nowrap}
-  .pkg.clash{border-color:rgba(229,83,75,.75);color:#f0968f;background:#2a1b19}
-  .pkg.py{border-color:rgba(88,166,255,.55);color:var(--blue);background:#1d2a3d}
-  .venv{position:absolute;box-sizing:border-box;border:2px dashed rgba(88,166,255,.55);border-radius:12px;background:rgba(88,166,255,.04)}
-  .venvtag{position:absolute;font-family:var(--mono);font-size:18px;font-weight:700;color:var(--blue)}
-  .verdict{position:absolute;box-sizing:border-box;border-radius:11px;padding:8px 18px;
-    font-family:var(--mono);font-size:20px;font-weight:700}
-  .uvchip{position:absolute;box-sizing:border-box;border-radius:14px;padding:10px 24px;background:#232323;
-    border:2px solid rgba(88,166,255,.6);font-family:var(--mono);font-size:24px;font-weight:800;color:var(--text)}
+  .lbl{position:absolute;left:44px;width:250px;font-family:var(--hand);font-weight:700;font-size:44px;line-height:1.1;color:#E8E8E8}
+  .folder{position:absolute;box-sizing:border-box;border:1.5px solid var(--line);border-radius:14px;background:#1E1E1E;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text)}
+  /* toolbox */
+  .box{position:absolute;box-sizing:border-box;border:3px solid #8a8a8a;border-radius:14px;background:#20232a;
+    box-shadow:inset 0 10px 22px rgba(0,0,0,.4)}
+  .box:before{content:"";position:absolute;left:-3px;right:-3px;top:-16px;height:16px;background:#8a8a8a;border-radius:8px 8px 0 0}
+  .boxname{position:absolute;font-family:var(--mono);font-size:25px;font-weight:800;color:#fff;text-align:center}
+  /* venv (sealed box) */
+  .venv{position:absolute;box-sizing:border-box;border:2.5px dashed rgba(88,166,255,.6);border-radius:14px;background:rgba(88,166,255,.05)}
+  .venvtag{position:absolute;font-family:var(--mono);font-size:19px;font-weight:800;color:var(--blue)}
+  /* package block */
+  .blk{position:absolute;box-sizing:border-box;width:130px;height:76px;border-radius:12px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;
+    font-family:var(--mono);font-size:20px;font-weight:800;box-shadow:0 3px 8px rgba(0,0,0,.4)}
+  .blk small{font-size:17px;font-weight:700;opacity:.85}
+  .blk.py{background:#1d3a5f;border:2px solid rgba(88,166,255,.8);color:#bcd8ff}
+  .blk.dbt{background:#4a2018;border:2px solid rgba(255,105,75,.85);color:#ffb3a3}
+  .blk.duck{background:#4a3a10;border:2px solid rgba(242,201,76,.8);color:#f5d97e}
+  .blk.gray{background:#2b2b2b;border:2px solid #6a6a6a;color:#d0d0d0}
+  .slot{position:absolute;box-sizing:border-box;border:2.5px dashed var(--err);border-radius:14px;background:rgba(229,83,75,.06)}
+  .mark{position:absolute;font-size:56px;font-weight:900;font-family:var(--mono)}
+  .uvchip{position:absolute;box-sizing:border-box;border-radius:16px;padding:12px 30px;background:#1d2a3d;
+    border:2.5px solid rgba(88,166,255,.7);font-family:var(--mono);font-size:30px;font-weight:800;color:#fff}
   .rule{position:absolute;left:44px;right:44px;border-top:2px dotted #3d3d3d}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
@@ -41,56 +52,53 @@
   <div class="title">What Is an Environment</div>
 
   <!-- ================= BAND A : without ================= -->
-  <div class="lbl" style="top:230px">Without<span class="cap">every project shares one Python 🌍</span></div>
+  <div class="lbl" style="top:280px">Without 🌍</div>
 
-  <div class="card" style="left:350px;top:160px;width:250px;height:64px"></div>
-  <div class="cname" style="left:350px;top:178px;width:250px">📁 dbt_course</div>
-  <div class="card" style="left:350px;top:256px;width:250px;height:64px"></div>
-  <div class="cname" style="left:350px;top:274px;width:250px">📁 client_work</div>
-  <div class="card" style="left:350px;top:352px;width:250px;height:64px"></div>
-  <div class="cname" style="left:350px;top:370px;width:250px">📁 experiments</div>
+  <div class="folder" style="left:310px;top:180px;width:250px;height:64px">📁 dbt_course</div>
+  <div class="folder" style="left:310px;top:288px;width:250px;height:64px">📁 client_work</div>
+  <div class="folder" style="left:310px;top:396px;width:250px;height:64px">📁 experiments</div>
 
-  <div class="card" style="left:790px;top:140px;width:600px;height:330px;border-color:#6a6a6a"></div>
-  <div class="cname" style="left:790px;top:162px;width:600px;font-size:24px">🌍 Python — one global toolbox</div>
-  <div class="pkg py" style="left:830px;top:216px">python 3.12</div>
-  <div class="pkg" style="left:1030px;top:216px">pandas 2.2</div>
-  <div class="pkg clash" style="left:830px;top:288px">dbt 1.12</div>
-  <div class="pkg clash" style="left:1010px;top:288px">dbt 1.9</div>
-  <div class="cname" style="left:960px;top:294px;width:60px;font-size:26px">⚡</div>
-  <div class="pkg" style="left:830px;top:360px">duckdb 1.1</div>
-  <div class="verdict" style="left:830px;top:414px;background:rgba(229,83,75,.08);border:1.5px solid var(--err);color:var(--err)">⚠️ one slot per package — versions fight</div>
+  <div class="box" style="left:820px;top:170px;width:760px;height:330px"></div>
+  <div class="boxname" style="left:820px;top:190px;width:760px">🌍 Python</div>
+  <div class="mark" style="left:1520px;top:150px;color:var(--err)">✗</div>
 
-  <div class="rule" style="top:540px"></div>
+  <div class="blk py" style="left:870px;top:250px">python<small>3.12</small></div>
+  <div class="blk gray" style="left:1030px;top:250px">pandas</div>
+  <div class="blk duck" style="left:1190px;top:250px">duckdb</div>
+
+  <div class="slot" style="left:1000px;top:352px;width:340px;height:112px"></div>
+  <div class="blk dbt" style="left:1030px;top:370px">dbt<small>1.9</small></div>
+  <div class="blk dbt" style="left:1160px;top:370px;transform:rotate(6deg)">dbt<small>1.12</small></div>
+  <div class="mark" style="left:1136px;top:376px;font-size:44px;color:var(--err);z-index:3">⚡</div>
+
+  <div class="rule" style="top:560px"></div>
 
   <!-- ================= BAND B : with ================= -->
-  <div class="lbl" style="top:760px">With<span class="cap">a sealed box per project 📦</span></div>
+  <div class="lbl" style="top:800px">With 📦</div>
 
-  <div class="uvchip" style="left:810px;top:596px">⚡ uv — builds the box, installs into it, pins versions</div>
+  <div class="uvchip" style="left:882px;top:606px">⚡ uv</div>
 
-  <div class="card" style="left:370px;top:700px;width:440px;height:300px"></div>
-  <div class="cname" style="left:370px;top:722px;width:440px">📁 dbt_course</div>
-  <div class="venv" style="left:394px;top:764px;width:392px;height:210px"></div>
-  <div class="venvtag" style="left:414px;top:776px">.venv 📦</div>
-  <div class="pkg py" style="left:414px;top:812px">python 3.12</div>
-  <div class="pkg" style="left:414px;top:872px">dbt 1.12</div>
-  <div class="pkg" style="left:568px;top:872px">duckdb 1.1</div>
-  <div class="verdict" style="left:414px;top:924px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok);font-size:18px;padding:5px 12px">✓ isolated</div>
+  <div class="folder" style="left:310px;top:710px;width:440px;height:300px;flex-direction:column;justify-content:flex-start;padding-top:16px">📁 dbt_course</div>
+  <div class="venv" style="left:334px;top:766px;width:392px;height:220px"></div>
+  <div class="venvtag" style="left:354px;top:778px">.venv</div>
+  <div class="mark" style="left:668px;top:770px;font-size:38px;color:var(--ok)">✓</div>
+  <div class="blk py" style="left:354px;top:818px">python<small>3.12</small></div>
+  <div class="blk dbt" style="left:494px;top:818px">dbt<small>1.12</small></div>
+  <div class="blk duck" style="left:424px;top:900px">duckdb</div>
 
-  <div class="card" style="left:864px;top:700px;width:440px;height:300px"></div>
-  <div class="cname" style="left:864px;top:722px;width:440px">📁 client_work</div>
-  <div class="venv" style="left:888px;top:764px;width:392px;height:210px"></div>
-  <div class="venvtag" style="left:908px;top:776px">.venv 📦</div>
-  <div class="pkg py" style="left:908px;top:812px">python 3.11</div>
-  <div class="pkg" style="left:908px;top:872px">dbt 1.9</div>
-  <div class="verdict" style="left:908px;top:924px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok);font-size:18px;padding:5px 12px">✓ isolated</div>
+  <div class="folder" style="left:810px;top:710px;width:440px;height:300px;flex-direction:column;justify-content:flex-start;padding-top:16px">📁 client_work</div>
+  <div class="venv" style="left:834px;top:766px;width:392px;height:220px"></div>
+  <div class="venvtag" style="left:854px;top:778px">.venv</div>
+  <div class="mark" style="left:1168px;top:770px;font-size:38px;color:var(--ok)">✓</div>
+  <div class="blk py" style="left:854px;top:818px">python<small>3.11</small></div>
+  <div class="blk dbt" style="left:994px;top:818px">dbt<small>1.9</small></div>
 
-  <div class="card" style="left:1358px;top:700px;width:440px;height:300px"></div>
-  <div class="cname" style="left:1358px;top:722px;width:440px">📁 experiments</div>
-  <div class="venv" style="left:1382px;top:764px;width:392px;height:210px"></div>
-  <div class="venvtag" style="left:1402px;top:776px">.venv 📦</div>
-  <div class="pkg py" style="left:1402px;top:812px">python 3.13</div>
-  <div class="pkg" style="left:1402px;top:872px">pandas 2.2</div>
-  <div class="verdict" style="left:1402px;top:924px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok);font-size:18px;padding:5px 12px">✓ isolated</div>
+  <div class="folder" style="left:1310px;top:710px;width:440px;height:300px;flex-direction:column;justify-content:flex-start;padding-top:16px">📁 experiments</div>
+  <div class="venv" style="left:1334px;top:766px;width:392px;height:220px"></div>
+  <div class="venvtag" style="left:1354px;top:778px">.venv</div>
+  <div class="mark" style="left:1668px;top:770px;font-size:38px;color:var(--ok)">✓</div>
+  <div class="blk py" style="left:1354px;top:818px">python<small>3.13</small></div>
+  <div class="blk gray" style="left:1494px;top:818px">pandas</div>
 
   <!-- ============ arrows ============ -->
   <svg class="art" viewBox="0 0 1920 1080">
@@ -102,14 +110,12 @@
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
       </marker>
     </defs>
-    <!-- band A: every project grabs the same toolbox -->
-    <path d="M 604 192 C 700 192, 720 210, 782 232" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 604 288 L 782 296" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 604 384 C 700 384, 720 366, 782 350" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- band B: uv builds each box -->
-    <path d="M 880 652 C 700 660, 620 670, 592 694" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
-    <path d="M 1084 652 L 1084 694" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
-    <path d="M 1290 652 C 1470 660, 1550 670, 1578 694" fill="none" stroke="#58A6FF" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 564 212 C 680 212, 720 250, 808 290" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 564 320 L 808 330" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 564 428 C 680 428, 720 400, 808 370" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 900 660 C 700 668, 580 680, 534 704" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 1030 668 L 1030 704" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 1160 660 C 1360 668, 1480 680, 1526 704" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
   </svg>
 
 </div>
