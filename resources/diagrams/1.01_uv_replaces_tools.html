@@ -1,0 +1,96 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>One Tool Instead of Three</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+:root{--bg:#191919;--panel:#202020;--line:#373737;--text:#D3D3D3;--muted:#9B9B9B;--blue:#58A6FF;--dbt:#FF694B;--duck:#F2C94C;--ok:#57AB5A;--mono:'Source Code Pro',ui-monospace,Menlo,Consolas,monospace;--hand:'Caveat',cursive}
+html,body{margin:0;padding:0;background:var(--bg)}
+.stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono)}
+.title{position:absolute;left:0;top:34px;width:1920px;text-align:center;font-family:var(--mono);font-size:54px;font-weight:700;color:#fff}
+.colhead{position:absolute;top:140px;font-family:var(--hand);font-size:42px;font-weight:700;color:var(--muted);text-align:center}
+.tool{position:absolute;left:170px;width:560px;height:236px;box-sizing:border-box;border:1.5px solid var(--line);border-radius:16px;background:var(--panel);padding:22px 30px}
+.tname{font-family:var(--mono);font-size:32px;font-weight:800;color:#fff}
+.tjob{position:absolute;right:30px;top:24px;font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:.06em}
+.graphic{margin-top:18px;display:flex;align-items:center;gap:14px}
+.pychip{box-sizing:border-box;padding:8px 18px;border-radius:10px;background:#1d3a5f;border:2px solid rgba(88,166,255,.75);font-family:var(--mono);font-size:24px;font-weight:800;color:#bcd8ff}
+.pkgchip{box-sizing:border-box;padding:8px 18px;border-radius:10px;font-family:var(--mono);font-size:24px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.pkgchip.dbt{background:#3d1d15;border:2px solid rgba(255,105,75,.8);color:#ffb3a3}
+.pkgchip.duck{background:#3d3110;border:2px solid rgba(242,201,76,.75);color:#f5d97e}
+.pkgchip.gray{background:#292929;border:2px solid #5c5c5c;color:#d0d0d0}
+.minienv{box-sizing:border-box;white-space:nowrap;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;border:2px dashed rgba(88,166,255,.6);background:rgba(88,166,255,.05);font-family:var(--mono);font-size:22px;font-weight:800;color:var(--blue)}
+.tdesc{margin-top:16px;font-family:var(--hand);font-size:32px;font-weight:600;color:var(--text);line-height:1.05}
+.uv{position:absolute;left:1170px;top:220px;width:620px;height:700px;box-sizing:border-box;border:3px solid rgba(88,166,255,.8);border-radius:20px;background:#1a2332;box-shadow:0 8px 30px rgba(88,166,255,.12)}
+.uvname{position:absolute;top:36px;left:0;width:100%;text-align:center;font-family:var(--mono);font-size:52px;font-weight:800;color:#fff}
+.uvsub{position:absolute;top:112px;left:0;width:100%;text-align:center;font-family:var(--hand);font-size:34px;font-weight:600;color:var(--blue)}
+.row{position:absolute;left:44px;width:532px;height:130px;box-sizing:border-box;border:1.5px solid #2e4160;border-radius:12px;background:#151d2b;padding:20px 24px}
+.rjob{font-family:var(--hand);font-size:30px;font-weight:600;color:var(--text)}
+.rcmd{margin-top:8px;font-family:var(--mono);font-size:23px;font-weight:700;color:#8fc0ff}
+.rcmd b{color:#fff}
+.chk{position:absolute;right:20px;top:16px;font-size:30px;color:var(--ok);font-family:var(--mono);font-weight:900}
+.note{position:absolute;font-family:var(--hand);font-weight:600;color:var(--text)}
+svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="title">One Tool Instead of Three</div>
+
+<div class="colhead" style="left:170px;width:560px">the old way</div>
+<div class="colhead" style="left:1170px;width:620px">the new way</div>
+
+<div class="tool" style="top:474px">
+  <div class="tname">pyenv</div><div class="tjob" style="color:var(--duck)">PYTHON VERSIONS</div>
+  <div class="graphic">
+    <img src="../images/PythonLogo.png" alt="Python" style="width:52px;height:52px">
+    <div class="pychip">3.8</div><div class="pychip">3.11</div><div class="pychip">3.12</div>
+  </div>
+  <div class="tdesc">installs &amp; switches Python versions</div>
+</div>
+
+<div class="tool" style="top:214px">
+  <div class="tname">venv</div><div class="tjob" style="color:var(--blue)">ENVIRONMENTS</div>
+  <div class="graphic">
+    <div class="minienv">📁 .venv</div><div class="minienv">📁 .venv</div><div class="minienv">📁 .venv</div>
+  </div>
+  <div class="tdesc">creates an isolated box per project</div>
+</div>
+
+<div class="tool" style="top:734px">
+  <div class="tname">pip</div><div class="tjob" style="color:var(--dbt)">PACKAGES</div>
+  <div class="graphic">
+    <div class="pkgchip dbt">dbt</div><div class="pkgchip duck">duckdb</div><div class="pkgchip gray">pandas</div>
+  </div>
+  <div class="tdesc">installs packages into that box</div>
+</div>
+
+<div class="uv">
+  <div class="uvname">⚡ uv</div>
+  <div class="uvsub">one fast tool does all three</div>
+  <div class="row" style="top:190px"><span class="chk">✓</span>
+    <div class="rjob">creates the environment</div>
+    <div class="rcmd"><b>uv venv</b></div>
+  </div>
+  <div class="row" style="top:344px"><span class="chk">✓</span>
+    <div class="rjob">installs Python versions</div>
+    <div class="rcmd"><b>uv python install</b> 3.12</div>
+  </div>
+  <div class="row" style="top:498px"><span class="chk">✓</span>
+    <div class="rjob">installs packages</div>
+    <div class="rcmd"><b>uv add</b> dbt-core</div>
+  </div>
+</div>
+
+<div class="note" style="left:660px;top:974px;width:600px;text-align:center;font-size:36px;white-space:nowrap">3 tools to learn → 1 tool to learn</div>
+
+<svg class="art" viewBox="0 0 1920 1080">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/></marker></defs>
+  <path d="M 744 332 C 920 332, 1000 430, 1156 470" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+  <path d="M 744 592 L 1156 625" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+  <path d="M 744 852 C 920 852, 1000 780, 1156 778" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+</svg>
+</div>
+</body>
+</html>

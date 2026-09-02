@@ -1,0 +1,94 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Five Commands vs One</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+:root{--bg:#191919;--panel:#202020;--line:#373737;--text:#D3D3D3;--muted:#9B9B9B;--blue:#58A6FF;--dbt:#FF694B;--duck:#F2C94C;--ok:#57AB5A;--err:#E5534B;--mono:'Source Code Pro',ui-monospace,Menlo,Consolas,monospace;--hand:'Caveat',cursive}
+html,body{margin:0;padding:0;background:var(--bg)}
+.stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono)}
+.title{position:absolute;left:0;top:34px;width:1920px;text-align:center;font-family:var(--mono);font-size:54px;font-weight:700;color:#fff}
+.colhead{position:absolute;top:142px;font-family:var(--hand);font-size:42px;font-weight:700;text-align:center}
+.pane{position:absolute;top:212px;width:840px;height:790px;box-sizing:border-box;border-radius:20px;padding:40px 44px;display:flex;flex-direction:column;justify-content:space-evenly}
+.pane.old{left:90px;border:1.5px solid var(--line);background:var(--panel)}
+.pane.new{left:990px;border:3px solid rgba(88,166,255,.8);background:#1a2332;box-shadow:0 8px 30px rgba(88,166,255,.12)}
+.glabel{font-family:var(--mono);font-size:23px;font-weight:800;letter-spacing:.07em;margin:0 0 14px}
+.grp{margin:0}
+.grow{display:flex;align-items:center;gap:14px}
+.cmds{flex:0 0 430px;display:flex;flex-direction:column;gap:12px}
+.code{box-sizing:border-box;border-radius:10px;background:#141414;border:1.5px solid var(--line);padding:14px 16px;font-family:var(--mono);font-size:23px;font-weight:700;color:#8fc0ff;white-space:nowrap}
+.code b{color:#6b6b6b;font-weight:700}
+.arr{font-family:var(--mono);font-size:36px;color:#7a7a7a}
+.result{display:flex;align-items:center;gap:10px;flex-wrap:nowrap;white-space:nowrap}
+.result .chip{font-size:23px;padding:8px 14px}
+.chip{box-sizing:border-box;padding:9px 18px;border-radius:10px;font-family:var(--mono);font-size:26px;font-weight:800;white-space:nowrap}
+.chip.py{background:#1d3a5f;border:2px solid rgba(88,166,255,.75);color:#bcd8ff}
+.chip.dbt{background:#3d1d15;border:2px solid rgba(255,105,75,.8);color:#ffb3a3}
+.chip.duck{background:#3d3110;border:2px solid rgba(242,201,76,.75);color:#f5d97e}
+.chip.env{background:rgba(88,166,255,.05);border:2px dashed rgba(88,166,255,.6);color:var(--blue)}
+.ok{font-family:var(--mono);font-size:32px;font-weight:900;color:var(--ok)}
+.bigcode{box-sizing:border-box;border-radius:12px;background:#101825;border:2px solid rgba(88,166,255,.55);padding:22px 30px;font-family:var(--mono);font-size:36px;font-weight:800;color:#fff;white-space:nowrap}
+.bigcode b{color:#6b6b6b;font-weight:700}
+.newres{display:flex;align-items:center;gap:16px;margin-left:40px}
+.newres .glabel{margin:0;width:270px}
+.hand{font-family:var(--hand);font-weight:600}
+svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="title">Five Commands vs One</div>
+
+<div class="colhead" style="left:90px;width:840px;color:var(--muted)">the old way — 3 tools, 5 commands</div>
+<div class="colhead" style="left:990px;width:840px;color:var(--blue)">the uv way — 1 tool, 1 command</div>
+
+<div class="pane old">
+  <div class="grp">
+    <div class="glabel" style="color:var(--duck)">PYTHON VERSION INSTALLED</div>
+    <div class="grow">
+      <div class="cmds"><div class="code"><b>$</b> pyenv install 3.12</div><div class="code"><b>$</b> pyenv local 3.12</div></div>
+      <div class="arr">→</div>
+      <div class="result"><img src="../images/PythonLogo.png" alt="Python" style="width:50px;height:50px"><span class="chip py">python 3.12</span><span class="ok">✓</span></div>
+    </div>
+  </div>
+  <div class="grp">
+    <div class="glabel" style="color:var(--blue)">ENVIRONMENT CREATED + ACTIVATED</div>
+    <div class="grow">
+      <div class="cmds"><div class="code"><b>$</b> python -m venv .venv</div><div class="code"><b>$</b> source .venv/bin/activate</div></div>
+      <div class="arr">→</div>
+      <div class="result"><span class="chip env">📁 .venv</span><span class="ok">✓</span></div>
+    </div>
+  </div>
+  <div class="grp">
+    <div class="glabel" style="color:var(--dbt)">PACKAGES INSTALLED</div>
+    <div class="grow">
+      <div class="cmds"><div class="code"><b>$</b> pip install dbt-core duckdb</div></div>
+      <div class="arr">→</div>
+      <div class="result"><span class="chip dbt">dbt</span><span class="chip duck">duckdb</span><span class="ok">✓</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="pane new">
+  <div class="grp">
+    <div class="glabel" style="color:var(--muted)">YOUR PROJECT LISTS WHAT IT NEEDS</div>
+    <div style="box-sizing:border-box;border-radius:12px;background:#141414;border:1.5px solid var(--line);padding:18px 24px;font-family:var(--mono);font-size:23px;font-weight:700;color:var(--text);line-height:1.55;width:fit-content;white-space:nowrap">
+      <div style="color:#fff;font-weight:800">📄 pyproject.toml</div>
+      <div><span style="color:#8fc0ff">requires-python</span> = <span style="color:#f5d97e">"3.12"</span></div>
+      <div><span style="color:#8fc0ff">dependencies</span> = [<span style="color:#ffb3a3">"dbt-core"</span>, <span style="color:#f5d97e">"duckdb"</span>]</div>
+    </div>
+  </div>
+  <div class="grp" style="display:flex;align-items:center;gap:20px">
+    <div class="bigcode"><b>$</b> uv sync</div>
+    <div class="hand" style="font-size:34px;color:var(--blue)">reads the file, does all three ↓</div>
+  </div>
+  <div class="newres"><div class="glabel" style="color:var(--duck)">PYTHON VERSION</div><img src="../images/PythonLogo.png" alt="Python" style="width:50px;height:50px"><span class="chip py">python 3.12</span><span class="ok">✓</span></div>
+  <div class="newres"><div class="glabel" style="color:var(--blue)">ENVIRONMENT</div><span class="chip env">📁 .venv</span><span class="ok">✓</span></div>
+  <div class="newres"><div class="glabel" style="color:var(--dbt)">PACKAGES</div><span class="chip dbt">dbt</span><span class="chip duck">duckdb</span><span class="ok">✓</span></div>
+</div>
+
+</div>
+</body>
+</html>

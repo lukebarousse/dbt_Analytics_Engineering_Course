@@ -5,119 +5,68 @@
 <meta charset="utf-8">
 <title>What Is an Environment</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
-  :root{
-    --bg:#191919; --line:#4a4a4a;
-    --text:#E8E8E8; --muted:#9B9B9B; --faint:#6B6B6B;
-    --blue:#58A6FF; --dbt:#FF694B; --duck:#F2C94C; --ok:#57AB5A; --err:#E5534B;
-    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
-    --hand:'Caveat',cursive;
-  }
-  html,body{margin:0;padding:0;background:var(--bg)}
-  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
-  .title{position:absolute;left:0;top:28px;width:1920px;text-align:center;
-    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
-  .lbl{position:absolute;left:44px;width:250px;font-family:var(--hand);font-weight:700;font-size:44px;line-height:1.1;color:#E8E8E8}
-  .folder{position:absolute;box-sizing:border-box;border:1.5px solid var(--line);border-radius:14px;background:#1E1E1E;
-    display:flex;align-items:center;justify-content:center;gap:12px;
-    font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text)}
-  /* toolbox */
-  .box{position:absolute;box-sizing:border-box;border:3px solid #8a8a8a;border-radius:14px;background:#20232a;
-    box-shadow:inset 0 10px 22px rgba(0,0,0,.4)}
-  .box:before{content:"";position:absolute;left:-3px;right:-3px;top:-16px;height:16px;background:#8a8a8a;border-radius:8px 8px 0 0}
-  .boxname{position:absolute;font-family:var(--mono);font-size:25px;font-weight:800;color:#fff;text-align:center}
-  /* venv (sealed box) */
-  .venv{position:absolute;box-sizing:border-box;border:2.5px dashed rgba(88,166,255,.6);border-radius:14px;background:rgba(88,166,255,.05)}
-  .venvtag{position:absolute;font-family:var(--mono);font-size:19px;font-weight:800;color:var(--blue)}
-  /* package block */
-  .blk{position:absolute;box-sizing:border-box;width:130px;height:76px;border-radius:12px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;
-    font-family:var(--mono);font-size:20px;font-weight:800;box-shadow:0 3px 8px rgba(0,0,0,.4)}
-  .blk small{font-size:17px;font-weight:700;opacity:.85}
-  .blk.py{background:#1d3a5f;border:2px solid rgba(88,166,255,.8);color:#bcd8ff}
-  .blk.dbt{background:#4a2018;border:2px solid rgba(255,105,75,.85);color:#ffb3a3}
-  .blk.duck{background:#4a3a10;border:2px solid rgba(242,201,76,.8);color:#f5d97e}
-  .blk.gray{background:#2b2b2b;border:2px solid #6a6a6a;color:#d0d0d0}
-  .slot{position:absolute;box-sizing:border-box;border:2.5px dashed var(--err);border-radius:14px;background:rgba(229,83,75,.06)}
-  .mark{position:absolute;font-size:56px;font-weight:900;font-family:var(--mono)}
-  .uvchip{position:absolute;box-sizing:border-box;border-radius:16px;padding:12px 30px;background:#1d2a3d;
-    border:2.5px solid rgba(88,166,255,.7);font-family:var(--mono);font-size:30px;font-weight:800;color:#fff}
-  .rule{position:absolute;left:44px;right:44px;border-top:2px dotted #3d3d3d}
-  svg.art{position:absolute;inset:0;pointer-events:none}
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+:root{--bg:#191919;--panel:#202020;--line:#373737;--text:#D3D3D3;--muted:#9B9B9B;--blue:#58A6FF;--dbt:#FF694B;--duck:#F2C94C;--ok:#57AB5A;--mono:'Source Code Pro',ui-monospace,Menlo,Consolas,monospace;--hand:'Caveat',cursive}
+html,body{margin:0;padding:0;background:var(--bg)}
+.stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono)}
+.title{position:absolute;left:0;top:34px;width:1920px;text-align:center;font-family:var(--mono);font-size:54px;font-weight:700;color:#fff}
+.sub{position:absolute;left:0;top:112px;width:1920px;text-align:center;font-family:var(--hand);font-size:40px;font-weight:600;color:var(--blue)}
+.env{position:absolute;top:230px;width:480px;height:700px;box-sizing:border-box;border:2.5px dashed rgba(88,166,255,.55);border-radius:20px;background:rgba(88,166,255,.045)}
+.envhead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:var(--bg);padding:2px 22px;font-family:var(--mono);font-size:26px;font-weight:800;color:#fff;white-space:nowrap}
+.pylogo{position:absolute;top:52px;left:50%;transform:translateX(-50%);width:150px;height:150px}
+.pyver{position:absolute;top:216px;left:0;width:100%;text-align:center;font-family:var(--mono);font-size:30px;font-weight:800;color:#fff}
+.pkghead{position:absolute;top:286px;left:44px;font-family:var(--mono);font-size:20px;font-weight:700;color:var(--muted);letter-spacing:.06em}
+.pkg{position:absolute;left:44px;width:392px;height:70px;box-sizing:border-box;border-radius:12px;display:flex;align-items:center;gap:16px;padding:0 22px;font-family:var(--mono);font-size:24px;font-weight:800;box-shadow:0 3px 8px rgba(0,0,0,.35)}
+.pkg span{margin-left:auto;font-size:20px;font-weight:700;opacity:.8}
+.pkg.dbt{background:#3d1d15;border:2px solid rgba(255,105,75,.8);color:#ffb3a3}
+.pkg.duck{background:#3d3110;border:2px solid rgba(242,201,76,.75);color:#f5d97e}
+.pkg.gray{background:#292929;border:2px solid #5c5c5c;color:#d0d0d0}
+.pkg.pandas{background:#2d1a3d;border:2px solid rgba(180,120,255,.75);color:#d9bfff}
+.note{position:absolute;font-family:var(--hand);font-weight:600;color:var(--text);line-height:1.15}
+svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
+<div class="title">What Is an Environment</div>
+<div class="sub">each project gets its own box: a Python version + its packages</div>
 
-  <div class="title">What Is an Environment</div>
+<div class="env" style="left:130px">
+  <div class="envhead">📁 dbt_course</div>
+  <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
+  <div class="pyver">Python 3.12</div>
+  <div class="pkghead">PACKAGES</div>
+  <div class="pkg dbt" style="top:330px">dbt<span>1.12</span></div>
+  <div class="pkg duck" style="top:418px">duckdb<span>1.1</span></div>
+  <div class="pkg pandas" style="top:506px">pandas<span>2.2</span></div>
+</div>
 
-  <!-- ================= BAND A : without ================= -->
-  <div class="lbl" style="top:280px">Without 🌍</div>
+<div class="env" style="left:720px">
+  <div class="envhead">📁 client_work</div>
+  <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
+  <div class="pyver">Python 3.11</div>
+  <div class="pkghead">PACKAGES</div>
+  <div class="pkg dbt" style="top:330px">dbt<span>1.9</span></div>
+  <div class="pkg pandas" style="top:418px">pandas<span>1.5</span></div>
+</div>
 
-  <div class="folder" style="left:310px;top:180px;width:250px;height:64px">📁 dbt_course</div>
-  <div class="folder" style="left:310px;top:288px;width:250px;height:64px">📁 client_work</div>
-  <div class="folder" style="left:310px;top:396px;width:250px;height:64px">📁 experiments</div>
+<div class="env" style="left:1310px">
+  <div class="envhead">📁 sales_report</div>
+  <img class="pylogo" src="../images/PythonLogo.png" alt="Python">
+  <div class="pyver">Python 3.8</div>
+  <div class="pkghead">PACKAGES</div>
+  <div class="pkg pandas" style="top:330px">pandas<span>0.25</span></div>
+  <div class="pkg gray" style="top:418px">matplotlib<span>3.1</span></div>
+</div>
 
-  <div class="box" style="left:820px;top:170px;width:760px;height:330px"></div>
-  <div class="boxname" style="left:820px;top:190px;width:760px">🌍 Python</div>
-  <div class="mark" style="left:1520px;top:150px;color:var(--err)">✗</div>
+<div class="note" style="left:130px;top:966px;width:660px;font-size:38px">different dbt versions live side by side — no conflicts ✓</div>
+<div class="note" style="left:1250px;top:966px;width:560px;text-align:right;font-size:38px">same laptop, three separate setups</div>
 
-  <div class="blk py" style="left:870px;top:250px">python<small>3.12</small></div>
-  <div class="blk gray" style="left:1030px;top:250px">pandas</div>
-  <div class="blk duck" style="left:1190px;top:250px">duckdb</div>
-
-  <div class="slot" style="left:1000px;top:352px;width:340px;height:112px"></div>
-  <div class="blk dbt" style="left:1030px;top:370px">dbt<small>1.9</small></div>
-  <div class="blk dbt" style="left:1160px;top:370px;transform:rotate(6deg)">dbt<small>1.12</small></div>
-  <div class="mark" style="left:1136px;top:376px;font-size:44px;color:var(--err);z-index:3">⚡</div>
-
-  <div class="rule" style="top:560px"></div>
-
-  <!-- ================= BAND B : with ================= -->
-  <div class="lbl" style="top:800px">With 📦</div>
-
-  <div class="uvchip" style="left:882px;top:606px">⚡ uv</div>
-
-  <div class="folder" style="left:310px;top:710px;width:440px;height:300px;flex-direction:column;justify-content:flex-start;padding-top:16px">📁 dbt_course</div>
-  <div class="venv" style="left:334px;top:766px;width:392px;height:220px"></div>
-  <div class="venvtag" style="left:354px;top:778px">.venv</div>
-  <div class="mark" style="left:668px;top:770px;font-size:38px;color:var(--ok)">✓</div>
-  <div class="blk py" style="left:354px;top:818px">python<small>3.12</small></div>
-  <div class="blk dbt" style="left:494px;top:818px">dbt<small>1.12</small></div>
-  <div class="blk duck" style="left:424px;top:900px">duckdb</div>
-
-  <div class="folder" style="left:810px;top:710px;width:440px;height:300px;flex-direction:column;justify-content:flex-start;padding-top:16px">📁 client_work</div>
-  <div class="venv" style="left:834px;top:766px;width:392px;height:220px"></div>
-  <div class="venvtag" style="left:854px;top:778px">.venv</div>
-  <div class="mark" style="left:1168px;top:770px;font-size:38px;color:var(--ok)">✓</div>
-  <div class="blk py" style="left:854px;top:818px">python<small>3.11</small></div>
-  <div class="blk dbt" style="left:994px;top:818px">dbt<small>1.9</small></div>
-
-  <div class="folder" style="left:1310px;top:710px;width:440px;height:300px;flex-direction:column;justify-content:flex-start;padding-top:16px">📁 experiments</div>
-  <div class="venv" style="left:1334px;top:766px;width:392px;height:220px"></div>
-  <div class="venvtag" style="left:1354px;top:778px">.venv</div>
-  <div class="mark" style="left:1668px;top:770px;font-size:38px;color:var(--ok)">✓</div>
-  <div class="blk py" style="left:1354px;top:818px">python<small>3.13</small></div>
-  <div class="blk gray" style="left:1494px;top:818px">pandas</div>
-
-  <!-- ============ arrows ============ -->
-  <svg class="art" viewBox="0 0 1920 1080">
-    <defs>
-      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
-      </marker>
-      <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
-      </marker>
-    </defs>
-    <path d="M 564 212 C 680 212, 720 250, 808 290" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 564 320 L 808 330" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 564 428 C 680 428, 720 400, 808 370" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 900 660 C 700 668, 580 680, 534 704" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
-    <path d="M 1030 668 L 1030 704" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
-    <path d="M 1160 660 C 1360 668, 1480 680, 1526 704" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
-  </svg>
-
+<svg class="art" viewBox="0 0 1920 1080">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/></marker></defs>
+  <path d="M 400 962 C 380 920, 372 900, 370 872" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+  <path d="M 1560 962 C 1580 920, 1588 900, 1590 872" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+</svg>
 </div>
 </body>
 </html>

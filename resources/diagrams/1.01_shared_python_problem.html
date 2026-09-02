@@ -1,0 +1,91 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Problem: One Shared Python</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+:root{--bg:#191919;--panel:#202020;--line:#373737;--text:#D3D3D3;--muted:#9B9B9B;--blue:#58A6FF;--dbt:#FF694B;--duck:#F2C94C;--ok:#57AB5A;--err:#E5534B;--mono:'Source Code Pro',ui-monospace,Menlo,Consolas,monospace;--hand:'Caveat',cursive}
+html,body{margin:0;padding:0;background:var(--bg)}
+.stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--mono)}
+.title{position:absolute;left:0;top:30px;width:1920px;text-align:center;font-family:var(--mono);font-size:54px;font-weight:700;color:#fff}
+.sub{position:absolute;left:0;top:106px;width:1920px;text-align:center;font-family:var(--hand);font-size:38px;font-weight:600;color:var(--err)}
+.proj{position:absolute;left:100px;width:580px;height:196px;box-sizing:border-box;border:1.5px solid var(--line);border-radius:16px;background:var(--panel);padding:18px 28px}
+.pname{font-family:var(--mono);font-size:27px;font-weight:800;color:#fff}
+.chips{margin-top:12px;display:flex;align-items:center;gap:12px}
+.chip{box-sizing:border-box;padding:6px 16px;border-radius:10px;font-family:var(--mono);font-size:22px;font-weight:800;white-space:nowrap}
+.chip.py{background:#1d3a5f;border:2px solid rgba(88,166,255,.75);color:#bcd8ff}
+.chip.dbt{background:#3d1d15;border:2px solid rgba(255,105,75,.8);color:#ffb3a3}
+.chip.pandas{background:#2d1a3d;border:2px solid rgba(180,120,255,.75);color:#d9bfff}
+.pstory{margin-top:10px;font-family:var(--hand);font-size:29px;font-weight:600;color:var(--muted);line-height:1.05}
+/* laptop */
+.screen{position:absolute;left:1080px;top:190px;width:740px;height:580px;box-sizing:border-box;background:#101418;border:16px solid #3f3f42;border-bottom-width:22px;border-radius:26px 26px 6px 6px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.cam{position:absolute;left:50%;top:-11px;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:#191919}
+.base{position:absolute;left:1010px;top:770px;width:880px;height:34px;background:linear-gradient(#9a9a9e,#5c5c60);border-radius:4px 4px 20px 20px}
+.base:before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:150px;height:12px;background:#4a4a4e;border-radius:0 0 12px 12px}
+.gname{position:absolute;top:24px;left:0;width:100%;text-align:center;font-family:var(--mono);font-size:32px;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px}
+.gname img{width:46px;height:46px}
+.gsub{position:absolute;top:80px;left:0;width:100%;text-align:center;font-family:var(--hand);font-size:28px;font-weight:600;color:var(--muted)}
+.slot{position:absolute;left:40px;width:628px;height:150px;box-sizing:border-box;border:2.5px dashed var(--err);border-radius:14px;background:rgba(229,83,75,.06);padding:12px 22px}
+.slot.ok{border:2.5px solid rgba(87,171,90,.65);background:rgba(87,171,90,.07)}
+.sstory{margin-top:8px;font-family:var(--hand);font-size:28px;font-weight:600;color:var(--text)}
+.sname{font-family:var(--mono);font-size:20px;font-weight:800;color:var(--muted);letter-spacing:.04em}
+.fight{margin-top:8px;display:flex;align-items:center;gap:10px}
+.fight .chip{font-size:20px;padding:5px 12px}
+.vs{font-family:var(--hand);font-size:30px;font-weight:700;color:var(--err)}
+.x{margin-left:auto;font-family:var(--mono);font-size:38px;font-weight:900;color:var(--err)}
+.note{position:absolute;font-family:var(--hand);font-weight:600;color:var(--text);line-height:1.15}
+svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="title">The Problem: One Shared Python</div>
+<div class="sub">every project has different requirements… but they all install into the same place</div>
+
+<div class="proj" style="top:230px">
+  <div class="pname">📁 dbt_course</div>
+  <div class="chips"><span class="chip py">python 3.12</span><span class="chip dbt">dbt 1.12</span></div>
+  <div class="pstory">brand new — needs the latest everything</div>
+</div>
+<div class="proj" style="top:466px">
+  <div class="pname">📁 client_work</div>
+  <div class="chips"><span class="chip py">python 3.11</span><span class="chip dbt">dbt 1.9</span></div>
+  <div class="pstory">client is locked on dbt 1.9 — can't upgrade</div>
+</div>
+<div class="proj" style="top:702px">
+  <div class="pname">📁 sales_report</div>
+  <div class="chips"><span class="chip py">python 3.8</span><span class="chip pandas">pandas 0.25</span></div>
+  <div class="pstory">built 5 years ago — still runs, but only on the old versions</div>
+</div>
+
+<div class="screen">
+  <div class="cam"></div>
+  <div class="gname"><img src="../images/PythonLogo.png" alt="Python">Global Python</div>
+  <div class="gsub">one copy for the whole computer</div>
+  <div class="slot ok" style="top:126px">
+    <div class="sname" style="color:var(--ok)">INSTALLED TODAY</div>
+    <div class="fight"><span class="chip py">python 3.12</span><span class="chip dbt">dbt 1.12</span><span class="chip pandas">pandas 2.2</span><span class="x" style="color:var(--ok)">✓</span></div>
+    <div class="sstory">dbt_course runs great</div>
+  </div>
+  <div class="note" style="left:40px;top:294px;width:628px;font-size:31px;color:var(--err);text-align:center">want to run sales_report? downgrade everything ⬇</div>
+  <div class="slot" style="top:352px">
+    <div class="sname">AFTER THE DOWNGRADE</div>
+    <div class="fight"><span class="chip py">python 3.8</span><span class="chip pandas">pandas 0.25</span><span class="x">✗</span></div>
+    <div class="sstory">sales_report runs… but dbt_course is now broken</div>
+  </div>
+</div>
+<div class="base"></div>
+
+
+
+<svg class="art" viewBox="0 0 1920 1080">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/></marker></defs>
+  <path d="M 694 328 C 870 328, 940 400, 1052 440" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+  <path d="M 694 564 L 1052 530" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+  <path d="M 694 800 C 870 800, 940 680, 1052 620" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+</svg>
+</div>
+</body>
+</html>
