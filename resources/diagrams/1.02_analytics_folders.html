@@ -29,6 +29,7 @@
   .mono{font-family:var(--mono)}
   .fname{font-family:var(--mono);font-weight:700;color:var(--text)}
   .job{color:var(--muted);line-height:1.45}
+  .rowchip{font-family:var(--mono);font-weight:700;font-size:21px;border-radius:10px;padding:6px 18px;display:inline-block}
 </style>
 </head>
 <body>
@@ -51,57 +52,68 @@
       </div>
     </div>
 
-    <!-- 6 folders, 3 × 2 grid -->
-    <div style="position:absolute;left:36px;top:118px;display:grid;grid-template-columns:552px 552px 552px;gap:24px 20px">
+    <!-- the Basics pair: models + tests -->
+    <div style="position:absolute;left:36px;top:112px;width:1696px;height:392px;box-sizing:border-box;
+         border:2px dashed rgba(88,166,255,.55);border-radius:18px;background:rgba(88,166,255,.045)">
+      <div class="rowchip" style="position:absolute;left:28px;top:-20px;background:var(--bg);color:var(--blue)">⭐ the Basics chapter lives here</div>
 
-      <div class="card" style="position:relative;width:552px;height:288px;background:var(--panel)">
-        <div style="padding:30px 32px">
-          <div style="font-size:48px">📁</div>
-          <div class="fname" style="font-size:34px;margin-top:14px">models/</div>
-          <div class="job" style="font-size:23px;margin-top:12px">📄 your SQL — one SELECT each</div>
+      <div class="card" style="left:28px;top:44px;width:806px;height:314px;border:2px solid rgba(88,166,255,.8);background:var(--panel)">
+        <div style="padding:32px 36px">
+          <div style="font-size:56px">📁</div>
+          <div class="fname" style="font-size:42px;margin-top:14px">models/</div>
+          <div class="job" style="font-size:25px;margin-top:14px;color:var(--text)">📄 your SQL — one SELECT each</div>
         </div>
+        <div style="position:absolute;right:26px;top:24px;font-size:38px">⭐</div>
       </div>
 
-      <div class="card" style="position:relative;width:552px;height:288px;background:var(--panel)">
-        <div style="padding:30px 32px">
-          <div style="font-size:48px">📁</div>
-          <div class="fname" style="font-size:34px;margin-top:14px">seeds/</div>
-          <div class="job" style="font-size:23px;margin-top:12px">📄 lookup CSVs, live in the repo</div>
+      <div class="card" style="left:862px;top:44px;width:806px;height:314px;border:2px solid rgba(88,166,255,.8);background:var(--panel)">
+        <div style="padding:32px 36px">
+          <div style="font-size:56px">📁</div>
+          <div class="fname" style="font-size:42px;margin-top:14px">tests/</div>
+          <div class="job" style="font-size:25px;margin-top:14px;color:var(--text)">✓ checks — bad data fails loudly</div>
         </div>
+        <div style="position:absolute;right:26px;top:24px;font-size:38px">⭐</div>
       </div>
+    </div>
 
-      <div class="card" style="position:relative;width:552px;height:288px;background:var(--panel)">
-        <div style="padding:30px 32px">
-          <div style="font-size:48px">📁</div>
-          <div class="fname" style="font-size:34px;margin-top:14px">analyses/</div>
-          <div class="job" style="font-size:23px;margin-top:12px">📄 scratch queries — never built</div>
+    <!-- the rest: dimmed, smaller -->
+    <div style="position:absolute;left:36px;top:534px;width:1696px">
+      <div class="rowchip" style="background:transparent;color:var(--faint);padding-left:0">the Advanced chapter's tools</div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:409px 409px 409px 409px;gap:0 20px">
+
+        <div class="card" style="position:relative;width:409px;height:170px;background:var(--panel);opacity:.62">
+          <div style="padding:20px 26px">
+            <div style="font-size:34px">📁</div>
+            <div class="fname" style="font-size:28px;margin-top:8px">seeds/</div>
+            <div class="job" style="font-size:20px;margin-top:8px">📄 lookup CSVs, in the repo</div>
+          </div>
         </div>
-      </div>
 
-      <div class="card" style="position:relative;width:552px;height:288px;background:var(--panel)">
-        <div style="padding:30px 32px">
-          <div style="font-size:48px">📁</div>
-          <div class="fname" style="font-size:34px;margin-top:14px">macros/</div>
-          <div class="job" style="font-size:23px;margin-top:12px">⚙️ reusable SQL — write your own</div>
+        <div class="card" style="position:relative;width:409px;height:170px;background:var(--panel);opacity:.62">
+          <div style="padding:20px 26px">
+            <div style="font-size:34px">📁</div>
+            <div class="fname" style="font-size:28px;margin-top:8px">macros/</div>
+            <div class="job" style="font-size:20px;margin-top:8px">⚙️ reusable SQL — write your own</div>
+          </div>
         </div>
-      </div>
 
-      <div class="card" style="position:relative;width:552px;height:288px;background:var(--panel)">
-        <div style="padding:30px 32px">
-          <div style="font-size:48px">📁</div>
-          <div class="fname" style="font-size:34px;margin-top:14px">tests/</div>
-          <div class="job" style="font-size:23px;margin-top:12px">✓ checks — bad data fails loudly</div>
+        <div class="card" style="position:relative;width:409px;height:170px;background:var(--panel);opacity:.62">
+          <div style="padding:20px 26px">
+            <div style="font-size:34px">📁</div>
+            <div class="fname" style="font-size:28px;margin-top:8px">analyses/</div>
+            <div class="job" style="font-size:20px;margin-top:8px">📄 scratch queries — never built</div>
+          </div>
         </div>
-      </div>
 
-      <div class="card" style="position:relative;width:552px;height:288px;background:var(--panel)">
-        <div style="padding:30px 32px">
-          <div style="font-size:48px">📁</div>
-          <div class="fname" style="font-size:34px;margin-top:14px">snapshots/</div>
-          <div class="job" style="font-size:23px;margin-top:12px">⏳ row history — what changed, when</div>
+        <div class="card" style="position:relative;width:409px;height:170px;background:var(--panel);opacity:.62">
+          <div style="padding:20px 26px">
+            <div style="font-size:34px">📁</div>
+            <div class="fname" style="font-size:28px;margin-top:8px">snapshots/</div>
+            <div class="job" style="font-size:20px;margin-top:8px">⏳ row history — what changed</div>
+          </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
 
