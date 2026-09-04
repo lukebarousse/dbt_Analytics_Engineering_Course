@@ -20,16 +20,16 @@
       radial-gradient(900px 480px at 30% -8%, rgba(88,166,255,.05), transparent 60%),
       radial-gradient(900px 520px at 85% 112%, rgba(255,105,75,.04), transparent 60%),
       var(--bg);}
-  .card{position:relative;width:552px;height:352px;background:var(--panel);border:1.5px solid var(--line);
+  .card{position:absolute;width:440px;height:350px;background:var(--panel);border:1.5px solid var(--line);
     border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
   .mono{font-family:var(--mono)}
-  .cmd{font-family:var(--mono);font-weight:800;font-size:34px;white-space:nowrap}
+  .cmd{font-family:var(--mono);font-weight:800;font-size:32px;white-space:nowrap}
   .cmd b{color:var(--dbt);font-weight:800}
-  .job{color:var(--text);font-size:23px;line-height:1.4}
-  .chip{display:inline-block;font-family:var(--mono);font-weight:700;font-size:20px;
-    border-radius:10px;padding:9px 16px;background:#141414;border:1.5px solid var(--line);color:var(--muted);white-space:nowrap}
-  .inner{padding:30px 32px;text-align:center}
-  .chiprow{position:absolute;left:0;bottom:28px;width:100%;text-align:center}
+  .job{color:var(--text);font-size:22px;line-height:1.4}
+  .chip{display:inline-block;font-family:var(--mono);font-weight:700;font-size:19px;
+    border-radius:10px;padding:8px 14px;background:#141414;border:1.5px solid var(--line);color:var(--muted);white-space:nowrap}
+  .inner{padding:26px 24px;text-align:center}
+  .chiprow{position:absolute;left:0;bottom:24px;width:100%;text-align:center}
 </style>
 </head>
 <body>
@@ -38,63 +38,69 @@
   <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center;
        font-family:var(--mono);font-weight:700;font-size:54px;color:#FFFFFF;letter-spacing:-.01em">The dbt Command Belt</div>
 
-  <!-- six commands, 3 × 2 grid -->
-  <div style="position:absolute;left:108px;top:170px;display:grid;grid-template-columns:552px 552px 552px;gap:34px 24px">
+  <!-- seven commands, lesson order: 4 + 3 -->
 
-    <div class="card">
-      <div class="inner">
-        <div style="font-size:58px">🩺</div>
-        <div class="cmd" style="margin-top:18px"><b>dbt</b> debug</div>
-        <div class="job" style="margin-top:12px">config + connection smoke test</div>
-      </div>
-      <div class="chiprow"><span class="chip" style="color:var(--ok);border-color:rgba(87,171,90,.55)">✓ All checks passed!</span></div>
+  <div class="card" style="left:48px;top:190px">
+    <div class="inner">
+      <div style="font-size:54px">🏗️</div>
+      <div class="cmd" style="margin-top:16px"><b>dbt</b> init</div>
+      <div class="job" style="margin-top:12px">scaffold a brand-new<br>dbt project</div>
     </div>
+    <div class="chiprow"><span class="chip">analytics/ appears</span></div>
+  </div>
 
-    <div class="card">
-      <div class="inner">
-        <div style="font-size:58px">⚙️</div>
-        <div class="cmd" style="margin-top:18px"><b>dbt</b> run</div>
-        <div class="job" style="margin-top:12px">build every model into the warehouse</div>
-      </div>
-      <div class="chiprow"><span class="chip">tables + views appear</span></div>
+  <div class="card" style="left:508px;top:190px">
+    <div class="inner">
+      <div style="font-size:54px">🩺</div>
+      <div class="cmd" style="margin-top:16px"><b>dbt</b> debug</div>
+      <div class="job" style="margin-top:12px">config + connection<br>smoke test</div>
     </div>
+    <div class="chiprow"><span class="chip" style="color:var(--ok);border-color:rgba(87,171,90,.55)">✓ All checks passed!</span></div>
+  </div>
 
-    <div class="card">
-      <div class="inner">
-        <div style="font-size:58px">📋</div>
-        <div class="cmd" style="margin-top:18px"><b>dbt</b> ls</div>
-        <div class="job" style="margin-top:12px">list everything the project contains</div>
-      </div>
-      <div class="chiprow"><span class="chip">models · tests · seeds</span></div>
+  <div class="card" style="left:968px;top:190px">
+    <div class="inner">
+      <div style="font-size:54px">⚙️</div>
+      <div class="cmd" style="margin-top:16px"><b>dbt</b> run</div>
+      <div class="job" style="margin-top:12px">build every model<br>into the warehouse</div>
     </div>
+    <div class="chiprow"><span class="chip">tables + views appear</span></div>
+  </div>
 
-    <div class="card">
-      <div class="inner">
-        <div style="font-size:58px">👁️</div>
-        <div class="cmd" style="margin-top:18px"><b>dbt</b> show</div>
-        <div class="job" style="margin-top:12px">preview a model's rows in the terminal</div>
-      </div>
-      <div class="chiprow"><span class="chip">first 5 rows</span></div>
+  <div class="card" style="left:1428px;top:190px">
+    <div class="inner">
+      <div style="font-size:54px">📋</div>
+      <div class="cmd" style="margin-top:16px"><b>dbt</b> ls</div>
+      <div class="job" style="margin-top:12px">list everything the<br>project contains</div>
     </div>
+    <div class="chiprow"><span class="chip">models · tests · seeds</span></div>
+  </div>
 
-    <div class="card">
-      <div class="inner">
-        <div style="font-size:58px">📝</div>
-        <div class="cmd" style="margin-top:18px"><b>dbt</b> compile</div>
-        <div class="job" style="margin-top:12px">write the SQL, run nothing</div>
-      </div>
-      <div class="chiprow"><span class="chip">target/compiled/</span></div>
+  <div class="card" style="left:280px;top:590px">
+    <div class="inner">
+      <div style="font-size:54px">👁️</div>
+      <div class="cmd" style="margin-top:16px"><b>dbt</b> show</div>
+      <div class="job" style="margin-top:12px">preview a model's<br>rows in the terminal</div>
     </div>
+    <div class="chiprow"><span class="chip">first 5 rows</span></div>
+  </div>
 
-    <div class="card">
-      <div class="inner">
-        <div style="font-size:58px">🧹</div>
-        <div class="cmd" style="margin-top:18px"><b>dbt</b> clean</div>
-        <div class="job" style="margin-top:12px">wipe the build artifacts</div>
-      </div>
-      <div class="chiprow"><span class="chip">target/ + logs/ gone</span></div>
+  <div class="card" style="left:740px;top:590px">
+    <div class="inner">
+      <div style="font-size:54px">📝</div>
+      <div class="cmd" style="margin-top:16px"><b>dbt</b> compile</div>
+      <div class="job" style="margin-top:12px">write the SQL,<br>run nothing</div>
     </div>
+    <div class="chiprow"><span class="chip">target/compiled/</span></div>
+  </div>
 
+  <div class="card" style="left:1200px;top:590px">
+    <div class="inner">
+      <div style="font-size:54px">🧹</div>
+      <div class="cmd" style="margin-top:16px"><b>dbt</b> clean</div>
+      <div class="job" style="margin-top:12px">wipe the build<br>artifacts</div>
+    </div>
+    <div class="chiprow"><span class="chip">target/ + logs/ gone</span></div>
   </div>
 
 </div>
