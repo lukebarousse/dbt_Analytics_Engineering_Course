@@ -1,0 +1,129 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>How a Source Works</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    /* base = Notion dark, so exports blend into the notes */
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    /* semantic accents (carry meaning — don't rotate) */
+    --dbt:#FF694B; --duck:#F2C94C;
+    /* THE course accent — Luke's blue (placeholder hex, one-line swap) */
+    --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+    font-family:var(--sans);color:var(--text);
+    background:
+      radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+      radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
+      var(--bg);}
+  .mono{font-family:var(--mono)}
+  .panel{position:absolute;top:260px;height:660px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .phead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+    background:var(--bg);padding:2px 22px;font-family:var(--mono);font-size:26px;
+    font-weight:800;color:#fff;white-space:nowrap}
+  .card{position:absolute;box-sizing:border-box;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  .code{font-family:var(--mono);font-size:22px;line-height:1.6;color:var(--text);
+    background:#191919;border-radius:10px;padding:16px 20px;white-space:pre}
+  .sub{font-size:22px;color:var(--muted)}
+  .chip{display:inline-block;font-family:var(--mono);font-weight:700;font-size:19px;
+    border-radius:10px;padding:7px 14px;background:#141414;border:1.5px solid var(--line);
+    color:var(--muted);white-space:nowrap}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em">
+    How a Source Works</div>
+
+  <!-- ============ LEFT: you declare ============ -->
+  <div class="panel" style="left:76px;width:560px">
+    <div class="phead">📄 you declare</div>
+    <div class="mono" style="position:absolute;left:40px;top:56px;font-size:25px;font-weight:800">
+      models/sources.yml</div>
+    <div class="code" style="position:absolute;left:40px;top:116px;width:478px"><span style="color:var(--blue);font-weight:700">sources:</span>
+  - name: <span style="color:var(--blue)">raw</span>
+    tables:
+      - name: <span style="color:var(--blue)">job_postings</span>
+        meta:
+          <span style="color:var(--dbt);font-weight:700">external_location:</span>
+            <span style="color:var(--duck)">"read_parquet(
+             '../data/raw/…')"</span></div>
+    <div class="sub" style="position:absolute;left:40px;top:520px;font-size:23px">📖 data dbt did NOT build</div>
+    <div class="sub" style="position:absolute;left:40px;top:572px;font-size:23px">📍 the YAML holds the path</div>
+  </div>
+
+  <!-- ============ MIDDLE: at compile ============ -->
+  <div class="panel" style="left:716px;width:600px;border-color:rgba(255,105,75,.55)">
+    <div class="phead">⚙️ <span style="color:var(--dbt)">source()</span> — at compile</div>
+    <div class="card" style="left:36px;top:70px;width:528px;height:170px">
+      <div style="padding:24px 28px">
+        <div class="sub" style="font-size:20px;color:var(--faint)">your model says</div>
+        <div class="mono" style="margin-top:10px;font-size:22px;font-weight:700;white-space:pre">FROM <span style="color:var(--dbt)">{{ source(</span><span style="color:var(--blue)">'raw',
+  'job_postings'</span><span style="color:var(--dbt)">) }}</span></div>
+      </div>
+    </div>
+    <div class="card" style="left:36px;top:330px;width:528px;height:170px">
+      <div style="padding:24px 28px">
+        <div class="sub" style="font-size:20px;color:var(--faint)">the warehouse gets</div>
+        <div class="mono" style="margin-top:10px;font-size:22px;font-weight:700;white-space:pre">FROM <span style="color:var(--duck)">read_parquet(
+  '../data/raw/…')</span></div>
+      </div>
+    </div>
+    <div class="sub" style="position:absolute;left:36px;top:560px;font-size:23px">🔁 swapped in from the YAML</div>
+  </div>
+
+  <!-- ============ RIGHT: what exists after ============ -->
+  <div class="panel" style="left:1396px;width:448px;border-color:rgba(88,166,255,.5)">
+    <div class="phead">🕸 what exists</div>
+    <div class="card" style="left:36px;top:90px;width:376px;height:180px;border-style:dashed">
+      <div style="padding:26px 30px">
+        <div class="mono" style="font-size:24px;font-weight:700;color:var(--muted)">🗄 dev.duckdb</div>
+        <div class="sub" style="margin-top:12px">🚫 nothing built — no schema, no table</div>
+      </div>
+    </div>
+    <div class="card" style="left:36px;top:340px;width:376px;height:200px;border-color:rgba(88,166,255,.5)">
+      <div style="padding:26px 30px">
+        <div class="mono" style="font-size:24px;font-weight:800;color:var(--blue)">raw.job_postings</div>
+        <div style="margin-top:14px"><span class="chip" style="color:var(--blue);border-color:rgba(88,166,255,.5)">🔗 a new lineage node</span></div>
+      </div>
+    </div>
+    <div class="sub" style="position:absolute;left:36px;top:580px;font-size:23px">📣 a declaration, not a creation</div>
+  </div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ar-dbt" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#FF694B"/>
+      </marker>
+      <marker id="ar-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <!-- declare → compile -->
+    <line x1="648" y1="590" x2="702" y2="590" stroke="#FF694B" stroke-width="3.5"
+      stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
+    <!-- compile top card → bottom card -->
+    <line x1="1016" y1="506" x2="1016" y2="578" stroke="#FF694B" stroke-width="3.5"
+      stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
+    <!-- compile → exists -->
+    <line x1="1328" y1="590" x2="1382" y2="590" stroke="#58A6FF" stroke-width="3.5"
+      stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-blue)"/>
+  </svg>
+
+</div>
+</body>
+</html>
