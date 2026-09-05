@@ -1,0 +1,137 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>How a Model Runs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    /* base = Notion dark, so exports blend into the notes */
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    /* semantic accents (carry meaning — don't rotate) */
+    --dbt:#FF694B; --duck:#F2C94C;
+    /* THE course accent — Luke's blue (placeholder hex, one-line swap) */
+    --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+    font-family:var(--sans);color:var(--text);
+    background:
+      radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+      radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),
+      var(--bg);}
+  .mono{font-family:var(--mono)}
+  .panel{position:absolute;background:var(--zone);border:1.5px solid var(--line);border-radius:18px}
+  .phead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+    background:var(--bg);padding:2px 22px;font-family:var(--mono);font-size:26px;
+    font-weight:800;color:#fff;white-space:nowrap}
+  .card{position:absolute;box-sizing:border-box;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  .step{font-family:var(--mono);font-size:25px;font-weight:800;color:var(--text)}
+  .sub{font-size:22px;color:var(--muted);margin-top:8px}
+  .code{font-family:var(--mono);font-size:22px;line-height:1.6;color:var(--text);
+    background:#191919;border-radius:10px;padding:14px 18px;white-space:pre}
+  .chip{display:inline-block;font-family:var(--mono);font-weight:700;font-size:19px;
+    border-radius:10px;padding:7px 14px;background:#141414;border:1.5px solid var(--line);
+    color:var(--muted);white-space:nowrap}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em">
+    How a Model Runs</div>
+
+  <!-- ============ LEFT: the file you write ============ -->
+  <div class="panel" style="left:76px;top:260px;width:470px;height:660px">
+    <div class="phead">📄 you write</div>
+    <div class="mono" style="position:absolute;left:40px;top:56px;font-size:25px;font-weight:800">
+      models/<span style="color:var(--blue)">job_postings</span>.sql</div>
+    <div class="code" style="position:absolute;left:40px;top:120px;width:352px">SELECT
+    job_id,
+    job_title,
+    company_name
+FROM read_parquet(
+  '../data/raw/…')</div>
+    <div class="sub" style="position:absolute;left:40px;top:472px;font-size:23px">✍️ one SELECT statement</div>
+    <div class="sub" style="position:absolute;left:40px;top:524px;font-size:23px">🚫 no CREATE, no INSERT</div>
+  </div>
+
+  <!-- ============ MIDDLE: what dbt run does ============ -->
+  <div class="panel" style="left:660px;top:260px;width:660px;height:660px;border-color:rgba(255,105,75,.55)">
+    <div class="phead">⚙️ <span style="color:var(--dbt)">dbt run</span> — every time</div>
+
+    <div class="card" style="left:36px;top:66px;width:588px;height:150px">
+      <div style="padding:22px 28px">
+        <div class="step">1️⃣ compile 📝</div>
+        <div class="sub">your file becomes plain SQL</div>
+        <div style="margin-top:10px"><span class="chip">saved to target/compiled/</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="left:36px;top:250px;width:588px;height:150px">
+      <div style="padding:22px 28px">
+        <div class="step">2️⃣ wrap 🎁</div>
+        <div class="sub mono" style="font-size:21px;color:var(--text);white-space:pre"><span style="color:var(--dbt)">CREATE VIEW</span> <span style="color:var(--blue)">job_postings</span> <span style="color:var(--dbt)">AS</span>
+<span style="color:var(--dbt)">  (</span> your SELECT <span style="color:var(--dbt)">)</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="left:36px;top:434px;width:588px;height:150px">
+      <div style="padding:22px 28px">
+        <div class="step">3️⃣ execute ▶️</div>
+        <div class="sub">the warehouse runs it</div>
+        <div class="mono" style="margin-top:10px;font-size:19px;color:var(--ok)">1 of 1 OK created sql view model ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ RIGHT: what it creates ============ -->
+  <div class="panel" style="left:1434px;top:260px;width:410px;height:660px;border-color:rgba(242,201,76,.55)">
+    <div class="phead">🗄 <span style="color:var(--duck)">dev.duckdb</span></div>
+
+    <div class="card" style="left:34px;top:80px;width:342px;height:190px;border-color:rgba(88,166,255,.5)">
+      <div style="padding:26px 30px">
+        <div class="mono" style="font-size:31px;font-weight:800;color:var(--blue)">job_postings</div>
+        <div style="margin-top:16px"><span class="chip" style="color:var(--duck);border-color:rgba(242,201,76,.5)">🧾 view · the default</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="left:34px;top:310px;width:342px;height:170px;border-style:dashed">
+      <div style="padding:24px 30px">
+        <div class="mono" style="font-size:25px;font-weight:700;color:var(--muted)">or a table 🗄</div>
+        <div style="margin-top:12px"><span class="chip">one config line flips it</span></div>
+      </div>
+    </div>
+
+    <div class="sub" style="position:absolute;left:34px;top:530px;font-size:23px">🏷️ file name = object name</div>
+    <div class="sub" style="position:absolute;left:34px;top:582px;font-size:23px">❓ query it like any table</div>
+  </div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ar-dbt" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#FF694B"/>
+      </marker>
+      <marker id="ar-duck" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#F2C94C"/>
+      </marker>
+    </defs>
+    <!-- file → dbt run -->
+    <line x1="558" y1="590" x2="646" y2="590" stroke="#FF694B" stroke-width="3.5"
+      stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
+    <!-- dbt run → warehouse -->
+    <line x1="1332" y1="590" x2="1420" y2="590" stroke="#F2C94C" stroke-width="3.5"
+      stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-duck)"/>
+  </svg>
+
+</div>
+</body>
+</html>
