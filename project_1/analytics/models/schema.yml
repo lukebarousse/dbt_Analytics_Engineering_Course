@@ -1,6 +1,10 @@
 models:
   - name: job_postings
     description: Cleaned postings; scraper error rows removed. SELECT * behind the filter, so every raw column rides.
+    config:
+      persist_docs:
+        relation: true
+        columns: true
     columns:
       - name: job_id
         description: The scraper's posting id; re-scraped postings repeat it.
