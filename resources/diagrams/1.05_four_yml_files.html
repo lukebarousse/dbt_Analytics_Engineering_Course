@@ -1,0 +1,115 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>4 YAML Files, 4 Questions</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+               radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;left:0;top:38px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
+  .col{position:absolute;top:170px;width:430px;height:780px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .q{position:absolute;width:430px;text-align:center;top:22px;font-size:26px;font-weight:800;color:#FFFFFF}
+  .q b{color:var(--blue)}
+  .fname{position:absolute;top:66px;width:430px;text-align:center;
+    font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text)}
+  .chiprow{position:absolute;top:112px;width:430px;display:flex;justify-content:center}
+  .chip{font-family:var(--mono);font-size:18px;background:var(--panel2);
+    border:1.5px solid var(--line);border-radius:8px;padding:6px 12px;white-space:nowrap;color:var(--muted)}
+  .chip.keep{color:var(--ok);border-color:rgba(87,171,90,.45)}
+  .chip.no{color:var(--err);border-color:rgba(229,83,75,.45)}
+  .code{position:absolute;top:162px;left:26px;box-sizing:border-box;width:378px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;
+    font-family:var(--mono);font-size:19px;line-height:32px;white-space:pre;color:var(--text)}
+  .verb{position:absolute;width:430px;text-align:center;top:632px;font-family:var(--mono);
+    font-size:20px;font-weight:700}
+  .target{position:absolute;top:684px;left:26px;box-sizing:border-box;width:378px;height:64px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;
+    gap:10px;font-family:var(--mono);font-size:20px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">4 YAML Files · 4 Questions</div>
+
+  <!-- ============ COLUMN 1: dbt_project.yml ============ -->
+  <div class="col" style="left:76px">
+    <div class="q"><b>WHAT</b> is this project?</div>
+    <div class="fname">📄 analytics/dbt_project.yml</div>
+    <div class="chiprow"><span class="chip keep">✓ committed</span></div>
+    <div class="code"><span style="color:var(--blue);font-weight:700">name:</span> analytics
+<span style="color:var(--blue);font-weight:700">profile:</span> analytics
+<span style="color:var(--blue);font-weight:700">model-paths:</span>
+  ["models"]
+<span style="color:var(--blue);font-weight:700">models:</span>
+  analytics:</div>
+    <div class="verb" style="color:var(--dbt)">🪪 defines ↓</div>
+    <div class="target" style="border-color:rgba(255,105,75,.5)">📁 <span style="color:var(--dbt)">the dbt project</span></div>
+  </div>
+
+  <!-- ============ COLUMN 2: profiles.yml ============ -->
+  <div class="col" style="left:522px">
+    <div class="q"><b>WHERE</b> does dbt connect?</div>
+    <div class="fname">🏠 ~/.dbt/profiles.yml</div>
+    <div class="chiprow"><span class="chip no">✗ never committed</span></div>
+    <div class="code"><span style="color:var(--blue);font-weight:700">analytics:</span>
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: <span style="color:var(--duck)">../data/
+       dev.duckdb</span></div>
+    <div class="verb" style="color:var(--duck)">🗄 writes ↓</div>
+    <div class="target" style="border-color:rgba(242,201,76,.5)">🗄 <span style="color:var(--duck)">data/dev.duckdb</span></div>
+  </div>
+
+  <!-- ============ COLUMN 3: sources.yml ============ -->
+  <div class="col" style="left:968px">
+    <div class="q"><b>WHAT</b> raw data exists?</div>
+    <div class="fname">📄 models/sources.yml</div>
+    <div class="chiprow"><span class="chip keep">✓ committed</span></div>
+    <div class="code"><span style="color:var(--blue);font-weight:700">sources:</span>
+  - name: raw
+    tables:
+      - name: job_postings
+        meta:
+          <span style="color:var(--dbt);font-weight:700">external_
+           location:</span> <span style="color:var(--duck)">"…"</span></div>
+    <div class="verb" style="color:var(--duck)">📥 reads ↓</div>
+    <div class="target" style="border-color:rgba(242,201,76,.5)">📁 <span style="color:var(--duck)">data/raw/*.parquet</span></div>
+  </div>
+
+  <!-- ============ COLUMN 4: schema.yml ============ -->
+  <div class="col" style="left:1414px">
+    <div class="q"><b>WHAT</b> does dbt build?</div>
+    <div class="fname">📄 models/schema.yml</div>
+    <div class="chiprow"><span class="chip keep">✓ committed</span></div>
+    <div class="code"><span style="color:var(--blue);font-weight:700">models:</span>
+  - name: job_postings
+    description: …
+    columns:
+      - name: job_title
+        <span style="color:var(--dbt);font-weight:700">data_tests:</span>
+          <span style="color:var(--dbt);font-weight:700">- not_null</span></div>
+    <div class="verb" style="color:var(--dbt)">🧪 describes + tests ↓</div>
+    <div class="target" style="border-color:rgba(255,105,75,.5)">📄 <span style="color:var(--dbt)">models/*.sql</span></div>
+  </div>
+
+</div>
+</body>
+</html>
