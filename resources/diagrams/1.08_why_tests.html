@@ -1,0 +1,128 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Where Bad Data Gets Caught</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+               radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
+  .lane{position:absolute;left:340px;width:1520px;height:360px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .lhead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:var(--bg);
+    padding:2px 22px;font-family:var(--mono);font-size:27px;font-weight:800;color:#fff;white-space:nowrap}
+  .card{position:absolute;box-sizing:border-box;width:300px;height:200px;top:80px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.35);text-align:center}
+  .card .ic{font-size:52px;margin-top:26px}
+  .card .nm{font-family:var(--mono);font-size:23px;font-weight:700;margin-top:12px}
+  .card .st{font-family:var(--mono);font-size:20px;font-weight:700;margin-top:10px}
+  .lanecap{position:absolute;left:0;width:1520px;top:302px;text-align:center;
+    font-family:var(--mono);font-size:23px;font-weight:700}
+  .badchip{position:absolute;left:76px;top:428px;width:200px;height:224px;background:var(--panel);
+    border:1.5px solid rgba(229,83,75,.55);border-radius:16px;text-align:center}
+  .badchip .ic{font-size:56px;margin-top:38px}
+  .badchip .nm{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--err);margin-top:14px;line-height:1.4}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Where Bad Data Gets Caught</div>
+
+  <!-- ============ the cause ============ -->
+  <div class="badchip">
+    <div class="ic">⚠️</div>
+    <div class="nm">bad rows<br>arrive</div>
+  </div>
+
+  <!-- ============ LANE 1: plain SQL files ============ -->
+  <div class="lane" style="top:170px">
+    <div class="lhead">📄 plain SQL files</div>
+    <div class="card" style="left:56px">
+      <div class="ic">📄</div>
+      <div class="nm">query.sql</div>
+      <div class="st" style="color:var(--ok)">✓ runs</div>
+    </div>
+    <div class="card" style="left:436px">
+      <div class="ic">🗄</div>
+      <div class="nm">table</div>
+      <div class="st" style="color:var(--ok)">✓ builds</div>
+    </div>
+    <div class="card" style="left:816px">
+      <div class="ic">📊</div>
+      <div class="nm">dashboard</div>
+      <div class="st" style="color:var(--ok)">✓ ships</div>
+    </div>
+    <div class="card" style="left:1196px;border-color:rgba(229,83,75,.6)">
+      <div class="ic">😬</div>
+      <div class="nm">stakeholder</div>
+      <div class="st" style="color:var(--err)">✗ "this looks wrong"</div>
+    </div>
+    <div class="lanecap" style="color:var(--muted)">every step green · data silently wrong</div>
+  </div>
+
+  <!-- ============ LANE 2: dbt models + tests ============ -->
+  <div class="lane" style="top:650px;border-color:rgba(255,105,75,.5)">
+    <div class="lhead" style="color:var(--dbt)">dbt: models + tests</div>
+    <div class="card" style="left:56px">
+      <div class="ic">📄</div>
+      <div class="nm">model.sql</div>
+      <div class="st" style="color:var(--ok)">✓ runs</div>
+    </div>
+    <div class="card" style="left:436px">
+      <div class="ic">🗄</div>
+      <div class="nm">table</div>
+      <div class="st" style="color:var(--ok)">✓ builds</div>
+    </div>
+    <div class="card" style="left:816px;border-color:rgba(229,83,75,.6)">
+      <div class="ic">🛡️</div>
+      <div class="nm">test</div>
+      <div class="st" style="color:var(--err)">✗ ERROR</div>
+    </div>
+    <div class="card" style="left:1196px;border-style:dashed;opacity:.55">
+      <div class="ic">📊</div>
+      <div class="nm">dashboard</div>
+      <div class="st" style="color:var(--muted)">🚫 never sees it</div>
+    </div>
+    <div class="lanecap" style="color:var(--dbt)">fails loudly · right at the model</div>
+  </div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="aw" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#EDEDED"/>
+      </marker>
+      <marker id="ae" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#E5534B"/>
+      </marker>
+    </defs>
+    <!-- bad rows → both lanes -->
+    <path d="M 276 500 C 308 500, 308 350, 336 350" fill="none" stroke="#E5534B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ae)"/>
+    <path d="M 276 580 C 308 580, 308 830, 336 830" fill="none" stroke="#E5534B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ae)"/>
+    <!-- lane 1 flow (y=350) -->
+    <line x1="700" y1="350" x2="768" y2="350" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="1080" y1="350" x2="1148" y2="350" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="1460" y1="350" x2="1528" y2="350" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <!-- lane 2 flow (y=830), stops at the test -->
+    <line x1="700" y1="830" x2="768" y2="830" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="1080" y1="830" x2="1148" y2="830" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+  </svg>
+
+</div>
+</body>
+</html>
