@@ -1,0 +1,94 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Three Types of dbt Tests</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+               radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;left:0;top:38px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
+  .col{position:absolute;top:160px;width:566px;height:790px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .q{position:absolute;width:566px;text-align:center;top:24px;font-size:30px;font-weight:800;color:#FFFFFF}
+  .q b{color:var(--blue)}
+  .fname{position:absolute;top:76px;width:566px;text-align:center;
+    font-family:var(--mono);font-size:26px;font-weight:700;color:var(--text)}
+  .chiprow{position:absolute;top:126px;width:566px;display:flex;justify-content:center;gap:14px}
+  .chip{font-family:var(--mono);font-size:19px;background:var(--panel2);
+    border:1.5px solid var(--line);border-radius:8px;padding:7px 14px;white-space:nowrap;color:var(--muted)}
+  .chip.now{color:var(--ok);border-color:rgba(87,171,90,.45)}
+  .chip.later{color:var(--blue);border-color:rgba(88,166,255,.4)}
+  .code{position:absolute;top:186px;left:32px;box-sizing:border-box;width:502px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:12px;padding:20px 24px;
+    font-family:var(--mono);font-size:22px;line-height:36px;white-space:pre;color:var(--text)}
+  .verb{position:absolute;width:566px;text-align:center;top:668px;font-family:var(--mono);
+    font-size:22px;font-weight:700}
+  .target{position:absolute;top:712px;left:32px;box-sizing:border-box;width:502px;height:62px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;
+    gap:12px;font-family:var(--mono);font-size:22px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">The Three Types of dbt Tests</div>
+
+  <!-- ============ COLUMN 1: generic tests ============ -->
+  <div class="col" style="left:76px;border-color:rgba(255,105,75,.5)">
+    <div class="q"><b>REUSE</b> a built-in rule</div>
+    <div class="fname">📏 generic tests</div>
+    <div class="chiprow"><span class="chip now">✓ in use today</span></div>
+    <div class="code"><span style="color:var(--blue);font-weight:700">data_tests:</span>
+  - <span style="color:var(--dbt);font-weight:700">not_null</span>
+  - <span style="color:var(--dbt);font-weight:700">unique</span>
+  - accepted_values
+  - relationships</div>
+    <div class="verb" style="color:var(--dbt)">📏 one YAML line per rule ↓</div>
+    <div class="target" style="border-color:rgba(255,105,75,.5)">📄 <span style="color:var(--dbt)">models/schema.yml</span></div>
+  </div>
+
+  <!-- ============ COLUMN 2: singular tests ============ -->
+  <div class="col" style="left:677px">
+    <div class="q"><b>WRITE</b> your own rule</div>
+    <div class="fname">🧾 singular tests</div>
+    <div class="chiprow"><span class="chip later">🎓 Advanced chapter</span></div>
+    <div class="code"><span style="color:var(--faint)">-- any rule you can query</span>
+SELECT *
+FROM <span style="color:var(--dbt)">{{ ref('jobs') }}</span>
+WHERE <span style="color:var(--err);font-weight:700">salary &lt; 0</span></div>
+    <div class="verb" style="color:var(--muted)">🧾 rows back = FAIL ↓</div>
+    <div class="target">📁 <span style="color:var(--text)">tests/*.sql</span></div>
+  </div>
+
+  <!-- ============ COLUMN 3: unit tests ============ -->
+  <div class="col" style="left:1278px">
+    <div class="q"><b>CHECK</b> the logic itself</div>
+    <div class="fname">🧪 unit tests</div>
+    <div class="chiprow"><span class="chip later">🎓 Advanced chapter</span></div>
+    <div class="code"><span style="color:var(--blue);font-weight:700">given:</span> 3 fake rows
+<span style="color:var(--blue);font-weight:700">expect:</span> 1 output row
+
+<span style="color:var(--faint)">runs the model's SQL
+on mock data — no
+warehouse needed</span></div>
+    <div class="verb" style="color:var(--muted)">🧪 tests your CODE, not data ↓</div>
+    <div class="target">📄 <span style="color:var(--text)">YAML + mock rows</span></div>
+  </div>
+
+</div>
+</body>
+</html>
