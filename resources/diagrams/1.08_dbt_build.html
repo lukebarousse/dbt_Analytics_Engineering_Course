@@ -21,14 +21,14 @@
   .mono{font-family:var(--mono)}
   .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
-  .cmd{position:absolute;top:170px;box-sizing:border-box;width:420px;height:150px;background:var(--panel);
+  .bigbox{position:absolute;left:210px;top:190px;width:1500px;height:330px;box-sizing:border-box;background:rgba(255,105,75,.05);border:2.5px solid var(--dbt);border-radius:22px}
+  .bighead{position:absolute;top:-30px;left:50%;transform:translateX(-50%);background:var(--bg);padding:2px 26px;font-family:var(--mono);font-size:40px;font-weight:800;color:var(--dbt);white-space:nowrap}
+  .cmd{position:absolute;top:90px;box-sizing:border-box;width:380px;height:170px;background:var(--panel);
     border:1.5px solid var(--line);border-radius:16px;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.35)}
-  .cmd .ic{font-size:40px;margin-top:20px}
-  .cmd .nm{font-family:var(--mono);font-size:28px;font-weight:800;margin-top:8px}
-  .cmd .why{font-family:var(--mono);font-size:19px;color:var(--muted);margin-top:6px}
-  .buildbadge{position:absolute;left:660px;top:456px;width:600px;height:120px;background:rgba(255,105,75,.06);
-    border:2px solid var(--dbt);border-radius:20px;display:flex;align-items:center;justify-content:center;gap:20px}
-  .buildbadge .nm{font-family:var(--mono);font-size:46px;font-weight:800;color:var(--dbt)}
+  .cmd .ic{font-size:40px;margin-top:22px}
+  .cmd .nm{font-family:var(--mono);font-size:30px;font-weight:800;margin-top:8px}
+  .cmd .why{font-family:var(--mono);font-size:20px;color:var(--muted);margin-top:8px}
+  .plus{position:absolute;top:150px;font-family:var(--mono);font-size:52px;font-weight:800;color:var(--dbt)}
   .zone{position:absolute;left:76px;top:680px;width:1768px;height:320px;background:var(--zone);
     border:1.5px solid var(--line);border-radius:18px}
   .zhead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:var(--bg);
@@ -47,53 +47,57 @@
 
   <div class="title">dbt build: Three Commands in One</div>
 
-  <!-- ============ the three commands ============ -->
-  <div class="cmd" style="left:126px">
-    <div class="ic">🌱</div>
-    <div class="nm">dbt seed</div>
-    <div class="why">loads reference CSVs</div>
-  </div>
-  <div class="cmd" style="left:750px">
-    <div class="ic">🏗️</div>
-    <div class="nm">dbt run</div>
-    <div class="why">builds the models</div>
-  </div>
-  <div class="cmd" style="left:1374px">
-    <div class="ic">🛡️</div>
-    <div class="nm">dbt test</div>
-    <div class="why">checks the data</div>
-  </div>
-
-  <!-- ============ the one command ============ -->
-  <div class="buildbadge">
-    <span style="font-size:44px">🚀</span>
-    <span class="nm">dbt build</span>
+  <!-- ============ dbt build = the three commands ============ -->
+  <div class="bigbox">
+    <div class="bighead">🚀 dbt build =</div>
+    <div class="cmd" style="left:70px">
+      <div class="ic">🌱</div>
+      <div class="nm">dbt seed</div>
+      <div class="why">loads reference CSVs</div>
+    </div>
+    <div class="plus" style="left:478px">+</div>
+    <div class="cmd" style="left:560px">
+      <div class="ic">🏗️</div>
+      <div class="nm">dbt run</div>
+      <div class="why">builds the models</div>
+    </div>
+    <div class="plus" style="left:968px">+</div>
+    <div class="cmd" style="left:1050px">
+      <div class="ic">🛡️</div>
+      <div class="nm">dbt test</div>
+      <div class="why">checks the data</div>
+    </div>
   </div>
 
   <!-- ============ one pass, DAG order ============ -->
   <div class="zone">
     <div class="zhead">⛓ one pass · DAG order</div>
-    <div class="node" style="left:100px">
+    <div class="node" style="left:40px">
+      <div class="ic">🌱</div>
+      <div class="nm">seed</div>
+      <div class="st" style="color:var(--ok)">✓ loaded</div>
+    </div>
+    <div class="node" style="left:380px">
       <div class="ic">🏗️</div>
       <div class="nm">model</div>
       <div class="st" style="color:var(--ok)">✓ built</div>
     </div>
-    <div class="node" style="left:520px;border-color:rgba(229,83,75,.6)">
+    <div class="node" style="left:720px;border-color:rgba(229,83,75,.6)">
       <div class="ic">🛡️</div>
       <div class="nm">its test</div>
       <div class="st" style="color:var(--err)">✗ ERROR</div>
     </div>
-    <div class="node" style="left:940px;border-style:dashed;opacity:.55">
+    <div class="node" style="left:1120px;border-style:dashed;opacity:.55">
       <div class="ic">🏗️</div>
-      <div class="nm">next model</div>
+      <div class="nm">downstream model</div>
       <div class="st" style="color:var(--muted)">⏭ SKIP</div>
     </div>
-    <div class="node" style="left:1360px;border-style:dashed;opacity:.55">
+    <div class="node" style="left:1450px;border-style:dashed;opacity:.55">
       <div class="ic">🛡️</div>
       <div class="nm">its test</div>
       <div class="st" style="color:var(--muted)">⏭ SKIP</div>
     </div>
-    <div class="zcap">🛑 a failed test stops everything downstream</div>
+    <div class="zcap" style="color:var(--err);font-size:26px">🛑 one failed test stops every model downstream</div>
   </div>
 
   <svg class="art" viewBox="0 0 1920 1080">
@@ -105,16 +109,14 @@
         <path d="M0 0 L10 5 L0 10 z" fill="#EDEDED"/>
       </marker>
     </defs>
-    <!-- three commands → dbt build -->
-    <path d="M 336 328 C 336 420, 700 380, 742 452" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ao)"/>
-    <line x1="960" y1="328" x2="960" y2="448" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ao)"/>
-    <path d="M 1584 328 C 1584 420, 1220 380, 1178 452" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ao)"/>
     <!-- dbt build → the pass -->
-    <line x1="960" y1="584" x2="960" y2="668" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ao)"/>
+    <line x1="960" y1="524" x2="960" y2="668" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ao)"/>
     <!-- pass sequence (y=825) -->
-    <line x1="384" y1="825" x2="508" y2="825" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
-    <line x1="804" y1="825" x2="928" y2="825" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
-    <line x1="1224" y1="825" x2="1348" y2="825" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="398" y1="825" x2="448" y2="825" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="738" y1="825" x2="788" y2="825" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <!-- red barrier after the failed test -->
+    <line x1="1122" y1="740" x2="1122" y2="910" stroke="#E5534B" stroke-width="4" stroke-dasharray="8 10" stroke-linecap="round"/>
+    <text x="1122" y="728" text-anchor="middle" font-family="'Source Code Pro',monospace" font-size="26" font-weight="800" fill="#E5534B">🛑</text>
   </svg>
 
 </div>

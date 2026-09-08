@@ -1,0 +1,124 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Plain SQL Works… Until It Doesn't</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+               radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
+  .lane{position:absolute;left:76px;width:1768px;height:360px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .lhead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:var(--bg);
+    padding:2px 22px;font-family:var(--mono);font-size:27px;font-weight:800;color:#fff;white-space:nowrap}
+  .card{position:absolute;box-sizing:border-box;width:280px;height:200px;top:80px;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.35);text-align:center}
+  .card .ic{font-size:52px;margin-top:26px}
+  .card .nm{font-family:var(--mono);font-size:22px;font-weight:700;margin-top:12px}
+  .card .st{font-family:var(--mono);font-size:19px;font-weight:700;margin-top:10px}
+  .lanecap{position:absolute;left:0;width:1768px;top:302px;text-align:center;
+    font-family:var(--mono);font-size:23px;font-weight:700}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Plain SQL Works… Until It Doesn't</div>
+
+  <!-- ============ LANE 1: good data ============ -->
+  <div class="lane" style="top:170px;border-color:rgba(87,171,90,.45)">
+    <div class="lhead" style="color:var(--ok)">✓ good data arrives</div>
+    <div class="card" style="left:48px;border-color:rgba(87,171,90,.55)">
+      <div class="ic">🟢</div>
+      <div class="nm">good rows</div>
+      <div class="st" style="color:var(--ok)">✓ clean</div>
+    </div>
+    <div class="card" style="left:396px">
+      <div class="ic">📄</div>
+      <div class="nm">query.sql</div>
+      <div class="st" style="color:var(--ok)">✓ runs</div>
+    </div>
+    <div class="card" style="left:744px">
+      <div class="ic">🗄</div>
+      <div class="nm">table</div>
+      <div class="st" style="color:var(--ok)">✓ builds</div>
+    </div>
+    <div class="card" style="left:1092px">
+      <div class="ic">📊</div>
+      <div class="nm">dashboard</div>
+      <div class="st" style="color:var(--ok)">✓ ships</div>
+    </div>
+    <div class="card" style="left:1440px;border-color:rgba(87,171,90,.55)">
+      <div class="ic">😀</div>
+      <div class="nm">stakeholder</div>
+      <div class="st" style="color:var(--ok)">✓ "looks great"</div>
+    </div>
+    <div class="lanecap" style="color:var(--ok)">everything green · everyone happy</div>
+  </div>
+
+  <!-- ============ LANE 2: bad data, same pipeline ============ -->
+  <div class="lane" style="top:650px;border-color:rgba(229,83,75,.5)">
+    <div class="lhead" style="color:var(--err)">⚠️ bad rows arrive — same pipeline</div>
+    <div class="card" style="left:48px;border-color:rgba(229,83,75,.6)">
+      <div class="ic">⚠️</div>
+      <div class="nm">bad rows</div>
+      <div class="st" style="color:var(--err)">✗ dupes · nulls</div>
+    </div>
+    <div class="card" style="left:396px">
+      <div class="ic">📄</div>
+      <div class="nm">query.sql</div>
+      <div class="st" style="color:var(--ok)">✓ still runs</div>
+    </div>
+    <div class="card" style="left:744px">
+      <div class="ic">🗄</div>
+      <div class="nm">table</div>
+      <div class="st" style="color:var(--ok)">✓ still builds</div>
+    </div>
+    <div class="card" style="left:1092px">
+      <div class="ic">📊</div>
+      <div class="nm">dashboard</div>
+      <div class="st" style="color:var(--ok)">✓ still ships</div>
+    </div>
+    <div class="card" style="left:1440px;border-color:rgba(229,83,75,.6)">
+      <div class="ic">😬</div>
+      <div class="nm">stakeholder</div>
+      <div class="st" style="color:var(--err)">✗ "this looks wrong"</div>
+    </div>
+    <div class="lanecap" style="color:var(--err)">SQL only checks syntax — never the data</div>
+  </div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="aw" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#EDEDED"/>
+      </marker>
+    </defs>
+    <!-- lane 1 flow (y=350) -->
+    <line x1="406" y1="350" x2="464" y2="350" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="754" y1="350" x2="812" y2="350" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="1102" y1="350" x2="1160" y2="350" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="1450" y1="350" x2="1508" y2="350" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <!-- lane 2 flow (y=830) -->
+    <line x1="406" y1="830" x2="464" y2="830" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="754" y1="830" x2="812" y2="830" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="1102" y1="830" x2="1160" y2="830" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+    <line x1="1450" y1="830" x2="1508" y2="830" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+  </svg>
+
+</div>
+</body>
+</html>
