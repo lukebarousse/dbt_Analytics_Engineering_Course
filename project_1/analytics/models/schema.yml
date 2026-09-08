@@ -53,7 +53,7 @@ models:
         description: Share of the month's postings flagged remote, percent.
 
   - name: top_companies
-    description: Top 50 employers by posting count.
+    description: Top 50 employers by posting count. Aggregator boards kept as scraped.
     columns:
       - name: company_name
         description: Employer; the grain.
