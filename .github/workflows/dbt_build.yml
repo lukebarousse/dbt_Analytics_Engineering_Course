@@ -9,7 +9,7 @@ on:
       - 'project_1/**'
       - '.github/workflows/dbt_build.yml'
   schedule:
-    - cron: '0 6 * * 1'    # Mondays — the pipeline runs while you sleep
+    - cron: '17 6 * * 1'    # Mondays — the pipeline runs while you sleep
   workflow_dispatch:        # …and a manual Run button
 permissions:
   contents: write           # lets the workflow update the release
@@ -24,7 +24,7 @@ jobs:
       - uses: astral-sh/setup-uv@v5
       - run: uv sync
       - run: uv run python scripts/download_data.py
-      - run: uv run dbt build --target prod --profiles-dir ../ci
+      - run: uv run dbt build --profiles-dir ../ci
         working-directory: project_1/analytics
       - run: |
           gh release create warehouse --notes "Warehouse — auto-built by dbt" || true
