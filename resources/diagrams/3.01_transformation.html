@@ -66,8 +66,8 @@
     <div class="cap" style="color:var(--goldT)">the star — what people query</div>
   </div>
   <div class="card" style="left:1330px;top:290px;width:320px;border-color:rgba(227,179,65,.55)"><span class="g-tbl gold"></span>fct_job_postings</div>
-  <div class="card" style="left:1240px;top:440px;width:240px"><span class="g-tbl gold"></span>dim_company</div>
-  <div class="card" style="left:1560px;top:440px;width:210px"><span class="g-tbl gold"></span>dim_skill</div>
+  <div class="card" style="left:1240px;top:440px;width:210px"><span class="g-tbl gold"></span>dim_skill</div>
+  <div class="card" style="left:1560px;top:440px;width:240px"><span class="g-tbl gold"></span>dim_company</div>
   <div class="card" style="left:1280px;top:580px;width:330px"><span class="g-tbl gold"></span>bridge_job_skills</div>
 
   <!-- ============ the flow ============ -->
@@ -81,11 +81,11 @@
     <path d="M 550 350 C 850 336, 1180 322, 1326 320" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- stg_job_skills → int (the re-grain) -->
     <path d="M 550 530 C 612 530, 620 448, 660 434" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- int → dim_skill (the counts, served) -->
-    <path d="M 1104 430 C 1260 424, 1470 445, 1556 464" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- fct → dim_company (down) · fct → bridge (the right swing) -->
-    <path d="M 1400 352 C 1388 392, 1380 412, 1376 434" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 1652 352 C 1760 430, 1730 540, 1616 582" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- int → dim_skill (the counts, served — now the near card, no crossing) -->
+    <path d="M 1104 430 C 1170 428, 1200 448, 1236 464" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- fct → dim_company (down the right side) · fct → bridge (down the middle) -->
+    <path d="M 1610 352 C 1660 388, 1680 410, 1692 434" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1450 352 C 1440 430, 1440 510, 1445 574" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- stg_job_skills → bridge (corridor lane) -->
     <path d="M 550 545 C 880 580, 1150 602, 1274 608" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
   </svg>
