@@ -70,10 +70,15 @@ The badge at the top of this README links to the latest runs.
 No clone required. [Install DuckDB](https://duckdb.org/docs/installation/) (`brew install duckdb`), then from a `duckdb` session:
 
 ```sql
-ATTACH 'https://lukeb.co/dbt-warehouse' AS jobs;
+INSTALL httpfs;
+LOAD httpfs;
 
-SELECT * FROM jobs.main.top_locations;
-SELECT * FROM jobs.main.monthly_summary;
+ATTACH 'https://lukeb.co/dbt-warehouse' AS jobs;
+USE jobs;
+SHOW TABLES;
+
+SELECT * FROM top_locations;
+SELECT * FROM monthly_summary;
 ```
 
 > The short link is just a convenience — the database itself lives at the release asset URL, which works in `ATTACH` directly (use this form in your own README):
