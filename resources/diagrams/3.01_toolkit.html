@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>The Advanced Toolkit</title>
+<title>Advanced Chapter Topics</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
@@ -11,6 +11,8 @@
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
     --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
     --ok:#57AB5A; --err:#E5534B;
+    --silverT:#C9CED6; --silverB:#3a3d42;
+    --goldT:#E3B341;  --goldB:#4a3a10;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
   }
@@ -20,68 +22,92 @@
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
   .card{position:absolute;box-sizing:border-box;width:533px;height:252px;border-radius:16px;
     background:var(--panel);border:1.5px solid var(--line);box-shadow:0 8px 22px rgba(0,0,0,.35)}
-  .card .emo{position:absolute;left:36px;top:34px;font-size:46px;line-height:1}
-  .card .name{position:absolute;left:36px;top:106px;right:30px;
-    font-family:var(--mono);font-size:29px;font-weight:800;color:#FFFFFF;white-space:nowrap}
-  .card .sub{position:absolute;left:36px;top:160px;right:34px;
-    font-family:var(--sans);font-size:22.5px;line-height:1.4;color:var(--muted)}
-  .card .name b{color:var(--dbt)}
+  .card .emo{position:absolute;left:36px;top:28px;font-size:42px;line-height:1}
+  .card .lnum{position:absolute;right:28px;top:34px;font-family:var(--mono);font-size:20px;font-weight:700;
+    color:var(--dbt);background:#141414;border:1.5px solid var(--line);border-radius:9px;padding:7px 14px;white-space:nowrap}
+  .card .name{position:absolute;left:36px;top:94px;right:30px;
+    font-family:var(--mono);font-size:28px;font-weight:800;color:#FFFFFF;white-space:nowrap}
+  .mini{position:absolute;left:36px;top:150px;right:36px;box-sizing:border-box;
+    background:#191919;border:1.5px solid #2b2b2b;border-radius:9px;padding:11px 16px;
+    font-family:var(--mono);font-size:20px;line-height:1.55;font-weight:600;color:var(--text);white-space:pre}
+  .j{color:var(--dbt)} .k{color:var(--blue)} .v{color:var(--duck)} .c{color:var(--faint)} .m{color:var(--muted)}
+  .chiprow{position:absolute;left:36px;top:160px;right:36px;display:flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-weight:700}
+  .chip{font-size:17px;border-radius:8px;padding:8px 13px;background:#141414;border:1.5px solid var(--line);white-space:nowrap}
+  .chip.silver{color:var(--silverT);border-color:rgba(201,206,214,.45)}
+  .chip.gold{color:var(--goldT);border-color:rgba(227,179,65,.55)}
+  .chip.plain{color:var(--silverT);border-color:rgba(201,206,214,.45);font-size:16px;padding:6px 11px}
+  .arrow{color:var(--faint);font-size:18px}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div class="title">The Advanced Toolkit</div>
+  <div class="title">Advanced Chapter Topics</div>
 
   <!-- row 1 -->
   <div class="card" style="left:120px;top:180px">
-    <div class="emo">☁️</div>
+    <div class="emo">☁️</div><div class="lnum">3.01 · 3.02</div>
     <div class="name">Cloud Warehouse</div>
-    <div class="sub">dbt runs against Databricks now, and dev and prod become separate catalogs.</div>
+    <div class="mini"><span class="m">type:</span> <span class="k">databricks</span>
+<span class="m">catalog:</span> <span class="v">dev</span></div>
   </div>
   <div class="card" style="left:693px;top:180px">
-    <div class="emo">📐</div>
+    <div class="emo">📐</div><div class="lnum">3.03</div>
     <div class="name">Layered Modeling</div>
-    <div class="sub">staging, intermediate, marts. Every model has one job and one obvious home.</div>
+    <div class="chiprow" style="top:168px">
+      <span class="chip silver">staging</span><span class="arrow">→</span>
+      <span class="chip silver">intermediate</span><span class="arrow">→</span>
+      <span class="chip gold">marts</span>
+    </div>
   </div>
   <div class="card" style="left:1266px;top:180px">
-    <div class="emo">🔁</div>
+    <div class="emo">🔁</div><div class="lnum">3.04</div>
     <div class="name">Jinja</div>
-    <div class="sub">Loops and conditions inside your SQL, so the repetitive parts write themselves.</div>
+    <div class="mini"><span class="j">{%</span> <span class="k">for</span> role <span class="k">in</span> roles <span class="j">%}</span></div>
   </div>
 
   <!-- row 2 -->
   <div class="card" style="left:120px;top:470px">
-    <div class="emo">🧰</div>
+    <div class="emo">🧰</div><div class="lnum">3.05 · 3.06</div>
     <div class="name">Macros</div>
-    <div class="sub">Your own SQL functions, reused across models. You even override dbt's built-ins.</div>
+    <div class="mini"><span class="j">{%</span> <span class="k">macro</span> parse_salary() <span class="j">%}</span></div>
   </div>
   <div class="card" style="left:693px;top:470px">
-    <div class="emo">⭐</div>
+    <div class="emo">⭐</div><div class="lnum">3.07</div>
     <div class="name">The Star Schema</div>
-    <div class="sub">A fact table, dimensions, a bridge, and seeds. The layout analysts actually query.</div>
+    <div class="chiprow" style="top:156px;justify-content:center">
+      <span class="chip plain">dim</span><span class="arrow">—</span>
+      <span class="chip gold" style="font-size:18px;padding:8px 15px">fct</span><span class="arrow">—</span>
+      <span class="chip plain">dim</span>
+    </div>
+    <div class="chiprow" style="top:206px;justify-content:center">
+      <span class="chip plain">bridge</span><span class="arrow">—</span><span class="chip plain">seeds</span>
+    </div>
   </div>
   <div class="card" style="left:1266px;top:470px">
-    <div class="emo">📓</div>
+    <div class="emo">📓</div><div class="lnum">3.08</div>
     <div class="name">Analyses</div>
-    <div class="sub">Version-controlled queries that ride along with the project without becoming tables.</div>
+    <div class="mini">analyses/<span class="v">*.sql</span>
+<span class="c">-- compiled, never built</span></div>
   </div>
 
   <!-- row 3 -->
   <div class="card" style="left:120px;top:760px">
-    <div class="emo">🧪</div>
+    <div class="emo">🧪</div><div class="lnum">3.09</div>
     <div class="name">Tests, Leveled Up</div>
-    <div class="sub">Singular tests, custom generic tests, and unit tests that check your logic before it runs.</div>
+    <div class="mini"><span class="j">{%</span> <span class="k">test</span> <span class="j">%}</span>  <span class="m">·</span>  <span class="m">unit_tests:</span></div>
   </div>
   <div class="card" style="left:693px;top:760px">
-    <div class="emo">📸</div>
+    <div class="emo">📸</div><div class="lnum">3.10</div>
     <div class="name">Snapshots</div>
-    <div class="sub">History for data that overwrites itself. Yesterday's values stop disappearing.</div>
+    <div class="mini"><span class="j">dbt</span> snapshot
+<span class="v">valid_from</span> <span class="m">→</span> <span class="v">valid_to</span></div>
   </div>
   <div class="card" style="left:1266px;top:760px">
-    <div class="emo">⚡</div>
+    <div class="emo">⚡</div><div class="lnum">3.11</div>
     <div class="name">Incremental Models</div>
-    <div class="sub">Process only the new rows instead of rebuilding everything, every time.</div>
+    <div class="mini"><span class="j">{%</span> <span class="k">if</span> is_incremental() <span class="j">%}</span></div>
   </div>
 
 </div>
