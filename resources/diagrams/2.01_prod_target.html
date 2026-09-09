@@ -1,0 +1,122 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Robot's Own profiles.yml</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 24% -8%, rgba(88,166,255,.05), transparent 60%),
+               radial-gradient(900px 520px at 88% 112%, rgba(88,166,255,.03), transparent 60%),var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
+  .panel{position:absolute;top:260px;height:660px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .phead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+    background:var(--bg);padding:2px 22px;font-family:var(--mono);font-size:26px;
+    font-weight:800;color:#fff;white-space:nowrap}
+  .card{position:absolute;box-sizing:border-box;background:var(--panel);
+    border:1.5px solid var(--line);border-radius:14px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  .code{font-family:var(--mono);font-size:22px;line-height:1.6;color:var(--text);
+    background:#191919;border-radius:10px;padding:16px 20px;white-space:pre}
+  .sub{font-size:22px;color:var(--muted)}
+  .chip{display:inline-block;font-family:var(--mono);font-weight:700;font-size:19px;
+    border-radius:10px;padding:7px 14px;background:#141414;border:1.5px solid var(--line);
+    color:var(--muted);white-space:nowrap}
+  .cyl{position:absolute}
+  .cyl .body{position:absolute;left:0;right:0;top:8px;bottom:6px;border-radius:10px/14px;background:linear-gradient(180deg,#f5df8a 0%,#F2C94C 40%,#c9a230 90%);box-shadow:inset 0 -5px 10px rgba(0,0,0,.25)}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:16px;border-radius:50%;background:linear-gradient(180deg,#f8e7a5,#e3bd45)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:14px;border-radius:50%;background:linear-gradient(180deg,#c9a230,#a8871f)}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">The Robot's Own profiles.yml</div>
+
+  <!-- ============ LEFT: the WHERE, committed ============ -->
+  <div class="panel" style="left:76px;width:600px">
+    <div class="phead">📄 you declare its WHERE</div>
+    <div class="mono" style="position:absolute;left:40px;top:56px;font-size:25px;font-weight:800">your-repo/<span style="color:var(--blue)">ci/profiles.yml</span></div>
+    <div class="code" style="position:absolute;left:40px;top:116px;width:518px"><span style="color:var(--blue);font-weight:700">analytics:</span>
+  target: prod
+  outputs:
+    prod:
+      type: duckdb
+      <span style="color:var(--dbt);font-weight:700">path:</span> <span style="color:var(--duck)">../data/
+       prod.duckdb</span></div>
+    <div class="sub" style="position:absolute;left:40px;top:508px;font-size:23px">✓ committed — file paths, no secrets</div>
+    <div class="sub" style="position:absolute;left:40px;top:560px;font-size:23px">🏠 ~/.dbt/profiles.yml stays YOURS</div>
+  </div>
+
+  <!-- ============ MIDDLE: dbt writes there ============ -->
+  <div class="panel" style="left:756px;width:600px;border-color:rgba(255,105,75,.55)">
+    <div class="phead">⚙️ <span style="color:var(--dbt)">dbt writes there</span></div>
+    <div class="card" style="left:36px;top:70px;width:528px;height:180px">
+      <div style="padding:22px 28px">
+        <div class="sub" style="font-size:20px;color:var(--faint)">the workflow runs</div>
+        <div class="mono" style="margin-top:10px;font-size:22px;font-weight:700;white-space:pre">dbt build <span style="color:var(--dbt)">--target prod</span>
+  <span style="color:var(--dbt)">--profiles-dir ../ci</span></div>
+      </div>
+    </div>
+    <div class="card" style="left:36px;top:340px;width:528px;height:200px;border-color:rgba(242,201,76,.5)">
+      <div style="padding:22px 28px">
+        <div class="sub" style="font-size:20px;color:var(--faint)">lands on the runner's disk</div>
+        <div class="cyl" style="left:32px;top:74px;width:74px;height:86px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+        <div class="mono" style="position:absolute;left:140px;top:104px;font-size:24px;font-weight:800;color:var(--duck)">data/prod.duckdb</div>
+      </div>
+    </div>
+    <div class="sub" style="position:absolute;left:36px;top:576px;font-size:23px">🤖 fresh machine — no ~/.dbt there</div>
+  </div>
+
+  <!-- ============ RIGHT: a step publishes ============ -->
+  <div class="panel" style="left:1436px;width:408px;border-color:rgba(88,166,255,.5)">
+    <div class="phead">📦 <span style="color:var(--blue)">a step publishes</span></div>
+    <div class="card" style="left:36px;top:90px;width:336px;height:150px">
+      <div style="padding:24px 28px">
+        <div class="sub" style="font-size:20px;color:var(--faint)">the next workflow step</div>
+        <div class="mono" style="margin-top:10px;font-size:21px;font-weight:700;white-space:pre">gh release upload
+  <span style="color:var(--duck)">data/prod.duckdb</span></div>
+      </div>
+    </div>
+    <div class="card" style="left:36px;top:330px;width:336px;height:210px;border-color:rgba(88,166,255,.5)">
+      <div style="padding:24px 28px">
+        <div class="mono" style="font-size:23px;font-weight:800;color:var(--blue)">📦 GitHub Release</div>
+        <div class="sub" style="margin-top:14px;font-size:21px">the copy that ships —<br>anyone can ATTACH it</div>
+      </div>
+    </div>
+    <div class="sub" style="position:absolute;left:36px;top:580px;font-size:23px">📍 build path = upload path</div>
+  </div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ar-dbt" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#FF694B"/>
+      </marker>
+      <marker id="ar-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <!-- declare → build -->
+    <line x1="688" y1="590" x2="742" y2="590" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
+    <!-- command card → database card -->
+    <line x1="1056" y1="516" x2="1056" y2="588" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
+    <!-- build → publish -->
+    <line x1="1368" y1="590" x2="1422" y2="590" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-blue)"/>
+  </svg>
+
+</div>
+</body>
+</html>
