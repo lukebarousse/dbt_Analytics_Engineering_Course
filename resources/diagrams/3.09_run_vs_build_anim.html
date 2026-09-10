@@ -26,13 +26,29 @@
     display:flex;align-items:center;justify-content:center;
     font-family:var(--mono);font-size:32px;font-weight:800;box-sizing:border-box;border-bottom:1.5px solid var(--line)}
 
-  .node{position:absolute;left:60px;right:60px;height:96px;border-radius:12px;box-sizing:border-box;
+  /* incoming rows */
+  .rows{position:absolute;left:60px;right:60px;top:104px;height:52px;
+    display:flex;align-items:center;justify-content:center;gap:14px}
+  .rows .rl{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--faint);margin-right:6px;transition:opacity .7s}
+  .rows.ingest .rl{opacity:0}
+  .chip{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);
+    background:#141414;border:1.5px solid var(--line);border-radius:9px;padding:8px 15px;
+    transition:transform .7s ease,opacity .7s ease}
+  .chip.bad{color:var(--err);border-color:var(--err);background:#241414}
+  .rows.ingest .chip{transform:translateY(78px);opacity:0}
+  .rows.ingest .chip:nth-child(2){transition-delay:0s}
+  .rows.ingest .chip:nth-child(3){transition-delay:.12s}
+  .rows.ingest .chip:nth-child(4){transition-delay:.24s}
+  .rows.ingest .chip:nth-child(5){transition-delay:.36s}
+  .rows.ingest .chip:nth-child(6){transition-delay:.48s}
+
+  .node{position:absolute;left:60px;right:60px;height:92px;border-radius:12px;box-sizing:border-box;
     background:var(--panel);border:1.5px dashed var(--line);
     display:flex;align-items:center;justify-content:space-between;padding:0 28px;
     transition:border-color .5s,background .5s,box-shadow .5s,opacity .5s}
   .node .nm{font-family:var(--mono);font-size:25px;font-weight:700;color:var(--text)}
   .node .st{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--faint)}
-  .node.test{height:76px;background:#1d1d1d}
+  .node.test{height:72px;background:#1d1d1d}
   .node.test .nm{font-size:22px;color:var(--muted)}
 
   .built{border-style:solid!important;border-color:rgba(87,171,90,.75)!important}
@@ -64,11 +80,15 @@
   <!-- LEFT: dbt run -->
   <div class="panel" id="Lp" style="left:120px;width:800px">
     <div class="phead">dbt run</div>
-    <div class="node" id="L1" style="top:120px"><span class="nm">stg_job_postings</span><span class="st">…</span></div>
-    <div class="node" id="L2" style="top:262px"><span class="nm">fct_job_postings</span><span class="st">…</span></div>
-    <div class="node" id="L3" style="top:404px"><span class="nm">the star</span><span class="st">…</span></div>
+    <div class="rows" id="Lrows">
+      <span class="rl">job_id</span>
+      <span class="chip">51054</span><span class="chip">42</span><span class="chip bad">NULL</span><span class="chip">8890</span><span class="chip bad">NULL</span>
+    </div>
+    <div class="node" id="L1" style="top:196px"><span class="nm">stg_job_postings</span><span class="st">…</span></div>
+    <div class="node" id="L2" style="top:342px"><span class="nm">fct_job_postings</span><span class="st">…</span></div>
+    <div class="node" id="L3" style="top:488px"><span class="nm">dim_company</span><span class="st">…</span></div>
     <div class="meter">
-      <span class="cap">bad rows in the star</span>
+      <span class="cap">NULL ids downstream</span>
       <span class="num" id="Lnum" style="color:var(--faint)">0</span>
       <div class="bar"><div class="fill" id="Lfill" style="background:var(--err)"></div></div>
     </div>
@@ -78,12 +98,16 @@
   <!-- RIGHT: dbt build -->
   <div class="panel dim" id="Rp" style="left:1000px;width:800px;border-color:rgba(255,105,75,.55)">
     <div class="phead" style="color:var(--dbt)">dbt build</div>
-    <div class="node" id="R1" style="top:120px"><span class="nm">stg_job_postings</span><span class="st">…</span></div>
-    <div class="node test" id="RT" style="top:240px"><span class="nm">🧪 not_null · job_id</span><span class="st">…</span></div>
-    <div class="node" id="R2" style="top:344px"><span class="nm">fct_job_postings</span><span class="st">…</span></div>
-    <div class="node" id="R3" style="top:472px"><span class="nm">the star</span><span class="st">…</span></div>
+    <div class="rows" id="Rrows">
+      <span class="rl">job_id</span>
+      <span class="chip">51054</span><span class="chip">42</span><span class="chip bad">NULL</span><span class="chip">8890</span><span class="chip bad">NULL</span>
+    </div>
+    <div class="node" id="R1" style="top:196px"><span class="nm">stg_job_postings</span><span class="st">…</span></div>
+    <div class="node test" id="RT" style="top:314px"><span class="nm">🧪 not_null · job_id</span><span class="st">…</span></div>
+    <div class="node" id="R2" style="top:414px"><span class="nm">fct_job_postings</span><span class="st">…</span></div>
+    <div class="node" id="R3" style="top:536px"><span class="nm">dim_company</span><span class="st">…</span></div>
     <div class="meter">
-      <span class="cap">bad rows in the star</span>
+      <span class="cap">NULL ids downstream</span>
       <span class="num" id="Rnum" style="color:var(--ok)">0</span>
       <div class="bar"><div class="fill" id="Rfill" style="background:var(--ok)"></div></div>
     </div>
@@ -102,6 +126,7 @@ function count(el,fill,to,color){let v=0;const step=Math.ceil(to/28);clearInterv
     if(v>=to)clearInterval(tick);},40);fill.style.width=to>0?'100%':'0%';}
 function reset(){
   nodes.forEach(n=>set(n,null,'…'));
+  $('Lrows').classList.remove('ingest');$('Rrows').classList.remove('ingest');
   $('Lnum').textContent='0';$('Lnum').style.color='var(--faint)';$('Lfill').style.width='0%';
   $('Rnum').textContent='0';$('Rnum').style.color='var(--ok)';$('Rfill').style.width='0%';
   $('Lver').style.opacity=0;$('Rver').style.opacity=0;clearInterval(tick);
@@ -109,13 +134,13 @@ function reset(){
 }
 const steps=[
   reset,
-  ()=>set($('L1'),'building','RUN'),
+  ()=>{$('Lrows').classList.add('ingest');set($('L1'),'building','RUN');},
   ()=>{set($('L1'),'built','OK');set($('L2'),'building','RUN');},
   ()=>{set($('L2'),'built','OK');set($('L3'),'building','RUN');},
   ()=>{set($('L3'),'poison','OK ⚠');count($('Lnum'),$('Lfill'),6255,'var(--err)');
        $('Lver').style.opacity=1;},
   ()=>{$('Lp').classList.add('dim');$('Rp').classList.remove('dim');
-       set($('R1'),'building','RUN');},
+       $('Rrows').classList.add('ingest');set($('R1'),'building','RUN');},
   ()=>{set($('R1'),'built','OK');set($('RT'),'building','TEST');},
   ()=>set($('RT'),'failed','FAIL 6,255'),
   ()=>{set($('R2'),'skipped','SKIP');set($('R3'),'skipped','SKIP');
