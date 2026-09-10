@@ -9,7 +9,7 @@ WITH source AS (
 
 ),
 
-renamed AS (
+cleaned AS (
 
     SELECT
         job_id,
@@ -20,4 +20,4 @@ renamed AS (
 
 )
 
-SELECT * FROM renamed
+SELECT * FROM cleaned

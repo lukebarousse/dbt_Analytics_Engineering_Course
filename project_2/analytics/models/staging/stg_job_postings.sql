@@ -32,7 +32,7 @@ parsed AS (
 
 ),
 
-renamed AS (
+cleaned AS (
 
     SELECT
         -- ids + scrape metadata
@@ -86,4 +86,4 @@ renamed AS (
 
 )
 
-SELECT * FROM renamed
+SELECT * FROM cleaned
