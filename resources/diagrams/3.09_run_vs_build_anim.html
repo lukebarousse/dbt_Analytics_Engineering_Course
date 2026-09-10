@@ -5,72 +5,59 @@
 <meta charset="utf-8">
 <title>dbt run vs dbt build</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap');
   :root{
-    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --bg:#191919; --panel:#202020; --zone:#1E1E1E; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
     --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
     --ok:#57AB5A; --err:#E5534B;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+    --hand:'Caveat',cursive;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
-  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
-    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
-
-  .panel{position:absolute;top:170px;height:790px;background:var(--zone);border:1.5px solid var(--line);border-radius:18px;
-    transition:opacity .7s}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .panel{position:absolute;top:170px;height:790px;background:var(--zone);border:1.5px solid var(--line);border-radius:18px;transition:opacity .7s}
   .panel.dim{opacity:.3}
-  .phead{position:absolute;left:0;right:0;top:0;height:80px;border-radius:16px 16px 0 0;
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--mono);font-size:32px;font-weight:800;box-sizing:border-box;border-bottom:1.5px solid var(--line)}
-
-  /* incoming rows */
-  .rows{position:absolute;left:60px;right:60px;top:104px;height:52px;
-    display:flex;align-items:center;justify-content:center;gap:14px}
-  .rows .rl{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--faint);margin-right:6px;transition:opacity .7s}
-  .rows.ingest .rl{opacity:.35}
-  .chip{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);
-    background:#141414;border:1.5px solid var(--line);border-radius:9px;padding:8px 15px;
-    transition:opacity .5s}
+  .phead{position:absolute;left:0;right:0;top:0;height:74px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:32px;font-weight:800;box-sizing:border-box;border-bottom:1.5px solid var(--line)}
+  .cap{position:absolute;left:60px;top:88px;font-family:var(--mono);font-size:18px;font-weight:700;color:var(--faint);letter-spacing:.04em}
+  .rows{position:absolute;left:60px;right:60px;top:116px;height:50px;display:flex;align-items:center;justify-content:center;gap:14px}
+  .chip{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);background:#141414;border:1.5px solid var(--line);border-radius:9px;padding:8px 15px;transition:transform .8s ease,opacity .8s ease}
   .chip.bad{color:var(--err);border-color:var(--err);background:#241414}
-  .rows.ingest .chip{opacity:.35;animation:dip .9s ease both}
-  @keyframes dip{0%{transform:none}45%{transform:translateY(64px)}100%{transform:none}}
-  .rows.ingest .chip:nth-child(2){animation-delay:0s}
-  .rows.ingest .chip:nth-child(3){animation-delay:.12s}
-  .rows.ingest .chip:nth-child(4){animation-delay:.24s}
-  .rows.ingest .chip:nth-child(5){animation-delay:.36s}
-  .rows.ingest .chip:nth-child(6){animation-delay:.48s}
-
-  .node{position:absolute;left:60px;right:60px;height:92px;border-radius:12px;box-sizing:border-box;
-    background:var(--panel);border:1.5px dashed var(--line);
-    display:flex;align-items:center;justify-content:space-between;padding:0 28px;
-    transition:border-color .5s,background .5s,box-shadow .5s,opacity .5s}
-  .node .nm{font-family:var(--mono);font-size:25px;font-weight:700;color:var(--text)}
-  .node .st{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--faint)}
-  .node.test{height:72px;background:#1d1d1d}
+  .rows.ingest .chip{transform:translateY(28px);opacity:.75}
+  .rows.ingest .chip:nth-child(1){transition-delay:0s}
+  .rows.ingest .chip:nth-child(2){transition-delay:.1s}
+  .rows.ingest .chip:nth-child(3){transition-delay:.2s}
+  .rows.ingest .chip:nth-child(4){transition-delay:.3s}
+  .rows.ingest .chip:nth-child(5){transition-delay:.4s}
+  .note{position:absolute;font-family:var(--hand);font-size:30px;font-weight:700;color:var(--err);line-height:1.05}
+  .node{position:absolute;left:60px;right:60px;border-radius:12px;box-sizing:border-box;background:var(--panel);border:1.5px dashed var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;transition:border-color .5s,background .5s,box-shadow .5s,opacity .5s}
+  .node .nm{font-family:var(--mono);font-size:25px;font-weight:700;color:var(--text);white-space:nowrap}
+  .node .st{font-family:var(--mono);font-size:21px;font-weight:800;color:var(--faint)}
+  .node.test{background:#1d1d1d}
   .node.test .nm{font-size:22px;color:var(--muted)}
-
+  .arrow{position:absolute;left:50%;transform:translateX(-50%);width:24px}
   .built{border-style:solid!important;border-color:rgba(87,171,90,.75)!important}
   .built .st{color:var(--ok)!important}
-  .building{border-style:solid!important;border-color:var(--dbt)!important;animation:pulse 1s infinite}
-  .building .st{color:var(--dbt)!important}
+  .building{border-style:solid!important;border-color:var(--blue)!important;animation:pulse 1s infinite}
+  .building .st{color:var(--blue)!important}
   .failed{border-style:solid!important;border-color:var(--err)!important;background:#2a1b1a!important;box-shadow:0 0 24px rgba(229,83,75,.3)}
   .failed .st{color:var(--err)!important}
   .skipped{opacity:.55}
   .skipped .st{color:var(--muted)!important;letter-spacing:.12em}
   .poison{border-style:solid!important;border-color:var(--err)!important}
-  @keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(255,105,75,.15)}50%{box-shadow:0 0 26px rgba(255,105,75,.35)}}
-
-  .meter{position:absolute;left:60px;right:60px;bottom:110px}
-  .meter .cap{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--muted)}
+  .poison .st{color:var(--err)!important}
+  @keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(88,166,255,.15)}50%{box-shadow:0 0 26px rgba(88,166,255,.35)}}
+  .meter{position:absolute;left:60px;right:60px;bottom:118px}
+  .meter .mcap{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--muted)}
   .meter .num{position:absolute;right:0;top:-14px;font-family:var(--mono);font-size:48px;font-weight:800;transition:color .4s}
-  .meter .bar{margin-top:18px;height:16px;border-radius:8px;background:#141414;border:1.5px solid var(--line);overflow:hidden}
+  .meter .bar{margin-top:16px;height:16px;border-radius:8px;background:#141414;border:1.5px solid var(--line);overflow:hidden}
   .meter .fill{height:100%;width:0%;transition:width 1.3s ease}
-  .verdict{position:absolute;left:60px;right:60px;bottom:30px;height:56px;border-radius:10px;
-    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:25px;font-weight:800;
-    opacity:0;transition:opacity .6s}
+  .verdict{position:absolute;left:60px;right:60px;bottom:32px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:25px;font-weight:800;opacity:0;transition:opacity .6s}
+  .legend{position:absolute;left:0;bottom:24px;width:1920px;display:flex;justify-content:center;gap:44px;font-family:var(--mono);font-size:20px;font-weight:700}
+  .legend span{display:flex;align-items:center;gap:10px;color:var(--muted)}
+  .legend i{width:16px;height:16px;border-radius:4px;display:inline-block}
 </style>
 </head>
 <body>
@@ -81,39 +68,46 @@
   <!-- LEFT: dbt run -->
   <div class="panel" id="Lp" style="left:120px;width:800px">
     <div class="phead">dbt run</div>
+    <div class="cap">incoming rows · job_id</div>
     <div class="rows" id="Lrows">
-      <span class="rl">job_id</span>
       <span class="chip">51054</span><span class="chip">42</span><span class="chip bad">NULL</span><span class="chip">8890</span><span class="chip bad">NULL</span>
     </div>
-    <div class="node" id="L1" style="top:196px"><span class="nm">stg_job_postings</span><span class="st">…</span></div>
-    <div class="node" id="L2" style="top:342px"><span class="nm">fct_job_postings</span><span class="st">…</span></div>
-    <div class="node" id="L3" style="top:488px"><span class="nm">dim_company</span><span class="st">…</span></div>
+    <div class="node" id="L1" style="top:196px;height:84px"><span class="nm">stg_job_postings</span><span class="st">…</span></div>
+    <svg class="arrow" style="top:282px;height:42px" viewBox="0 0 24 42"><line x1="12" y1="4" x2="12" y2="28" stroke="#6B6B6B" stroke-width="2.5" stroke-dasharray="2 10" stroke-linecap="round"></line><path d="M6 30 L12 39 L18 30" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <div class="node" id="L2" style="top:326px;height:84px"><span class="nm">fct_job_postings</span><span class="st">…</span></div>
+    <svg class="arrow" style="top:412px;height:42px" viewBox="0 0 24 42"><line x1="12" y1="4" x2="12" y2="28" stroke="#6B6B6B" stroke-width="2.5" stroke-dasharray="2 10" stroke-linecap="round"></line><path d="M6 30 L12 39 L18 30" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <div class="node" id="L3" style="top:456px;height:84px"><span class="nm">dim_company</span><span class="st">…</span></div>
     <div class="meter">
-      <span class="cap">NULL ids downstream</span>
+      <span class="mcap">NULL job_ids shipped</span>
       <span class="num" id="Lnum" style="color:var(--faint)">0</span>
       <div class="bar"><div class="fill" id="Lfill" style="background:var(--err)"></div></div>
     </div>
-    <div class="verdict" id="Lver" style="background:#2a1b1a;border:1.5px solid var(--err);color:var(--err)">broken rows, shipped ✗</div>
+    <div class="verdict" id="Lver" style="background:#2a1b1a;border:1.5px solid var(--err);color:var(--err)">bad data shipped downstream ✗</div>
   </div>
 
   <!-- RIGHT: dbt build -->
   <div class="panel dim" id="Rp" style="left:1000px;width:800px;border-color:rgba(255,105,75,.55)">
-    <div class="phead" style="color:var(--dbt)">dbt build</div>
+    <div class="phead" style="color:var(--dbt)">dbt build&nbsp;<span style="color:var(--faint);font-size:22px;font-weight:700">= run + test</span></div>
+    <div class="cap">incoming rows · job_id</div>
     <div class="rows" id="Rrows">
-      <span class="rl">job_id</span>
       <span class="chip">51054</span><span class="chip">42</span><span class="chip bad">NULL</span><span class="chip">8890</span><span class="chip bad">NULL</span>
     </div>
-    <div class="node" id="R1" style="top:196px"><span class="nm">stg_job_postings</span><span class="st">…</span></div>
-    <div class="node test" id="RT" style="top:314px"><span class="nm">🧪 not_null · job_id</span><span class="st">…</span></div>
-    <div class="node" id="R2" style="top:414px"><span class="nm">fct_job_postings</span><span class="st">…</span></div>
-    <div class="node" id="R3" style="top:536px"><span class="nm">dim_company</span><span class="st">…</span></div>
+    <div class="node" id="R1" style="top:196px;height:72px"><span class="nm">stg_job_postings</span><span class="st">…</span></div>
+    <svg class="arrow" style="top:270px;height:30px" viewBox="0 0 24 34"><line x1="12" y1="3" x2="12" y2="20" stroke="#6B6B6B" stroke-width="2.5" stroke-dasharray="2 10" stroke-linecap="round"></line><path d="M6 22 L12 31 L18 22" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <div class="node test" id="RT" style="top:302px;height:58px"><span class="nm">🧪 not_null(job_id)</span><span class="st">…</span></div>
+    <svg class="arrow" style="top:362px;height:30px" viewBox="0 0 24 34"><line x1="12" y1="3" x2="12" y2="20" stroke="#6B6B6B" stroke-width="2.5" stroke-dasharray="2 10" stroke-linecap="round"></line><path d="M6 22 L12 31 L18 22" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <div class="node" id="R2" style="top:394px;height:72px"><span class="nm">fct_job_postings</span><span class="st">…</span></div>
+    <svg class="arrow" style="top:468px;height:30px" viewBox="0 0 24 34"><line x1="12" y1="3" x2="12" y2="20" stroke="#6B6B6B" stroke-width="2.5" stroke-dasharray="2 10" stroke-linecap="round"></line><path d="M6 22 L12 31 L18 22" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    <div class="node" id="R3" style="top:500px;height:72px"><span class="nm">dim_company</span><span class="st">…</span></div>
     <div class="meter">
-      <span class="cap">NULL ids downstream</span>
+      <span class="mcap">NULL job_ids shipped</span>
       <span class="num" id="Rnum" style="color:var(--ok)">0</span>
       <div class="bar"><div class="fill" id="Rfill" style="background:var(--ok)"></div></div>
     </div>
-    <div class="verdict" id="Rver" style="background:#1b241c;border:1.5px solid var(--ok);color:var(--ok)">stopped at the gate ✓</div>
+    <div class="verdict" id="Rver" style="background:#1b241c;border:1.5px solid var(--ok);color:var(--ok)">test failed → downstream skipped ✓</div>
   </div>
+
+
 
 </div>
 
@@ -135,22 +129,22 @@ function reset(){
 }
 const steps=[
   reset,
-  ()=>{$('Lrows').classList.add('ingest');set($('L1'),'building','RUN');},
-  ()=>{set($('L1'),'built','OK');set($('L2'),'building','RUN');},
-  ()=>{set($('L2'),'built','OK');set($('L3'),'building','RUN');},
-  ()=>{set($('L3'),'poison','OK ⚠');count($('Lnum'),$('Lfill'),6255,'var(--err)');
+  ()=>{$('Lrows').classList.add('ingest');set($('L1'),'building','RUNNING…');},
+  ()=>{set($('L1'),'built','OK');set($('L2'),'building','RUNNING…');},
+  ()=>{set($('L2'),'built','OK');set($('L3'),'building','RUNNING…');},
+  ()=>{set($('L3'),'built','OK');count($('Lnum'),$('Lfill'),6255,'var(--err)');
        $('Lver').style.opacity=1;},
   ()=>{$('Lp').classList.add('dim');$('Rp').classList.remove('dim');
-       $('Rrows').classList.add('ingest');set($('R1'),'building','RUN');},
-  ()=>{set($('R1'),'built','OK');set($('RT'),'building','TEST');},
-  ()=>set($('RT'),'failed','FAIL 6,255'),
-  ()=>{set($('R2'),'skipped','SKIP');set($('R3'),'skipped','SKIP');
+       $('Rrows').classList.add('ingest');set($('R1'),'building','RUNNING…');},
+  ()=>{set($('R1'),'built','OK');set($('RT'),'building','TESTING…');},
+  ()=>set($('RT'),'failed','FAIL · 2 NULLs'),
+  ()=>{set($('R2'),'skipped','SKIPPED');set($('R3'),'skipped','SKIPPED');
        $('Rver').style.opacity=1;},
   ()=>{$('Lp').classList.remove('dim');},
 ];
 const qs=new URLSearchParams(location.search), freeze=qs.get('s');
 if(freeze!==null){ for(let i=0;i<=Math.min(+freeze,steps.length-1);i++) steps[i](); }
-else{ let i=0; steps[0](); setInterval(()=>{ i=(i+1)%steps.length; if(i===0)reset(); else steps[i](); }, 1500); }
+else{ let i=0; steps[0](); setInterval(()=>{ i=(i+1)%steps.length; if(i===0)reset(); else steps[i](); }, 1600); }
 </script>
 </body>
 </html>
