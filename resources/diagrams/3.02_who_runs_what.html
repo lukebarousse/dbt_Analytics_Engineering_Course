@@ -1,0 +1,114 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Who Runs What</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .panel{position:absolute;top:230px;height:640px;background:var(--zone);
+    border:1.5px solid var(--line);border-radius:18px}
+  .phead{position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+    background:var(--bg);padding:2px 22px;font-family:var(--mono);font-size:27px;
+    font-weight:800;color:#fff;white-space:nowrap}
+  .nest{position:absolute;box-sizing:border-box;border-radius:14px;border:1.5px solid var(--line);background:var(--panel)}
+  .nlabel{position:absolute;left:22px;top:14px;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--muted)}
+  .sub{position:absolute;font-family:var(--sans);font-size:22px;color:var(--muted)}
+  .mono{font-family:var(--mono)}
+  .cyl{position:absolute}
+  .cyl .body{position:absolute;left:0;right:0;top:8px;bottom:6px;border-radius:10px/14px;background:linear-gradient(180deg,#f5df8a 0%,#F2C94C 40%,#c9a230 90%);box-shadow:inset 0 -5px 10px rgba(0,0,0,.25)}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:16px;border-radius:50%;background:linear-gradient(180deg,#f8e7a5,#e3bd45)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:14px;border-radius:50%;background:linear-gradient(180deg,#c9a230,#a8871f)}
+  .chip{position:absolute;font-family:var(--mono);font-weight:700;font-size:20px;
+    border-radius:10px;padding:9px 16px;background:#141414;border:1.5px solid var(--line);
+    color:var(--muted);white-space:nowrap}
+  .cable-label{position:absolute;font-family:var(--mono);font-size:22px;font-weight:700;white-space:nowrap}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Who Runs What</div>
+
+  <!-- ============ LEFT: your computer ============ -->
+  <div class="panel" style="left:100px;width:730px">
+    <div class="phead">💻 Your Computer</div>
+
+    <!-- uv env -->
+    <div class="nest" style="left:40px;top:70px;right:40px;height:420px">
+      <div class="nlabel">uv environment · <span style="color:var(--blue)">.venv</span></div>
+      <!-- python -->
+      <div class="nest" style="left:30px;top:60px;right:30px;height:320px;background:var(--panel2)">
+        <div class="nlabel">Python · <span style="color:var(--blue)">dbt-databricks</span></div>
+        <!-- dbt -->
+        <div class="nest" style="left:30px;top:66px;right:30px;height:210px;border-color:rgba(255,105,75,.65);background:#241d1b">
+          <div style="position:absolute;left:0;right:0;top:38px;text-align:center;font-family:var(--mono);font-size:44px;font-weight:800;color:var(--dbt)">dbt</div>
+          <div class="sub" style="left:0;right:0;top:110px;text-align:center;font-size:23px">compiles your models to SQL</div>
+          <div class="sub" style="left:0;right:0;top:150px;text-align:center;font-size:23px">no compute engine of its own</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub" style="left:40px;top:518px;right:40px;text-align:center;font-size:24px">orchestrates everything · computes nothing</div>
+    <div class="sub" style="left:40px;top:562px;right:40px;text-align:center;font-size:24px;color:var(--faint)">no data lives here</div>
+  </div>
+
+  <!-- ============ RIGHT: databricks ============ -->
+  <div class="panel" style="left:1190px;width:630px;border-color:rgba(88,166,255,.5)">
+    <div class="phead">☁️ <span style="color:var(--blue)">Databricks</span></div>
+
+    <!-- warehouse -->
+    <div class="nest" style="left:40px;top:70px;right:40px;height:170px">
+      <div style="position:absolute;left:0;right:0;top:34px;text-align:center;font-family:var(--mono);font-size:30px;font-weight:800;color:#fff">⚙️ SQL Warehouse</div>
+      <div class="sub" style="left:0;right:0;top:96px;text-align:center;font-size:23px">executes the SQL</div>
+    </div>
+
+    <!-- catalogs -->
+    <div class="nest" style="left:40px;top:280px;right:40px;height:210px">
+      <div class="nlabel">catalogs</div>
+      <div class="cyl" style="left:90px;top:74px;width:82px;height:96px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+      <div class="mono" style="position:absolute;left:60px;top:180px;width:142px;text-align:center;font-size:23px;font-weight:800;color:var(--duck)">raw</div>
+      <div class="cyl" style="left:378px;top:74px;width:82px;height:96px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+      <div class="mono" style="position:absolute;left:348px;top:180px;width:142px;text-align:center;font-size:23px;font-weight:800;color:var(--duck)">dev</div>
+    </div>
+
+    <div class="sub" style="left:40px;top:518px;right:40px;text-align:center;font-size:24px">runs the queries · holds the data</div>
+    <div class="sub" style="left:40px;top:562px;right:40px;text-align:center;font-size:24px;color:var(--faint)">always on, in the cloud</div>
+  </div>
+
+  <!-- ============ the connection ============ -->
+  <div class="chip" style="left:905px;top:508px;color:var(--text)">📄 profiles.yml<br><span style="font-weight:600;font-size:17px;color:var(--faint)">holds the address</span></div>
+  <div class="cable-label" style="left:882px;top:365px;color:var(--dbt)">compiled SQL →</div>
+  <div class="cable-label" style="left:912px;top:665px;color:var(--blue)">← results</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ar-dbt" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#FF694B"/>
+      </marker>
+      <marker id="ar-blue" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <!-- laptop → warehouse (compiled SQL) -->
+    <line x1="842" y1="410" x2="1176" y2="410" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-dbt)"/>
+    <!-- warehouse → laptop (results) -->
+    <line x1="1176" y1="640" x2="842" y2="640" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar-blue)"/>
+  </svg>
+
+</div>
+</body>
+</html>
