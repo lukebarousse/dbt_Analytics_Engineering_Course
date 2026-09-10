@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Compiled, Never Built</title>
+<title>Models vs Analyses</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
@@ -18,42 +18,67 @@
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
   .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
-  .card{position:absolute;box-sizing:border-box;height:96px;border-radius:12px;background:var(--panel);
-    border:1.5px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 26px;
+  .panel{position:absolute;top:170px;height:800px;background:var(--zone);border:1.5px solid var(--line);border-radius:18px}
+  .phead{position:absolute;left:0;right:0;top:0;height:74px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:30px;font-weight:800;box-sizing:border-box;border-bottom:1.5px solid var(--line)}
+  .card{position:absolute;box-sizing:border-box;border-radius:12px;background:var(--panel);
+    border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;gap:14px;
     font-family:var(--mono);font-size:23px;font-weight:700;color:var(--text)}
-  .card small{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--faint)}
-  .cable-label{position:absolute;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--muted);text-align:center}
+  .card small{font-family:var(--mono);font-size:17px;font-weight:600;color:var(--faint)}
+  .lbl{position:absolute;font-family:var(--mono);font-size:21px;font-weight:700;white-space:nowrap}
   .cyl{position:absolute}
   .cyl .body{position:absolute;left:0;right:0;top:9px;bottom:7px;border-radius:11px/15px;background:linear-gradient(180deg,#f5df8a 0%,#F2C94C 40%,#c9a230 90%);box-shadow:inset 0 -5px 10px rgba(0,0,0,.25)}
   .cyl .top{position:absolute;left:0;right:0;top:0;height:18px;border-radius:50%;background:linear-gradient(180deg,#f8e7a5,#e3bd45)}
   .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:16px;border-radius:50%;background:linear-gradient(180deg,#c9a230,#a8871f)}
-  .ghost{position:absolute;box-sizing:border-box;border:2px dashed #4a4a4a;border-radius:14px/18px;opacity:.7}
-  .lane-label{position:absolute;font-family:var(--mono);font-size:26px;font-weight:800}
+  .ghost{position:absolute;box-sizing:border-box;border:2px dashed #4a4a4a;border-radius:13px/17px;opacity:.75}
+  .term{position:absolute;box-sizing:border-box;border-radius:12px;background:#141414;border:1.5px solid var(--line);
+    font-family:var(--mono);padding:14px 20px}
+  .term .th{font-size:16px;font-weight:700;color:var(--faint);letter-spacing:.04em}
+  .term .tr{font-size:18px;font-weight:600;color:var(--text);margin-top:8px;white-space:pre}
+  .tag{position:absolute;left:40px;right:40px;bottom:28px;height:54px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:23px;font-weight:800}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div class="title">Compiled, Never Built</div>
+  <div class="title">Models vs Analyses</div>
 
-  <!-- ============ LANE 1: models/ ============ -->
-  <div class="card" style="left:120px;top:280px;width:560px">📄 models/stg_job_postings.sql</div>
-  <div class="card" style="left:880px;top:280px;width:400px"><span>compiled SQL</span><small>target/compiled/</small></div>
-  <div class="cyl" style="left:1560px;top:250px;width:120px;height:150px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
-  <div class="cable-label" style="left:1480px;top:428px;width:280px;color:var(--duck);font-weight:800">lands in dev</div>
+  <!-- ============ LEFT: models/ ============ -->
+  <div class="panel" style="left:120px;width:800px">
+    <div class="phead">📁 models/</div>
+    <div class="card" style="left:260px;top:120px;width:520px;height:84px">📄 stg_job_postings.sql</div>
+    <div class="card" style="left:260px;top:290px;width:520px;height:84px"><span>compiled SQL</span><small>target/compiled/</small></div>
+    <div class="cyl" style="left:462px;top:446px;width:116px;height:144px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+    <div class="lbl" style="left:260px;top:606px;width:520px;text-align:center;color:var(--duck);font-weight:800">dev.default_staging.stg_job_postings</div>
+    <div class="tag" style="background:#141414;border:1.5px solid rgba(242,201,76,.45);color:var(--duck)">an object LANDS · permanent · anyone queries it</div>
+  </div>
 
-  <!-- ============ LANE 2: analyses/ ============ -->
-  <div class="card" style="left:120px;top:660px;width:560px">📄 analyses/jinja_practice.sql</div>
-  <div class="card" style="left:880px;top:660px;width:400px"><span>compiled SQL</span><small>target/compiled/</small></div>
-  <div class="ghost" style="left:1560px;top:630px;width:120px;height:150px"></div>
-  <div class="cable-label" style="left:1480px;top:808px;width:280px">nothing lands</div>
+  <!-- ============ RIGHT: analyses/ ============ -->
+  <div class="panel" style="left:1000px;width:800px">
+    <div class="phead">📁 analyses/</div>
+    <div class="card" style="left:140px;top:120px;width:520px;height:84px">📄 jinja_practice.sql</div>
+    <div class="card" style="left:140px;top:290px;width:520px;height:84px"><span>compiled SQL</span><small>target/compiled/</small></div>
+    <!-- branch A: no object -->
+    <div class="ghost" style="left:132px;top:446px;width:116px;height:144px"></div>
+    <div class="lbl" style="left:42px;top:606px;width:300px;text-align:center;color:var(--faint)">no view, no table</div>
+    <!-- branch B: dbt show -->
+    <div class="term" style="left:420px;top:446px;width:300px;height:170px">
+      <div class="th">YOUR TERMINAL</div>
+      <div class="tr">Data Analyst   176,350</div>
+      <div class="tr">Data Engineer  413,320</div>
+      <div class="tr" style="color:var(--faint)">…rows, then gone</div>
+    </div>
+    <div class="tag" style="background:#141414;border:1.5px solid var(--line);color:var(--muted)">runs on demand · results only · nothing saved</div>
+  </div>
 
   <!-- cable labels -->
-  <div class="cable-label" style="left:690px;top:236px;width:180px;color:var(--dbt)">dbt compile</div>
-  <div class="cable-label" style="left:1300px;top:236px;width:240px;color:var(--dbt)">dbt build</div>
-  <div class="cable-label" style="left:690px;top:616px;width:180px;color:var(--dbt)">dbt compile</div>
-  <div class="cable-label" style="left:1300px;top:616px;width:240px;color:var(--faint)">…and stops</div>
+  <div class="lbl" style="left:545px;top:392px;color:var(--dbt)">dbt build compiles…</div>
+  <div class="lbl" style="left:545px;top:562px;color:var(--dbt)">…then runs it</div>
+  <div class="lbl" style="left:1425px;top:392px;color:var(--dbt)">dbt compile</div>
+  <div class="lbl" style="left:1030px;top:560px;color:var(--faint)">no build step</div>
+  <div class="lbl" style="left:1565px;top:560px;color:var(--dbt)">dbt show</div>
 
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
@@ -61,12 +86,15 @@
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
       </marker>
     </defs>
-    <!-- lane 1 -->
-    <line x1="694" y1="328" x2="864" y2="328" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <line x1="1294" y1="328" x2="1540" y2="328" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <!-- lane 2: compile only; second cable fades out -->
-    <line x1="694" y1="708" x2="864" y2="708" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <line x1="1294" y1="708" x2="1420" y2="708" stroke="#4a4a4a" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <!-- left: file → compiled → cylinder -->
+    <line x1="520" y1="378" x2="520" y2="444" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <line x1="520" y1="548" x2="520" y2="612" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- right: file → compiled -->
+    <line x1="1400" y1="378" x2="1400" y2="444" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- right branch A: compiled → ghost (faded, stops) -->
+    <line x1="1300" y1="548" x2="1230" y2="606" stroke="#4a4a4a" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <!-- right branch B: compiled → terminal -->
+    <path d="M 1500 548 C 1530 570, 1540 580, 1555 600" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
   </svg>
 
 </div>
