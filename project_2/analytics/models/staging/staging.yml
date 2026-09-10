@@ -22,7 +22,7 @@ models:
       - name: search_date
         description: Scrape day; doubles as the incremental high-water mark in fct_job_postings.
       - name: searched_at
-        description: Scrape timestamp (search_time cast); anchors the snapshot's updated_at.
+        description: Scrape timestamp (search_time renamed); anchors the snapshot's updated_at.
       - name: search_location
         description: Location parameter the scraper searched under.
       - name: job_title

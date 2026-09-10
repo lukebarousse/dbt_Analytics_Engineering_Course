@@ -39,7 +39,7 @@ renamed AS (
         job_id,
         search_term,
         search_date,
-        CAST(search_time AS TIMESTAMP) AS searched_at,
+        search_time AS searched_at,
         search_location,
 
         -- posting attributes
