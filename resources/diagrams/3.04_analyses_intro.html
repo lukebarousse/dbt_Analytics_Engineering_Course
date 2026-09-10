@@ -48,11 +48,17 @@
   <!-- ============ LEFT: models/ ============ -->
   <div class="panel" style="left:120px;width:800px">
     <div class="phead">📁 models/</div>
-    <div class="card" style="left:260px;top:120px;width:520px;height:84px">📄 stg_job_postings.sql</div>
-    <div class="card" style="left:260px;top:290px;width:520px;height:84px"><span>compiled SQL</span><small>target/compiled/</small></div>
-    <div class="cyl" style="left:462px;top:446px;width:116px;height:144px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
-    <div class="lbl" style="left:260px;top:606px;width:520px;text-align:center;color:var(--duck);font-weight:800">dev.default_staging.stg_job_postings</div>
-    <div class="tag" style="background:#141414;border:1.5px solid rgba(242,201,76,.45);color:var(--duck)">an object LANDS · permanent · anyone queries it</div>
+    <div class="card" style="left:140px;top:120px;width:520px;height:84px">📄 stg_job_postings.sql</div>
+    <div class="card" style="left:140px;top:290px;width:520px;height:84px"><span>compiled SQL</span><small>target/compiled/</small></div>
+    <div class="cyl" style="left:132px;top:446px;width:116px;height:144px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+    <div class="lbl" style="left:10px;top:606px;width:360px;text-align:center;color:var(--duck);font-weight:800;font-size:15px">dev.default_staging.stg_job_postings</div>
+    <div class="term" style="left:420px;top:446px;width:300px;height:170px">
+      <div class="th">YOUR TERMINAL</div>
+      <div class="tr">Data Analyst   176,350</div>
+      <div class="tr">Data Engineer  413,320</div>
+      <div class="tr" style="color:var(--faint)">…rows, then gone</div>
+    </div>
+    <div class="tag" style="background:#141414;border:1.5px solid rgba(242,201,76,.45);color:var(--duck)">dbt build → object LANDS · dbt show → quick peek</div>
   </div>
 
   <!-- ============ RIGHT: analyses/ ============ -->
@@ -75,9 +81,10 @@
 
   <!-- cable labels -->
   <div class="lbl" style="left:545px;top:392px;color:var(--dbt)">dbt build compiles…</div>
-  <div class="lbl" style="left:545px;top:562px;color:var(--dbt)">…then runs it</div>
-  <div class="lbl" style="left:1425px;top:392px;color:var(--dbt)">dbt compile</div>
-  <div class="lbl" style="left:1030px;top:560px;color:var(--faint)">no build step</div>
+  <div class="lbl" style="left:170px;top:560px;color:var(--dbt)">…and builds it</div>
+  <div class="lbl" style="left:690px;top:560px;color:var(--dbt)">dbt show</div>
+  <div class="lbl" style="left:1425px;top:392px;color:var(--dbt)">dbt build compiles…</div>
+  <div class="lbl" style="left:1020px;top:560px;color:var(--err)">…but builds nothing</div>
   <div class="lbl" style="left:1565px;top:560px;color:var(--dbt)">dbt show</div>
 
   <svg class="art" viewBox="0 0 1920 1080">
@@ -86,9 +93,10 @@
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
       </marker>
     </defs>
-    <!-- left: file → compiled → cylinder -->
+    <!-- left: file → compiled → branches -->
     <line x1="520" y1="378" x2="520" y2="444" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <line x1="520" y1="548" x2="520" y2="612" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 440 548 C 400 570, 380 582, 335 604" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 620 548 C 650 570, 660 580, 675 600" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- right: file → compiled -->
     <line x1="1400" y1="378" x2="1400" y2="444" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- right branch A: compiled → ghost (faded, stops) -->
