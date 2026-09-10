@@ -1,0 +1,74 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Compiled, Never Built</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .card{position:absolute;box-sizing:border-box;height:96px;border-radius:12px;background:var(--panel);
+    border:1.5px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 26px;
+    font-family:var(--mono);font-size:23px;font-weight:700;color:var(--text)}
+  .card small{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--faint)}
+  .cable-label{position:absolute;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--muted);text-align:center}
+  .cyl{position:absolute}
+  .cyl .body{position:absolute;left:0;right:0;top:9px;bottom:7px;border-radius:11px/15px;background:linear-gradient(180deg,#f5df8a 0%,#F2C94C 40%,#c9a230 90%);box-shadow:inset 0 -5px 10px rgba(0,0,0,.25)}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:18px;border-radius:50%;background:linear-gradient(180deg,#f8e7a5,#e3bd45)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:16px;border-radius:50%;background:linear-gradient(180deg,#c9a230,#a8871f)}
+  .ghost{position:absolute;box-sizing:border-box;border:2px dashed #4a4a4a;border-radius:14px/18px;opacity:.7}
+  .lane-label{position:absolute;font-family:var(--mono);font-size:26px;font-weight:800}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Compiled, Never Built</div>
+
+  <!-- ============ LANE 1: models/ ============ -->
+  <div class="card" style="left:120px;top:280px;width:560px">📄 models/stg_job_postings.sql</div>
+  <div class="card" style="left:880px;top:280px;width:400px"><span>compiled SQL</span><small>target/compiled/</small></div>
+  <div class="cyl" style="left:1560px;top:250px;width:120px;height:150px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+  <div class="cable-label" style="left:1480px;top:428px;width:280px;color:var(--duck);font-weight:800">lands in dev</div>
+
+  <!-- ============ LANE 2: analyses/ ============ -->
+  <div class="card" style="left:120px;top:660px;width:560px">📄 analyses/jinja_practice.sql</div>
+  <div class="card" style="left:880px;top:660px;width:400px"><span>compiled SQL</span><small>target/compiled/</small></div>
+  <div class="ghost" style="left:1560px;top:630px;width:120px;height:150px"></div>
+  <div class="cable-label" style="left:1480px;top:808px;width:280px">nothing lands</div>
+
+  <!-- cable labels -->
+  <div class="cable-label" style="left:690px;top:236px;width:180px;color:var(--dbt)">dbt compile</div>
+  <div class="cable-label" style="left:1300px;top:236px;width:240px;color:var(--dbt)">dbt build</div>
+  <div class="cable-label" style="left:690px;top:616px;width:180px;color:var(--dbt)">dbt compile</div>
+  <div class="cable-label" style="left:1300px;top:616px;width:240px;color:var(--faint)">…and stops</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+    </defs>
+    <!-- lane 1 -->
+    <line x1="694" y1="328" x2="864" y2="328" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <line x1="1294" y1="328" x2="1540" y2="328" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <!-- lane 2: compile only; second cable fades out -->
+    <line x1="694" y1="708" x2="864" y2="708" stroke="#EDEDED" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <line x1="1294" y1="708" x2="1420" y2="708" stroke="#4a4a4a" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+  </svg>
+
+</div>
+</body>
+</html>
