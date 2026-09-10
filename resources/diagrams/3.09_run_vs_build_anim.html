@@ -1,0 +1,148 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>dbt run vs dbt build</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:34px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:50px;font-weight:700;color:#FFFFFF}
+  .mono{font-family:var(--mono)}
+
+  /* top: the incoming batch + the test */
+  .feed{position:absolute;left:330px;top:112px;width:1260px;height:96px;border-radius:14px;
+    background:#141414;border:1.5px solid var(--line);display:flex;align-items:center;gap:26px;padding:0 30px;box-sizing:border-box}
+  .feed .lbl{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--muted);white-space:nowrap}
+  .feed .bad{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--err);white-space:nowrap}
+  .feed .yml{font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text);
+    background:#1d1d1d;border:1.5px solid var(--line);border-radius:9px;padding:8px 14px;white-space:nowrap}
+  .feed .yml .k{color:var(--blue)} .feed .yml .v{color:var(--dbt)}
+
+  /* panels */
+  .panel{position:absolute;top:260px;height:700px;background:var(--zone);border:1.5px solid var(--line);border-radius:18px}
+  .phead{position:absolute;left:0;right:0;top:0;height:74px;border-radius:16px 16px 0 0;
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    font-family:var(--mono);font-size:29px;font-weight:800;box-sizing:border-box;border-bottom:1.5px solid var(--line)}
+  .phead small{font-family:var(--mono);font-size:19px;font-weight:600;color:var(--muted)}
+
+  /* dag nodes */
+  .node{position:absolute;left:60px;right:60px;height:88px;border-radius:12px;box-sizing:border-box;
+    background:var(--panel);border:1.5px dashed var(--line);
+    display:flex;align-items:center;justify-content:space-between;padding:0 26px;
+    transition:border-color .5s,background .5s,box-shadow .5s,opacity .5s}
+  .node .nm{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--text);transition:color .5s}
+  .node .st{font-family:var(--mono);font-size:21px;font-weight:800;color:var(--faint);transition:color .5s}
+  .node.test{height:70px;background:#1d1d1d}
+  .node.test .nm{font-size:21px;color:var(--muted)}
+
+  .built{border-style:solid!important;border-color:rgba(87,171,90,.75)!important}
+  .built .st{color:var(--ok)!important}
+  .building{border-style:solid!important;border-color:var(--dbt)!important;box-shadow:0 0 22px rgba(255,105,75,.25);animation:pulse 1s infinite}
+  .building .st{color:var(--dbt)!important}
+  .failed{border-style:solid!important;border-color:var(--err)!important;background:#2a1b1a!important;box-shadow:0 0 24px rgba(229,83,75,.3)}
+  .failed .st{color:var(--err)!important}
+  .skipped{opacity:.55}
+  .skipped .st{color:var(--muted)!important;letter-spacing:.12em}
+  .poison{border-style:solid!important;border-color:var(--err)!important}
+  @keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(255,105,75,.15)}50%{box-shadow:0 0 26px rgba(255,105,75,.35)}}
+
+  /* counter */
+  .meter{position:absolute;left:60px;right:60px;bottom:96px}
+  .meter .cap{font-family:var(--mono);font-size:21px;font-weight:700;color:var(--muted)}
+  .meter .num{position:absolute;right:0;top:-12px;font-family:var(--mono);font-size:44px;font-weight:800;transition:color .4s}
+  .meter .bar{margin-top:16px;height:16px;border-radius:8px;background:#141414;border:1.5px solid var(--line);overflow:hidden}
+  .meter .fill{height:100%;width:0%;transition:width 1.4s ease}
+  .verdict{position:absolute;left:60px;right:60px;bottom:26px;height:52px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:23px;font-weight:800;
+    opacity:0;transition:opacity .6s}
+
+  svg.art{position:absolute;inset:0;pointer-events:none}
+  .cable{stroke:#EDEDED;stroke-width:3;stroke-dasharray:2 10;stroke-linecap:round;transition:stroke .5s}
+</style>
+</head>
+<body class="s0">
+<div class="stage">
+
+  <div class="title">dbt run vs dbt build</div>
+
+  <!-- the batch + the test -->
+  <div class="feed">
+    <span class="lbl">today's scrape lands in raw</span>
+    <span class="bad" id="feedbad">⚠ 6,255 rows have a NULL job_id</span>
+    <span style="flex:1"></span>
+    <span class="yml"><span class="k">job_id:</span> data_tests: [<span class="v">not_null</span>]</span>
+  </div>
+
+  <!-- LEFT: dbt run -->
+  <div class="panel" style="left:120px;width:800px">
+    <div class="phead">dbt run <small>build models, ask no questions</small></div>
+    <div class="node" id="L1" style="top:104px"><span class="nm">stg_job_postings</span><span class="st" id="L1s">…</span></div>
+    <div class="node" id="L2" style="top:236px"><span class="nm">fct_job_postings</span><span class="st" id="L2s">…</span></div>
+    <div class="node" id="L3" style="top:368px"><span class="nm">the star · dims + bridge</span><span class="st" id="L3s">…</span></div>
+    <div class="meter">
+      <span class="cap">NULL ids reaching the star</span>
+      <span class="num" id="Lnum" style="color:var(--faint)">0</span>
+      <div class="bar"><div class="fill" id="Lfill" style="background:var(--err)"></div></div>
+    </div>
+    <div class="verdict" id="Lver" style="background:#2a1b1a;border:1.5px solid var(--err);color:var(--err)">broken rows, shipped ✗</div>
+  </div>
+
+  <!-- RIGHT: dbt build -->
+  <div class="panel" style="left:1000px;width:800px;border-color:rgba(255,105,75,.55)">
+    <div class="phead" style="color:var(--dbt)">dbt build <small>materialize, then TEST, then continue</small></div>
+    <div class="node" id="R1" style="top:104px"><span class="nm">stg_job_postings</span><span class="st" id="R1s">…</span></div>
+    <div class="node test" id="RT" style="top:216px"><span class="nm">🧪 not_null · job_id</span><span class="st" id="RTs">…</span></div>
+    <div class="node" id="R2" style="top:310px"><span class="nm">fct_job_postings</span><span class="st" id="R2s">…</span></div>
+    <div class="node" id="R3" style="top:428px"><span class="nm">the star · dims + bridge</span><span class="st" id="R3s">…</span></div>
+    <div class="meter">
+      <span class="cap">NULL ids reaching the star</span>
+      <span class="num" id="Rnum" style="color:var(--ok)">0</span>
+      <div class="bar"><div class="fill" id="Rfill" style="background:var(--ok)"></div></div>
+    </div>
+    <div class="verdict" id="Rver" style="background:#1b241c;border:1.5px solid var(--ok);color:var(--ok)">stopped at the gate · star untouched ✓</div>
+  </div>
+
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const L=[ $('L1'),$('L2'),$('L3') ], R=[ $('R1'),$('RT'),$('R2'),$('R3') ];
+const set=(el,cls,st)=>{el.className=el.className.replace(/\b(built|building|failed|skipped|poison)\b/g,'').trim();if(cls)el.classList.add(cls);const s=el.querySelector('.st');if(st!==undefined)s.textContent=st;};
+let tick=null;
+function count(el,fill,to,color){let v=0;const step=Math.ceil(to/28);clearInterval(tick);
+  tick=setInterval(()=>{v=Math.min(to,v+step);el.textContent=v.toLocaleString();el.style.color=color;
+    if(v>=to)clearInterval(tick);},40);fill.style.width=to>0?'100%':'0%';}
+function reset(){
+  L.forEach(n=>set(n,null,'…'));R.forEach(n=>set(n,null,'…'));
+  $('Lnum').textContent='0';$('Lnum').style.color='var(--faint)';$('Lfill').style.width='0%';
+  $('Rnum').textContent='0';$('Rnum').style.color='var(--ok)';$('Rfill').style.width='0%';
+  $('Lver').style.opacity=0;$('Rver').style.opacity=0;clearInterval(tick);
+}
+const steps=[
+  reset,
+  ()=>{set($('L1'),'building','RUN');set($('R1'),'building','RUN');},
+  ()=>{set($('L1'),'built','OK');set($('R1'),'built','OK');
+       set($('L2'),'building','RUN');set($('RT'),'building','TEST');},
+  ()=>{set($('L2'),'built','OK');set($('L3'),'building','RUN');
+       set($('RT'),'failed','FAIL 6,255');},
+  ()=>{set($('L3'),'poison','OK ⚠');count($('Lnum'),$('Lfill'),6255,'var(--err)');
+       set($('R2'),'skipped','SKIP');set($('R3'),'skipped','SKIP');},
+  ()=>{$('Lver').style.opacity=1;$('Rver').style.opacity=1;},
+];
+const qs=new URLSearchParams(location.search), freeze=qs.get('s');
+if(freeze!==null){ for(let i=0;i<=Math.min(+freeze,steps.length-1);i++) steps[i](); }
+else{ let i=0; steps[0](); setInterval(()=>{ i=(i+1)%steps.length; if(i===0)reset(); else steps[i](); }, 1700); }
+</script>
+</body>
+</html>
