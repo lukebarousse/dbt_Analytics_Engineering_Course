@@ -3,8 +3,10 @@
 -- from target/compiled/ into any SQL surface.
 -- role_slug joined at 3.43: the sandbox is where the new macro got tested
 -- before it touched a real model — macros are project-wide.
+-- the roles list stopped being hardcoded at 3.53: dbt_utils.get_column_values
+-- asks the column itself, at parse time, so the loop follows the data.
 
-{% set roles = ['data analyst', 'data engineer', 'data scientist'] %}
+{% set roles = dbt_utils.get_column_values(ref('stg_job_postings'), 'search_term') %}
 
 {% for role in roles %}
 SELECT
@@ -12,7 +14,7 @@ SELECT
     '{{ slugify(role) }}' AS role_slug,
     COUNT(*) AS postings
 FROM {{ ref('stg_job_postings') }}
-WHERE search_term = '{{ role | title }}'
+WHERE search_term = '{{ role }}'
 GROUP BY search_term
 {{ "UNION ALL" if not loop.last }}
 {% endfor %}
