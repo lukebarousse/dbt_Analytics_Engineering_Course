@@ -19,9 +19,9 @@
   .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
   .card{position:absolute;box-sizing:border-box;border-radius:16px;background:var(--panel);
-    border:1.5px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.38)}
+    border:1.5px solid rgba(88,166,255,.45);box-shadow:0 10px 28px rgba(0,0,0,.38)}
   .lbl{position:absolute;font-family:var(--mono);font-weight:700;letter-spacing:.08em;
-    font-size:19px;color:var(--faint);white-space:nowrap}
+    font-size:19px;color:var(--blue);white-space:nowrap}
   .name{font-family:var(--mono);font-weight:700;color:var(--text)}
   .chip{display:flex;align-items:center;gap:12px;height:56px;border-radius:10px;
     background:#1c1c1c;border:1.5px solid #2e2e2e;padding:0 18px;margin-top:14px;
@@ -37,21 +37,21 @@
 
   <div class="title">Where Macros Come From</div>
 
-  <!-- 1: your project -->
-  <div class="lbl" style="left:120px;top:186px;color:var(--blue)">YOU WRITE THEM</div>
-  <div class="card" style="left:120px;top:216px;width:520px;height:470px;border-color:rgba(88,166,255,.45)">
+  <!-- 1: dbt's built-ins -->
+  <div class="lbl" style="left:120px;top:186px">SHIPS INSIDE dbt</div>
+  <div class="card" style="left:120px;top:216px;width:520px;height:470px">
     <div style="padding:26px 28px 0">
-      <div class="name" style="font-size:32px">📁 macros/</div>
-      <div style="font-size:21px;color:var(--muted);margin-top:8px">your project's folder</div>
-      <div class="chip" style="margin-top:24px;color:var(--blue)">{% macro slugify(text) %}</div>
-      <div class="chip">📄 any .sql file here</div>
+      <div class="name" style="font-size:32px">⚙️ dbt's global project</div>
+      <div style="font-size:21px;color:var(--muted);margin-top:8px">the built-ins</div>
+      <div class="chip" style="margin-top:24px;color:var(--blue);font-size:21px">not_null() · unique()</div>
+      <div class="chip" style="font-size:21px">generate_schema_name()</div>
     </div>
-    <div class="foot">first one lands this lesson</div>
+    <div class="foot">already running every build</div>
   </div>
 
   <!-- 2: packages -->
-  <div class="lbl" style="left:700px;top:186px;color:var(--blue)">INSTALLED FROM THE COMMUNITY</div>
-  <div class="card" style="left:700px;top:216px;width:520px;height:470px;border-color:rgba(88,166,255,.45)">
+  <div class="lbl" style="left:700px;top:186px">INSTALLED FROM THE COMMUNITY</div>
+  <div class="card" style="left:700px;top:216px;width:520px;height:470px">
     <div style="padding:26px 28px 0">
       <div class="name" style="font-size:32px">📦 packages</div>
       <div style="font-size:21px;color:var(--muted);margin-top:8px">shared macro libraries</div>
@@ -62,28 +62,28 @@
     <div class="foot">dbt_utils lands this lesson</div>
   </div>
 
-  <!-- 3: dbt built-in -->
-  <div class="lbl" style="left:1280px;top:186px;color:var(--dbt)">SHIPS INSIDE dbt</div>
-  <div class="card" style="left:1280px;top:216px;width:520px;height:470px;border-color:rgba(255,105,75,.55)">
+  <!-- 3: your own -->
+  <div class="lbl" style="left:1280px;top:186px">YOU WRITE THEM</div>
+  <div class="card" style="left:1280px;top:216px;width:520px;height:470px">
     <div style="padding:26px 28px 0">
-      <div class="name" style="font-size:32px;color:var(--dbt)">⚙️ dbt's global project</div>
-      <div style="font-size:21px;color:var(--muted);margin-top:8px">the built-ins</div>
-      <div class="chip" style="margin-top:24px;color:var(--dbt)">ref() · source()</div>
-      <div class="chip">generate_schema_name()</div>
+      <div class="name" style="font-size:32px">📁 macros/</div>
+      <div style="font-size:21px;color:var(--muted);margin-top:8px">your project's folder</div>
+      <div class="chip" style="margin-top:24px;color:var(--blue);font-size:21px">{% macro slugify(text) %}</div>
+      <div class="chip">📄 any .sql file here</div>
     </div>
-    <div class="foot">called since your first model</div>
+    <div class="foot">still empty, fills this lesson</div>
   </div>
 
   <!-- the log-line receipt -->
-  <div class="lbl" style="left:640px;top:806px">EVERY RUN'S LOG · ALL THREE COUNTED</div>
+  <div class="lbl" style="left:640px;top:806px;color:var(--faint)">EVERY RUN'S LOG · ALL THREE COUNTED</div>
   <div class="term" style="left:640px;top:840px;width:640px;height:90px;display:flex;align-items:center">
-    <span style="font-size:26px;font-weight:600;color:var(--text)">Found … <span style="color:var(--dbt);font-weight:800">726 macros</span></span>
+    <span style="font-size:26px;font-weight:600;color:var(--text)">Found … <span style="color:var(--blue);font-weight:800">726 macros</span></span>
   </div>
 
   <svg class="art" viewBox="0 0 1920 1080">
     <path d="M 380 690 C 400 780, 500 850, 620 878" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
     <line x1="960" y1="690" x2="960" y2="832" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
-    <path d="M 1540 690 C 1520 780, 1420 850, 1300 878" fill="none" stroke="#FF694B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 1540 690 C 1520 780, 1420 850, 1300 878" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
   </svg>
 
 </div>
