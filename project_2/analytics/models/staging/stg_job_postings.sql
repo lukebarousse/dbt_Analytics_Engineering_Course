@@ -79,7 +79,7 @@ cleaned AS (
             job_extensions,
             '{{ keyword }}'
         ) AS has_{{ slugify(keyword) }}
-        {{ "," if not loop.last }}
+        {{- "," if not loop.last }}
         {% endfor %}
 
     FROM parsed
