@@ -1,0 +1,119 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>First Match Wins</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .card{position:absolute;box-sizing:border-box;border-radius:16px;background:var(--panel);
+    border:1.5px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .lbl{position:absolute;font-family:var(--mono);font-weight:700;letter-spacing:.08em;
+    font-size:19px;color:var(--faint);white-space:nowrap}
+  .fchip{display:flex;align-items:center;gap:12px;height:58px;border-radius:10px;
+    background:#1c1c1c;border:1.5px solid #2e2e2e;padding:0 18px;
+    font-family:var(--mono);font-size:23px;font-weight:600;color:var(--text)}
+  .name{font-family:var(--mono);font-weight:700;color:var(--text)}
+  .schip{position:absolute;box-sizing:border-box;border-radius:12px;display:flex;align-items:center;
+    justify-content:center;gap:14px;font-family:var(--mono);font-weight:700}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">First Match Wins</div>
+
+  <!-- dbt engine, the asker -->
+  <div class="card" style="left:110px;top:400px;width:360px;height:280px;border-color:rgba(255,105,75,.6)">
+    <div style="padding:30px 30px 0;text-align:center">
+      <div class="name" style="font-size:44px;color:var(--dbt)">⚙️ dbt</div>
+      <div style="font-size:21px;color:var(--muted);margin-top:8px">every model, every run</div>
+      <div style="margin:26px auto 0;display:inline-block;border:1.5px solid rgba(255,105,75,.55);border-radius:10px;
+           padding:12px 20px;font-family:var(--mono);font-size:22px;font-weight:700;color:var(--dbt)">
+        generate_schema_name?</div>
+    </div>
+  </div>
+
+  <!-- 1: your project -->
+  <div class="lbl" style="left:660px;top:172px;color:var(--ok)">SEARCHED FIRST · YOUR PROJECT</div>
+  <div class="card" style="left:660px;top:202px;width:560px;height:200px;border-color:rgba(87,171,90,.65);
+       box-shadow:0 0 0 1px rgba(87,171,90,.18), 0 10px 28px rgba(0,0,0,.38)">
+    <div style="padding:24px 28px 0;display:flex;align-items:center">
+      <span class="name" style="font-size:32px">📁 macros/</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:20px;font-weight:800;color:var(--ok);
+            border:1.5px solid rgba(87,171,90,.6);border-radius:8px;padding:6px 14px">✓ MATCH</span>
+    </div>
+    <div style="padding:18px 28px 0">
+      <div class="fchip">📄 generate_schema_name.sql</div>
+    </div>
+  </div>
+
+  <!-- 2: packages -->
+  <div class="lbl" style="left:660px;top:474px;opacity:.7">SEARCHED SECOND</div>
+  <div class="card" style="left:660px;top:504px;width:560px;height:120px;opacity:.55">
+    <div style="padding:34px 28px 0;display:flex;align-items:center">
+      <span class="name" style="font-size:28px;color:var(--muted)">📦 installed packages</span>
+      <span style="margin-left:auto;font-size:21px;color:var(--faint)">never reached</span>
+    </div>
+  </div>
+
+  <!-- 3: dbt global project -->
+  <div class="lbl" style="left:660px;top:696px;opacity:.7">SEARCHED LAST</div>
+  <div class="card" style="left:660px;top:726px;width:560px;height:200px;opacity:.55">
+    <div style="padding:24px 28px 0;display:flex;align-items:center;white-space:nowrap">
+      <span class="name" style="font-size:25px;color:var(--muted)">⚙️ dbt's global project</span>
+      <span style="margin-left:auto;font-size:20px;color:var(--faint)">never reached</span>
+    </div>
+    <div style="padding:18px 28px 0">
+      <div class="fchip" style="color:var(--muted);white-space:nowrap;font-size:21px">📄 get_custom_schema.sql<span style="margin-left:auto;font-size:18px;color:var(--faint)">the built-in</span></div>
+    </div>
+  </div>
+
+  <!-- answers -->
+  <div class="lbl" style="left:1390px;top:232px;color:var(--duck)">THE SCHEMA IT BUILDS</div>
+  <div class="schip" style="left:1390px;top:266px;width:420px;height:84px;font-size:27px;color:var(--duck);
+       background:#141414;border:1.5px solid rgba(242,201,76,.6)">🗄 dev.staging</div>
+
+  <div class="lbl" style="left:1390px;top:758px;opacity:.7">BEFORE THE OVERRIDE</div>
+  <div class="schip" style="left:1390px;top:792px;width:420px;height:74px;font-size:22px;color:var(--faint);
+       background:#141414;border:1.5px dashed #4a4a4a">🗄 dev.default_staging</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#FF694B"/>
+      </marker>
+      <marker id="ahy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#F2C94C"/>
+      </marker>
+    </defs>
+    <!-- the ask: dbt -> your macros/ (stops there) -->
+    <path d="M 470 500 C 560 460, 590 390, 650 322" fill="none" stroke="#FF694B" stroke-width="3.5"
+          stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahd)"/>
+    <!-- the search path that never continues -->
+    <line x1="940" y1="404" x2="940" y2="500" stroke="#4a4a4a" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <line x1="940" y1="626" x2="940" y2="722" stroke="#4a4a4a" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <!-- the answer: your copy names the schema -->
+    <path d="M 1222 302 C 1290 302, 1310 306, 1378 308" fill="none" stroke="#F2C94C" stroke-width="3.5"
+          stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahy)"/>
+    <!-- the ghost answer the built-in used to give -->
+    <path d="M 1222 826 C 1290 828, 1310 828, 1378 829" fill="none" stroke="#4a4a4a" stroke-width="3.5"
+          stroke-dasharray="2 10" stroke-linecap="round"/>
+  </svg>
+
+</div>
+</body>
+</html>
