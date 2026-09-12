@@ -1,0 +1,99 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Seeds vs the Pipeline</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
+    font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
+  .panel{position:absolute;top:168px;height:812px;background:var(--zone);border:1.5px solid var(--line);border-radius:18px}
+  .phead{position:absolute;left:0;right:0;top:0;height:78px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:30px;font-weight:800;box-sizing:border-box;border-bottom:1.5px solid var(--line)}
+  .sub{position:absolute;left:0;right:0;top:86px;text-align:center;font-size:21px;color:var(--muted)}
+  .card{position:absolute;box-sizing:border-box;border-radius:12px;background:var(--panel);
+    border:1.5px solid var(--line);font-family:var(--mono)}
+  .cardname{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--text)}
+  .cyl{position:absolute}
+  .cyl .body{position:absolute;left:0;right:0;top:9px;bottom:7px;border-radius:11px/15px;
+    background:linear-gradient(180deg,#f5df8a 0%,#F2C94C 40%,#c9a230 90%);box-shadow:inset 0 -5px 10px rgba(0,0,0,.25)}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:18px;border-radius:50%;background:linear-gradient(180deg,#f8e7a5,#e3bd45)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:16px;border-radius:50%;background:linear-gradient(180deg,#c9a230,#a8871f)}
+  .lbl{position:absolute;font-family:var(--mono);font-size:20px;font-weight:700;white-space:nowrap}
+  .chip{position:absolute;box-sizing:border-box;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:22px;font-weight:700;background:#141414;border:1.5px solid rgba(88,166,255,.5);color:var(--blue)}
+  .row{display:flex;gap:0;font-family:var(--mono);font-size:18px}
+  .row span{padding:7px 10px;border-top:1px solid #2e2e2e}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Seeds vs the Pipeline</div>
+
+  <!-- LEFT: the EL pipeline -->
+  <div class="panel" style="left:110px;width:800px">
+    <div class="phead">🛠️ The Pipeline</div>
+    <div class="sub">somebody else owns it, and it arrives on a schedule</div>
+
+    <div class="card" style="left:190px;top:160px;width:420px;height:96px;display:flex;align-items:center;justify-content:center;gap:14px">
+      <span class="cardname">🤖 the scraper</span>
+    </div>
+
+    <div class="cyl" style="left:342px;top:392px;width:116px;height:150px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+    <div class="lbl" style="left:90px;top:562px;width:620px;text-align:center;color:var(--duck);font-size:21px">raw.jobs.raw_job_postings</div>
+    <div class="lbl" style="left:90px;top:596px;width:620px;text-align:center;color:var(--faint);font-weight:600">691,950 rows, refreshed nightly</div>
+
+    <div class="chip" style="left:150px;top:672px;width:500px;height:64px">source('jobs', 'raw_job_postings')</div>
+  </div>
+
+  <!-- RIGHT: the seed -->
+  <div class="panel" style="left:1010px;width:800px">
+    <div class="phead">📁 Your Repo</div>
+    <div class="sub">you own it, and it changes with the code</div>
+
+    <div class="card" style="left:150px;top:140px;width:500px;height:136px;padding:14px 0 0">
+      <div class="cardname" style="padding:0 18px 10px;font-size:21px">📄 seeds/skill_categories.csv</div>
+      <div class="row" style="color:var(--muted)"><span style="width:150px">skill_id</span><span style="width:150px">display_name</span><span style="width:200px">category</span></div>
+      <div class="row" style="color:var(--text)"><span style="width:150px">0034c68…</span><span style="width:150px">Skydio</span><span style="width:200px">Applications</span></div>
+    </div>
+
+    <div class="chip" style="left:280px;top:318px;width:240px;height:60px">dbt seed</div>
+
+    <div class="cyl" style="left:342px;top:412px;width:116px;height:130px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+    <div class="lbl" style="left:90px;top:562px;width:620px;text-align:center;color:var(--duck);font-size:21px">dev.seeds.skill_categories</div>
+    <div class="lbl" style="left:90px;top:596px;width:620px;text-align:center;color:var(--faint);font-weight:600">1,422 rows, reviewed in a pull request</div>
+
+    <div class="chip" style="left:150px;top:672px;width:500px;height:64px">ref('skill_categories')</div>
+  </div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <!-- LEFT lane, centered on x=510 -->
+    <line x1="510" y1="434" x2="510" y2="550" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <line x1="510" y1="798" x2="510" y2="832" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <!-- RIGHT lane, centered on x=1410 -->
+    <line x1="1410" y1="452" x2="1410" y2="478" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <line x1="1410" y1="552" x2="1410" y2="574" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <line x1="1410" y1="798" x2="1410" y2="832" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+  </svg>
+
+</div>
+</body>
+</html>
