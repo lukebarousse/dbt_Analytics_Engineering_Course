@@ -1,0 +1,91 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Which Layer?</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --silver:#C9CED6; --ink:#EDEDED;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;top:36px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
+  .zone{position:absolute;box-sizing:border-box;border:2px dashed #8a8a8a;border-radius:25px}
+  .ztitle{position:absolute;font-family:var(--mono);font-size:40px;font-weight:700;text-align:center}
+  .chip{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
+    border-radius:15px 225px 15px 255px/255px 15px 225px 15px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ink)}
+  .lbl{position:absolute;font-family:var(--hand);font-size:30px;color:var(--ink);text-align:center;line-height:1.5}
+  .small{font-size:24px;color:var(--muted)}
+  .sect{position:absolute;font-family:var(--hand);font-size:26px;color:var(--faint);text-align:center;letter-spacing:.03em}
+  .rule{position:absolute;font-family:var(--hand);font-size:34px;text-align:center;width:1920px;left:0}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Which Layer?</div>
+
+  <!-- ============ STAGING ============ -->
+  <div class="zone" style="left:60px;top:132px;width:570px;height:812px"></div>
+  <div class="ztitle" style="left:60px;top:160px;width:570px;color:var(--blue)">STAGING</div>
+  <div class="lbl small" style="left:60px;top:212px;width:570px;font-family:var(--mono);font-size:21px;color:var(--blue)">clean it</div>
+
+  <div class="sect" style="left:60px;top:268px;width:570px">— what it is —</div>
+  <div class="lbl" style="left:90px;top:312px;width:510px">one model per source table,<br>renamed and typed</div>
+
+  <div class="sect" style="left:60px;top:432px;width:570px">— choose it when —</div>
+  <div class="lbl" style="left:90px;top:478px;width:510px;text-align:left">✏️ renaming, casting, trimming<br>🚪 dropping junk at the door<br>1️⃣ it maps to ONE source table</div>
+
+  <div class="sect" style="left:60px;top:664px;width:570px">— ours —</div>
+  <div class="chip" style="left:110px;top:708px;width:470px;height:68px;transform:rotate(.3deg)">stg_job_postings</div>
+  <div class="chip" style="left:110px;top:792px;width:470px;height:68px;transform:rotate(-.25deg)">stg_job_skills</div>
+  <div class="lbl small" style="left:60px;top:882px;width:570px">everything downstream starts here</div>
+
+  <!-- ============ INTERMEDIATE ============ -->
+  <div class="zone" style="left:675px;top:132px;width:570px;height:812px"></div>
+  <div class="ztitle" style="left:675px;top:160px;width:570px;color:var(--silver)">INTERMEDIATE</div>
+  <div class="lbl small" style="left:675px;top:212px;width:570px;font-family:var(--mono);font-size:21px;color:var(--silver)">think once</div>
+
+  <div class="sect" style="left:675px;top:268px;width:570px">— what it is —</div>
+  <div class="lbl" style="left:705px;top:312px;width:510px">the thinking,<br>stated one time only</div>
+
+  <div class="sect" style="left:675px;top:432px;width:570px">— choose it when —</div>
+  <div class="lbl" style="left:705px;top:478px;width:510px;text-align:left">🔁 two+ marts need the same logic<br>🧮 you are changing the GRAIN<br>🧩 a mart would get too big to read</div>
+
+  <div class="sect" style="left:675px;top:664px;width:570px">— ours —</div>
+  <div class="chip" style="left:700px;top:708px;width:520px;height:68px;transform:rotate(-.3deg)">int_skill_observations</div>
+  <div class="lbl small" style="left:675px;top:800px;width:570px">nobody queries it but dbt ⚙️</div>
+
+  <!-- ============ MARTS ============ -->
+  <div class="zone" style="left:1290px;top:132px;width:570px;height:812px"></div>
+  <div class="ztitle" style="left:1290px;top:160px;width:570px;color:var(--duck)">MARTS</div>
+  <div class="lbl small" style="left:1290px;top:212px;width:570px;font-family:var(--mono);font-size:21px;color:var(--duck)">serve it</div>
+
+  <div class="sect" style="left:1290px;top:268px;width:570px">— what it is —</div>
+  <div class="lbl" style="left:1320px;top:312px;width:510px">the tables people<br>actually query</div>
+
+  <div class="sect" style="left:1290px;top:432px;width:570px">— choose it when —</div>
+  <div class="lbl" style="left:1320px;top:478px;width:510px;text-align:left">👥 humans or BI read it directly<br>🤝 it promises a grain<br>⭐ it is the shape of the business</div>
+
+  <div class="sect" style="left:1290px;top:664px;width:570px">— ours —</div>
+  <div class="chip" style="left:1320px;top:708px;width:250px;height:62px;transform:rotate(.25deg)">fct_job_postings</div>
+  <div class="chip" style="left:1588px;top:708px;width:250px;height:62px;transform:rotate(-.3deg)">dim_company</div>
+  <div class="chip" style="left:1320px;top:786px;width:250px;height:62px;transform:rotate(-.2deg)">dim_skill</div>
+  <div class="chip" style="left:1588px;top:786px;width:250px;height:62px;transform:rotate(.3deg)">bridge_job_skills</div>
+  <div class="lbl small" style="left:1290px;top:872px;width:570px">documented and tested, always</div>
+
+  <div class="rule" style="top:982px">clean it <span class="mono" style="color:var(--blue);font-size:28px">→</span> think once <span class="mono" style="color:var(--silver);font-size:28px">→</span> serve it</div>
+
+</div>
+</body>
+</html>
