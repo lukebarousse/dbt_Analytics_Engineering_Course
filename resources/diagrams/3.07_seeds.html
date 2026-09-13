@@ -9,28 +9,42 @@
   :root{
     --bg:#191919; --panel:#202020; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
-    --duck:#F2C94C; --blue:#58A6FF; --ink:#EDEDED;
+    --duck:#F2C94C; --blue:#58A6FF; --silver:#C9CED6; --ink:#EDEDED;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --hand:'Caveat',cursive;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
-  .title{position:absolute;top:48px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
-  .card{position:absolute;box-sizing:border-box;border-radius:14px;background:var(--panel);border:1.5px solid var(--line)}
-  .cname{font-family:var(--mono);font-size:23px;font-weight:700;color:var(--text)}
-  .row{display:flex;font-family:var(--mono);font-size:19px}
-  .row span{padding:9px 12px;border-top:1px solid #2e2e2e}
+  .title{position:absolute;top:38px;left:0;width:1920px;font-family:var(--mono);font-size:52px;font-weight:700;color:#FFFFFF;text-align:center}
+
+  .card{position:absolute;box-sizing:border-box;border-radius:12px;background:var(--panel);border:1.5px solid var(--line)}
+  .cname{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text)}
+  .row{display:flex;font-family:var(--mono);font-size:17px}
+  .row span{padding:7px 10px;border-top:1px solid #2e2e2e}
   .cyl{position:absolute}
-  .cyl .body{position:absolute;left:0;right:0;top:10px;bottom:8px;border-radius:12px/16px;
+  .cyl .body{position:absolute;left:0;right:0;top:9px;bottom:7px;border-radius:11px/14px;
     background:linear-gradient(180deg,#f5df8a 0%,#F2C94C 40%,#c9a230 90%);box-shadow:inset 0 -5px 10px rgba(0,0,0,.25)}
-  .cyl .top{position:absolute;left:0;right:0;top:0;height:20px;border-radius:50%;background:linear-gradient(180deg,#f8e7a5,#e3bd45)}
-  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:18px;border-radius:50%;background:linear-gradient(180deg,#c9a230,#a8871f)}
-  .mlbl{position:absolute;font-family:var(--mono);font-size:21px;font-weight:700;text-align:center}
-  .hlbl{position:absolute;font-family:var(--hand);font-size:30px;color:var(--muted);text-align:center}
-  .cmd{position:absolute;box-sizing:border-box;border-radius:10px;display:flex;align-items:center;justify-content:center;
-    font-family:var(--mono);font-size:22px;font-weight:700;background:#141414;border:1.5px solid rgba(88,166,255,.55);color:var(--blue)}
-  .sect{position:absolute;font-family:var(--hand);font-size:28px;color:var(--faint);text-align:center;letter-spacing:.03em}
-  .why{position:absolute;font-family:var(--hand);font-size:34px;color:var(--ink);text-align:center;line-height:1.7}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:18px;border-radius:50%;background:linear-gradient(180deg,#f8e7a5,#e3bd45)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:16px;border-radius:50%;background:linear-gradient(180deg,#c9a230,#a8871f)}
+  .mlbl{position:absolute;font-family:var(--mono);font-size:19px;font-weight:700;text-align:center}
+  .pill{position:absolute;box-sizing:border-box;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:20px;font-weight:700;background:#141414}
+
+  .sect{position:absolute;font-family:var(--hand);font-size:30px;color:var(--faint);text-align:center;letter-spacing:.03em}
+  .zone{position:absolute;box-sizing:border-box;border:2px dashed #8a8a8a;border-radius:25px}
+  .q{position:absolute;font-family:var(--hand);font-size:40px;color:var(--ink);text-align:center}
+
+  .sit{position:absolute;font-family:var(--hand);font-size:36px;color:var(--ink)}
+  .ex{position:absolute;font-family:var(--hand);font-size:26px;color:var(--muted)}
+  .verdict{position:absolute;box-sizing:border-box;height:60px;border-radius:11px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:23px;font-weight:800;background:#141414}
+
+  .file{position:absolute;height:44px;clip-path:polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%)}
+  .fin{position:absolute;inset:2px;background:#1c1c1c;
+    clip-path:polygon(0 0, calc(100% - 17px) 0, 100% 17px, 100% 100%, 0 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:17px;font-weight:600;color:var(--text)}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
@@ -39,33 +53,47 @@
 
   <div class="title">What a Seed Is</div>
 
-  <!-- 1: the CSV in your repo -->
-  <div class="card" style="left:140px;top:210px;width:470px;height:196px;padding:16px 0 0">
-    <div class="cname" style="padding:0 20px 12px">📄 seeds/skill_categories.csv</div>
-    <div class="row" style="color:var(--muted)"><span style="width:150px">skill_id</span><span style="width:150px">display_name</span><span style="width:170px">category</span></div>
-    <div class="row" style="color:var(--text)"><span style="width:150px">0034c68…</span><span style="width:150px">Skydio</span><span style="width:170px">Applications</span></div>
-    <div class="row" style="color:var(--text)"><span style="width:150px">f1a9e2b…</span><span style="width:150px">Python</span><span style="width:170px">Languages</span></div>
+  <!-- ================= the mechanism ================= -->
+  <div class="card" style="left:150px;top:140px;width:400px;height:158px;padding:13px 0 0">
+    <div class="cname" style="padding:0 16px 10px">📄 seeds/skill_categories.csv</div>
+    <div class="row" style="color:var(--muted)"><span style="width:125px">skill_id</span><span style="width:130px">display_name</span><span style="width:145px">category</span></div>
+    <div class="row" style="color:var(--text)"><span style="width:125px">0034c68…</span><span style="width:130px">Skydio</span><span style="width:145px">Applications</span></div>
+    <div class="row" style="color:var(--text)"><span style="width:125px">f1a9e2b…</span><span style="width:130px">Python</span><span style="width:145px">Languages</span></div>
   </div>
-  <div class="hlbl" style="left:140px;top:424px;width:470px">a small table you keep in the repo</div>
 
-  <!-- 2: the command -->
-  <div class="cmd" style="left:700px;top:276px;width:230px;height:64px">dbt seed</div>
+  <div class="pill" style="left:640px;top:190px;width:200px;height:58px;border:1.5px solid rgba(88,166,255,.55);color:var(--blue)">dbt seed</div>
 
-  <!-- 3: the warehouse table -->
-  <div class="cyl" style="left:1075px;top:228px;width:150px;height:170px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
-  <div class="mlbl" style="left:930px;top:424px;width:440px;color:var(--duck)">dev.seeds.skill_categories</div>
-  <div class="hlbl" style="left:930px;top:462px;width:440px">a real table, 1,422 rows</div>
+  <div class="cyl" style="left:960px;top:150px;width:128px;height:140px"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+  <div class="mlbl" style="left:824px;top:302px;width:400px;color:var(--duck)">dev.seeds.skill_categories</div>
 
-  <!-- 4: used like any model -->
-  <div class="cmd" style="left:1490px;top:276px;width:330px;height:64px;border-color:rgba(242,201,76,.55);color:var(--duck)">ref('skill_categories')</div>
-  <div class="hlbl" style="left:1460px;top:424px;width:390px">models use it like any other</div>
+  <div class="pill" style="left:1330px;top:190px;width:300px;height:58px;border:1.5px solid rgba(242,201,76,.55);color:var(--duck)">ref('skill_categories')</div>
 
-  <!-- why -->
-  <div class="sect" style="left:0;top:640px;width:1920px">— keep data in a seed when —</div>
-  <div class="why" style="left:0;top:700px;width:1920px">📏 it is small &nbsp;&nbsp;·&nbsp;&nbsp; 🧠 a human decided it &nbsp;&nbsp;·&nbsp;&nbsp; 🔀 it changes with the code</div>
+  <div class="ex" style="left:150px;top:340px;width:400px;text-align:center">a CSV that lives in your repo</div>
+  <div class="ex" style="left:824px;top:340px;width:400px;text-align:center">a real table, 1,422 rows</div>
+  <div class="ex" style="left:1330px;top:340px;width:300px;text-align:center">models use it like any other</div>
 
-  <div class="sect" style="left:0;top:830px;width:1920px">— never when —</div>
-  <div class="why" style="left:0;top:890px;width:1920px;color:var(--muted)">📈 it is big &nbsp;&nbsp;·&nbsp;&nbsp; ⏰ it arrives on a schedule</div>
+  <!-- ================= the question ================= -->
+  <div class="sect" style="left:0;top:400px;width:1920px">— so when do you reach for one? —</div>
+
+  <div class="zone" style="left:120px;top:454px;width:1680px;height:556px"></div>
+  <div class="q" style="left:120px;top:480px;width:1680px">When this data changes, who edits it?</div>
+
+  <!-- branch 1: SEED -->
+  <div class="sit" style="left:210px;top:566px;width:820px">✏️ You, in a pull request</div>
+  <div class="file" style="left:248px;top:618px;width:300px;background:var(--duck)"><div class="fin">skill_categories.csv</div></div>
+  <div class="file" style="left:570px;top:618px;width:272px;background:var(--duck)"><div class="fin">country_codes.csv</div></div>
+  <div class="file" style="left:864px;top:618px;width:268px;background:var(--duck)"><div class="fin">test_accounts.csv</div></div>
+  <div class="verdict" style="left:1450px;top:576px;width:280px;border:2px solid var(--duck);color:var(--duck)">🌱 SEED</div>
+
+  <!-- branch 2: SOURCE -->
+  <div class="sit" style="left:210px;top:716px;width:820px">🏭 Someone outside the repo</div>
+  <div class="ex" style="left:248px;top:770px;width:900px">the job scraper, Stripe, your app database</div>
+  <div class="verdict" style="left:1450px;top:726px;width:280px;border:2px solid var(--blue);color:var(--blue)">📥 SOURCE</div>
+
+  <!-- branch 3: MODEL -->
+  <div class="sit" style="left:210px;top:866px;width:820px">⚙️ Nobody, it is computed</div>
+  <div class="ex" style="left:248px;top:920px;width:900px">salary_avg, the per-skill counts</div>
+  <div class="verdict" style="left:1450px;top:876px;width:280px;border:2px solid var(--silver);color:var(--silver)">🧠 MODEL</div>
 
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
@@ -75,10 +103,17 @@
       <marker id="ahd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#F2C94C"/>
       </marker>
+      <marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#6B6B6B"/>
+      </marker>
     </defs>
-    <line x1="622" y1="308" x2="690" y2="308" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
-    <line x1="942" y1="308" x2="1062" y2="308" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
-    <line x1="1240" y1="308" x2="1478" y2="308" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahd)"/>
+    <line x1="562" y1="219" x2="630" y2="219" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <line x1="852" y1="219" x2="948" y2="219" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <line x1="1100" y1="219" x2="1318" y2="219" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahd)"/>
+
+    <line x1="1240" y1="606" x2="1436" y2="606" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahd)"/>
+    <line x1="1240" y1="756" x2="1436" y2="756" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <line x1="1240" y1="906" x2="1436" y2="906" stroke="#6B6B6B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahg)"/>
   </svg>
 
 </div>
