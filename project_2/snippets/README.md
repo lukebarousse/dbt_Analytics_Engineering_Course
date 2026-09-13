@@ -50,11 +50,16 @@ answer key and costs nothing to maintain.
 | `lukeb.co/dbt-dim-company` | `dim_company.sql` | live |
 | `lukeb.co/dbt-dim-skill` | `dim_skill.sql` | live |
 | `lukeb.co/dbt-bridge` | `bridge_job_skills.sql` | live |
+| `lukeb.co/dbt-int-yml` | `intermediate.yml` | **frozen** (3.09 adds `data_tests` on skill_id) |
 | `lukeb.co/dbt-marts` | `marts.yml` | **frozen** (3.09 adds 5 `data_tests:` blocks) |
 
-⚠️ `intermediate.yml` is NOT linked: the live file already carries
-`data_tests: not_null, unique` on `skill_id`, which 3.09 introduces. The
-lesson types that file instead, without the tests.
+`marts.yml` is downloaded ONCE, whole, at the Fact Table topic. It documents
+all four marts, so until the dimensions and bridge are built dbt prints
+`Did not find matching node for patch with name ...` for each one. That is a
+warning, not an error, and the lesson calls it out. An earlier design split
+this file into three append-able fragments; it was dropped as too fragile
+(the `>>` seam silently welded lines when a fragment lost its trailing blank
+line). Do not reintroduce it.
 
 ⚠️ Before adding a live link, grep the file for later-lesson features. The
 SQL check is `qualify|is_incremental|row_number|unique_key`; for a `.yml` it
