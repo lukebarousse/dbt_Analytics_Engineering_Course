@@ -9,23 +9,24 @@
   :root{
     --bg:#191919; --panel:#202020; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
-    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
-    --silver:#C9CED6; --ink:#EDEDED;
+    --duck:#F2C94C; --blue:#58A6FF; --silver:#C9CED6; --ink:#EDEDED;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --hand:'Caveat',cursive;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
-  .title{position:absolute;top:52px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
+  .title{position:absolute;top:46px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
   .zone{position:absolute;box-sizing:border-box;border:2px dashed #8a8a8a;border-radius:25px}
   .ztitle{position:absolute;font-family:var(--mono);font-size:40px;font-weight:700;text-align:center}
   .job{position:absolute;font-family:var(--mono);font-size:22px;text-align:center}
-  .chip{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
-    border-radius:15px 225px 15px 255px/255px 15px 225px 15px;
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ink)}
-  .lbl{position:absolute;font-family:var(--hand);font-size:34px;color:var(--ink);text-align:center;line-height:1.65}
+  .lbl{position:absolute;font-family:var(--hand);font-size:34px;color:var(--ink);text-align:center;line-height:1.7}
   .sect{position:absolute;font-family:var(--hand);font-size:27px;color:var(--faint);text-align:center;letter-spacing:.03em}
+  .file{position:absolute;height:62px;
+    clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%)}
+  .fin{position:absolute;inset:2.5px;background:#1c1c1c;
+    clip-path:polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:21px;font-weight:600;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -34,41 +35,41 @@
   <div class="title">Which Layer?</div>
 
   <!-- ============ STAGING ============ -->
-  <div class="zone" style="left:60px;top:178px;width:570px;height:760px"></div>
-  <div class="ztitle" style="left:60px;top:222px;width:570px;color:var(--blue)">STAGING</div>
-  <div class="job" style="left:60px;top:280px;width:570px;color:var(--blue)">clean it</div>
+  <div class="zone" style="left:60px;top:168px;width:570px;height:848px"></div>
+  <div class="ztitle" style="left:60px;top:210px;width:570px;color:var(--blue)">STAGING</div>
+  <div class="job" style="left:60px;top:268px;width:570px;color:var(--blue)">clean it</div>
 
-  <div class="sect" style="left:60px;top:372px;width:570px">— choose it when —</div>
-  <div class="lbl" style="left:80px;top:426px;width:530px">✏️ rename, cast, trim<br>🚪 drop junk at the door<br>1️⃣ one source table in</div>
+  <div class="sect" style="left:60px;top:356px;width:570px">— choose it when —</div>
+  <div class="lbl" style="left:80px;top:410px;width:530px">🧼 light cleaning only<br>✏️ rename, cast, trim<br>1️⃣ one source table in</div>
 
-  <div class="sect" style="left:60px;top:664px;width:570px">— ours —</div>
-  <div class="chip" style="left:110px;top:716px;width:470px;height:68px;transform:rotate(.3deg)">stg_job_postings</div>
-  <div class="chip" style="left:110px;top:806px;width:470px;height:68px;transform:rotate(-.25deg)">stg_job_skills</div>
+  <div class="sect" style="left:60px;top:626px;width:570px">— ours —</div>
+  <div class="file" style="left:105px;top:680px;width:480px;background:var(--blue)"><div class="fin">stg_job_postings.sql</div></div>
+  <div class="file" style="left:105px;top:756px;width:480px;background:var(--blue)"><div class="fin">stg_job_skills.sql</div></div>
 
   <!-- ============ INTERMEDIATE ============ -->
-  <div class="zone" style="left:675px;top:178px;width:570px;height:760px"></div>
-  <div class="ztitle" style="left:675px;top:222px;width:570px;color:var(--silver)">INTERMEDIATE</div>
-  <div class="job" style="left:675px;top:280px;width:570px;color:var(--silver)">think once</div>
+  <div class="zone" style="left:675px;top:168px;width:570px;height:848px"></div>
+  <div class="ztitle" style="left:675px;top:210px;width:570px;color:var(--silver)">INTERMEDIATE</div>
+  <div class="job" style="left:675px;top:268px;width:570px;color:var(--silver)">do the logic</div>
 
-  <div class="sect" style="left:675px;top:372px;width:570px">— choose it when —</div>
-  <div class="lbl" style="left:695px;top:426px;width:530px">🔁 two+ marts need it<br>🧮 the grain changes<br>⚙️ only dbt reads it</div>
+  <div class="sect" style="left:675px;top:356px;width:570px">— choose it when —</div>
+  <div class="lbl" style="left:695px;top:410px;width:530px">🧠 real logic starts<br>🔗 joining or aggregating<br>⚙️ nobody reads it directly</div>
 
-  <div class="sect" style="left:675px;top:664px;width:570px">— ours —</div>
-  <div class="chip" style="left:700px;top:716px;width:520px;height:68px;transform:rotate(-.3deg)">int_skill_observations</div>
+  <div class="sect" style="left:675px;top:626px;width:570px">— ours —</div>
+  <div class="file" style="left:720px;top:680px;width:480px;background:var(--silver)"><div class="fin">int_skill_observations.sql</div></div>
 
   <!-- ============ MARTS ============ -->
-  <div class="zone" style="left:1290px;top:178px;width:570px;height:760px"></div>
-  <div class="ztitle" style="left:1290px;top:222px;width:570px;color:var(--duck)">MARTS</div>
-  <div class="job" style="left:1290px;top:280px;width:570px;color:var(--duck)">serve it</div>
+  <div class="zone" style="left:1290px;top:168px;width:570px;height:848px"></div>
+  <div class="ztitle" style="left:1290px;top:210px;width:570px;color:var(--duck)">MARTS</div>
+  <div class="job" style="left:1290px;top:268px;width:570px;color:var(--duck)">serve the consumer</div>
 
-  <div class="sect" style="left:1290px;top:372px;width:570px">— choose it when —</div>
-  <div class="lbl" style="left:1310px;top:426px;width:530px">👥 people query it<br>🤝 it promises a grain<br>⭐ the shape of the business</div>
+  <div class="sect" style="left:1290px;top:356px;width:570px">— choose it when —</div>
+  <div class="lbl" style="left:1310px;top:410px;width:530px">👥 an end consumer reads it<br>📊 dashboards and analysts<br>⭐ the final shape</div>
 
-  <div class="sect" style="left:1290px;top:664px;width:570px">— ours —</div>
-  <div class="chip" style="left:1320px;top:716px;width:250px;height:62px;transform:rotate(.25deg)">fct_job_postings</div>
-  <div class="chip" style="left:1588px;top:716px;width:250px;height:62px;transform:rotate(-.3deg)">dim_company</div>
-  <div class="chip" style="left:1320px;top:800px;width:250px;height:62px;transform:rotate(-.2deg)">dim_skill</div>
-  <div class="chip" style="left:1588px;top:800px;width:250px;height:62px;transform:rotate(.3deg)">bridge_job_skills</div>
+  <div class="sect" style="left:1290px;top:626px;width:570px">— ours —</div>
+  <div class="file" style="left:1320px;top:680px;width:510px;background:var(--duck)"><div class="fin">fct_job_postings.sql</div></div>
+  <div class="file" style="left:1320px;top:756px;width:510px;background:var(--duck)"><div class="fin">dim_company.sql</div></div>
+  <div class="file" style="left:1320px;top:832px;width:510px;background:var(--duck)"><div class="fin">dim_skill.sql</div></div>
+  <div class="file" style="left:1320px;top:908px;width:510px;background:var(--duck)"><div class="fin">bridge_job_skills.sql</div></div>
 
 </div>
 </body>
