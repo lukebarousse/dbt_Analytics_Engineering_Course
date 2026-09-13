@@ -1,0 +1,11 @@
+  - name: bridge_job_skills
+    description: >
+      One row per (job_id, skill_id) for jobs present in fct_job_postings —
+      referential integrity guaranteed by construction.
+    columns:
+      - name: job_id
+        description: Job carrying the skill; every value exists in fct_job_postings.
+      - name: skill_id
+        description: Skill observed on the job; every value exists in dim_skill.
+      - name: skill_keyword
+        description: Raw skill keyword, trimmed upstream.
