@@ -1,0 +1,15 @@
+models:
+  - name: int_skill_observations
+    description: >
+      One row per skill_id observed in the raw pairs: the "do the thinking once"
+      layer re-grains 3,304,574 (job, skill) rows into per-skill demand counts.
+      Aggregates staging, not the star, so the counts include orphan pairs whose
+      job never made fct — observed in the wild, documented rather than hidden.
+      dim_skill joins these counts onto the seed taxonomy and serves them.
+    columns:
+      - name: skill_id
+        description: Skill key; the grain.
+      - name: postings_with_skill
+        description: >
+          Distinct jobs observed with this skill in staging. Runs hot versus any
+          bridge-based count (~13%): orphan pairs are in, by design.
