@@ -26,3 +26,4 @@
         description: >
           Distinct postings observed with this skill; 0 when a seeded skill
           never appears in the data.
+

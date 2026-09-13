@@ -51,3 +51,4 @@ models:
         description: Posting extensions mention paid time off.
       - name: has_no_degree_mentioned
         description: Posting extensions mention no degree required.
+
