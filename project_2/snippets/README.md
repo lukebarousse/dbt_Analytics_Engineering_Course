@@ -32,3 +32,30 @@ course is actually about.
 | File | Lesson | Verified |
 | --- | --- | --- |
 | `3.06_salary_columns.sql` | 3.06 Macros Pt.2 | Matches the shipped `parse_salary()` output on all 685,695 rows (0 mismatches across min, max, period, currency) |
+| `3.07/fct_job_postings.sql` | 3.07 Fact Table | Compiles with 0 QUALIFY / is_incremental / ROW_NUMBER (the four features 3.09 and 3.11 add later) |
+| `3.07/marts.yml` | 3.07 Fact / Dimensions / Bridge | Parses; 4 models, 18/3/5/3 columns, every description preserved; diff vs live is exactly 5 `data_tests:` removals |
+
+## Frozen here, or live from `analytics/`?
+
+A snippet only exists when a LATER lesson modifies the file. Otherwise the
+lesson points `curl` straight at the live model, which never drifts from the
+answer key and costs nothing to maintain.
+
+3.07 hands students six files. Verified file by file:
+
+| Short link | File | Source |
+| --- | --- | --- |
+| `lukeb.co/dbt-int` | `int_skill_observations.sql` | live |
+| `lukeb.co/dbt-fct` | `fct_job_postings.sql` | **frozen** (3.09 adds QUALIFY, 3.11 adds incremental) |
+| `lukeb.co/dbt-dim-company` | `dim_company.sql` | live |
+| `lukeb.co/dbt-dim-skill` | `dim_skill.sql` | live |
+| `lukeb.co/dbt-bridge` | `bridge_job_skills.sql` | live |
+| `lukeb.co/dbt-marts` | `marts.yml` | **frozen** (3.09 adds 5 `data_tests:` blocks) |
+
+⚠️ `intermediate.yml` is NOT linked: the live file already carries
+`data_tests: not_null, unique` on `skill_id`, which 3.09 introduces. The
+lesson types that file instead, without the tests.
+
+⚠️ Before adding a live link, grep the file for later-lesson features. The
+SQL check is `qualify|is_incremental|row_number|unique_key`; for a `.yml` it
+is `data_tests`, which that SQL pattern does not catch.
