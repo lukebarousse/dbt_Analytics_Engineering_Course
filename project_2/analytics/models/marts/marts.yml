@@ -21,6 +21,11 @@ models:
           under a different search carries its most recent term.
       - name: company_name
         description: Employer, trimmed upstream; natural key into dim_company.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_company')
+                field: company_name
       - name: job_location
         description: Location text as posted.
       - name: source_platform
