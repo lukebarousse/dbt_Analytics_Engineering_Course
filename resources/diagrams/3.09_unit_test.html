@@ -1,0 +1,89 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>How a Unit Test Works</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --ink:#EDEDED; --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
+  .title{position:absolute;top:34px;left:0;width:1920px;font-family:var(--mono);font-size:50px;font-weight:700;color:#FFFFFF;text-align:center}
+  .lbl{position:absolute;font-family:var(--mono);font-size:22px;font-weight:700;letter-spacing:.06em;color:var(--blue);text-align:center}
+  .card{position:absolute;box-sizing:border-box;border-radius:13px;background:var(--panel);border:1.5px solid var(--line);overflow:hidden}
+  .ch{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);padding:13px 18px;height:50px;box-sizing:border-box}
+  .ch span{font-weight:400;color:var(--faint);font-size:17px}
+  .r{display:flex;font-family:var(--mono);font-size:19px;border-top:1px solid #2b2b2b;height:54px;align-items:center;color:var(--text)}
+  .r span{padding:0 16px}
+  .r.hd{height:40px;color:var(--faint);font-size:15px}
+  .model{position:absolute;box-sizing:border-box;border-radius:14px;background:var(--panel);border:2px solid rgba(88,166,255,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+  .model .n{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--text)}
+  .model .m{font-family:var(--mono);font-size:19px;color:var(--blue);line-height:1.6;text-align:center}
+  .hand{position:absolute;font-family:var(--hand);text-align:center;color:var(--muted);font-size:30px;line-height:1.35}
+  .chip{position:absolute;box-sizing:border-box;height:66px;width:400px;border-radius:12px;background:#141414;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:23px;font-weight:800}
+  .rule{position:absolute;left:0;width:1920px;text-align:center;font-family:var(--hand);font-size:36px;color:var(--ink)}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">How a Unit Test Works</div>
+
+  <!-- given -->
+  <div class="lbl" style="left:60px;top:150px;width:540px">given:  fake rows in</div>
+  <div class="card" style="left:60px;top:190px;width:540px;height:262px">
+    <div class="ch">source('jobs', 'raw_job_postings') <span>mocked</span></div>
+    <div class="r hd"><span style="width:120px">job_id</span><span style="width:420px">job_salary</span></div>
+    <div class="r"><span style="width:120px">1</span><span style="width:420px">"100K–186K a year"</span></div>
+    <div class="r"><span style="width:120px">2</span><span style="width:420px">"32.50 an hour"</span></div>
+    <div class="r"><span style="width:120px">3</span><span style="width:420px;color:var(--faint)">null</span></div>
+  </div>
+  <div class="hand" style="left:60px;top:470px;width:540px">three shapes you already know the answer for</div>
+
+  <!-- model -->
+  <div class="lbl" style="left:700px;top:150px;width:520px">the model runs on them</div>
+  <div class="model" style="left:700px;top:190px;width:520px;height:262px">
+    <div class="n">⚙️ stg_job_postings</div>
+    <div class="m">{{ parse_salary('min') }}<br>{{ parse_salary('max') }}</div>
+  </div>
+  <div class="hand" style="left:700px;top:470px;width:520px">your real tables are never read</div>
+
+  <!-- expect -->
+  <div class="lbl" style="left:1320px;top:150px;width:540px">expect:  rows you declare</div>
+  <div class="card" style="left:1320px;top:190px;width:540px;height:262px">
+    <div class="ch">the answer key <span>only these columns compared</span></div>
+    <div class="r hd"><span style="width:120px">job_id</span><span style="width:210px">salary_min</span><span style="width:210px">salary_max</span></div>
+    <div class="r"><span style="width:120px">1</span><span style="width:210px">100000</span><span style="width:210px">186000</span></div>
+    <div class="r"><span style="width:120px">2</span><span style="width:210px">32.5</span><span style="width:210px">32.5</span></div>
+    <div class="r"><span style="width:120px">3</span><span style="width:210px;color:var(--faint)">null</span><span style="width:210px;color:var(--faint)">null</span></div>
+  </div>
+  <div class="hand" style="left:1320px;top:470px;width:540px">what the model MUST produce</div>
+
+  <!-- verdict -->
+  <div class="hand" style="left:0;top:600px;width:1920px;font-size:28px;color:var(--faint)">— output vs answer key —</div>
+  <div class="chip" style="left:540px;top:650px;border:2px solid var(--ok);color:var(--ok)">matches  →  PASS</div>
+  <div class="chip" style="left:980px;top:650px;border:2px solid var(--err);color:var(--err)">differs  →  FAIL</div>
+
+  <div class="rule" style="top:800px">Data tests ask the warehouse, after a build.</div>
+  <div class="rule" style="top:856px">A unit test asks your SQL, before one.</div>
+  <div class="hand" style="left:0;top:930px;width:1920px;font-size:30px">⏱ under dbt build it runs first, before the model materializes</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/></marker>
+    </defs>
+    <line x1="604" y1="321" x2="688" y2="321" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1224" y1="321" x2="1308" y2="321" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+  </svg>
+
+</div>
+</body>
+</html>
