@@ -15,54 +15,51 @@
   }
   html,body{margin:0;padding:0;background:var(--bg)}
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
-  .title{position:absolute;top:34px;left:0;width:1920px;font-family:var(--mono);font-size:50px;font-weight:700;color:#FFFFFF;text-align:center}
-  .colh{position:absolute;top:140px;font-family:var(--mono);font-size:23px;font-weight:700;text-align:center}
-  .pair{position:absolute;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text);line-height:1.5}
-  .pair .sub{font-weight:400;color:var(--faint);font-size:18px}
-  .chip{position:absolute;box-sizing:border-box;height:62px;width:340px;border-radius:11px;background:#141414;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:22px;font-weight:800}
-  .why{position:absolute;font-family:var(--hand);font-size:29px;color:var(--ink);line-height:1.35}
+  .title{position:absolute;top:30px;left:0;width:1920px;font-family:var(--mono);font-size:50px;font-weight:700;color:#FFFFFF;text-align:center}
+  .colh{position:absolute;top:118px;font-family:var(--mono);font-size:22px;font-weight:700;text-align:center}
+  .pair{position:absolute;font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);line-height:1.5}
+  .pair .sub{font-weight:400;color:var(--faint);font-size:17px}
+  .chip{position:absolute;box-sizing:border-box;height:58px;width:340px;border-radius:11px;background:#141414;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:21px;font-weight:800}
+  .why{position:absolute;font-family:var(--hand);font-size:28px;color:var(--ink);line-height:1.3;text-align:center}
   .sep{position:absolute;left:60px;width:1800px;border-top:1.5px dashed #3a3a3a}
-  .rule{position:absolute;left:0;width:1920px;text-align:center;font-family:var(--hand);font-size:34px;color:var(--ink)}
+  .rule{position:absolute;left:0;width:1920px;text-align:center;font-family:var(--hand);font-size:33px;color:var(--ink)}
+  svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
-
   <div class="title">Why the Direction Matters</div>
-
   <div class="colh" style="left:660px;width:580px;color:var(--blue)">written where the FK lives  ·  FK → PK</div>
   <div class="colh" style="left:1280px;width:580px;color:var(--muted)">the same test flipped  ·  PK → FK</div>
-
-  <!-- row 1: skills -->
-  <div class="pair" style="left:60px;top:214px;width:560px">bridge_job_skills.skill_id<br>→ dim_skill.skill_id<br><span class="sub">every skill pair → the taxonomy</span></div>
-  <div class="chip" style="left:660px;top:214px;border:2px solid var(--ok);color:var(--ok)">✓ PASS · 0 orphans</div>
-  <div class="why" style="left:660px;top:292px;width:580px">every skill somebody posted is in the taxonomy</div>
-  <div class="chip" style="left:1280px;top:214px;border:2px solid var(--err);color:var(--err)">✗ FAIL · 462 rows</div>
-  <div class="why" style="left:1280px;top:292px;width:580px">462 seeded skills nobody has posted yet. That is fine.</div>
-
-  <div class="sep" style="top:400px"></div>
-
-  <!-- row 2: jobs -->
-  <div class="pair" style="left:60px;top:434px;width:560px">bridge_job_skills.job_id<br>→ fct_job_postings.job_id<br><span class="sub">every skill pair → a real posting</span></div>
-  <div class="chip" style="left:660px;top:434px;border:2px solid var(--ok);color:var(--ok)">✓ PASS · 0 orphans</div>
-  <div class="why" style="left:660px;top:512px;width:580px">every skill pair points at a posting that exists</div>
-  <div class="chip" style="left:1280px;top:434px;border:2px solid var(--err);color:var(--err)">✗ FAIL · 65,039 rows</div>
-  <div class="why" style="left:1280px;top:512px;width:580px">13.2% of postings list no skills at all. Also fine.</div>
-
-  <div class="sep" style="top:620px"></div>
-
-  <!-- row 3: companies -->
-  <div class="pair" style="left:60px;top:654px;width:560px">fct_job_postings.company_name<br>→ dim_company.company_name<br><span class="sub">every posting → its company</span></div>
-  <div class="chip" style="left:660px;top:654px;border:2px solid var(--ok);color:var(--ok)">✓ PASS · 0 orphans</div>
-  <div class="why" style="left:660px;top:732px;width:580px">every posting's company is in the dim</div>
-  <div class="chip" style="left:1280px;top:654px;border:2px solid var(--ok);color:var(--ok)">✓ PASS · 0 rows</div>
-  <div class="why" style="left:1280px;top:732px;width:580px">passes, but only because dim_company is BUILT from fct</div>
-
-  <div class="sep" style="top:850px"></div>
-
-  <div class="rule" style="top:900px">FK → PK asks: does every child have a parent?</div>
-  <div class="rule" style="top:956px;color:var(--muted)">Flipped, it asks: does every parent have a child? A different promise, and usually one nobody made.</div>
-
+  <div class="pair" style="left:60px;top:208px;width:560px">bridge_job_skills.skill_id<br>→ dim_skill.skill_id<br><span class="sub">every skill pair → the taxonomy</span></div>
+<div class="chip" style="left:780px;top:278px;border:2px solid var(--ok);color:var(--ok)">✓ PASS · 0 orphans</div>
+<div class="why" style="left:660px;top:350px;width:580px">every skill somebody posted is in the taxonomy</div>
+<div class="chip" style="left:1400px;top:278px;border:2px solid var(--err);color:var(--err)">✗ FAIL · 462 rows</div>
+<div class="why" style="left:1280px;top:350px;width:580px">462 seeded skills nobody has posted yet. That is fine.</div>
+<div class="sep" style="top:428px"></div>
+<div class="pair" style="left:60px;top:468px;width:560px">bridge_job_skills.job_id<br>→ fct_job_postings.job_id<br><span class="sub">every skill pair → a real posting</span></div>
+<div class="chip" style="left:780px;top:538px;border:2px solid var(--ok);color:var(--ok)">✓ PASS · 0 orphans</div>
+<div class="why" style="left:660px;top:610px;width:580px">every skill pair points at a posting that exists</div>
+<div class="chip" style="left:1400px;top:538px;border:2px solid var(--err);color:var(--err)">✗ FAIL · 65,039 rows</div>
+<div class="why" style="left:1280px;top:610px;width:580px">13.2% of postings list no skills at all. Also fine.</div>
+<div class="sep" style="top:688px"></div>
+<div class="pair" style="left:60px;top:728px;width:560px">fct_job_postings.company_name<br>→ dim_company.company_name<br><span class="sub">every posting → its company</span></div>
+<div class="chip" style="left:780px;top:798px;border:2px solid var(--ok);color:var(--ok)">✓ PASS · 0 orphans</div>
+<div class="why" style="left:660px;top:870px;width:580px">every posting's company is in the dim</div>
+<div class="chip" style="left:1400px;top:798px;border:2px solid var(--ok);color:var(--ok)">✓ PASS · 0 rows</div>
+<div class="why" style="left:1280px;top:870px;width:580px">passes, but only because dim_company is BUILT from fct</div>
+  <div class="sep" style="top:948px"></div>
+  <div class="rule" style="top:972px">Along the crow's foot, many → one, every child finds its parent.</div>
+  <div class="rule" style="top:1018px;color:var(--muted)">Against it, one → many, a parent with no children is not a bug. Usually.</div>
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs><marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/></marker></defs>
+    <rect x="680" y="212" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="775.0" y="240" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">bridge_job_skills</text><rect x="1030" y="212" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1125.0" y="240" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">dim_skill</text><line x1="894" y1="234" x2="1012" y2="234" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="234" x2="870" y2="222" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="234" x2="870" y2="234" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="234" x2="870" y2="246" stroke="#9B9B9B" stroke-width="2"/><line x1="1012" y1="222" x2="1012" y2="246" stroke="#9B9B9B" stroke-width="2"/><line x1="880" y1="190" x2="1016" y2="190" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+<rect x="1300" y="212" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1395.0" y="240" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">bridge_job_skills</text><rect x="1650" y="212" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1745.0" y="240" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">dim_skill</text><line x1="1514" y1="234" x2="1632" y2="234" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="234" x2="1490" y2="222" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="234" x2="1490" y2="234" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="234" x2="1490" y2="246" stroke="#9B9B9B" stroke-width="2"/><line x1="1632" y1="222" x2="1632" y2="246" stroke="#9B9B9B" stroke-width="2"/><line x1="1640" y1="190" x2="1504" y2="190" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+<rect x="680" y="472" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="775.0" y="500" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">bridge_job_skills</text><rect x="1030" y="472" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1125.0" y="500" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">fct_job_postings</text><line x1="894" y1="494" x2="1012" y2="494" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="494" x2="870" y2="482" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="494" x2="870" y2="494" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="494" x2="870" y2="506" stroke="#9B9B9B" stroke-width="2"/><line x1="1012" y1="482" x2="1012" y2="506" stroke="#9B9B9B" stroke-width="2"/><line x1="880" y1="450" x2="1016" y2="450" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+<rect x="1300" y="472" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1395.0" y="500" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">bridge_job_skills</text><rect x="1650" y="472" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1745.0" y="500" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">fct_job_postings</text><line x1="1514" y1="494" x2="1632" y2="494" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="494" x2="1490" y2="482" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="494" x2="1490" y2="494" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="494" x2="1490" y2="506" stroke="#9B9B9B" stroke-width="2"/><line x1="1632" y1="482" x2="1632" y2="506" stroke="#9B9B9B" stroke-width="2"/><line x1="1640" y1="450" x2="1504" y2="450" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+<rect x="680" y="732" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="775.0" y="760" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">fct_job_postings</text><rect x="1030" y="732" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1125.0" y="760" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">dim_company</text><line x1="894" y1="754" x2="1012" y2="754" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="754" x2="870" y2="742" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="754" x2="870" y2="754" stroke="#9B9B9B" stroke-width="2"/><line x1="894" y1="754" x2="870" y2="766" stroke="#9B9B9B" stroke-width="2"/><line x1="1012" y1="742" x2="1012" y2="766" stroke="#9B9B9B" stroke-width="2"/><line x1="880" y1="710" x2="1016" y2="710" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+<rect x="1300" y="732" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1395.0" y="760" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">fct_job_postings</text><rect x="1650" y="732" width="190" height="44" rx="8" fill="#202020" stroke="#4a4a4a" stroke-width="1.5"/><text x="1745.0" y="760" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="16" font-weight="700" fill="#D3D3D3">dim_company</text><line x1="1514" y1="754" x2="1632" y2="754" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="754" x2="1490" y2="742" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="754" x2="1490" y2="754" stroke="#9B9B9B" stroke-width="2"/><line x1="1514" y1="754" x2="1490" y2="766" stroke="#9B9B9B" stroke-width="2"/><line x1="1632" y1="742" x2="1632" y2="766" stroke="#9B9B9B" stroke-width="2"/><line x1="1640" y1="710" x2="1504" y2="710" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+  </svg>
 </div>
 </body>
 </html>
