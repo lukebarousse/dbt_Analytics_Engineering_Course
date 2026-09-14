@@ -34,11 +34,11 @@
 
   <div class="title">How a relationships Test Works</div>
 
-  <div class="hand" style="left:1060px;top:112px;width:380px;font-size:30px">look up every child key in the parent</div>
+  <div class="hand" style="left:1084px;top:112px;width:304px;font-size:30px">does every FK find its PK?</div>
 
   <!-- CHILD -->
-  <div class="card" style="left:640px;top:150px;width:420px;height:320px">
-    <div class="ch">bridge_job_skills <span>child</span></div>
+  <div class="card" style="left:620px;top:150px;width:460px;height:320px">
+    <div class="ch">bridge_job_skills <span>child · FK side</span></div>
     <div class="r hd"><span style="width:170px">job_id</span><span style="width:250px">skill_id</span></div>
     <div class="r" style="color:var(--text)"><span style="width:170px">a4f0c…</span><span style="width:250px">8679265…</span></div>
     <div class="r" style="color:var(--text)"><span style="width:170px">a4f0c…</span><span style="width:250px">1b9a3e9…</span></div>
@@ -48,8 +48,8 @@
   </div>
 
   <!-- PARENT -->
-  <div class="card" style="left:1440px;top:150px;width:420px;height:320px">
-    <div class="ch">dim_skill <span>parent</span></div>
+  <div class="card" style="left:1400px;top:150px;width:460px;height:320px">
+    <div class="ch">dim_skill <span>parent · PK side</span></div>
     <div class="r hd"><span style="width:200px">skill_id</span><span style="width:220px">display_name</span></div>
     <div class="r" style="color:var(--text)"><span style="width:200px">8679265…</span><span style="width:220px">Python</span></div>
     <div class="r" style="color:var(--text)"><span style="width:200px">1b9a3e9…</span><span style="width:220px">SQL</span></div>
@@ -58,11 +58,11 @@
     <div class="r" style="color:var(--text)"><span style="width:200px">0034c68…</span><span style="width:220px">Skydio</span></div>
   </div>
 
-  <div class="hand" style="left:1190px;top:428px;width:230px;font-size:30px;color:var(--err);text-align:left">✗ no parent</div>
+  <div class="hand" style="left:1200px;top:428px;width:200px;font-size:30px;color:var(--err);text-align:left">✗ no PK</div>
 
   <!-- the YAML, small, left -->
   <div class="card" style="left:60px;top:150px;width:520px;height:320px">
-    <div class="ch">marts.yml <span>declared on the child</span></div>
+    <div class="ch">marts.yml <span>declared where the FK lives</span></div>
     <div class="code" style="padding:14px 18px;font-size:18px">- name: skill_id
   data_tests:
     - relationships:
@@ -94,19 +94,19 @@ left join parent
   <div class="hand" style="left:1300px;top:508px;width:560px;font-size:28px;color:var(--faint)">— the verdict —</div>
   <div class="chip" style="left:1300px;top:566px;width:560px;border:2px solid var(--ok);color:var(--ok)">0 rows back  →  PASS</div>
   <div class="chip" style="left:1300px;top:660px;width:560px;border:2px solid var(--err);color:var(--err)">any rows back  →  FAIL</div>
-  <div class="hand" style="left:1300px;top:770px;width:560px;font-size:34px;color:var(--ink);line-height:1.5">The query hunts for orphans.<br>Every child needs a parent.<br>Nobody promised every parent has children.</div>
+  <div class="hand" style="left:1300px;top:770px;width:560px;font-size:34px;color:var(--ink);line-height:1.5">The query hunts for orphans.<br>Every foreign key needs its primary key.<br>Nobody promised every parent has children.</div>
 
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
       <marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/></marker>
       <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E5534B"/></marker>
     </defs>
-    <line x1="1064" y1="263" x2="1428" y2="263" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
-    <line x1="1064" y1="309" x2="1428" y2="309" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
-    <line x1="1064" y1="355" x2="1428" y2="355" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
-    <line x1="1064" y1="401" x2="1428" y2="401" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
-    <line x1="1064" y1="447" x2="1176" y2="447" stroke="#E5534B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar)"/>
-    <line x1="582" y1="310" x2="628" y2="310" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1084" y1="263" x2="1388" y2="263" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1084" y1="309" x2="1388" y2="309" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1084" y1="355" x2="1388" y2="355" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1084" y1="401" x2="1388" y2="401" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1084" y1="447" x2="1186" y2="447" stroke="#E5534B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar)"/>
+    <line x1="582" y1="310" x2="608" y2="310" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
   </svg>
 
 </div>
