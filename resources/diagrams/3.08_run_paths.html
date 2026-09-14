@@ -1,0 +1,99 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Two Ways to Run an Analysis</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --duck:#F2C94C; --blue:#58A6FF; --ink:#EDEDED;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
+  .title{position:absolute;top:36px;left:0;width:1920px;font-family:var(--mono);font-size:52px;font-weight:700;color:#FFFFFF;text-align:center}
+  .zone{position:absolute;box-sizing:border-box;border:2px dashed #8a8a8a;border-radius:25px}
+  .ztitle{position:absolute;font-family:var(--mono);font-size:42px;font-weight:700;text-align:center;color:var(--blue)}
+  .job{position:absolute;font-family:var(--mono);font-size:22px;text-align:center;color:var(--muted)}
+  .sect{position:absolute;font-family:var(--hand);font-size:28px;color:var(--faint);text-align:center;letter-spacing:.03em}
+  .lbl{position:absolute;font-family:var(--hand);font-size:36px;color:var(--ink);text-align:center;line-height:1.6}
+  .cap{position:absolute;font-family:var(--hand);font-size:30px;color:var(--muted);text-align:center}
+  .card{position:absolute;box-sizing:border-box;border-radius:12px;background:var(--panel);border:1.5px solid var(--line)}
+  .code{font-family:var(--mono);font-size:18px;line-height:1.5;white-space:pre;color:var(--text)}
+  .term{position:absolute;box-sizing:border-box;border-radius:12px;background:#141414;border:1.5px solid var(--line);padding:20px 22px}
+  .chip{position:absolute;box-sizing:border-box;height:66px;border-radius:11px;background:#141414;border:1.5px solid rgba(88,166,255,.55);
+    display:flex;align-items:center;justify-content:center;gap:12px;font-family:var(--mono);font-size:21px;font-weight:700;color:var(--ink)}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Two Ways to Run an Analysis</div>
+
+  <!-- the one question both paths start from -->
+  <div class="card" style="left:650px;top:120px;width:620px;height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
+    <div style="font-family:var(--mono);font-size:25px;font-weight:700;color:var(--text)">📄 analyses/in_demand_skills.sql</div>
+    <div style="font-family:var(--mono);font-size:19px;color:var(--faint)">{{ ref('fct_job_postings') }}</div>
+  </div>
+
+  <!-- ================= LEFT: dbt compile ================= -->
+  <div class="zone" style="left:60px;top:272px;width:880px;height:780px"></div>
+  <div class="ztitle" style="left:60px;top:292px;width:880px">dbt compile</div>
+  <div class="job" style="left:60px;top:352px;width:880px">you get the SQL</div>
+
+  <div class="card" style="left:220px;top:408px;width:560px;height:262px;padding:16px 22px">
+    <div style="font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text)">📄 in_demand_skills.sql</div>
+    <div style="font-family:var(--mono);font-size:18px;color:var(--faint);margin:2px 0 10px">target/compiled/analytics/analyses/</div>
+    <div class="code">WITH job_postings AS (
+    SELECT job_id
+    FROM `dev`.`marts`.`fct_job_postings`
+),
+<span style="color:var(--faint)">...</span></div>
+  </div>
+
+  <div class="chip" style="left:128px;top:716px;width:360px"><img src="../images/Databricks_logo.png" style="height:34px">SQL editor</div>
+  <div class="chip" style="left:512px;top:716px;width:360px">🧩 SQLTools in VS Code</div>
+
+  <div class="sect" style="left:60px;top:836px;width:880px">— choose it when —</div>
+  <div class="lbl" style="left:80px;top:880px;width:840px">✏️ you'll tweak and rerun it<br>📊 you want a results grid</div>
+
+  <!-- ================= RIGHT: dbt show ================= -->
+  <div class="zone" style="left:980px;top:272px;width:880px;height:780px"></div>
+  <div class="ztitle" style="left:980px;top:292px;width:880px">dbt show</div>
+  <div class="job" style="left:980px;top:352px;width:880px">you get the rows</div>
+
+  <div class="term" style="left:1010px;top:408px;width:820px;height:262px">
+<div class="code"><span style="color:var(--blue)">$ dbt show --select in_demand_skills</span>
+<span style="color:var(--muted)">| display_name | category             | demand_count | demand_pct |</span>
+<span style="color:var(--faint)">| ------------ | -------------------- | ------------ | ---------- |</span>
+| Python       | Programming Langu... |       191777 |       64.2 |
+| SQL          | Programming Langu... |       187451 |       62.7 |
+| AWS          | Infrastructure       |       121066 |       40.5 |
+| Azure        | Infrastructure       |       116488 |       39.0 |
+| Spark        | Infrastructure       |       103529 |       34.7 |</div>
+  </div>
+  <div class="cap" style="left:980px;top:704px;width:880px">5 rows by default</div>
+
+  <div class="sect" style="left:980px;top:836px;width:880px">— choose it when —</div>
+  <div class="lbl" style="left:1000px;top:880px;width:840px">⚡ a quick look is enough<br>🖥️ you never leave the terminal</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <path d="M 880 218 C 880 250, 500 236, 500 262" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <path d="M 1040 218 C 1040 250, 1420 236, 1420 262" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <line x1="440" y1="676" x2="330" y2="706" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+    <line x1="560" y1="676" x2="670" y2="706" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ah)"/>
+  </svg>
+
+</div>
+</body>
+</html>
