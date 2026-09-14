@@ -1,5 +1,5 @@
 -- which postings changed their salary between scrapes? BONUS deep-dive — the filmed
--- 3.10.3 payoff went simpler (analyses/top_posting_editors.sql + salary_swings.sql);
+-- 3.11.3 payoff went simpler (analyses/top_posting_editors.sql + salary_swings.sql);
 -- this is the LAG-over-versions version. needs `dbt snapshot` run at least twice
 -- (two as_of points) before any job has a second version to compare.
 -- hero rows: Fraser Health's senior Data Engineer, CA$1.06M–1.22M on 2025-09-01,

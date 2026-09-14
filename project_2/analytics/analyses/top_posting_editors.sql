@@ -1,4 +1,4 @@
--- which companies edit their postings the most? the 3.10.3 payoff — a question
+-- which companies edit their postings the most? the 3.11.3 payoff — a question
 -- only the snapshot can answer (staging has the scrapes, but no notion of "changed").
 -- the whole query leans on one idea: dbt_valid_to IS NOT NULL = a closed version
 -- exists = that job changed at some point. the snapshot idiom, inverted.

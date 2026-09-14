@@ -1,4 +1,4 @@
--- biggest salary swings per posting (optional second payoff for 3.10.3).
+-- biggest salary swings per posting (optional second payoff for 3.11.3).
 -- no LAG needed: a job's versions are just rows, so MIN/MAX across them IS the
 -- swing. USD only — mixed currencies (COP, KRW, INR) swamp the board otherwise.
 -- live receipt: the top is a TYPO board (a PMO Analyst going 60K → 1,000,000) —
