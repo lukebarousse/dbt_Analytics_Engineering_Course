@@ -1,0 +1,114 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>How a relationships Test Works</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --duck:#F2C94C; --blue:#58A6FF; --ink:#EDEDED; --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
+  .title{position:absolute;top:34px;left:0;width:1920px;font-family:var(--mono);font-size:50px;font-weight:700;color:#FFFFFF;text-align:center}
+  .card{position:absolute;box-sizing:border-box;border-radius:13px;background:var(--panel);border:1.5px solid var(--line);overflow:hidden}
+  .ch{font-family:var(--mono);font-size:21px;font-weight:700;color:var(--text);padding:13px 18px;height:50px;box-sizing:border-box}
+  .ch span{font-weight:400;color:var(--faint);font-size:18px}
+  .r{display:flex;font-family:var(--mono);font-size:18px;border-top:1px solid #2b2b2b;height:46px;align-items:center}
+  .r span{padding:0 16px}
+  .r.hd{height:40px;color:var(--faint);font-size:15px}
+  .hand{position:absolute;font-family:var(--hand);text-align:center;color:var(--muted)}
+  .term{position:absolute;box-sizing:border-box;border-radius:13px;background:#141414;border:1.5px solid var(--line);padding:18px 24px}
+  .code{font-family:var(--mono);font-size:19px;line-height:1.55;white-space:pre;color:var(--text)}
+  .chip{position:absolute;box-sizing:border-box;height:70px;border-radius:12px;background:#141414;display:flex;align-items:center;justify-content:center;gap:14px;font-family:var(--mono);font-size:23px;font-weight:800}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">How a relationships Test Works</div>
+
+  <div class="hand" style="left:1060px;top:112px;width:380px;font-size:30px">look up every child key in the parent</div>
+
+  <!-- CHILD -->
+  <div class="card" style="left:640px;top:150px;width:420px;height:320px">
+    <div class="ch">bridge_job_skills <span>child</span></div>
+    <div class="r hd"><span style="width:170px">job_id</span><span style="width:250px">skill_id</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:170px">a4f0c…</span><span style="width:250px">8679265…</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:170px">a4f0c…</span><span style="width:250px">1b9a3e9…</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:170px">b91d2…</span><span style="width:250px">fe326a4…</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:170px">c07e8…</span><span style="width:250px">45120b6…</span></div>
+    <div class="r" style="color:var(--err)"><span style="width:170px">c07e8…</span><span style="width:250px">ffff000…</span></div>
+  </div>
+
+  <!-- PARENT -->
+  <div class="card" style="left:1440px;top:150px;width:420px;height:320px">
+    <div class="ch">dim_skill <span>parent</span></div>
+    <div class="r hd"><span style="width:200px">skill_id</span><span style="width:220px">display_name</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:200px">8679265…</span><span style="width:220px">Python</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:200px">1b9a3e9…</span><span style="width:220px">SQL</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:200px">fe326a4…</span><span style="width:220px">AWS</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:200px">45120b6…</span><span style="width:220px">Tableau</span></div>
+    <div class="r" style="color:var(--text)"><span style="width:200px">0034c68…</span><span style="width:220px">Skydio</span></div>
+  </div>
+
+  <div class="hand" style="left:1190px;top:428px;width:230px;font-size:30px;color:var(--err);text-align:left">✗ no parent</div>
+
+  <!-- the YAML, small, left -->
+  <div class="card" style="left:60px;top:150px;width:520px;height:320px">
+    <div class="ch">marts.yml <span>declared on the child</span></div>
+    <div class="code" style="padding:14px 18px;font-size:18px">- name: skill_id
+  data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_skill')
+          field: skill_id</div>
+  </div>
+
+  <!-- what dbt runs -->
+  <div class="hand" style="left:60px;top:508px;width:1180px;font-size:28px;color:var(--faint)">— what dbt actually runs —</div>
+  <div class="term" style="left:60px;top:552px;width:1180px;height:470px">
+<div class="code">with child as (
+    select skill_id as from_field
+    from `dev`.`marts`.`bridge_job_skills`
+    where skill_id is not null
+),
+parent as (
+    select skill_id as to_field
+    from `dev`.`marts`.`dim_skill`
+)
+select from_field
+from child
+left join parent
+    on child.from_field = parent.to_field
+<span style="color:var(--blue);font-weight:700">where parent.to_field is null</span></div>
+  </div>
+
+  <!-- verdict -->
+  <div class="hand" style="left:1300px;top:508px;width:560px;font-size:28px;color:var(--faint)">— the verdict —</div>
+  <div class="chip" style="left:1300px;top:566px;width:560px;border:2px solid var(--ok);color:var(--ok)">0 rows back  →  PASS</div>
+  <div class="chip" style="left:1300px;top:660px;width:560px;border:2px solid var(--err);color:var(--err)">any rows back  →  FAIL</div>
+  <div class="hand" style="left:1300px;top:770px;width:560px;font-size:34px;color:var(--ink);line-height:1.5">The query hunts for orphans.<br>Every child needs a parent.<br>Nobody promised every parent has children.</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/></marker>
+      <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E5534B"/></marker>
+    </defs>
+    <line x1="1064" y1="263" x2="1428" y2="263" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1064" y1="309" x2="1428" y2="309" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1064" y1="355" x2="1428" y2="355" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1064" y1="401" x2="1428" y2="401" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+    <line x1="1064" y1="447" x2="1176" y2="447" stroke="#E5534B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ar)"/>
+    <line x1="582" y1="310" x2="628" y2="310" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ab)"/>
+  </svg>
+
+</div>
+</body>
+</html>
