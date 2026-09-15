@@ -17,8 +17,8 @@
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
   .title{position:absolute;left:0;top:28px;width:1920px;text-align:center;
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
-  .lbl{position:absolute;left:44px;width:270px;font-family:var(--hand);font-weight:700;font-size:40px;line-height:1.1;color:#E8E8E8}
-  .lbl .cap{display:block;margin-top:8px;font-size:25px;font-weight:600;color:var(--muted)}
+  .lbl{position:absolute;left:44px;width:280px;font-family:var(--mono);font-weight:700;font-size:30px;line-height:1.1;color:#E8E8E8}
+  .lbl .cap{display:block;margin-top:10px;font-family:var(--mono);font-size:21px;font-weight:600;color:var(--muted)}
   .tname{position:absolute;font-family:var(--mono);font-size:20px;font-weight:600;color:var(--text)}
   table.d{position:absolute;border-collapse:collapse;font-family:var(--mono);font-size:19px}
   table.d th{border:1.5px solid var(--line);background:#262626;color:#e8e8e8;font-weight:700;padding:8px 14px;text-align:left}
@@ -29,7 +29,7 @@
   .engine{position:absolute;box-sizing:border-box;border:2px solid var(--dbt);border-radius:14px;background:rgba(255,105,75,.06);
     padding:12px 20px;display:flex;flex-direction:column;gap:6px}
   .engine .en{font-family:var(--mono);font-size:23px;font-weight:700;color:var(--dbt)}
-  .engine .ec{font-family:var(--hand);font-size:24px;font-weight:600;color:var(--text);line-height:1.15}
+  .engine .ec{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--muted);line-height:1.2}
   .verdict{position:absolute;box-sizing:border-box;border-radius:11px;padding:7px 16px;
     font-family:var(--mono);font-size:20px;font-weight:700}
   .rule{position:absolute;left:44px;right:44px;border-top:2px dotted #3d3d3d}
@@ -42,7 +42,7 @@
   <div class="title">Inside a Snapshot Run</div>
 
   <!-- ================= RUN 1 ================= -->
-  <div class="lbl" style="top:186px">Run 1<span class="cap">as_of Sept 5 — no table yet</span></div>
+  <div class="lbl" style="top:186px">🌙 2025-09-01<span class="cap">first run</span></div>
 
   <div class="tname" style="left:340px;top:160px">input — current row per job</div>
   <table class="d" style="left:340px;top:192px">
@@ -52,7 +52,7 @@
 
   <div class="engine" style="left:800px;top:158px;width:380px">
     <span class="en">dbt snapshot</span>
-    <span class="ec">compare the 13 watched columns vs each job's current version</span>
+    <span class="ec">no table yet</span>
   </div>
   <div class="verdict" style="left:800px;top:296px;background:#1d2a3d;border:1.5px solid rgba(88,166,255,.55);color:var(--blue)">no table yet → INSERT all</div>
 
@@ -65,7 +65,7 @@
   <div class="rule" style="top:392px"></div>
 
   <!-- ================= RUN 2 ================= -->
-  <div class="lbl" style="top:452px">Run 2<span class="cap">as_of Sept 15 — the correction arrived</span></div>
+  <div class="lbl" style="top:452px">🌙 2025-09-11<span class="cap">correction arrives</span></div>
 
   <div class="tname" style="left:340px;top:428px">input — current row per job</div>
   <table class="d" style="left:340px;top:460px">
@@ -75,7 +75,7 @@
 
   <div class="engine" style="left:800px;top:426px;width:380px">
     <span class="en">dbt snapshot</span>
-    <span class="ec">salary_min ≠ the current version</span>
+    <span class="ec">salary_min ≠ current</span>
   </div>
   <div class="verdict" style="left:800px;top:540px;background:rgba(255,105,75,.1);border:1.5px solid var(--dbt);color:var(--dbt)">≠ changed → CLOSE old + INSERT new</div>
 
@@ -89,7 +89,7 @@
   <div class="rule" style="top:688px"></div>
 
   <!-- ================= RUN 3 ================= -->
-  <div class="lbl" style="top:748px">Run 3<span class="cap">run it again — nothing new arrived</span></div>
+  <div class="lbl" style="top:748px">🌙 2025-09-12<span class="cap">next night</span></div>
 
   <div class="tname" style="left:340px;top:724px">input — current row per job</div>
   <table class="d" style="left:340px;top:756px">
@@ -99,7 +99,7 @@
 
   <div class="engine" style="left:800px;top:722px;width:380px">
     <span class="en">dbt snapshot</span>
-    <span class="ec">every watched column = the current version</span>
+    <span class="ec">13 check_cols = current</span>
   </div>
   <div class="verdict" style="left:800px;top:836px;background:rgba(87,171,90,.08);border:1.5px solid var(--ok);color:var(--ok)">＝ unchanged → touch NOTHING</div>
 
@@ -109,7 +109,6 @@
     <tr><td class="old">1,060,000</td><td class="old">2025-09-01</td><td class="old">2025-09-11</td></tr>
     <tr><td>104,000</td><td>2025-09-11</td><td>NULL ← current</td></tr>
   </table>
-  <div class="tname" style="left:1280px;top:918px;color:var(--faint);font-family:var(--hand);font-size:25px">unchanged — history at rest</div>
 
   <!-- ============ cables ============ -->
   <svg class="art" viewBox="0 0 1920 1080">
