@@ -3,7 +3,7 @@
 -- this is the LAG-over-versions version. needs `dbt snapshot` run at least twice
 -- (two as_of points) before any job has a second version to compare.
 -- hero rows: Fraser Health's senior Data Engineer, CA$1.06M–1.22M on 2025-09-01,
--- corrected to CA$104K–145K on 2025-09-11 — the same rows assert_salaries_sane flags.
+-- corrected to CA$104K–145K on 2025-09-11 — the rows a currency-aware sanity test would flag (assert_salaries_sane is pinned to USD).
 -- caveat: on the full-year table the ORDER BY is dominated by foreign-currency rows
 -- (₩85M, COP 77M…) — add e.g. `AND salary_currency = 'CAD'` to put Fraser on top.
 

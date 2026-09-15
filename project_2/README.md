@@ -43,7 +43,7 @@ And the dbt features doing the work:
 | Overriding a built-in | `generate_schema_name` — schemas land where the folder says |
 | Seeds | the skill taxonomy: version-controlled reference data |
 | Test-driven cleaning | `not_null` surfaced 6,255 real id-less postings; dropped with eyes open, documented |
-| Singular + custom tests | `assert_salaries_sane` caught a CA$1.2M typo the schema tests never would |
+| Singular + custom tests | `assert_salaries_sane` caught 27 typed `…–1M` salary ceilings the schema tests never would |
 | SCD2 snapshots | `check` strategy on 13 content columns; `searched_at` dates the versions |
 | Incremental | merge on `job_id`; `is_incremental()` + a `search_date` high-water filter |
 | Environments | `catalog: dev` vs `catalog: prod` — promotion is a one-line diff |

@@ -1,14 +1,14 @@
--- a naive sanity bound: flag any parsed yearly salary above 1,000,000. it fires
--- ~6.9k times, and MOST flags are the test's own assumption being wrong — ₹, ZAR,
--- PKR and friends legitimately pay seven figures a year (₹ alone is 4,165 of them).
--- buried inside is the real garbage: Fraser Health's senior Data Engineer posting
--- hit the scrape at CA$1.06M–1.22M on 2025-09-01, then got corrected to CA$104K–145K
--- ten days later. the 3.11.1 snapshot catches the correction; interrogating this
--- test's red — your assumption vs real garbage — is the 3.10.2 lesson.
--- checks parsed min/max across ALL currencies on purpose — the hero garbage is
--- CA$, and a USD-only filter would hide it. points at staging, not fct: fct keeps
--- only the latest scrape (the corrected row), so only scrape grain still shows
--- the bad one. warn, not error: documented data reality, not a broken pipeline.
+-- a sanity bound: no posting legitimately pays seven figures a year. across ALL
+-- currencies it fires 7,232 times, and most of those flags are the test's own
+-- assumption being wrong: ₹, ZAR, PKR and friends legitimately pay seven figures
+-- (₹ alone is 4,248 of them). fix the assumption, not the data: pinned to USD the
+-- red drops to 27 rows, every one a range that ends in "1M" (a typed ceiling, not
+-- a salary). one of them, Kobie Marketing's Decision Sciences Analyst, reads
+-- 800K–1M for a single scrape inside a five-scrape 90K–125K life: the employer
+-- corrected it within days, and only scrape grain still shows the bad one. the
+-- 3.11.1 snapshot turns that into history; reading this red in two layers is the
+-- 3.10.2 lesson. points at staging, not fct: fct keeps only the latest scrape.
+-- warn, not error: documented data reality, not a broken pipeline.
 
 {{ config(severity = 'warn') }}
 
@@ -23,4 +23,5 @@ SELECT
     searched_at
 FROM {{ ref('stg_job_postings') }}
 WHERE salary_period = 'year'
-  AND COALESCE(salary_max, salary_min) > 1000000
+  AND salary_currency = 'USD'
+  AND COALESCE(salary_max, salary_min) >= 1000000
