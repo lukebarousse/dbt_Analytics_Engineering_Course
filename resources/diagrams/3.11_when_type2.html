@@ -1,0 +1,92 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>When Do You Need Type 2?</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --ink:#EDEDED;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Caveat',cursive;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--ink);background:var(--bg)}
+  .mono{font-family:var(--mono)}
+  .title{position:absolute;top:36px;left:0;width:1920px;font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;text-align:center}
+  .zone{position:absolute;box-sizing:border-box;border:2px dashed #8a8a8a;border-radius:25px}
+  .ztitle{position:absolute;font-family:var(--mono);font-size:44px;font-weight:700;text-align:center}
+  .zq{position:absolute;font-family:var(--mono);font-size:26px;font-weight:600;text-align:center;color:var(--muted)}
+  .sect{position:absolute;font-family:var(--hand);font-size:26px;color:var(--faint);text-align:center;letter-spacing:.03em}
+  .lbl{position:absolute;font-family:var(--hand);font-size:31px;color:var(--ink);line-height:1.55;text-align:left}
+  /* a row of a table */
+  .row{position:absolute;box-sizing:border-box;height:58px;border-radius:10px;background:var(--panel);
+    border:1.5px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 20px;
+    font-family:var(--mono);font-size:23px;font-weight:600;color:var(--text);white-space:nowrap}
+  .row .d{color:var(--muted);font-weight:400}
+  .row.cur{border-color:rgba(88,166,255,.7)}
+  .row.cur .d{color:var(--blue);font-weight:600}
+  .row .old{color:var(--faint);text-decoration:line-through;text-decoration-thickness:2px}
+  .chip{position:absolute;box-sizing:border-box;border:2.5px solid var(--ink);
+    border-radius:15px 225px 15px 255px/255px 15px 225px 15px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:25px;font-weight:600;color:var(--ink)}
+  .chip.b{border-color:var(--blue);color:var(--blue)}
+  .tag{position:absolute;font-family:var(--mono);font-size:21px;font-weight:600;color:var(--muted);text-align:center}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">When Do You Need Type 2?</div>
+
+  <!-- ==================== LEFT: TYPE 1 ==================== -->
+  <div class="zone" style="left:60px;top:130px;width:880px;height:900px"></div>
+  <div class="ztitle" style="left:60px;top:160px;width:880px;color:var(--ink)">Type 1 · overwrite</div>
+  <div class="zq" style="left:60px;top:222px;width:880px">asks: what is it NOW?</div>
+
+  <div class="sect" style="left:60px;top:286px;width:880px">— what it is —</div>
+  <div class="row" style="left:250px;top:358px;width:500px"><span class="old">Facebook</span><span>→</span><span>Meta</span></div>
+
+  <div class="sect" style="left:60px;top:478px;width:880px">— choose it when —</div>
+  <div class="lbl" style="left:190px;top:526px;width:640px">✏️ a typo, fixed<br>📧 a customer's new email<br>🧹 a trimmed name<br>🚫 nobody reports on the past</div>
+
+  <div class="sect" style="left:60px;top:792px;width:880px">— ours —</div>
+  <div class="chip" style="left:150px;top:846px;width:320px;height:90px;transform:rotate(.3deg)">dim_company</div>
+  <div class="chip" style="left:530px;top:846px;width:290px;height:90px;transform:rotate(-.3deg)">dim_skill</div>
+  <div class="tag" style="left:60px;top:966px;width:880px">⟳ dbt build · every run</div>
+
+  <!-- ==================== RIGHT: TYPE 2 ==================== -->
+  <div class="zone" style="left:980px;top:130px;width:880px;height:900px"></div>
+  <div class="ztitle" style="left:980px;top:160px;width:880px;color:var(--blue)">Type 2 · new row</div>
+  <div class="zq" style="left:980px;top:222px;width:880px">asks: what was it THEN?</div>
+
+  <div class="sect" style="left:980px;top:286px;width:880px">— what it is —</div>
+  <div class="row" style="left:1130px;top:328px;width:600px;color:var(--faint)"><span>Facebook</span><span class="d">2004-02 → 2021-10</span></div>
+  <div class="row cur" style="left:1130px;top:392px;width:600px"><span>Meta</span><span class="d">2021-10 → NULL</span></div>
+
+  <div class="sect" style="left:980px;top:478px;width:880px">— choose it when —</div>
+  <div class="lbl" style="left:1090px;top:526px;width:700px">🗺️ revenue by region, as of then<br>🏷️ the segment at purchase time<br>📜 the status on a given date<br>🔁 trial → paid → churned<br>💰 a salary, scrape by scrape</div>
+
+  <div class="sect" style="left:980px;top:792px;width:880px">— ours —</div>
+  <div class="chip" style="left:1030px;top:846px;width:340px;height:90px;transform:rotate(.25deg)">stg_job_postings</div>
+  <div class="chip b" style="left:1450px;top:846px;width:380px;height:90px;transform:rotate(-.25deg)">job_postings_snapshot</div>
+  <div class="tag" style="left:980px;top:966px;width:880px;color:var(--blue)">📸 dbt snapshot · a separate table</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
+      </marker>
+    </defs>
+    <path d="M 1372 891 L 1444 891" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+  </svg>
+
+</div>
+</body>
+</html>

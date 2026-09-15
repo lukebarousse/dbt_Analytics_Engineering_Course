@@ -52,51 +52,45 @@
 
   <div class="title">The Pipeline, and Its Memory</div>
 
-  <div class="chip" style="left:480px;top:120px;background:#262626;border:1.5px solid var(--line);color:var(--muted)">⟳ dbt build — rebuilt every run · only the latest survives</div>
+  <div class="chip" style="left:760px;top:120px;background:#262626;border:1.5px solid var(--line);color:var(--muted)">⟳ dbt build · latest only</div>
 
   <!-- ============ RAW ============ -->
   <div class="tier" style="left:40px;top:196px;width:350px;height:404px;background:rgba(216,154,91,.05);border:1.5px solid rgba(216,154,91,.45)">
     <div class="bar" style="background:var(--bronzeB);color:var(--bronzeT)">raw.jobs</div>
-    <div class="cap" style="left:22px;top:74px;color:var(--bronzeT)">every scrape, kept forever</div>
   </div>
-  <div class="card" style="left:62px;top:322px;width:306px;font-size:19px"><span>raw_job_postings</span></div>
-  <div class="mrow" style="left:62px;top:392px;width:306px">09-01 · 'CA$1.06M–1.22M'</div>
-  <div class="mrow" style="left:62px;top:440px;width:306px">09-11 · 'CA$104K–145K'</div>
-  <div class="v-no" style="left:62px;top:520px"><b>✗</b>&nbsp;raw text · error rows</div>
+  <div class="card" style="left:62px;top:288px;width:306px;font-size:19px"><span>raw_job_postings</span></div>
+  <div class="mrow" style="left:62px;top:358px;width:306px">09-01 · 'CA$1.06M–1.22M'</div>
+  <div class="mrow" style="left:62px;top:406px;width:306px">09-11 · 'CA$104K–145K'</div>
+  <div class="v-no" style="left:62px;top:486px"><b>✗</b>&nbsp;raw text · error rows</div>
 
   <!-- ============ STAGING ============ -->
   <div class="tier" style="left:430px;top:196px;width:400px;height:404px;background:rgba(201,206,214,.05);border:1.5px solid rgba(201,206,214,.4)">
     <div class="bar" style="background:var(--silverB);color:var(--silverT)">staging</div>
-    <div class="cap" style="left:22px;top:74px;color:var(--silverT)">clean — and BOTH scrapes still here</div>
   </div>
-  <div class="card" style="left:452px;top:322px;width:356px;border-color:rgba(88,166,255,.5)"><span>stg_job_postings</span></div>
-  <div class="mrow" style="left:452px;top:392px;width:356px;color:var(--text)">09-01 · 1,060,000 – 1,220,000</div>
-  <div class="mrow" style="left:452px;top:440px;width:356px;color:var(--text)">09-11 · 104,000 – 145,000</div>
-  <div class="v-ok" style="left:452px;top:520px">✓ clean + full history</div>
+  <div class="card" style="left:452px;top:288px;width:356px;border-color:rgba(88,166,255,.5)"><span>stg_job_postings</span></div>
+  <div class="mrow" style="left:452px;top:358px;width:356px;color:var(--text)">09-01 · 1,060,000 – 1,220,000</div>
+  <div class="mrow" style="left:452px;top:406px;width:356px;color:var(--text)">09-11 · 104,000 – 145,000</div>
+  <div class="v-ok" style="left:452px;top:486px">✓ clean + full history</div>
 
   <!-- ============ INTERMEDIATE ============ -->
   <div class="tier" style="left:870px;top:196px;width:380px;height:404px;background:rgba(201,206,214,.04);border:1.5px solid rgba(201,206,214,.4)">
     <div class="bar" style="background:var(--silverB);color:var(--silverT)">intermediate</div>
-    <div class="cap" style="left:22px;top:74px;color:var(--silverT)">skills, one per row</div>
   </div>
-  <div class="card" style="left:892px;top:322px;width:336px;font-size:18px"><span>int_skill_observations</span></div>
-  <div class="v-no" style="left:892px;top:520px"><b>✗</b>&nbsp;wrong grain — skills</div>
+  <div class="card" style="left:892px;top:288px;width:336px;font-size:18px"><span>int_skill_observations</span></div>
+  <div class="v-no" style="left:892px;top:486px"><b>✗</b>&nbsp;wrong grain — skills</div>
 
   <!-- ============ MARTS ============ -->
   <div class="tier" style="left:1290px;top:196px;width:590px;height:404px;background:rgba(227,179,65,.06);border:1.5px solid rgba(227,179,65,.45)">
     <div class="bar" style="background:var(--goldB);color:var(--goldT)">marts</div>
-    <div class="cap" style="left:22px;top:74px;color:var(--goldT)">deduped ✂️ one row per job</div>
   </div>
-  <div class="card" style="left:1312px;top:322px;width:280px"><span>fct_job_postings</span></div>
-  <div class="card" style="left:1615px;top:322px;width:243px;font-size:19px"><span>dims · bridge</span></div>
-  <div class="mrow" style="left:1312px;top:392px;width:340px;color:var(--text)">09-11 · 104,000 – 145,000</div>
-  <div class="cap" style="left:1312px;top:440px;color:var(--faint);font-size:25px">the 09-01 row? gone.</div>
-  <div class="v-no" style="left:1312px;top:520px"><b>✗</b>&nbsp;history already gone</div>
+  <div class="card" style="left:1312px;top:288px;width:280px"><span>fct_job_postings</span></div>
+  <div class="card" style="left:1615px;top:288px;width:243px;font-size:19px"><span>dims · bridge</span></div>
+  <div class="mrow" style="left:1312px;top:358px;width:340px;color:var(--text)">09-11 · 104,000 – 145,000</div>
+  <div class="v-no" style="left:1312px;top:486px"><b>✗</b>&nbsp;history already gone</div>
 
   <!-- ============ SNAPSHOTS (the memory) ============ -->
   <div class="tier" style="left:430px;top:680px;width:760px;height:360px;background:rgba(88,166,255,.05);border:1.5px solid rgba(88,166,255,.45)">
     <div class="bar" style="background:#1d2a3d;color:var(--blue)">snapshots/</div>
-    <div class="cap" style="left:24px;top:74px;color:var(--blue)">＋ appends every run — versions accumulate</div>
   </div>
   <div class="stack" style="left:480px;top:812px">
     <div class="v" style="top:36px;left:24px;right:-24px;opacity:.35"></div>
@@ -105,7 +99,7 @@
   </div>
   <div class="chip" style="left:480px;top:928px;background:#20242c;border:1.5px solid var(--line);color:var(--muted);font-size:20px">v1 · closed</div>
   <div class="chip" style="left:672px;top:928px;background:#1d2a3d;border:1.5px solid rgba(88,166,255,.55);color:var(--blue);font-size:20px">v2 · current (valid_to NULL)</div>
-  <div class="chip" style="left:480px;top:982px;background:#20242c;border:1.5px solid var(--line);color:var(--muted);font-size:20px">🔒 the one table you can't rebuild</div>
+  <div class="chip" style="left:480px;top:982px;background:#20242c;border:1.5px solid var(--line);color:var(--muted);font-size:20px">🔒 never rebuilt</div>
 
   <!-- ============ cables ============ -->
   <svg class="art" viewBox="0 0 1920 1080">
@@ -117,13 +111,13 @@
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/>
       </marker>
     </defs>
-    <path d="M 368 349 L 448 349" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 808 349 L 888 349" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
-    <path d="M 1228 349 L 1308 349" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 368 315 L 448 315" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 808 315 L 888 315" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
+    <path d="M 1228 315 L 1308 315" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#ahw)"/>
     <!-- staging → snapshot -->
     <path d="M 630 600 C 630 630, 630 640, 630 676" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
   </svg>
-  <div class="chip" style="left:680px;top:612px;background:#1d2a3d;border:1.5px solid rgba(88,166,255,.55);color:var(--blue)">dbt snapshot — its own command</div>
+  <div class="chip" style="left:680px;top:612px;background:#1d2a3d;border:1.5px solid rgba(88,166,255,.55);color:var(--blue)">📸 dbt snapshot</div>
 
 </div>
 </body>
