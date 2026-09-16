@@ -20,7 +20,7 @@ A production dbt pipeline on **Databricks** over 843,097 raw job-posting scrapes
 | **Incremental fact** | merge on `job_id`, only new days load | [`fct_job_postings.sql`](analytics/models/marts/fct_job_postings.sql) |
 | **Macros** | a custom parser + an overridden built-in | [`analytics/macros/`](analytics/macros/) |
 | **Tests** | generic, singular, and custom generic | [`analytics/tests/`](analytics/tests/) + the properties YAMLs |
-| **Environments** | dev/prod as catalogs, one-line promotion | `~/.dbt/profiles.yml` targets |
+| **Environments** | dev/prod as catalogs: dev from the laptop, prod only from the job | Unity Catalog: `dev` + `prod` |
 | **Orchestration** | scheduled Databricks Job, zero secrets | Databricks → Jobs & Pipelines |
 | **Analyses** | questions, kept next to the models that answer them | [`analytics/analyses/`](analytics/analyses/) |
 
@@ -46,7 +46,7 @@ And the dbt features doing the work:
 | Singular + custom tests | `assert_salaries_sane` caught 27 typed `…–1M` salary ceilings the schema tests never would |
 | SCD2 snapshots | `check` strategy on 13 content columns; `searched_at` dates the versions |
 | Incremental | merge on `job_id`; `is_incremental()` + a `search_date` high-water filter |
-| Environments | `catalog: dev` vs `catalog: prod` — promotion is a one-line diff |
+| Environments | `dev` catalog from the local profile, `prod` catalog only from the scheduled job |
 
 `dbt build` compiles SQL, materializes models, and fails the run if any test fails — same command locally and in the scheduled job.
 
@@ -56,7 +56,7 @@ And the dbt features doing the work:
 
 **Databricks** owns the runtime — storage, compute, and the schedule, one platform:
 
-- **Two targets, one profile**: every build lands in the `dev` catalog until it's promoted — `dbt build --target prod` writes the same schemas into `prod`
+- **Dev and prod as catalogs**: laptop builds land in the `dev` catalog; only the scheduled job writes the same schemas into `prod`
 - **Scheduled Databricks Job** runs `dbt deps` → `dbt debug` → `dbt build` nightly, pulling the repo straight from GitHub
 - **Zero secrets**: the job generates a temporary-credentials profile against the attached warehouse and revokes it after the run — no tokens in the repo, no CI secrets
 

@@ -4,7 +4,7 @@
     drops the glue — use MY names exactly. the name matters: override the
     entry-point generate_schema_name (the docs template); a default__-named
     copy can answer dbt show probes yet be skipped by a real build.
-    environments are separated by CATALOG (dev/prod in the profile); raw
+    environments are separated by CATALOG (dev in the profile, prod set by the scheduled job); raw
     keeps its own shared catalog. -#}
 {% macro generate_schema_name(custom_schema_name, node) -%}
 

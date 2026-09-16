@@ -1,0 +1,105 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Who Runs the Pipeline</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --duck:#F2C94C;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--mono);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:28px;width:1920px;text-align:center;font-size:54px;font-weight:700;color:#FFFFFF}
+  .band{position:absolute;left:60px;width:1800px;box-sizing:border-box;border:1.5px solid var(--line);border-radius:18px;background:var(--zone)}
+  .band.auto{border-color:rgba(88,166,255,.55)}
+  .bname{position:absolute;left:32px;top:22px;font-size:32px;font-weight:800;color:#FFFFFF}
+  .band.auto .bname{color:var(--blue)}
+  .node{position:absolute;box-sizing:border-box;border:1.5px solid #3a3a3a;border-radius:14px;background:#232323;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+  .node .ic{font-size:54px;line-height:1}
+  .node img{height:58px}
+  .node .nm{font-size:26px;font-weight:700;color:#FFFFFF}
+  .node .sub{font-size:21px;font-weight:600;color:var(--muted)}
+  .node.cat{border-color:rgba(242,201,76,.6);background:rgba(242,201,76,.06)}
+  .node.cat .nm{color:var(--duck)}
+  .node.row{flex-direction:row;gap:18px}
+  .node.row .txt{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+  .cmds{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+  .cmds code{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--blue)}
+  .chip{position:absolute;height:44px;box-sizing:border-box;display:inline-flex;align-items:center;gap:10px;padding:0 16px;border-radius:10px;border:1.5px solid #3a3a3a;background:#262626;font-size:21px;font-weight:600;color:var(--text);white-space:nowrap}
+  .chip.good{border-color:rgba(88,166,255,.55);color:var(--blue);background:#1d2a3d}
+  .elab{position:absolute;font-size:20px;font-weight:700;color:var(--blue);background:var(--zone);padding:0 8px}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Who Runs the Pipeline</div>
+
+  <!-- ============ MANUAL ============ -->
+  <div class="band" style="top:120px;height:320px">
+    <div class="bname">💻 manual</div>
+  </div>
+  <div class="node" style="left:240px;top:185px;width:340px;height:220px">
+    <div class="ic">🧑‍💻</div>
+    <div class="nm">you</div>
+    <div class="sub">your laptop</div>
+  </div>
+  <div class="node" style="left:790px;top:185px;width:340px;height:220px">
+    <div class="ic">⚙️</div>
+    <div class="nm">dbt build</div>
+    <div class="sub">when you type it</div>
+  </div>
+  <div class="node cat" style="left:1340px;top:185px;width:340px;height:220px">
+    <div class="ic">🗄</div>
+    <div class="nm">dev</div>
+    <div class="sub">catalog</div>
+  </div>
+  <div class="chip" style="left:1655px;top:136px">🔑 your token</div>
+
+  <!-- ============ ORCHESTRATED ============ -->
+  <div class="band auto" style="top:480px;height:570px">
+    <div class="bname">🤖 orchestrated</div>
+  </div>
+  <div class="node" style="left:240px;top:545px;width:340px;height:260px">
+    <div class="ic">⏰</div>
+    <div class="nm">nightly</div>
+    <div class="sub">schedule</div>
+  </div>
+  <div class="node" style="left:790px;top:545px;width:340px;height:260px">
+    <img src="../images/Databricks_logo.png" alt="Databricks">
+    <div class="nm">Databricks Job</div>
+    <div class="cmds"><code>dbt deps</code><code>dbt debug</code><code>dbt build</code></div>
+  </div>
+  <div class="node cat" style="left:1340px;top:545px;width:340px;height:260px">
+    <div class="ic">🗄</div>
+    <div class="nm">prod</div>
+    <div class="sub">catalog</div>
+  </div>
+  <div class="node row" style="left:790px;top:895px;width:340px;height:120px">
+    <img src="../images/GitHub_White_Logo.png" alt="GitHub">
+    <div class="txt"><div class="nm">main</div><div class="sub">your repo</div></div>
+  </div>
+  <div class="elab" style="left:980px;top:833px">pulls</div>
+  <div class="chip good" style="left:1340px;top:933px">🔑 temporary credentials</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6B6B6B"/></marker>
+      <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#58A6FF"/></marker>
+    </defs>
+    <path d="M 592 295 L 778 295" fill="none" stroke="#6B6B6B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahg)"/>
+    <path d="M 1142 295 L 1328 295" fill="none" stroke="#6B6B6B" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahg)"/>
+    <path d="M 592 675 L 778 675" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 1142 675 L 1328 675" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+    <path d="M 960 885 L 960 818" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#ahb)"/>
+  </svg>
+
+</div>
+</body>
+</html>
