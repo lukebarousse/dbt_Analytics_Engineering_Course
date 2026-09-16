@@ -3,79 +3,73 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Only the New Day Loads</title>
+<title>Incremental Loads by Day</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
   :root{
     --bg:#191919; --panel:#202020; --line:#4a4a4a;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
     --blue:#58A6FF; --dbt:#FF694B; --ok:#57AB5A;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
-    --hand:'Caveat',cursive;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
-  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--hand);color:var(--text);background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--mono);color:var(--text);background:var(--bg)}
   .title{position:absolute;left:0;top:30px;width:1920px;text-align:center;
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF}
-  .day{position:absolute;width:400px;text-align:center;font-family:var(--hand);font-weight:700;font-size:42px;color:#E8E8E8}
-  .day .cap{display:block;margin-top:4px;font-size:26px;font-weight:600;color:var(--muted)}
+  .day{position:absolute;width:400px;text-align:center;font-family:var(--mono);font-weight:700;font-size:36px;color:#FFFFFF}
+  .day .cap{display:block;margin-top:8px;font-size:21px;font-weight:600;color:var(--muted)}
   .inbox{position:absolute;width:400px;display:flex;justify-content:center}
   .inbox span{box-sizing:border-box;border-radius:11px;padding:9px 18px;background:#1d2a3d;
     border:1.5px solid rgba(88,166,255,.55);color:var(--blue);font-family:var(--mono);font-size:20px;font-weight:700;white-space:nowrap}
   .inbox.quiet span{background:#1f1f1f;border-color:#3a3a3a;color:var(--muted)}
   .runtag{position:absolute;width:400px;display:flex;justify-content:center}
-  .runtag span{border-radius:9px;padding:5px 14px;background:rgba(255,105,75,.08);border:1.5px solid var(--dbt);
-    color:var(--dbt);font-family:var(--mono);font-size:19px;font-weight:700}
+  .runtag span{border-radius:9px;padding:6px 16px;background:#262626;border:1.5px solid #3a3a3a;
+    color:#FFFFFF;font-family:var(--mono);font-size:20px;font-weight:700}
   .layer{position:absolute;width:400px;height:66px;box-sizing:border-box;border:1.5px solid #3a3a3a;border-radius:10px;
     background:#1f1f1f;font-family:var(--mono);font-size:21px;font-weight:600;color:var(--muted);
     display:flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap}
   .layer.new{border-color:rgba(88,166,255,.65);background:#1d2a3d;color:var(--blue);font-weight:700}
   .tname{position:absolute;width:400px;text-align:center;font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)}
-  .note{position:absolute;width:400px;text-align:center;font-family:var(--hand);font-size:27px;font-weight:600;color:var(--muted)}
   svg.art{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <div class="title">Only the New Day Loads</div>
+  <div class="title">Incremental Loads by Day</div>
 
   <!-- ============ DAY 1 ============ -->
-  <div class="day" style="left:110px;top:140px">July 1<span class="cap">first run 🌙</span></div>
-  <div class="inbox" style="left:110px;top:262px"><span>📥 3,355 postings scraped</span></div>
+  <div class="day" style="left:110px;top:140px">July 1<span class="cap">first run</span></div>
+  <div class="inbox" style="left:110px;top:262px"><span>📥 3,355 jobs · 07-01</span></div>
   <div class="runtag" style="left:110px;top:420px"><span>⚙️ dbt run</span></div>
-  <div class="layer new" style="left:110px;top:826px">07-01 · 3,355 rows ★</div>
+  <div class="layer new" style="left:110px;top:826px">07-01 · 3,355 jobs ★</div>
   <div class="tname" style="left:110px;top:914px">fct_job_postings 🗄</div>
-  <div class="note" style="left:110px;top:958px">first run — everything loads</div>
 
   <!-- ============ DAY 2 ============ -->
-  <div class="day" style="left:560px;top:140px">July 2<span class="cap">new postings arrive 🌙</span></div>
-  <div class="inbox" style="left:560px;top:262px"><span>📥 2,638 new · 07-02</span></div>
+  <div class="day" style="left:560px;top:140px">July 2<span class="cap">new day</span></div>
+  <div class="inbox" style="left:560px;top:262px"><span>📥 3,147 jobs · 07-02</span></div>
   <div class="runtag" style="left:560px;top:420px"><span>⚙️ dbt run</span></div>
-  <div class="layer new" style="left:560px;top:754px">07-02 · +2,638 ★ added</div>
-  <div class="layer" style="left:560px;top:826px">07-01 · 3,355 · untouched</div>
+  <div class="layer new" style="left:560px;top:754px">07-02 · 3,147 jobs ★</div>
+  <div class="layer" style="left:560px;top:826px">07-01</div>
   <div class="tname" style="left:560px;top:914px">fct_job_postings 🗄</div>
-  <div class="note" style="left:560px;top:958px">the table GROWS a layer</div>
 
   <!-- ============ DAY 3 ============ -->
-  <div class="day" style="left:1010px;top:140px">July 3<span class="cap">new postings arrive 🌙</span></div>
-  <div class="inbox" style="left:1010px;top:262px"><span>📥 2,036 new · 07-03</span></div>
+  <div class="day" style="left:1010px;top:140px">July 3<span class="cap">new day</span></div>
+  <div class="inbox" style="left:1010px;top:262px"><span>📥 2,831 jobs · 07-03</span></div>
   <div class="runtag" style="left:1010px;top:420px"><span>⚙️ dbt run</span></div>
-  <div class="layer new" style="left:1010px;top:682px">07-03 · +2,036 ★ added</div>
-  <div class="layer" style="left:1010px;top:754px">07-02 · 2,638 · untouched</div>
-  <div class="layer" style="left:1010px;top:826px">07-01 · 3,355 · untouched</div>
+  <div class="layer new" style="left:1010px;top:682px">07-03 · 2,831 jobs ★</div>
+  <div class="layer" style="left:1010px;top:754px">07-02</div>
+  <div class="layer" style="left:1010px;top:826px">07-01</div>
   <div class="tname" style="left:1010px;top:914px">fct_job_postings 🗄</div>
-  <div class="note" style="left:1010px;top:958px">only the new day loads ⚡</div>
 
   <!-- ============ RUN AGAIN ============ -->
-  <div class="day" style="left:1460px;top:140px">July 3, again<span class="cap">run it twice ↻</span></div>
+  <div class="day" style="left:1460px;top:140px">July 3<span class="cap">run again</span></div>
   <div class="inbox quiet" style="left:1460px;top:262px"><span>📥 nothing new</span></div>
   <div class="runtag" style="left:1460px;top:420px"><span>⚙️ dbt run</span></div>
-  <div class="layer" style="left:1460px;top:682px">07-03 · 2,036 · untouched</div>
-  <div class="layer" style="left:1460px;top:754px">07-02 · 2,638 · untouched</div>
-  <div class="layer" style="left:1460px;top:826px">07-01 · 3,355 · untouched</div>
+  <div class="layer" style="left:1460px;top:682px">07-03</div>
+  <div class="layer" style="left:1460px;top:754px">07-02</div>
+  <div class="layer" style="left:1460px;top:826px">07-01</div>
   <div class="tname" style="left:1460px;top:914px">fct_job_postings 🗄</div>
-  <div class="note" style="left:1460px;top:958px">+0 rows — no rebuild</div>
 
   <!-- ============ cables: batch → run → top layer ============ -->
   <svg class="art" viewBox="0 0 1920 1080">

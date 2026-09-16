@@ -1,0 +1,211 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Incremental Strategies</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--mono);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:28px;width:1920px;text-align:center;font-size:54px;font-weight:700;color:#FFFFFF}
+
+  /* ---------- mini table: date lanes holding job rows ---------- */
+  .mt{display:flex;flex-direction:column;gap:10px}
+  .card .mt{gap:26px}
+  .lane{display:flex;align-items:stretch;gap:10px;box-sizing:border-box;border:1.5px solid #2e2e2e;border-radius:10px;background:#1b1b1b;padding:7px 8px;position:relative}
+  .lane .d{width:66px;flex:none;display:flex;align-items:center;font-size:19px;font-weight:600;color:var(--faint)}
+  .lane .rows{flex:1;display:flex;flex-direction:column;gap:6px;justify-content:center}
+  .lane.swap{border:2px solid rgba(88,166,255,.75);background:rgba(88,166,255,.04)}
+  .lane .tag{position:absolute;right:8px;top:-15px;font-size:19px;font-weight:700;color:var(--blue);background:var(--zone);padding:0 8px;border-radius:6px}
+  .r{height:42px;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:0 12px 0 6px;border-radius:8px;border:1.5px solid transparent}
+  .r .k{width:30px;height:30px;flex:none;border-radius:7px;display:flex;align-items:center;justify-content:center;background:#2c2c2c;color:#FFFFFF;font-size:19px;font-weight:700;box-sizing:border-box}
+  .r .v{font-size:22px;font-weight:600;color:var(--text)}
+  .r .m{margin-left:auto;font-size:22px;font-weight:700;color:var(--blue)}
+  .r.new{background:rgba(88,166,255,.12);border-color:rgba(88,166,255,.55)}
+  .r.new .v{color:var(--blue)}
+  .r.gone{opacity:.42}
+  .r.gone .v{text-decoration:line-through;text-decoration-thickness:2px}
+  .r.gone .m{color:var(--muted)}
+  .r .k.dup{border:2.5px solid var(--err);color:var(--err);background:rgba(229,83,75,.12)}
+
+  /* ---------- the givens ---------- */
+  .given{position:absolute;width:400px}
+  .given .lane .d{width:118px}
+  .ghead{display:flex;align-items:center;justify-content:center;gap:10px;height:44px;margin-bottom:10px;font-size:26px;font-weight:700;color:#FFFFFF}
+  .cols{display:flex;gap:10px;padding:0 10px 6px 10px;font-size:18px;font-weight:600;color:var(--faint)}
+  .cols span:first-child{width:128px}
+
+  /* ---------- strategy cards ---------- */
+  .card{position:absolute;top:448px;width:355px;height:580px;box-sizing:border-box;border:1.5px solid var(--line);border-radius:16px;background:var(--zone);padding:18px 14px 14px 14px;display:flex;flex-direction:column}
+  .name{height:46px;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;color:#FFFFFF}
+  .chips{display:flex;flex-direction:column;align-items:center;gap:10px;margin:10px 0 18px 0}
+  .chip{height:40px;box-sizing:border-box;display:inline-flex;align-items:center;gap:10px;padding:0 14px;border-radius:9px;border:1.5px solid #3a3a3a;background:#232323;font-size:19px;font-weight:600;color:var(--text);white-space:nowrap}
+  .chip .ck{color:var(--muted)}
+  .chip .cv{color:var(--blue);font-weight:700}
+  .chip.verb{color:#FFFFFF;font-weight:700;background:#262626}
+  .chip.none{color:var(--faint);border-style:dashed}
+  .card .mt .lane.l2{min-height:160px}
+  .card .mt .lane.l1{min-height:56px}
+  .card .mt .lane.l3{min-height:107px}
+  .rule{position:absolute;left:40px;right:40px;top:414px;border-top:2px dotted #333}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">Incremental Strategies</div>
+
+  <!-- ================= THE GIVENS ================= -->
+  <div class="given" style="left:500px;top:118px">
+    <div class="ghead">🗄 fct_job_postings</div>
+    <div class="cols"><span>search_date</span><span>job_id · salary_max</span></div>
+    <div class="mt">
+      <div class="lane"><div class="d">09-01</div><div class="rows">
+        <div class="r"><span class="k">A</span><span class="v">90K</span></div>
+      </div></div>
+      <div class="lane"><div class="d">09-02</div><div class="rows">
+        <div class="r"><span class="k">B</span><span class="v">1M</span></div>
+        <div class="r"><span class="k">C</span><span class="v">120K</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="given" style="left:1020px;top:118px">
+    <div class="ghead">📥 this run</div>
+    <div class="cols"><span>search_date</span><span>job_id · salary_max</span></div>
+    <div class="mt">
+      <div class="lane"><div class="d">09-02</div><div class="rows">
+        <div class="r new"><span class="k">B</span><span class="v">100K</span></div>
+      </div></div>
+      <div class="lane"><div class="d">09-03</div><div class="rows">
+        <div class="r new"><span class="k">A</span><span class="v">95K</span></div>
+        <div class="r new"><span class="k">D</span><span class="v">75K</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- ================= APPEND ================= -->
+  <div class="card" style="left:30px">
+    <div class="name">append</div>
+    <div class="chips">
+      <span class="chip none">no key</span>
+      <span class="chip verb">INSERT INTO</span>
+    </div>
+    <div class="mt">
+      <div class="lane l1"><div class="d">09-01</div><div class="rows">
+        <div class="r"><span class="k dup">A</span><span class="v">90K</span></div>
+      </div></div>
+      <div class="lane l2"><div class="d">09-02</div><div class="rows">
+        <div class="r"><span class="k dup">B</span><span class="v">1M</span></div>
+        <div class="r"><span class="k">C</span><span class="v">120K</span></div>
+        <div class="r new"><span class="k dup">B</span><span class="v">100K</span><span class="m">+</span></div>
+      </div></div>
+      <div class="lane l3"><div class="d">09-03</div><div class="rows">
+        <div class="r new"><span class="k dup">A</span><span class="v">95K</span><span class="m">+</span></div>
+        <div class="r new"><span class="k">D</span><span class="v">75K</span><span class="m">+</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ================= MERGE ================= -->
+  <div class="card" style="left:401px">
+    <div class="name">merge</div>
+    <div class="chips">
+      <span class="chip"><span class="ck">unique_key</span><span class="cv">job_id</span></span>
+      <span class="chip verb">MERGE INTO</span>
+    </div>
+    <div class="mt">
+      <div class="lane l1"><div class="d">09-01</div><div class="rows">
+      </div></div>
+      <div class="lane l2"><div class="d">09-02</div><div class="rows">
+        <div class="r new"><span class="k">B</span><span class="v">100K</span><span class="m">↻</span></div>
+        <div class="r"><span class="k">C</span><span class="v">120K</span></div>
+      </div></div>
+      <div class="lane l3"><div class="d">09-03</div><div class="rows">
+        <div class="r new"><span class="k">A</span><span class="v">95K</span><span class="m">↻</span></div>
+        <div class="r new"><span class="k">D</span><span class="v">75K</span><span class="m">+</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ================= DELETE+INSERT ================= -->
+  <div class="card" style="left:782px">
+    <div class="name">delete+insert</div>
+    <div class="chips">
+      <span class="chip"><span class="ck">unique_key</span><span class="cv">job_id</span></span>
+      <span class="chip verb">DELETE → INSERT</span>
+    </div>
+    <div class="mt">
+      <div class="lane l1"><div class="d">09-01</div><div class="rows">
+        <div class="r gone"><span class="k">A</span><span class="v">90K</span><span class="m">✗</span></div>
+      </div></div>
+      <div class="lane l2"><div class="d">09-02</div><div class="rows">
+        <div class="r gone"><span class="k">B</span><span class="v">1M</span><span class="m">✗</span></div>
+        <div class="r"><span class="k">C</span><span class="v">120K</span></div>
+        <div class="r new"><span class="k">B</span><span class="v">100K</span><span class="m">+</span></div>
+      </div></div>
+      <div class="lane l3"><div class="d">09-03</div><div class="rows">
+        <div class="r new"><span class="k">A</span><span class="v">95K</span><span class="m">+</span></div>
+        <div class="r new"><span class="k">D</span><span class="v">75K</span><span class="m">+</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ================= INSERT_OVERWRITE ================= -->
+  <div class="card" style="left:1163px">
+    <div class="name">insert_overwrite</div>
+    <div class="chips">
+      <span class="chip"><span class="ck">partition_by</span><span class="cv">search_date</span></span>
+      <span class="chip verb">INSERT OVERWRITE</span>
+    </div>
+    <div class="mt">
+      <div class="lane l1"><div class="d">09-01</div><div class="rows">
+        <div class="r"><span class="k dup">A</span><span class="v">90K</span></div>
+      </div></div>
+      <div class="lane l2 swap"><span class="tag">⇄ partition</span><div class="d">09-02</div><div class="rows">
+        <div class="r gone"><span class="k">B</span><span class="v">1M</span><span class="m">✗</span></div>
+        <div class="r gone"><span class="k">C</span><span class="v">120K</span><span class="m">✗</span></div>
+        <div class="r new"><span class="k">B</span><span class="v">100K</span><span class="m">+</span></div>
+      </div></div>
+      <div class="lane l3 swap"><span class="tag">⇄ partition</span><div class="d">09-03</div><div class="rows">
+        <div class="r new"><span class="k dup">A</span><span class="v">95K</span><span class="m">+</span></div>
+        <div class="r new"><span class="k">D</span><span class="v">75K</span><span class="m">+</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ================= MICROBATCH ================= -->
+  <div class="card" style="left:1544px">
+    <div class="name">microbatch</div>
+    <div class="chips">
+      <span class="chip"><span class="ck">event_time</span><span class="cv">search_date</span></span>
+      <span class="chip verb">REPLACE WHERE</span>
+    </div>
+    <div class="mt">
+      <div class="lane l1"><div class="d">09-01</div><div class="rows">
+        <div class="r"><span class="k dup">A</span><span class="v">90K</span></div>
+      </div></div>
+      <div class="lane l2 swap"><span class="tag">⚙️ batch</span><div class="d">09-02</div><div class="rows">
+        <div class="r gone"><span class="k">B</span><span class="v">1M</span><span class="m">✗</span></div>
+        <div class="r"><span class="k">C</span><span class="v">120K</span><span class="m">↻</span></div>
+        <div class="r new"><span class="k">B</span><span class="v">100K</span><span class="m">+</span></div>
+      </div></div>
+      <div class="lane l3 swap"><span class="tag">⚙️ batch</span><div class="d">09-03</div><div class="rows">
+        <div class="r new"><span class="k dup">A</span><span class="v">95K</span><span class="m">+</span></div>
+        <div class="r new"><span class="k">D</span><span class="v">75K</span><span class="m">+</span></div>
+      </div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

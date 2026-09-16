@@ -23,20 +23,16 @@
   .title{position:absolute;left:0;top:40px;width:1920px;text-align:center;
     font-family:var(--mono);font-size:54px;font-weight:700;color:#FFFFFF;letter-spacing:-.01em}
   .mono{font-family:var(--mono)}
-  .mcard{position:absolute;top:235px;width:344px;height:700px;box-sizing:border-box;
+  .mcard{position:absolute;top:350px;width:344px;height:430px;box-sizing:border-box;
     background:var(--zone);border:1.5px solid var(--line);border-radius:18px;
     display:flex;flex-direction:column;align-items:center;padding:26px 20px 24px;gap:0}
   .mcard.ghost{border-style:dashed;border-color:#4a4a4a}
   .mcard.ghost > *{opacity:.72}
   .mname{font-family:var(--mono);font-size:29px;font-weight:800;color:var(--blue)}
   .viz{width:300px;height:210px;margin-top:22px;flex:none}
-  .what{font-size:22px;text-align:center;margin-top:18px;line-height:1.35;min-height:60px}
-  .when{font-size:20px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.35}
   .chip{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--text);
     background:var(--panel2);border:1.5px solid var(--line);border-radius:8px;
     padding:8px 12px;white-space:normal;text-align:center;line-height:1.35;margin-top:auto}
-  .chip .d{color:var(--faint);font-weight:400}
-  .chip.orange{color:var(--dbt);border-color:rgba(255,105,75,.5)}
 </style>
 </head>
 <body>
@@ -56,9 +52,7 @@
       <line x1="115" y1="142" x2="160" y2="142" stroke="#6B6B6B" stroke-width="3" stroke-linecap="round"/>
       <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">🧾 the recipe, saved</text>
     </svg>
-    <div class="what">a saved query — <b>zero rows stored</b></div>
-    <div class="when">fresh every read · every query re-computes<br>the default; most models</div>
-    <div class="chip">materialized='view' <span class="d">— the default</span></div>
+    <div class="chip">materialized='view'</div>
   </div>
 
   <!-- ============ table ============ -->
@@ -75,9 +69,7 @@
       </g>
       <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">🗄 real rows on disk</text>
     </svg>
-    <div class="what">query results <b>written to storage</b></div>
-    <div class="when">fast reads · frozen until the next run<br>models dashboards hit hard</div>
-    <div class="chip orange">materialized='table'</div>
+    <div class="chip">materialized='table'</div>
   </div>
 
   <!-- ============ ephemeral ============ -->
@@ -95,9 +87,7 @@
       <line x1="196" y1="130" x2="252" y2="130" stroke="#6B6B6B" stroke-width="3" stroke-linecap="round"/>
       <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">inlined into whoever refs it</text>
     </svg>
-    <div class="what"><b>nothing built</b> — becomes a CTE downstream</div>
-    <div class="when">in your repo, invisible in the warehouse<br>small helper logic</div>
-    <div class="chip orange">materialized='ephemeral'</div>
+    <div class="chip">materialized='ephemeral'</div>
   </div>
 
   <!-- ============ incremental ============ -->
@@ -121,9 +111,7 @@
       <text x="38" y="152" text-anchor="middle" font-size="22" font-weight="700" fill="#58A6FF">+</text>
       <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">only NEW rows processed</text>
     </svg>
-    <div class="what">a table that <b>only adds what's new</b></div>
-    <div class="when">skip re-building what hasn't changed<br>when the data gets big</div>
-    <div class="chip orange">materialized='incremental'</div>
+    <div class="chip">materialized='incremental'</div>
   </div>
 
   <!-- ============ materialized_view ============ -->
@@ -140,8 +128,6 @@
       <text x="248" y="48" text-anchor="middle" font-size="44" font-weight="700" fill="#9B9B9B">↻</text>
       <text x="150" y="196" text-anchor="middle" font-size="20" fill="#9B9B9B">↻ refreshes itself</text>
     </svg>
-    <div class="what">a table the <b>warehouse keeps fresh</b></div>
-    <div class="when">no re-run needed — the engine refreshes it<br>adapter-dependent · not in DuckDB</div>
     <div class="chip">materialized=<br>'materialized_view'</div>
   </div>
 
