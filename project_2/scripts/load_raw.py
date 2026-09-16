@@ -1,10 +1,12 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # Load raw — the EL step (run once)
+# MAGIC # Load raw — the EL step
 # MAGIC Downloads the course dataset from GitHub **directly into a Unity Catalog Volume**
 # MAGIC (no local files, no drag-and-drop), then lands it as bronze tables.
 # MAGIC
-# MAGIC Import this notebook (Workspace → Import → URL) and **Run all**.
+# MAGIC First time (To the Cloud): import this notebook (Workspace → Import → URL) and **Run all**.
+# MAGIC Every night after (4.01): Task 1 of the Databricks Job, pulled from `scripts/load_raw.py` in your repo.
+# MAGIC Safe to rerun: files already in the Volume are skipped, the raw tables are re-landed.
 
 # COMMAND ----------
 

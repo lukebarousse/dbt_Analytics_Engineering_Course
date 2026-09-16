@@ -30,6 +30,7 @@
   .node.row .txt{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
   .cmds{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
   .cmds code{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--blue)}
+  .cmds code.ld{color:#FFFFFF}
   .chip{position:absolute;height:44px;box-sizing:border-box;display:inline-flex;align-items:center;gap:10px;padding:0 16px;border-radius:10px;border:1.5px solid #3a3a3a;background:#262626;font-size:21px;font-weight:600;color:var(--text);white-space:nowrap}
   .chip.good{border-color:rgba(88,166,255,.55);color:var(--blue);background:#1d2a3d}
   .elab{position:absolute;font-size:20px;font-weight:700;color:var(--blue);background:var(--zone);padding:0 8px}
@@ -71,10 +72,10 @@
     <div class="nm">nightly</div>
     <div class="sub">schedule</div>
   </div>
-  <div class="node" style="left:790px;top:545px;width:340px;height:260px">
-    <img src="../images/Databricks_logo.png" alt="Databricks">
+  <div class="node" style="left:790px;top:545px;width:340px;height:260px;gap:6px">
+    <img src="../images/Databricks_logo.png" alt="Databricks" style="height:46px">
     <div class="nm">Databricks Job</div>
-    <div class="cmds"><code>dbt deps</code><code>dbt debug</code><code>dbt build</code></div>
+    <div class="cmds"><code class="ld">load_raw</code><code>dbt deps</code><code>dbt debug</code><code>dbt build</code></div>
   </div>
   <div class="node cat" style="left:1340px;top:545px;width:340px;height:260px">
     <div class="ic">🗄</div>

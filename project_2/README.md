@@ -57,7 +57,7 @@ And the dbt features doing the work:
 **Databricks** owns the runtime — storage, compute, and the schedule, one platform:
 
 - **Dev and prod as catalogs**: laptop builds land in the `dev` catalog; only the scheduled job writes the same schemas into `prod`
-- **Scheduled Databricks Job** runs `dbt deps` → `dbt debug` → `dbt build` nightly, pulling the repo straight from GitHub
+- **Scheduled Databricks Job** runs the whole pipeline nightly: `load_raw` (the ingest notebook), then `dbt deps` → `dbt debug` → `dbt build`, pulling the repo straight from GitHub
 - **Zero secrets**: the job generates a temporary-credentials profile against the attached warehouse and revokes it after the run — no tokens in the repo, no CI secrets
 
 Any BI tool connects straight to the warehouse — SQL editor, Excel, Power BI, and Tableau all query the `prod` catalog directly.
@@ -118,7 +118,7 @@ Backfill a year of snapshot history in one query: paste [`scripts/backfill_job_p
 │   ├── macros/                       # parse_salary + generate_schema_name
 │   ├── tests/                        # singular + custom generic
 │   └── analyses/                     # the questions
-├── scripts/                          # snapshot backfill (SQL editor, run once)
+├── scripts/                          # load_raw.py (the job's ingest task) + snapshot backfill
 └── img/                              # README assets
 ```
 
