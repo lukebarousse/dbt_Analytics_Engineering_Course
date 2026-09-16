@@ -1,0 +1,99 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>delete+insert by Day</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --blue:#58A6FF; --duck:#F2C94C; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--mono);color:var(--text);background:var(--bg)}
+  .title{position:absolute;left:0;top:24px;width:1920px;text-align:center;font-size:54px;font-weight:700;color:#FFFFFF}
+  .cfg{position:absolute;left:0;top:104px;width:1920px;display:flex;justify-content:center;gap:14px}
+  .chip{height:42px;box-sizing:border-box;display:inline-flex;align-items:center;gap:10px;padding:0 16px;border-radius:9px;border:1.5px solid #3a3a3a;background:#232323;font-size:20px;font-weight:600;color:var(--text);white-space:nowrap}
+  .chip .ck{color:var(--faint)}
+  .chip .cv{color:#FFFFFF;font-weight:700}
+  .col{position:absolute;top:176px;width:560px;height:780px}
+  .day{text-align:center;font-size:36px;font-weight:700;color:#FFFFFF;height:46px}
+  .cap{text-align:center;font-size:21px;font-weight:600;color:var(--muted);height:30px}
+  .lbl{text-align:center;font-size:18px;font-weight:700;letter-spacing:.08em;color:var(--faint)}
+  .inbox{position:absolute;z-index:2;left:0;top:112px;width:560px;height:150px;display:flex;flex-direction:column;align-items:center}
+  .inrows{margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;width:540px}
+  .ir{height:48px;box-sizing:border-box;display:flex;align-items:center;gap:10px;padding:0 14px 0 8px;border-radius:9px;background:linear-gradient(rgba(88,166,255,.12),rgba(88,166,255,.12)),var(--bg);border:1.5px solid rgba(88,166,255,.55)}
+  .ir .d{font-size:19px;font-weight:600;color:var(--faint)}
+  .ir .v{font-size:23px;font-weight:600;color:var(--blue)}
+  .verb{position:absolute;left:0;top:300px;width:560px;display:flex;justify-content:center}
+  .verb span{height:46px;box-sizing:border-box;display:inline-flex;align-items:center;padding:0 18px;border-radius:10px;background:#262626;border:1.5px solid #3a3a3a;font-size:21px;font-weight:700;color:#FFFFFF;white-space:nowrap}
+  .tbl{position:absolute;left:0;top:384px;width:560px}
+  .lane{position:absolute;left:20px;width:520px;display:flex;align-items:stretch;gap:12px;box-sizing:border-box;border:1.5px solid #2e2e2e;border-radius:11px;background:#1b1b1b;padding:8px 10px}
+  .lane .ld{width:78px;flex:none;display:flex;align-items:center;font-size:21px;font-weight:600;color:var(--faint)}
+  .lane .rows{flex:1;display:flex;flex-direction:column;gap:8px;justify-content:center}
+  .lane.swap{border:2px solid rgba(242,201,76,.8);background:rgba(242,201,76,.05)}
+  .lane .tag{position:absolute;right:10px;top:-15px;font-size:19px;font-weight:700;color:var(--duck);background:var(--bg);padding:0 8px;border-radius:6px}
+  .r{height:50px;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:0 14px 0 8px;border-radius:9px;border:1.5px solid transparent}
+  .k{width:34px;height:34px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#2c2c2c;color:#FFFFFF;font-size:21px;font-weight:700;box-sizing:border-box}
+  .k.dup{border:2.5px solid var(--err);color:var(--err);background:rgba(229,83,75,.12)}
+  .r .v{font-size:24px;font-weight:600;color:var(--text)}
+  .r .m{margin-left:auto;font-size:25px;font-weight:700;color:var(--blue)}
+  .r.new{background:rgba(88,166,255,.12);border-color:rgba(88,166,255,.55)}
+  .r.new .v{color:var(--blue)}
+  .r.gone{border:1.5px dashed #4a4a4a}
+  .r.gone .k,.r.gone .v{opacity:.4}
+  .r.gone .v{text-decoration:line-through;text-decoration-thickness:2px}
+  .r.gone .m{color:var(--muted)}
+  .key{position:absolute;left:0;bottom:22px;width:1920px;display:flex;justify-content:center;gap:44px;font-size:20px;font-weight:600;color:var(--faint)}
+  .key span{display:flex;align-items:center;gap:10px}
+  .key em{font-style:normal;font-weight:700}
+  .key .sw{width:16px;height:16px;border-radius:4px;display:inline-block}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">delete+insert by Day</div>
+  <div class="cfg"><span class="chip"><span class="ck">incremental_strategy</span><span class="cv">delete+insert</span></span><span class="chip"><span class="ck">unique_key</span><span class="cv">job_id</span></span></div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+        <path d="M 340 376 L 340 468" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 340 530 L 340 554" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 960 376 L 960 468" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 960 530 L 960 554" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 1580 376 L 1580 468" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path d="M 1580 530 L 1580 554" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+  </svg>
+
+  <div class="col" style="left:60px">
+    <div class="day">Sept 1</div>
+    <div class="cap">first run</div>
+    <div class="inbox"><div class="lbl">📥 SELECT RETURNS</div><div class="inrows"><div class="ir"><span class="d">09-01</span><span class="k">A</span><span class="v">90K</span></div></div></div>
+    <div class="verb"><span>⚙️ CREATE TABLE</span></div>
+    <div class="tbl"><div class="lbl">🗄 FCT_JOB_POSTINGS</div><div class="lane" style="top:50px;height:70px"><div class="ld">09-01</div><div class="rows"><div class="r new"><span class="k">A</span><span class="v">90K</span><span class="m">+</span></div></div></div></div>
+  </div>
+  <div class="col" style="left:680px">
+    <div class="day">Sept 2</div>
+    <div class="cap">new day</div>
+    <div class="inbox"><div class="lbl">📥 SELECT RETURNS</div><div class="inrows"><div class="ir"><span class="d">09-02</span><span class="k">B</span><span class="v">1M</span></div><div class="ir"><span class="d">09-02</span><span class="k">C</span><span class="v">120K</span></div></div></div>
+    <div class="verb"><span>⚙️ DELETE → INSERT</span></div>
+    <div class="tbl"><div class="lbl">🗄 FCT_JOB_POSTINGS</div><div class="lane" style="top:50px;height:70px"><div class="ld">09-01</div><div class="rows"><div class="r "><span class="k">A</span><span class="v">90K</span></div></div></div><div class="lane" style="top:140px;height:128px"><div class="ld">09-02</div><div class="rows"><div class="r new"><span class="k">B</span><span class="v">1M</span><span class="m">+</span></div><div class="r new"><span class="k">C</span><span class="v">120K</span><span class="m">+</span></div></div></div></div>
+  </div>
+  <div class="col" style="left:1300px">
+    <div class="day">Sept 3</div>
+    <div class="cap">new day</div>
+    <div class="inbox"><div class="lbl">📥 SELECT RETURNS</div><div class="inrows"><div class="ir"><span class="d">09-03</span><span class="k">A</span><span class="v">95K</span></div><div class="ir"><span class="d">09-03</span><span class="k">D</span><span class="v">75K</span></div></div></div>
+    <div class="verb"><span>⚙️ DELETE → INSERT</span></div>
+    <div class="tbl"><div class="lbl">🗄 FCT_JOB_POSTINGS</div><div class="lane" style="top:50px;height:70px"><div class="ld">09-01</div><div class="rows"><div class="r gone"><span class="k">A</span><span class="v">90K</span><span class="m">✗</span></div></div></div><div class="lane" style="top:140px;height:128px"><div class="ld">09-02</div><div class="rows"><div class="r "><span class="k">B</span><span class="v">1M</span></div><div class="r "><span class="k">C</span><span class="v">120K</span></div></div></div><div class="lane" style="top:288px;height:128px"><div class="ld">09-03</div><div class="rows"><div class="r new"><span class="k">A</span><span class="v">95K</span><span class="m">+</span></div><div class="r new"><span class="k">D</span><span class="v">75K</span><span class="m">+</span></div></div></div></div>
+  </div>
+
+
+  <div class="key"><span><i class="sw" style="width:22px;height:22px;box-sizing:border-box;background:rgba(88,166,255,.12);border:1.5px solid rgba(88,166,255,.55)"></i>from tonight&rsquo;s SELECT</span><span><em style="color:var(--blue)">+</em> new row</span><span><i class="sw" style="width:22px;height:22px;box-sizing:border-box;background:transparent;border:1.5px dashed #6B6B6B"></i><em style="color:var(--muted)">✗</em> row removed</span></div>
+
+</div>
+</body>
+</html>
