@@ -12,7 +12,6 @@ data/
 # python
 .venv/
 __pycache__/
-uv.lock
 
 # exercise solutions stay private (never shipped in the public repo)
 **/_solutions/

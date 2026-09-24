@@ -38,7 +38,7 @@ macros:
         type: string
         description: The schema declared in config/dbt_project.yml, if any.
       - name: node
-        type: object
+        type: any
         description: The model being built (unused; kept for the built-in's signature).
 
   # documented HERE, not tests/tests.yml: that file documents test NODES
