@@ -2,6 +2,7 @@
 -- a QUESTION, not a model — it lives in analyses/ (3.08.2). all roles by default;
 -- pick yours with:
 --   dbt compile --select in_demand_skills --vars 'job_title: Data Analyst'
+-- then read target/compiled/analytics/analyses/in_demand_skills.sql (compile writes the file, it prints nothing)
 
 WITH job_postings AS (
 
