@@ -1,0 +1,72 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>dbt compile</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF; --ok:#57AB5A; --red:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
+    background:radial-gradient(900px 480px at 50% -8%, rgba(255,105,75,.06), transparent 60%), var(--bg)}
+  .title{position:absolute;left:0;top:56px;width:1920px;text-align:center;font-family:var(--mono);font-weight:800;font-size:64px;color:#fff}
+  .title b{color:var(--dbt);font-weight:800}
+  .sub{position:absolute;left:0;top:140px;width:1920px;text-align:center;font-size:28px;color:var(--muted)}
+  .lane{position:absolute;top:250px;width:520px;height:600px;border:1.5px dashed var(--line);border-radius:20px}
+  .lanehead{position:absolute;top:-22px;left:0;width:100%;text-align:center}
+  .lanehead span{display:inline-block;background:var(--bg);padding:4px 18px;font-family:var(--mono);font-weight:700;font-size:22px;letter-spacing:.14em;color:var(--faint)}
+  .card{position:absolute;left:60px;width:400px;background:var(--panel);border:1.5px solid var(--line);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38);padding:22px 26px;box-sizing:border-box}
+  .card .h{font-family:var(--mono);font-weight:800;font-size:30px}
+  .card ul{list-style:none;margin:14px 0 0;padding:0}
+  .card li{font-family:var(--mono);font-size:23px;line-height:1.75;color:var(--text)}
+  .card li.f::before{content:'📄 ';font-size:20px}
+  .card li.d::before{content:'📁 ';font-size:20px}
+  .card li.t::before{content:'▦ ';color:var(--ok)}
+  .card li.x{text-decoration:line-through;color:var(--faint)}
+  .card li.x::before{content:'✕ ';color:var(--red);text-decoration:none}
+  .card li.more{color:var(--faint)}
+  .card .note{margin-top:10px;font-family:var(--sans);font-size:20px;color:var(--muted)}
+  .yellow{color:var(--duck)} .blue{color:var(--blue)} .faintc{color:var(--faint)}
+  .cmd{position:absolute;left:60px;width:400px;top:200px;padding:26px 24px;box-sizing:border-box;text-align:center;background:var(--panel);border:1.5px solid rgba(255,105,75,.6);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .cmd .c{font-family:var(--mono);font-weight:800;font-size:40px;color:#fff;white-space:nowrap}
+  .cmd .c b{color:var(--dbt);font-weight:800}
+  .cmd .j{margin-top:12px;font-size:22px;color:var(--muted);line-height:1.4}
+  .term{position:absolute;left:60px;width:400px;top:420px;background:#141414;border:1.5px solid var(--line);border-radius:12px;padding:16px 20px;box-sizing:border-box;font-family:var(--mono);font-size:20px;line-height:1.5;color:var(--muted);white-space:pre}
+  .term .k{color:var(--faint)}
+  .none{position:absolute;left:0;top:275px;width:100%;text-align:center;font-family:var(--mono);font-size:24px;color:var(--faint)}
+  .foot{position:absolute;left:0;top:930px;width:1920px;text-align:center;font-size:30px;color:var(--text)}
+  .foot b{color:var(--duck);font-weight:700}
+  .lbl{position:absolute;font-family:var(--mono);font-size:20px;color:var(--faint);text-align:center;width:110px}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="title"><b>dbt</b> compile</div>
+  <div class="sub">write the SQL, run nothing</div>
+  <div class="lane" style="left:120px"><div class="lanehead"><span>YOUR FILES</span></div>
+    <div class="card" style="top:80px"><div class="h yellow">models/</div><ul><li class="f">staging/stg_orders.sql</li></ul><div class="note">{{ ref('raw_orders') }}</div></div>    <div class="card" style="top:430px"><div class="h faintc">target/compiled/</div><ul><li class="f">staging/stg_orders.sql</li></ul><div class="note">"dev"."main_raw"."raw_orders"</div></div>
+  </div>
+  <div class="lane" style="left:700px"><div class="lanehead"><span>dbt</span></div>
+    <div class="cmd"><div class="c"><b>dbt</b> compile</div><div class="j">resolves Jinja and ref(),<br>writes plain SQL</div></div>
+
+  </div>
+  <div class="lane" style="left:1280px"><div class="lanehead"><span>WAREHOUSE</span></div>
+    <div class="none">nothing happens here</div>
+  </div>
+  <svg width="1920" height="1080" style="position:absolute;left:0;top:0;pointer-events:none">
+    <defs><marker id="a" markerWidth="14" markerHeight="14" refX="9" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 z" fill="#D3D3D3"/></marker></defs>
+    <line x1="644" y1="470" x2="742" y2="470" stroke="#D3D3D3" stroke-width="6" marker-end="url(#a)"/>
+    <line x1="756" y1="725" x2="658" y2="725" stroke="#D3D3D3" stroke-width="6" marker-end="url(#a)"/>
+  </svg>
+  <div class="lbl" style="left:644px;top:678px">writes</div>
+  <div class="foot">The first half of <b>dbt run</b>, then it stops. The warehouse never hears about it.</div>
+</div>
+</body>
+</html>
