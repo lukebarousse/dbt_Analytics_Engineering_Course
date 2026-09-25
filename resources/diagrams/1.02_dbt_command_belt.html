@@ -38,7 +38,7 @@
   <div style="position:absolute;left:0;top:40px;width:1920px;text-align:center;
        font-family:var(--mono);font-weight:700;font-size:54px;color:#FFFFFF;letter-spacing:-.01em">The dbt Command Belt</div>
 
-  <!-- seven commands, lesson order: 4 + 3 -->
+  <!-- eight commands, lesson order: 4 + 4 -->
 
   <div class="card" style="left:48px;top:190px">
     <div class="inner">
@@ -58,7 +58,16 @@
     <div class="chiprow"><span class="chip" style="color:var(--ok);border-color:rgba(87,171,90,.55)">✓ All checks passed!</span></div>
   </div>
 
-  <div class="card" style="left:968px;top:190px">
+    <div class="card" style="left:968px;top:190px">
+    <div class="inner">
+      <div style="font-size:54px">🌱</div>
+      <div class="cmd" style="margin-top:16px"><b>dbt</b> seed</div>
+      <div class="job" style="margin-top:12px">load seeds/ CSVs<br>as tables</div>
+    </div>
+    <div class="chiprow"><span class="chip">CSV becomes a table</span></div>
+  </div>
+
+  <div class="card" style="left:1428px;top:190px">
     <div class="inner">
       <div style="font-size:54px">⚙️</div>
       <div class="cmd" style="margin-top:16px"><b>dbt</b> run</div>
@@ -67,7 +76,7 @@
     <div class="chiprow"><span class="chip">tables + views appear</span></div>
   </div>
 
-  <div class="card" style="left:1428px;top:190px">
+  <div class="card" style="left:48px;top:590px">
     <div class="inner">
       <div style="font-size:54px">📋</div>
       <div class="cmd" style="margin-top:16px"><b>dbt</b> ls</div>
@@ -76,16 +85,16 @@
     <div class="chiprow"><span class="chip">models · tests · seeds</span></div>
   </div>
 
-  <div class="card" style="left:280px;top:590px">
+  <div class="card" style="left:508px;top:590px">
     <div class="inner">
       <div style="font-size:54px">👁️</div>
       <div class="cmd" style="margin-top:16px"><b>dbt</b> show</div>
       <div class="job" style="margin-top:12px">preview a model's<br>rows in the terminal</div>
     </div>
-    <div class="chiprow"><span class="chip">first 5 rows</span></div>
+    <div class="chiprow"><span class="chip">first 10 rows</span></div>
   </div>
 
-  <div class="card" style="left:740px;top:590px">
+  <div class="card" style="left:968px;top:590px">
     <div class="inner">
       <div style="font-size:54px">📝</div>
       <div class="cmd" style="margin-top:16px"><b>dbt</b> compile</div>
@@ -94,13 +103,13 @@
     <div class="chiprow"><span class="chip">target/compiled/</span></div>
   </div>
 
-  <div class="card" style="left:1200px;top:590px">
+  <div class="card" style="left:1428px;top:590px">
     <div class="inner">
       <div style="font-size:54px">🧹</div>
       <div class="cmd" style="margin-top:16px"><b>dbt</b> clean</div>
       <div class="job" style="margin-top:12px">wipe the build<br>artifacts</div>
     </div>
-    <div class="chiprow"><span class="chip">target/ + logs/ gone</span></div>
+    <div class="chiprow"><span class="chip">target/ + dbt_packages/ gone</span></div>
   </div>
 
 </div>
