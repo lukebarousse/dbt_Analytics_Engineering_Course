@@ -1,5 +1,5 @@
 -- snapshot INPUT, not served: picks each job's current row as of the
--- time-machine cutoff. ephemeral — inlined into the snapshot's SQL, never
+-- time-machine cutoff. ephemeral: inlined into the snapshot's SQL, never
 -- lands in the warehouse (1.07.4's materialization, finally load-bearing).
 {{ config(materialized='ephemeral') }}
 
