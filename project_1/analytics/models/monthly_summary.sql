@@ -1,4 +1,4 @@
--- models/monthly_summary.sql — TWO refs: the diamond
+-- models/monthly_summary.sql: monthly totals + remote share from two refs
 WITH totals AS (
     SELECT month, SUM(postings) AS total_postings
     FROM {{ ref('jobs_per_month') }}
