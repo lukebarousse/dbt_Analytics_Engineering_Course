@@ -29,6 +29,10 @@ models:
 
   - name: jobs_per_month
     description: Monthly posting counts by role.
+    config:
+      persist_docs:
+        relation: true
+        columns: true
     columns:
       - name: month
         description: Posting month, truncated from search_date.
@@ -39,6 +43,10 @@ models:
 
   - name: monthly_summary
     description: Monthly summary of job postings; one row per month.
+    config:
+      persist_docs:
+        relation: true
+        columns: true
     columns:
       - name: month
         description: Year and month of the summary.
@@ -54,6 +62,10 @@ models:
 
   - name: top_locations
     description: Top 10 locations by posting count.
+    config:
+      persist_docs:
+        relation: true
+        columns: true
     columns:
       - name: job_location
         description: Posting location; the grain. (2,472 null-location rows exist upstream; the top-10 cut keeps them out.)
