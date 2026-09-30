@@ -11,14 +11,10 @@ lesson points `curl` straight at the live `analytics/` file.
 
 | Short link | File | Lesson | Why frozen | Verified |
 | --- | --- | --- | --- | --- |
-| `lukeb.co/dbt-schema` | `1.05/schema.yml` | 1.05 Properties | 1.06 adds `monthly_summary`, 1.08 adds `data_tests` | Diff vs live is exactly the `monthly_summary` entry, the four `data_tests` blocks and 1.08's null-count note on `job_location`; `dbt build` at the 1.05 state (no `monthly_summary.sql`) = 3 models, 0 tests, every description persisted as a column comment |
+| `lukeb.co/dbt-schema` | `1.05/schema.yml` | 1.05 Properties, the Describe the Models step | Handed out BEFORE `persist_docs` (students type that block next, it is the dbt part), 1.06 adds `monthly_summary`, 1.08 adds `data_tests` | Diff vs live is exactly the four `persist_docs` blocks, the `monthly_summary` entry, the four `data_tests` blocks and 1.08's null-count note on `job_location`; `dbt build` at that state (no `monthly_summary.sql`) = 3 models, 0 tests, descriptions in the manifest, no column comments yet |
 
-Student commands:
+Student command (prints to the terminal to paste into `models/properties.yml`):
 
 ```bash
-# print it to paste into models/properties.yml (the Describe the Models step)
 curl -sL lukeb.co/dbt-schema
-
-# or, at the end-of-lesson split, download it whole
-curl -sL lukeb.co/dbt-schema -o models/schema.yml
 ```
