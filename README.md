@@ -25,10 +25,13 @@ Lesson notes live in the course itself — this repo holds the code:
 | --- | --- |
 | [project_1/](project_1/) | Reference implementation of Project #1 (dbt + DuckDB, the finished repo you build in the course) |
 | [project_2/](project_2/) | Reference implementation of Project #2 (dbt + Databricks) |
-| [scripts/](scripts/) | `download_data.py` — fetches the course dataset |
-| [img/](img/) | Diagrams & images used in the course READMEs |
+| `project_*/snippets/` | Files the videos hand out via `lukeb.co` short links, frozen at the lesson that uses them |
+| [project_2/bonus/](project_2/bonus/) | Extra SQL and YAML beyond the videos; dbt never reads it |
+| [docs/](docs/) | The published dbt docs sites for both projects (GitHub Pages) |
+| [resources/](resources/) | Diagrams and images used in the videos |
+| [img/](img/) | Images used in the READMEs |
 
-Each project folder is self-contained with its own `uv` environment (Project #1 uses the DuckDB adapter, Project #2 the Databricks adapter).
+Each project folder is self-contained with its own `uv` environment and a single `dbt` install (dbt v2 bundles the DuckDB and Databricks adapters).
 
 ## Setup
 
