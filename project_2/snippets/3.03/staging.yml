@@ -1,0 +1,46 @@
+models:
+  - name: stg_job_postings
+    description: >
+      One row per posting per scrape day - a job re-scraped across days keeps
+      every row. 691,950 rows after the door-drop (the scraper's own error flag).
+    columns:
+      - name: job_id
+        description: The scraper's posting id. Not unique at this grain - one row per posting per scrape day.
+      - name: search_term
+        description: The role the scraper searched for; three values by construction.
+      - name: search_date
+        description: Scrape day.
+      - name: searched_at
+        description: Scrape timestamp (search_time renamed).
+      - name: search_location
+        description: Location parameter the scraper searched under.
+      - name: job_title
+        description: Posting title as scraped.
+      - name: company_name
+        description: Employer name, trimmed.
+      - name: job_location
+        description: Posting location as scraped.
+      - name: source_platform
+        description: Posting platform (job_via with the 'via ' scraper artifact stripped, ~6.3k rows).
+      - name: job_schedule_type
+        description: As scraped; 12,252 nulls stay null - documented, not fixed.
+      - name: job_work_from_home
+        description: True when the posting is flagged remote.
+      - name: job_posted_at
+        description: Raw relative posted time ('10 hours ago'), kept unparsed - search_date carries the time axis; parsing it is a supporter exercise.
+      - name: job_salary
+        description: Raw salary text, unparsed for now.
+      - name: job_extensions_raw
+        description: Raw extensions JSON - the benefits flags live in here, unparsed for now.
+
+  - name: stg_job_skills
+    description: >
+      One row per (job_id, skill_id) pair, straight off the raw table.
+      Deliberately boring; rename, order, trim is the discipline working.
+    columns:
+      - name: job_id
+        description: Every pair's parent exists in stg_job_postings - the export's join guarantees it.
+      - name: skill_id
+        description: Skill key for the pair; the human-readable text rides in skill_keyword.
+      - name: skill_keyword
+        description: Skill text as extracted, trimmed.
