@@ -11,7 +11,14 @@ render() { # name duration hold
   total=$(python3 -c "print(int(($dur+$hold)*$FPS))")
   for ((i=0;i<total;i++)); do
     t=$(python3 -c "print(min($i/$FPS, $dur))")
-    "$CH" --headless=new --disable-gpu --hide-scrollbars --window-size=1920,1080 --screenshot="$out/$(printf %04d $i).png" "file://$R/$f.html?t=$t" >/dev/null 2>&1
+    png="$out/$(printf %04d $i).png"
+    for attempt in 1 2 3; do   # headless Chrome occasionally hangs under load: 20 s watchdog, then retry
+      "$CH" --headless=new --disable-gpu --hide-scrollbars --window-size=1920,1080 --screenshot="$png" "file://$R/$f.html?t=$t" >/dev/null 2>&1 &
+      cpid=$!; for ((w=0;w<40;w++)); do kill -0 $cpid 2>/dev/null || break; sleep 0.5; done
+      if kill -0 $cpid 2>/dev/null; then kill -9 $cpid 2>/dev/null; wait $cpid 2>/dev/null; else wait $cpid 2>/dev/null; fi
+      [ -s "$png" ] && break
+    done
+    [ -s "$png" ] || { echo "frame $i failed"; exit 1; }
   done
   ffmpeg -y -loglevel error -framerate $FPS -i "$out/%04d.png" -c:v libx264 -pix_fmt yuv420p -crf 18 -movflags +faststart "$R/$f.mp4"
   echo "$f: $total frames -> $(ls -la "$R/$f.mp4" | awk '{print $5}') bytes"
