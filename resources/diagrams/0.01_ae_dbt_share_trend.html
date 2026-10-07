@@ -1,7 +1,51 @@
-<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#0A0913;width:1920px;height:1080px;overflow:hidden;font-family:ui-sans-serif,-apple-system,"Segoe UI",Inter,Helvetica,Arial,sans-serif}</style></head><body><svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
-<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF694B" stop-opacity="0.45"/><stop offset="1" stop-color="#FF694B" stop-opacity="0.02"/></linearGradient></defs>
-<text x="960" y="110" text-anchor="middle" font-size="58" font-weight="700" fill="#FFFFFF">dbt in Analytics Engineer Postings</text><text x="960" y="162" text-anchor="middle" font-size="28" fill="#8B93A7">share of postings that mention dbt, trailing 12 months. datanerd.tech, United States, full-time</text>
-<line x1="240" x2="1760" y1="751.1" y2="751.1" stroke="#262A3A" stroke-width="2"/><text x="216" y="762.1" text-anchor="end" font-size="28" fill="#8B93A7">10%</text><line x1="240" x2="1760" y1="602.2" y2="602.2" stroke="#262A3A" stroke-width="2"/><text x="216" y="613.2" text-anchor="end" font-size="28" fill="#8B93A7">20%</text><line x1="240" x2="1760" y1="453.3" y2="453.3" stroke="#262A3A" stroke-width="2"/><text x="216" y="464.3" text-anchor="end" font-size="28" fill="#8B93A7">30%</text><line x1="240" x2="1760" y1="304.4" y2="304.4" stroke="#262A3A" stroke-width="2"/><text x="216" y="315.4" text-anchor="end" font-size="28" fill="#8B93A7">40%</text><path d="M240.0,900 L240.0,560.5 L287.5,554.6 L335.0,553.1 L382.5,565.0 L430.0,569.5 L477.5,576.9 L525.0,576.9 L572.5,566.5 L620.0,585.8 L667.5,571.0 L715.0,559.0 L762.5,566.5 L810.0,573.9 L857.5,585.8 L905.0,568.0 L952.5,545.6 L1000.0,535.2 L1047.5,526.3 L1095.0,523.3 L1142.5,508.4 L1190.0,483.1 L1237.5,502.5 L1285.0,523.3 L1332.5,499.5 L1380.0,483.1 L1427.5,483.1 L1475.0,483.1 L1522.5,445.9 L1570.0,422.1 L1617.5,377.4 L1665.0,349.1 L1712.5,344.6 L1760.0,337.2 L1760.0,900 Z" fill="url(#g)"/><polyline points="240.0,560.5 287.5,554.6 335.0,553.1 382.5,565.0 430.0,569.5 477.5,576.9 525.0,576.9 572.5,566.5 620.0,585.8 667.5,571.0 715.0,559.0 762.5,566.5 810.0,573.9 857.5,585.8 905.0,568.0 952.5,545.6 1000.0,535.2 1047.5,526.3 1095.0,523.3 1142.5,508.4 1190.0,483.1 1237.5,502.5 1285.0,523.3 1332.5,499.5 1380.0,483.1 1427.5,483.1 1475.0,483.1 1522.5,445.9 1570.0,422.1 1617.5,377.4 1665.0,349.1 1712.5,344.6 1760.0,337.2" fill="none" stroke="#FF694B" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="240.0" cy="560.5" r="13" fill="#FF694B"/><text x="268.0" y="534.5" font-size="34" font-weight="700" fill="#FFFFFF">23%</text>
-<circle cx="1760.0" cy="337.2" r="13" fill="#FF694B"/><text x="1732.0" y="307.2" text-anchor="end" font-size="34" font-weight="700" fill="#FFFFFF">38%</text>
-<text x="287.5" y="952" text-anchor="middle" font-size="28" fill="#8B93A7">Jan 2024</text><text x="810.0" y="952" text-anchor="middle" font-size="28" fill="#8B93A7">Jan 2025</text><text x="1380.0" y="952" text-anchor="middle" font-size="28" fill="#8B93A7">Jan 2026</text><text x="1760.0" y="952" text-anchor="middle" font-size="28" fill="#8B93A7">Sep 2026</text></svg></body></html>
+<!doctype html><html><head><meta charset="utf-8"><title>dbt in Analytics Engineer Postings</title>
+<style>
+html,body{margin:0;background:#0A0913;width:1920px;height:1080px;overflow:hidden;font-family:ui-sans-serif,-apple-system,"Segoe UI",Inter,Helvetica,Arial,sans-serif;cursor:pointer}
+text{user-select:none}
+</style>
+<script>
+// Deterministic timeline: render(t) draws the frame for time t (seconds).
+// ?t=1.5  freezes that frame (used for PNG/MP4 export). ?still=1 = final frame.
+// Click or press space to replay. Autoplays 0.4 s after load.
+const Q=new URLSearchParams(location.search);
+const fixedTime=()=>Q.has('still')?DUR:(Q.has('t')?parseFloat(Q.get('t')):null);
+const easeOut=x=>1-Math.pow(1-x,3), clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const seg=(t,t0,d)=>clamp((t-t0)/d,0,1);
+let t0=null,raf=null;
+function play(){t0=performance.now()+400;cancelAnimationFrame(raf);const f=()=>{const t=(performance.now()-t0)/1000;render(clamp(t,0,DUR));if(t<DUR)raf=requestAnimationFrame(f);};raf=requestAnimationFrame(f);}
+window.addEventListener('load',()=>{const F=fixedTime();if(F!==null){render(F);}else{play();}});
+window.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();play();}});
+window.addEventListener('click',()=>play());
+</script>
+<script>
+const DUR=5.0;
+const PTS=[[240.0, 560.5], [287.5, 554.6], [335.0, 553.1], [382.5, 565.0], [430.0, 569.5], [477.5, 576.9], [525.0, 576.9], [572.5, 566.5], [620.0, 585.8], [667.5, 571.0], [715.0, 559.0], [762.5, 566.5], [810.0, 573.9], [857.5, 585.8], [905.0, 568.0], [952.5, 545.6], [1000.0, 535.2], [1047.5, 526.3], [1095.0, 523.3], [1142.5, 508.4], [1190.0, 483.1], [1237.5, 502.5], [1285.0, 523.3], [1332.5, 499.5], [1380.0, 483.1], [1427.5, 483.1], [1475.0, 483.1], [1522.5, 445.9], [1570.0, 422.1], [1617.5, 377.4], [1665.0, 349.1], [1712.5, 344.6], [1760.0, 337.2]]; const BASE=900; const V0=22.8, V1=37.8;
+function render(t){
+  const title=document.getElementById('title'), sub=document.getElementById('sub');
+  title.setAttribute('opacity', easeOut(seg(t,0,0.5))); title.setAttribute('transform', `translate(0,${(1-easeOut(seg(t,0,0.5)))*-18})`);
+  sub.setAttribute('opacity', easeOut(seg(t,0.25,0.5)));
+  document.getElementById('axes').setAttribute('opacity', easeOut(seg(t,0.4,0.6)));
+  // line progress: 1.0s to 4.2s, eased so the climb at the end reads slower
+  const p=easeOut(seg(t,1.0,3.2)) * (PTS.length-1);
+  const n=Math.floor(p), f=p-n;
+  const drawn=PTS.slice(0,n+1).map(q=>q.join(','));
+  let head=PTS[n];
+  if(n<PTS.length-1){ const a=PTS[n], b=PTS[n+1]; head=[a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f]; drawn.push(head[0].toFixed(1)+','+head[1].toFixed(1)); }
+  document.getElementById('line').setAttribute('points', drawn.join(' '));
+  document.getElementById('area').setAttribute('d', `M${PTS[0][0]},${BASE} L`+drawn.join(' L')+` L${head[0].toFixed(1)},${BASE} Z`);
+  const dot=document.getElementById('head'); dot.setAttribute('cx',head[0]); dot.setAttribute('cy',head[1]); dot.setAttribute('opacity', t>=1.0?1:0);
+  document.getElementById('lab0').setAttribute('opacity', easeOut(seg(t,1.0,0.4)));
+  const e=easeOut(seg(t,4.1,0.5)); const l1=document.getElementById('lab1'); l1.setAttribute('opacity',e); l1.textContent=Math.round(V1*e)+'%';
+}
+</script></head><body>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0070F3" stop-opacity="0.45"/><stop offset="1" stop-color="#0070F3" stop-opacity="0.02"/></linearGradient></defs>
+<text id="title" x="960" y="110" text-anchor="middle" font-size="58" font-weight="700" fill="#FFFFFF" opacity="0">dbt in Analytics Engineer Postings</text>
+<text id="sub" x="960" y="162" text-anchor="middle" font-size="28" fill="#8B93A7" opacity="0">share of postings that mention dbt, trailing 12 months. datanerd.tech, United States, full-time</text>
+<g id="axes" opacity="0"><line x1="240" x2="1760" y1="751.1" y2="751.1" stroke="#262A3A" stroke-width="2"/><text x="216" y="762.1" text-anchor="end" font-size="28" fill="#8B93A7">10%</text><line x1="240" x2="1760" y1="602.2" y2="602.2" stroke="#262A3A" stroke-width="2"/><text x="216" y="613.2" text-anchor="end" font-size="28" fill="#8B93A7">20%</text><line x1="240" x2="1760" y1="453.3" y2="453.3" stroke="#262A3A" stroke-width="2"/><text x="216" y="464.3" text-anchor="end" font-size="28" fill="#8B93A7">30%</text><line x1="240" x2="1760" y1="304.4" y2="304.4" stroke="#262A3A" stroke-width="2"/><text x="216" y="315.4" text-anchor="end" font-size="28" fill="#8B93A7">40%</text><text x="287.5" y="952" text-anchor="middle" font-size="28" fill="#8B93A7">Jan 2024</text><text x="810.0" y="952" text-anchor="middle" font-size="28" fill="#8B93A7">Jan 2025</text><text x="1380.0" y="952" text-anchor="middle" font-size="28" fill="#8B93A7">Jan 2026</text><text x="1760.0" y="952" text-anchor="middle" font-size="28" fill="#8B93A7">Sep 2026</text></g>
+<path id="area" d="" fill="url(#g)"/>
+<polyline id="line" points="" fill="none" stroke="#3A8EF3" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<circle id="head" cx="0" cy="0" r="13" fill="#0070F3" stroke="#FFFFFF" stroke-width="3" opacity="0"/>
+<text id="lab0" x="268.0" y="534.5" font-size="34" font-weight="700" fill="#FFFFFF" opacity="0">23%</text>
+<text id="lab1" x="1732.0" y="307.2" text-anchor="end" font-size="34" font-weight="700" fill="#FFFFFF" opacity="0">38%</text>
+</svg></body></html>
