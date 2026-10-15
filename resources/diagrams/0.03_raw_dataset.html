@@ -15,24 +15,23 @@
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
   }
   html,body{margin:0;padding:0;background:var(--bg)}
-  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);
-    background:radial-gradient(900px 480px at 50% -8%, rgba(216,154,91,.05), transparent 60%),var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
   svg.title{position:absolute;left:0;top:0;width:1920px;height:120px}
-  svg.title text{font-family:var(--mono);font-size:54px;font-weight:700;fill:#FFFFFF;
-    stroke:#000;stroke-width:10px;stroke-linejoin:round;paint-order:stroke fill}
+  svg.title text{font-family:var(--mono);font-size:54px;font-weight:700;fill:#FFFFFF;stroke:#000;stroke-width:10px;stroke-linejoin:round;paint-order:stroke fill}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+  svg.art text{font-family:var(--mono);font-size:21px;font-weight:700;fill:var(--muted)}
   .tbl{position:absolute;box-sizing:border-box;background:var(--panel);border:1.5px solid rgba(216,154,91,.55);
     border-radius:14px;overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,.38)}
-  .tbl .hd{height:58px;display:flex;align-items:center;gap:12px;padding:0 20px;background:var(--bronzeB)}
-  .tbl .hd .nm{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--bronzeT)}
-  .tbl .hd .ic{font-size:24px}
-  .tbl .grain{height:34px;display:flex;align-items:center;padding:0 20px;background:var(--panel2);
-    font-size:19px;color:var(--muted);font-style:italic;border-bottom:1px solid var(--line)}
-  .col{height:32px;display:flex;align-items:center;gap:10px;padding:0 20px;font-family:var(--mono);font-size:19px}
+  .tbl .hd{height:62px;display:flex;align-items:center;gap:12px;padding:0 22px;background:var(--bronzeB)}
+  .tbl .hd .nm{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--bronzeT)}
+  .tbl .hd .ic{font-size:26px}
+  .tbl .grain{height:36px;display:flex;align-items:center;padding:0 22px;background:var(--panel2);
+    font-size:20px;color:var(--muted);font-style:italic;border-bottom:1px solid var(--line)}
+  .col{height:36px;display:flex;align-items:center;gap:10px;padding:0 22px;font-family:var(--mono);font-size:21px}
   .col:nth-child(odd){background:rgba(255,255,255,.015)}
-  .col .ty{margin-left:auto;color:var(--faint);font-size:18px}
-  .col .note{color:var(--muted);font-size:18px;margin-left:6px}
-  .key{flex:none;font-family:var(--mono);font-size:13px;font-weight:800;letter-spacing:.05em;
-    border-radius:4px;padding:1.5px 7px}
+  .col .ty{margin-left:auto;color:var(--faint);font-size:19px}
+  .col .note{color:var(--muted);font-size:19px;margin-left:6px}
+  .key{flex:none;font-family:var(--mono);font-size:14px;font-weight:800;letter-spacing:.05em;border-radius:4px;padding:1.5px 7px}
   .key.pk{color:var(--dbt);border:1.5px solid rgba(255,105,75,.55);background:rgba(255,105,75,.1)}
   .key.fk{color:var(--blue);border:1.5px solid rgba(88,166,255,.5);background:rgba(88,166,255,.08)}
   .tbl.ghost{border-style:dashed;border-color:rgba(201,206,214,.45);background:transparent}
@@ -40,26 +39,23 @@
   .tbl.ghost .hd .nm{color:var(--muted)}
   .tbl.ghost .grain{background:transparent}
   .chips{position:absolute;display:flex;gap:12px}
-  .chip{box-sizing:border-box;height:38px;display:flex;align-items:center;gap:8px;padding:0 16px;
+  .chip{box-sizing:border-box;height:42px;display:flex;align-items:center;gap:8px;padding:0 18px;
     border:1.5px solid rgba(88,166,255,.5);border-radius:10px;background:rgba(88,166,255,.08);
-    font-family:var(--mono);font-size:20px;font-weight:600;color:var(--text);white-space:nowrap}
+    font-family:var(--mono);font-size:21px;font-weight:600;color:var(--text);white-space:nowrap}
   .chip.file{border-color:rgba(242,201,76,.5);background:rgba(242,201,76,.07)}
   .chip.seed{border-color:rgba(201,206,214,.4);background:transparent;color:var(--muted)}
-  svg.art{position:absolute;inset:0;pointer-events:none}
-  svg.art text{font-family:var(--mono);font-size:20px;font-weight:700;fill:var(--muted)}
+
 </style>
 </head>
 <body>
 <div class="stage">
-
   <svg class="title" viewBox="0 0 1920 120"><text x="960" y="78" text-anchor="middle">The Raw Dataset</text></svg>
 
-  <!-- ============ raw_job_postings ============ -->
-  <div class="chips" style="left:140px;top:120px">
+  <div class="chips" style="left:200px;top:142px">
     <div class="chip file">📄 12 monthly parquet files</div>
     <div class="chip">843,097 rows · 491,140 jobs</div>
   </div>
-  <div class="tbl" style="left:140px;top:172px;width:600px">
+  <div class="tbl" style="left:200px;top:200px;width:660px">
     <div class="hd"><span class="ic">🗄</span><span class="nm">raw_job_postings</span></div>
     <div class="grain">one row per posting per scrape day</div>
     <div class="col"><span class="key pk">PK</span>job_id<span class="ty">varchar</span></div>
@@ -81,12 +77,11 @@
     <div class="col">error_message<span class="ty">varchar</span></div>
   </div>
 
-  <!-- ============ raw_job_skills ============ -->
-  <div class="chips" style="left:1180px;top:270px">
+  <div class="chips" style="left:1120px;top:372px">
     <div class="chip file">📄 1 parquet file</div>
     <div class="chip">3,304,574 rows</div>
   </div>
-  <div class="tbl" style="left:1180px;top:322px;width:520px">
+  <div class="tbl" style="left:1120px;top:430px;width:600px">
     <div class="hd"><span class="ic">🗄</span><span class="nm">raw_job_skills</span></div>
     <div class="grain">one row per job and skill</div>
     <div class="col"><span class="key fk">FK</span>job_id<span class="ty">varchar</span></div>
@@ -94,41 +89,20 @@
     <div class="col"><span class="key fk">FK</span>skill_id<span class="ty">varchar</span></div>
   </div>
 
-  <!-- ============ skill_categories.csv (seed, secondary) ============ -->
-  <div class="chips" style="left:1180px;top:742px">
-    <div class="chip seed">🌱 dbt seed · 1,422 rows</div>
-  </div>
-  <div class="tbl ghost" style="left:1180px;top:794px;width:520px">
-    <div class="hd"><span class="ic">📄</span><span class="nm">skill_categories.csv</span></div>
-    <div class="grain">one row per skill</div>
-    <div class="col"><span class="key pk">PK</span>skill_id<span class="ty">varchar</span></div>
-    <div class="col">display_name<span class="note">"Power BI"</span><span class="ty">varchar</span></div>
-    <div class="col">category<span class="ty">varchar</span></div>
-    <div class="col">subcategory<span class="ty">varchar</span></div>
-  </div>
-
-  <!-- ============ relationships ============ -->
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
       <marker id="one" viewBox="0 0 26 26" markerWidth="26" markerHeight="26" refX="13" refY="13" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
         <path d="M13 5 L13 21" stroke="#EDEDED" stroke-width="3" fill="none" stroke-linecap="round"/>
       </marker>
-      <marker id="many" viewBox="0 0 30 30" markerWidth="30" markerHeight="30" refX="25" refY="15" orient="auto" markerUnits="userSpaceOnUse">
+      <marker id="many" viewBox="0 0 30 30" markerWidth="30" markerHeight="30" refX="25" refY="15" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
         <path d="M3 15 L25 4 M3 15 L25 15 M3 15 L25 26" stroke="#EDEDED" stroke-width="3" fill="none" stroke-linecap="round"/>
       </marker>
-      <marker id="oneG" viewBox="0 0 26 26" markerWidth="26" markerHeight="26" refX="13" refY="13" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
-        <path d="M13 5 L13 21" stroke="#9B9B9B" stroke-width="3" fill="none" stroke-linecap="round"/>
-      </marker>
-      <marker id="manyG" viewBox="0 0 30 30" markerWidth="30" markerHeight="30" refX="25" refY="15" orient="auto" markerUnits="userSpaceOnUse">
-        <path d="M3 15 L25 4 M3 15 L25 15 M3 15 L25 26" stroke="#9B9B9B" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <marker id="arr" viewBox="0 0 20 20" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M2 2 L16 10 L2 18" stroke="#EDEDED" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </marker>
     </defs>
-    <!-- raw_job_postings.job_id (row 1, y=172+58+34+16=280) 1 → ∞ raw_job_skills.job_id (row 1, y=322+58+34+16=430) -->
-    <path d="M 742 280 C 960 280, 960 430, 1176 430" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-start="url(#one)" marker-end="url(#many)"/>
-    <text x="960" y="318" text-anchor="middle">job_id</text>
-    <!-- raw_job_skills.skill_id (row 3, y=322+92+80=494) ∞ → 1 skill_categories.skill_id (row 1, y=794+58+34+16=902) -->
-    <path d="M 1702 494 C 1800 494, 1800 902, 1704 902" fill="none" stroke="#9B9B9B" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-start="url(#manyG)" marker-end="url(#oneG)"/>
-    <text x="1862" y="705" text-anchor="middle">skill_id</text>
+    <path d="M 862 316 C 1000 316, 980 546, 1116 546" fill="none" stroke="#EDEDED" stroke-width="3" stroke-dasharray="9 8" stroke-linecap="round" marker-start="url(#one)" marker-end="url(#many)"/>
+    <text x="1010" y="330" text-anchor="middle">job_id</text>
   </svg>
 
 </div>

@@ -10,6 +10,7 @@
     --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
     --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
     --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --bronzeT:#D89A5B; --bronzeB:#4a2f15;
     --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
   }
@@ -17,58 +18,63 @@
   .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
   svg.title{position:absolute;left:0;top:0;width:1920px;height:120px}
   svg.title text{font-family:var(--mono);font-size:54px;font-weight:700;fill:#FFFFFF;stroke:#000;stroke-width:10px;stroke-linejoin:round;paint-order:stroke fill}
-  .zone{position:absolute;left:560px;top:230px;width:1260px;height:620px;border:2px dashed #4A7DBB;border-radius:28px}
-  .zone .zl{position:absolute;left:0;top:-22px;width:1260px;text-align:center}
-  .zone .zl span{font-family:var(--mono);font-size:26px;font-weight:700;color:#FFFFFF;background:var(--bg);padding:0 18px}
-  .card{position:absolute;box-sizing:border-box;width:360px;height:400px;top:320px;border-radius:26px;background:var(--panel);
-    border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;box-shadow:0 12px 32px rgba(0,0,0,.4)}
-  .card .ic{font-size:110px;line-height:1}
-  .card .nm{font-family:var(--mono);font-size:32px;font-weight:700;color:#FFFFFF;text-align:center}
-  .card .cap{font-family:var(--mono);font-size:21px;color:var(--muted);text-align:center;line-height:1.35}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+  svg.art text{font-family:var(--mono);font-size:21px;font-weight:700;fill:var(--muted)}
+  .card{position:absolute;box-sizing:border-box;border-radius:26px;background:var(--panel);
+    border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;box-shadow:0 12px 32px rgba(0,0,0,.4)}
+  .card .ic{height:130px;display:flex;align-items:center;justify-content:center;font-size:120px;line-height:1}
+  .card .ic img{height:130px;width:auto}
+  .card .nm{font-family:var(--mono);font-size:34px;font-weight:700;color:#FFFFFF;text-align:center}
+  .card .cap{font-family:var(--mono);font-size:22px;color:var(--muted);text-align:center;line-height:1.35}
   .card.dbt{border-color:rgba(255,105,75,.6)}
   .card.dbt .nm{color:var(--dbt)}
   .card.duck{border-color:rgba(242,201,76,.55)}
   .card.duck .nm{color:var(--duck)}
-  .chip{position:absolute;box-sizing:border-box;height:56px;display:flex;align-items:center;gap:12px;padding:0 24px;
+  .chip{position:absolute;box-sizing:border-box;height:58px;display:flex;align-items:center;gap:14px;padding:0 24px;
     border:2px solid rgba(88,166,255,.55);border-radius:14px;background:rgba(88,166,255,.08);
     font-family:var(--mono);font-size:24px;font-weight:600;color:var(--text);white-space:nowrap}
-  svg.art{position:absolute;inset:0;pointer-events:none}
+  .chip img{height:32px;width:auto}
+  .zone{position:absolute;border:2px dashed #4A7DBB;border-radius:28px}
+  .zone .zl{position:absolute;left:0;top:-30px;width:100%;text-align:center}
+  .zone .zl span{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:28px;font-weight:700;color:#FFFFFF;background:var(--bg);padding:0 18px}
+  .zone .zl img{height:48px;width:auto}
+
 </style>
 </head>
 <body>
 <div class="stage">
   <svg class="title" viewBox="0 0 1920 120"><text x="960" y="78" text-anchor="middle">Project 2: Cloud Pipeline</text></svg>
 
-  <div class="card" style="left:120px">
+  <div class="card" style="left:120px;top:320px;width:360px;height:400px">
     <div class="ic">📄</div>
     <div class="nm">Raw Files</div>
-    <div class="cap">job postings<br>parquet · GitHub Release</div>
+    <div class="cap">job postings · parquet<br><img src="../images/github-white-icon.png" alt="" style="height:24px;width:auto;vertical-align:-5px"> GitHub Release</div>
   </div>
-
-  <div class="zone"><div class="zl"><span>☁️ Databricks</span></div></div>
-
-  <div class="card" style="left:620px">
+  <div class="zone" style="left:560px;top:230px;width:1260px;height:620px"><div class="zl"><span><img src="../images/Databricks_logo.png" alt="">Databricks</span></div></div>
+  <div class="card" style="left:620px;top:320px;width:360px;height:400px">
     <div class="ic">🪣</div>
     <div class="nm">Raw Catalog</div>
     <div class="cap">load_raw.py<br>lands the files</div>
   </div>
-
-  <div class="card dbt" style="left:1040px">
-    <div class="ic">🧱</div>
+  <div class="card dbt" style="left:1040px;top:320px;width:360px;height:400px">
+    <div class="ic"><img src="../images/dbt_logo.png" alt=""></div>
     <div class="nm">dbt</div>
     <div class="cap">staging → intermediate<br>→ marts (star schema)</div>
   </div>
-
-  <div class="card duck" style="left:1460px;width:340px">
+  <div class="card duck" style="left:1460px;top:320px;width:340px;height:400px">
     <div class="ic">🗄</div>
     <div class="nm">Prod</div>
     <div class="cap">tested · documented<br>warehouse</div>
   </div>
-
-  <div class="chip" style="left:860px;top:900px">🤖 a Databricks job runs it nightly</div>
-
+  <div class="chip" style="left:846px;top:900px"><img src="../images/Databricks_logo.png" alt="">a Databricks job runs it nightly</div>
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
+      <marker id="one" viewBox="0 0 26 26" markerWidth="26" markerHeight="26" refX="13" refY="13" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+        <path d="M13 5 L13 21" stroke="#EDEDED" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </marker>
+      <marker id="many" viewBox="0 0 30 30" markerWidth="30" markerHeight="30" refX="25" refY="15" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+        <path d="M3 15 L25 4 M3 15 L25 15 M3 15 L25 26" stroke="#EDEDED" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </marker>
       <marker id="arr" viewBox="0 0 20 20" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto" markerUnits="userSpaceOnUse">
         <path d="M2 2 L16 10 L2 18" stroke="#EDEDED" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </marker>
@@ -78,6 +84,7 @@
     <path d="M 1412 520 L 1448 520" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#arr)"/>
     <path d="M 1190 852 L 1190 886" fill="none" stroke="rgba(88,166,255,.7)" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
   </svg>
+
 </div>
 </body>
 </html>
