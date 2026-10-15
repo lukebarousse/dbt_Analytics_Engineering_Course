@@ -34,6 +34,13 @@
     border:2px solid rgba(88,166,255,.55);border-radius:14px;background:rgba(88,166,255,.08);
     font-family:var(--mono);font-size:24px;font-weight:600;color:var(--text);white-space:nowrap}
   .chip img{height:32px;width:auto}
+  .cyl{position:relative;width:104px;height:130px}
+  .cyl .body{position:absolute;left:0;right:0;top:12px;bottom:10px;border-radius:14px/22px;
+    background:linear-gradient(180deg,#e8e8e8 0%,#b9bec6 30%,#8f959e 90%);box-shadow:inset 0 -8px 14px rgba(0,0,0,.25)}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:26px;border-radius:50%;
+    background:linear-gradient(180deg,#f6f6f6,#c9cdd4);box-shadow:0 1px 2px rgba(0,0,0,.35)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:22px;border-radius:50%;
+    background:linear-gradient(180deg,#9aa0a9,#7c828b)}
   .zone{position:absolute;border:2px dashed #4A7DBB;border-radius:28px}
   .zone .zl{position:absolute;left:0;top:-30px;width:100%;text-align:center}
   .zone .zl span{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:28px;font-weight:700;color:#FFFFFF;background:var(--bg);padding:0 18px}
@@ -50,7 +57,7 @@
     <div class="nm">Raw Files</div>
     <div class="cap">job postings · parquet<br><img src="../images/github-white-icon.png" alt="" style="height:24px;width:auto;vertical-align:-5px"> GitHub Release</div>
   </div>
-  <div class="zone" style="left:560px;top:230px;width:860px;height:620px"><div class="zl"><span><img src="../images/github-white-icon.png" alt="">GitHub Actions</span></div></div>
+  <div class="zone" style="left:560px;top:230px;width:860px;height:560px"><div class="zl"><span><img src="../images/github-white-icon.png" alt="">GitHub Actions</span></div></div>
   <div class="card dbt" style="left:620px;top:320px;width:360px;height:400px">
     <div class="ic"><img src="../images/dbt_logo.png" alt=""></div>
     <div class="nm">dbt</div>
@@ -62,11 +69,10 @@
     <div class="cap">builds the warehouse<br>prod.duckdb</div>
   </div>
   <div class="card" style="left:1460px;top:320px;width:340px;height:400px">
-    <div class="ic">🗄</div>
+    <div class="ic"><div class="cyl"><div class="body"></div><div class="top"></div><div class="bot"></div></div></div>
     <div class="nm">Published</div>
     <div class="cap">prod.duckdb · one file<br><img src="../images/github-white-icon.png" alt="" style="height:24px;width:auto;vertical-align:-5px"> anyone can query</div>
   </div>
-  <div class="chip" style="left:720px;top:900px">⏰ runs every week, no laptop needed</div>
   <svg class="art" viewBox="0 0 1920 1080">
     <defs>
       <marker id="one" viewBox="0 0 26 26" markerWidth="26" markerHeight="26" refX="13" refY="13" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
@@ -82,7 +88,6 @@
     <path d="M 492 520 L 608 520" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#arr)"/>
     <path d="M 992 520 L 1028 520" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#arr)"/>
     <path d="M 1392 520 L 1448 520" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#arr)"/>
-    <path d="M 990 852 L 990 886" fill="none" stroke="rgba(88,166,255,.7)" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
   </svg>
 </div>
 </body>
