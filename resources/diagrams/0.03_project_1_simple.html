@@ -1,0 +1,71 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Project 1: Local Pipeline</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  svg.title{position:absolute;left:0;top:0;width:1920px;height:120px}
+  svg.title text{font-family:var(--mono);font-size:54px;font-weight:700;fill:#FFFFFF;stroke:#000;stroke-width:10px;stroke-linejoin:round;paint-order:stroke fill}
+  .card{position:absolute;box-sizing:border-box;width:460px;height:440px;top:300px;border-radius:26px;background:var(--panel);
+    border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;box-shadow:0 12px 32px rgba(0,0,0,.4)}
+  .card .ic{font-size:120px;line-height:1}
+  .card .nm{font-family:var(--mono);font-size:34px;font-weight:700;color:#FFFFFF;text-align:center}
+  .card .cap{font-family:var(--mono);font-size:22px;color:var(--muted);text-align:center;line-height:1.35}
+  .card.dbt{border-color:rgba(255,105,75,.6)}
+  .card.dbt .nm{color:var(--dbt)}
+  .card.duck{border-color:rgba(242,201,76,.55)}
+  .card.duck .nm{color:var(--duck)}
+  .chip{position:absolute;box-sizing:border-box;height:56px;display:flex;align-items:center;gap:12px;padding:0 24px;
+    border:2px solid rgba(88,166,255,.55);border-radius:14px;background:rgba(88,166,255,.08);
+    font-family:var(--mono);font-size:24px;font-weight:600;color:var(--text);white-space:nowrap}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="title" viewBox="0 0 1920 120"><text x="960" y="78" text-anchor="middle">Project 1: Local Pipeline</text></svg>
+
+  <div class="card" style="left:140px">
+    <div class="ic">📄</div>
+    <div class="nm">Raw Files</div>
+    <div class="cap">job postings<br>parquet · GitHub Release</div>
+  </div>
+
+  <div class="card dbt" style="left:730px">
+    <div class="ic">🧱</div>
+    <div class="nm">dbt</div>
+    <div class="cap">models · tests · docs<br>runs on your laptop</div>
+  </div>
+
+  <div class="card duck" style="left:1320px">
+    <div class="ic">🗄</div>
+    <div class="nm">DuckDB</div>
+    <div class="cap">prod.duckdb<br>one file, anyone can query</div>
+  </div>
+
+  <div class="chip" style="left:694px;top:820px">⚙️ GitHub Actions rebuilds it on a schedule</div>
+
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="arr" viewBox="0 0 20 20" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M2 2 L16 10 L2 18" stroke="#EDEDED" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <path d="M 612 520 L 718 520" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#arr)"/>
+    <path d="M 1202 520 L 1308 520" fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="9 8" stroke-linecap="round" marker-end="url(#arr)"/>
+    <path d="M 960 744 L 960 806" fill="none" stroke="rgba(88,166,255,.7)" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+  </svg>
+</div>
+</body>
+</html>
