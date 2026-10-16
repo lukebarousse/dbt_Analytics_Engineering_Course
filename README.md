@@ -1,8 +1,8 @@
-# 🔧 dbt for Data Analysts & Engineers - Full Course
+# 🔧 dbt for Data Analytics & Engineering - Full Course
 
-Data Nerds! This repo contains all the files needed to follow along my free course: dbt for Data Analysts & Engineers <!-- TODO: course link + thumbnail badge at launch -->
+Data Nerds! This repo contains all the files needed to follow along my free course: dbt for Data Analytics & Engineering <!-- TODO: course link + thumbnail badge at launch -->
 
-![dbt for Data Analysts & Engineers](img/dbt_youtube.png)
+![dbt for Data Analytics & Engineering](img/dbt_youtube.png)
 
 ## Team Members 👥
 

@@ -124,4 +124,4 @@ Backfill a year of snapshot history in one query: paste [`scripts/backfill_job_p
 
 ---
 
-*Reference build for Project #2 of the [dbt for Data Analysts & Engineers course](https://www.lukebarousse.com) (lessons 3.01–4.02) — students build this repo themselves and compare against this version. Dataset: real job postings scraped daily, July 2025 – June 2026.*
+*Reference build for Project #2 of the [dbt for Data Analytics & Engineering course](https://www.lukebarousse.com) (lessons 3.01–4.02) — students build this repo themselves and compare against this version. Dataset: real job postings scraped daily, July 2025 – June 2026.*

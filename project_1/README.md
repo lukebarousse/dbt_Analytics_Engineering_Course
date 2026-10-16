@@ -133,4 +133,4 @@ uv run dbt docs serve
 
 ---
 
-*Reference build for Project #1 of the [dbt for Data Analysts & Engineers course](https://www.lukebarousse.com) (lessons 1.01–2.02) — students build this repo themselves and compare against this version. Dataset: real job postings scraped daily.*
+*Reference build for Project #1 of the [dbt for Data Analytics & Engineering course](https://www.lukebarousse.com) (lessons 1.01–2.02) — students build this repo themselves and compare against this version. Dataset: real job postings scraped daily.*
