@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Updating Data Source</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B; --blue:#58A6FF;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Inter,Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);width:1920px;height:1080px;overflow:hidden;cursor:pointer}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--sans)}
+  svg.title{position:absolute;left:0;top:0;width:1920px;height:130px}
+  svg.title text{font-family:var(--mono);font-size:54px;font-weight:700;fill:#FFFFFF;stroke:#000;stroke-width:10px;stroke-linejoin:round;paint-order:stroke fill}
+  svg.wires{position:absolute;inset:0;pointer-events:none}
+  .card{position:absolute;box-sizing:border-box;background:var(--panel);border:1.5px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.38)}
+  .src img{position:absolute;left:40px;top:54px;width:400px}
+  .src .say{position:absolute;left:0;width:100%;top:150px;text-align:center;font-size:26px;color:var(--muted)}
+  .lane{position:absolute;left:40px;top:222px;width:400px;height:40px;overflow:hidden}
+  .job{position:absolute;top:13px;width:16px;height:16px;border-radius:4px;background:var(--blue)}
+  .cal{position:absolute;left:720px;top:395px;width:220px;height:250px;perspective:700px}
+  .cal .page{position:absolute;inset:0;box-sizing:border-box;border-radius:16px;overflow:hidden;background:var(--panel);border:1.5px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.38);transform-origin:50% 0}
+  .cal .hd{height:66px;display:flex;align-items:center;justify-content:center;background:var(--blue);color:#0B1220;font-family:var(--mono);font-size:27px;font-weight:800;letter-spacing:.06em}
+  .cal .day{height:184px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:120px;font-weight:800;color:#FFFFFF}
+  .cal-lbl{position:absolute;left:690px;top:668px;width:280px;text-align:center;font-size:26px;color:var(--muted)}
+  .files .hd{position:absolute;left:28px;top:26px;font-family:var(--mono);font-size:30px;font-weight:700;color:var(--text)}
+  .chip{position:absolute;right:26px;top:22px;height:44px;display:flex;align-items:center;padding:0 18px;border:1.5px solid rgba(88,166,255,.55);border-radius:10px;background:rgba(88,166,255,.10);font-family:var(--mono);font-size:22px;font-weight:700;color:var(--blue);transform-origin:50% 50%}
+  .tile{position:absolute;box-sizing:border-box;width:140px;height:118px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--panel2);border:1.5px solid var(--line)}
+  .tile .ic{font-size:34px;line-height:1}
+  .tile .m{font-family:var(--mono);font-size:21px;font-weight:600;color:var(--text)}
+  .tile.empty{background:transparent;border:2px dashed #4A4A4A}
+  .tile.empty .ic{font-family:var(--mono);font-size:40px;font-weight:400;color:#5A5A5A}
+  .tile.new{background:rgba(88,166,255,.10);border-color:var(--blue)}
+  .tile.new .m{color:var(--blue)}
+  .fly{position:absolute;z-index:5;background:#1C2633 !important}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <svg class="title" viewBox="0 0 1920 130"><text id="title" x="960" y="86" text-anchor="middle">Updating Data Source</text></svg>
+
+  <div id="body" style="position:absolute;inset:0;transform-origin:965px 510px;transform:translateY(88px) scale(1.07)">
+  <svg class="wires" viewBox="0 0 1920 1080">
+    <path id="w1" d="M 592 520 L 716 520" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <path id="w2" d="M 944 520 L 1016 520" fill="none" stroke="#58A6FF" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/>
+  </svg>
+
+  <div class="card src" id="src" style="left:110px;top:360px;width:480px;height:320px">
+    <img src="../images/datanerd_tech_logo.png" alt="datanerd.tech">
+    <div class="say">🔎 scrapes jobs daily</div>
+    <div class="lane" id="lane"></div>
+  </div>
+
+  <div class="cal" id="cal">
+    <div class="page" id="page"><div class="hd" id="calhd">JUL 2026</div><div class="day">5</div></div>
+  </div>
+  <div class="cal-lbl" id="callbl">📅 every month</div>
+
+  <div class="card files" id="files" style="left:1020px;top:250px;width:800px;height:520px">
+    <div class="hd">📂 raw monthly files</div>
+    <div class="chip" id="chip">12 months</div>
+  </div>
+  </div>
+</div>
+
+<script>
+// Deterministic timeline: render(t) draws the frame for time t (seconds).
+// ?t=1.5 freezes that frame (MP4 export). ?still=1 = final frame. Click or space = replay.
+const DUR=7.0;
+const Q=new URLSearchParams(location.search);
+const fixedTime=()=>Q.has('still')?DUR:(Q.has('t')?parseFloat(Q.get('t')):null);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const seg=(t,t0,d)=>clamp((t-t0)/d,0,1);
+const easeOut=x=>1-Math.pow(1-x,3), easeInOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+
+const MONTHS=["Jul '25","Aug '25","Sep '25","Oct '25","Nov '25","Dec '25","Jan '26","Feb '26","Mar '26","Apr '26","May '26","Jun '26","Jul '26","Aug '26","Sep '26"];
+const CAL=["AUG 2026","SEP 2026","OCT 2026"];     // publish month: last month's file lands on the 5th
+const GX=1036, GY=350, TW=140, TH=118, GAP=17;
+const slot=i=>({x:GX+(i%5)*(TW+GAP), y:GY+Math.floor(i/5)*(TH+GAP)});
+const CYCLE0=1.7, CYCLE=1.75;
+const cyc=k=>CYCLE0+k*CYCLE;                        // flip at T, fly T+.45 .. T+1.25
+const LAND=k=>cyc(k)+1.25;
+
+const stage=document.getElementById('body');
+const tiles=MONTHS.map((m,i)=>{
+  const d=document.createElement('div'); d.className='tile';
+  d.innerHTML='<div class="ic">📄</div><div class="m">'+m+'</div>';
+  const p=slot(i); d.style.left=p.x+'px'; d.style.top=p.y+'px';
+  stage.appendChild(d); return d;
+});
+const flies=[12,13,14].map(i=>{
+  const d=document.createElement('div'); d.className='tile new fly';
+  d.innerHTML='<div class="ic">📄</div><div class="m">'+MONTHS[i]+'</div>';
+  stage.appendChild(d); return d;
+});
+const lane=document.getElementById('lane');
+const jobs=Array.from({length:7},()=>{const j=document.createElement('div');j.className='job';lane.appendChild(j);return j;});
+
+function fadeUp(el,p,dy=24){el.style.opacity=p;el.style.transform=`translateY(${(1-p)*dy}px)`;}
+
+function render(t){
+  // title + zones
+  fadeUp(document.getElementById('title'),easeOut(seg(t,0,.5)),0);
+  document.querySelector('svg.title').style.opacity=easeOut(seg(t,0,.5));
+  fadeUp(document.getElementById('src'),easeOut(seg(t,.2,.5)));
+  fadeUp(document.getElementById('cal'),easeOut(seg(t,.4,.5)));
+  fadeUp(document.getElementById('callbl'),easeOut(seg(t,.45,.5)));
+  fadeUp(document.getElementById('files'),easeOut(seg(t,.5,.5)));
+
+  // daily job postings flowing through the source card
+  jobs.forEach((j,i)=>{
+    const x=((t*130+i*62)%434)-17;
+    const edge=Math.min(seg(x,-17,40),1-seg(x,360,40));
+    j.style.left=x+'px'; j.style.opacity=(0.85*edge*seg(t,.5,.4)).toFixed(3);
+  });
+
+  // connectors: draw in, then flow
+  ['w1','w2'].forEach((id,i)=>{
+    const w=document.getElementById(id), p=easeOut(seg(t,.8+i*.15,.4));
+    w.style.opacity=p; w.style.strokeDashoffset=(-t*28).toFixed(1);
+  });
+
+  // existing 12 months stagger in; 3 future slots start empty
+  const landed=[0,1,2].filter(k=>t>=LAND(k)).length;
+  tiles.forEach((d,i)=>{
+    if(i<12){ fadeUp(d,easeOut(seg(t,.65+i*.045,.35)),14); return; }
+    const k=i-12, has=t>=LAND(k);
+    d.className='tile'+(has?' new':' empty');
+    d.querySelector('.ic').textContent=has?'📄':'+';
+    d.querySelector('.m').style.display=has?'':'none';
+    fadeUp(d,easeOut(seg(t,.65+i*.045,.35)),14);
+    const glow=has?Math.max(0,1-seg(t,LAND(k),.6)):0;
+    d.style.boxShadow=glow?`0 0 ${(34*glow).toFixed(1)}px rgba(88,166,255,${(.85*glow).toFixed(2)})`:'none';
+  });
+
+  // calendar flips to the publish month, then last month's file flies over
+  let hdText='JUL 2026', flip=0;
+  for(let k=0;k<3;k++){ if(t>=cyc(k)+.15) hdText=CAL[k]; const f=seg(t,cyc(k),.3); if(f>0&&f<1) flip=f; }
+  document.getElementById('calhd').textContent=hdText;
+  const page=document.getElementById('page');
+  const ang=flip?(flip<.5?-90*flip*2:-90*(1-(flip-.5)*2)):0;
+  let pulse=0; for(let k=0;k<3;k++){ const p=seg(t,cyc(k)+.3,.35); if(p>0&&p<1) pulse=Math.sin(Math.PI*p); }
+  page.style.transform=`rotateX(${ang.toFixed(1)}deg) scale(${(1+.07*pulse).toFixed(3)})`;
+  page.style.boxShadow=pulse?`0 0 ${(40*pulse).toFixed(1)}px rgba(88,166,255,${(.6*pulse).toFixed(2)}), 0 10px 28px rgba(0,0,0,.38)`:'';
+
+  flies.forEach((d,k)=>{
+    const p=seg(t,cyc(k)+.45,.8);
+    if(p<=0||p>=1){ d.style.opacity=0; return; }
+    const e=easeInOut(p), s=slot(12+k);
+    const x0=830-TW/2, y0=520-TH/2;
+    const x=x0+(s.x-x0)*e, y=y0+(s.y-y0)*e-110*Math.sin(Math.PI*e);
+    d.style.left=x.toFixed(1)+'px'; d.style.top=y.toFixed(1)+'px';
+    d.style.opacity=Math.min(1,p*6).toFixed(2);
+    d.style.transform=`scale(${(.55+.45*e).toFixed(3)})`;
+    d.style.boxShadow=`0 0 26px rgba(88,166,255,.7)`;
+  });
+
+  // month counter
+  const chip=document.getElementById('chip');
+  chip.textContent=(12+landed)+' months';
+  let cp=0; for(let k=0;k<3;k++){ const p=seg(t,LAND(k),.35); if(p>0&&p<1) cp=Math.sin(Math.PI*p); }
+  chip.style.transform=`scale(${(1+.18*cp).toFixed(3)})`;
+}
+
+let t0=null,raf=null;
+function play(){t0=performance.now()+400;cancelAnimationFrame(raf);const f=()=>{const t=(performance.now()-t0)/1000;render(clamp(t,0,DUR));if(t<DUR+1)raf=requestAnimationFrame(f);};raf=requestAnimationFrame(f);}
+window.addEventListener('load',()=>{const F=fixedTime();if(F!==null){render(F);}else{render(0);play();}});
+window.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();play();}});
+window.addEventListener('click',()=>play());
+</script>
+</body>
+</html>
