@@ -1,0 +1,194 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>What Is a Parquet File?</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  svg.title{position:absolute;left:0;top:0;width:1920px;height:120px}
+  svg.title text{font-family:var(--mono);font-size:54px;font-weight:700;fill:#FFFFFF;stroke:#000;stroke-width:10px;stroke-linejoin:round;paint-order:stroke fill}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+
+  /* the one query, sent to both files */
+  .query{position:absolute;box-sizing:border-box;height:64px;display:flex;align-items:center;gap:14px;padding:0 28px;
+    border:2px solid rgba(88,166,255,.7);border-radius:14px;background:#1b2430;
+    font-family:var(--mono);font-size:30px;font-weight:700;color:#FFFFFF;white-space:nowrap;
+    box-shadow:0 10px 28px rgba(0,0,0,.4)}
+  .query .kw{color:var(--blue)}
+
+  /* format panels */
+  .panel{position:absolute;box-sizing:border-box;background:var(--panel);border:2px solid var(--line);border-radius:24px;
+    padding:26px 30px;box-shadow:0 12px 32px rgba(0,0,0,.4)}
+  .phd{display:flex;align-items:center;gap:14px;height:56px}
+  .phd .ic{font-size:36px}
+  .phd .nm{font-family:var(--mono);font-size:38px;font-weight:700;color:#FFFFFF}
+  .phd .chips{margin-left:auto;display:flex;gap:10px}
+  .chip{box-sizing:border-box;height:42px;display:flex;align-items:center;gap:8px;padding:0 16px;
+    border:1.5px solid rgba(88,166,255,.5);border-radius:10px;background:rgba(88,166,255,.08);
+    font-family:var(--mono);font-size:20px;font-weight:600;color:var(--text);white-space:nowrap}
+  .chip .ar{font-family:var(--sans);font-size:30px;font-weight:700;line-height:1;color:var(--blue)}
+  .chip.plain{border-color:rgba(201,206,214,.35);background:transparent;color:var(--muted)}
+  .body{margin-top:26px;height:344px}
+
+  /* "read" = blue glow; "skipped" = dimmed */
+  .read{border:2.5px solid var(--blue)!important;background:rgba(88,166,255,.13)!important;
+    box-shadow:0 0 22px rgba(88,166,255,.28)}
+  .skip{opacity:.3}
+
+  /* CSV: one text line per row */
+  .line{box-sizing:border-box;height:56px;display:flex;align-items:center;padding:0 18px;margin-bottom:16px;
+    border:1.5px solid var(--line);border-radius:10px;background:var(--panel2);
+    font-family:var(--mono);font-size:23px;color:var(--text);white-space:pre}
+  .line .c{color:var(--blue);font-weight:700}
+  .line.hdr{color:var(--muted)}
+  .line b{color:#FFFFFF;font-weight:700}
+
+  /* Parquet: one block per column */
+  .cols{display:flex;gap:12px;height:344px}
+  .blk{box-sizing:border-box;height:344px;border:1.5px solid var(--line);border-radius:12px;background:var(--panel2);
+    display:flex;flex-direction:column;overflow:hidden}
+  .blk .bh{padding:12px 12px 12px;border-bottom:1.5px solid var(--line);display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .blk .bn{font-family:var(--mono);font-size:21px;font-weight:700;color:#FFFFFF;white-space:nowrap}
+  .blk .ty{box-sizing:border-box;height:32px;display:flex;align-items:center;padding:0 10px;border-radius:7px;
+    border:1.5px solid rgba(88,166,255,.5);background:rgba(88,166,255,.08);
+    font-family:var(--mono);font-size:19px;font-weight:700;color:var(--blue);letter-spacing:.03em}
+  .blk .v{flex:1;display:flex;align-items:center;padding:0 12px;font-family:var(--mono);font-size:21px;color:var(--text);white-space:nowrap}
+  .blk .v + .v{border-top:1px dashed #333}
+  .blk.read .bh{border-bottom-color:rgba(88,166,255,.55)}
+  .blk.read .v{color:#FFFFFF}
+
+  /* file glyphs: stripes show HOW the file stores data (rows vs columns) */
+  .fg{position:relative;flex:none;width:40px;height:50px;border-radius:6px;background:linear-gradient(180deg,#f2f2f2,#d8d8d8);box-shadow:0 3px 8px rgba(0,0,0,.45)}
+  .fg:before{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 12px 12px 0;border-color:transparent var(--panel) transparent transparent}
+  .fg i{position:absolute;left:7px;right:7px;top:16px;bottom:8px}
+  .fg.rows i{background:repeating-linear-gradient(180deg,#7d9bd0 0 4px,transparent 4px 8px)}
+  .fg.cols i{background:repeating-linear-gradient(90deg,#7d9bd0 0 4px,transparent 4px 8px)}
+  .fg.sm{width:24px;height:30px;border-radius:4px}
+  .fg.sm:before{border-width:0 8px 8px 0}
+  .fg.sm i{left:4px;right:4px;top:10px;bottom:5px}
+  .fg.sm.rows i{background:repeating-linear-gradient(180deg,#7d9bd0 0 3px,transparent 3px 6px)}
+  .fg.sm.cols i{background:repeating-linear-gradient(90deg,#7d9bd0 0 3px,transparent 3px 6px)}
+
+  /* result pill under each body */
+  .res{margin-top:22px;display:flex;justify-content:center}
+  .res span{box-sizing:border-box;height:52px;display:flex;align-items:center;gap:12px;padding:0 24px;border-radius:12px;
+    background:var(--zone);border:1.5px solid var(--line);font-family:var(--mono);font-size:24px;font-weight:700;color:#FFFFFF}
+
+  /* benefit cards */
+  .ben{position:absolute;box-sizing:border-box;height:210px;background:var(--panel);border:2px solid var(--line);border-radius:22px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;box-shadow:0 12px 32px rgba(0,0,0,.4)}
+  .ben .top{display:flex;align-items:center;gap:16px}
+  .ben .ic{font-size:46px;line-height:1}
+  .ben .st{font-family:var(--mono);font-size:38px;font-weight:700;color:#FFFFFF;white-space:nowrap}
+  .ben .st em{font-style:normal;color:var(--blue)}
+  .ben .vs{display:flex;gap:30px;font-family:var(--mono);font-size:24px;color:var(--muted);white-space:nowrap}
+  .ben .vs span{display:flex;align-items:center;gap:10px}
+  .ben .vs b{color:#FFFFFF;font-weight:700}
+  .ben .vs i.dot{font-style:normal;color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="title" viewBox="0 0 1920 120"><text x="960" y="78" text-anchor="middle">What Is a Parquet File?</text></svg>
+
+  <!-- same query, both files -->
+  <div class="query" style="left:775px;top:122px;width:370px">🔍 <span class="kw">SELECT</span> job_title</div>
+
+  <!-- ============ CSV: row by row ============ -->
+  <div class="panel" style="left:30px;top:238px;width:876px;height:560px">
+    <div class="phd">
+      <span class="fg rows"><i></i></span><span class="nm">.csv</span>
+      <div class="chips"><div class="chip"><span class="ar">↔</span>row by row</div><div class="chip plain">plain text</div></div>
+    </div>
+    <div class="body">
+      <div class="line hdr read">job_title<span class="c">,</span>company_name<span class="c">,</span>search_date<span class="c">,</span>job_work_from_home</div>
+      <div class="line read"><b>Data Analyst</b><span class="c">,</span>CXC<span class="c">,</span>2026-06-22<span class="c">,</span>true</div>
+      <div class="line read"><b>Data Engineer</b><span class="c">,</span>BTSE<span class="c">,</span>2026-06-13<span class="c">,</span>true</div>
+      <div class="line read"><b>Data Scientist</b><span class="c">,</span>Pipe<span class="c">,</span>2026-06-03<span class="c">,</span>true</div>
+      <div class="line read" style="margin-bottom:0"><b>Analytics Engineer</b><span class="c">,</span>JUMO<span class="c">,</span>2026-06-08<span class="c">,</span>true</div>
+    </div>
+    <div class="res"><span>📖 reads every row in full</span></div>
+  </div>
+
+  <!-- ============ Parquet: column by column ============ -->
+  <div class="panel" style="left:936px;top:238px;width:954px;height:560px">
+    <div class="phd">
+      <span class="fg cols"><i></i></span><span class="nm">.parquet</span>
+      <div class="chips"><div class="chip"><span class="ar">↕</span>column by column</div><div class="chip plain">🗜 compressed</div></div>
+    </div>
+    <div class="body cols">
+      <div class="blk read" style="width:254px">
+        <div class="bh"><span class="bn">job_title</span><span class="ty">VARCHAR</span></div>
+        <div class="v">Data Analyst</div>
+        <div class="v">Data Engineer</div>
+        <div class="v">Data Scientist</div>
+        <div class="v">Analytics Engineer</div>
+      </div>
+      <div class="blk skip" style="width:180px">
+        <div class="bh"><span class="bn">company_name</span><span class="ty">VARCHAR</span></div>
+        <div class="v">CXC</div>
+        <div class="v">BTSE</div>
+        <div class="v">Pipe</div>
+        <div class="v">JUMO</div>
+      </div>
+      <div class="blk skip" style="width:166px">
+        <div class="bh"><span class="bn">search_date</span><span class="ty">DATE</span></div>
+        <div class="v">2026-06-22</div>
+        <div class="v">2026-06-13</div>
+        <div class="v">2026-06-03</div>
+        <div class="v">2026-06-08</div>
+      </div>
+      <div class="blk skip" style="width:254px">
+        <div class="bh"><span class="bn">job_work_from_home</span><span class="ty">BOOLEAN</span></div>
+        <div class="v">true</div>
+        <div class="v">true</div>
+        <div class="v">true</div>
+        <div class="v">true</div>
+      </div>
+    </div>
+    <div class="res"><span>📖 reads only job_title</span></div>
+  </div>
+
+  <!-- ============ benefits (measured on raw_job_postings) ============ -->
+  <div class="ben" style="left:30px;top:830px;width:423px">
+    <div class="top"><span class="ic">🗜</span><span class="st"><em>10x</em> smaller</span></div>
+    <div class="vs"><span><span class="fg sm cols"><i></i></span><b>27 MB</b></span><span><span class="fg sm rows"><i></i></span><b>281 MB</b></span></div>
+  </div>
+  <div class="ben" style="left:483px;top:830px;width:423px">
+    <div class="top"><span class="ic">⚡</span><span class="st"><em>17x</em> faster</span></div>
+    <div class="vs"><span><span class="fg sm cols"><i></i></span><b>5.7 ms</b></span><span><span class="fg sm rows"><i></i></span><b>99 ms</b></span></div>
+  </div>
+  <div class="ben" style="left:936px;top:830px;width:462px">
+    <div class="top"><span class="ic">🏷</span><span class="st">types built in</span></div>
+    <div class="vs"><span><span class="fg sm cols"><i></i></span><b>stored</b></span><span><span class="fg sm rows"><i></i></span><b>guessed</b></span></div>
+  </div>
+  <div class="ben" style="left:1428px;top:830px;width:462px">
+    <div class="top"><span class="ic">🌐</span><span class="st">widely used</span></div>
+    <div class="vs"><b>DuckDB <i class="dot">·</i> Spark <i class="dot">·</i> pandas</b></div>
+  </div>
+
+  <!-- connectors: query → both files (dotted 2 10, outside every card) -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="20" markerHeight="20" orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+    </defs>
+    <g fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)">
+      <path d="M 763 154 H 508 Q 468 154 468 194 V 224"/>
+      <path d="M 1157 154 H 1373 Q 1413 154 1413 194 V 224"/>
+    </g>
+  </svg>
+</div>
+</body>
+</html>
