@@ -26,6 +26,19 @@ jobs:
       - run: uv run python scripts/download_data.py
       - run: uv run dbt build --profiles-dir ../ci
         working-directory: project_1/analytics
+      # Monorepo-only (not in the student copy): store job_postings as a table in
+      # the published warehouse, so a remote ATTACH can query it. The model stays
+      # a view in the course code. duckdb pinned to the version this was tested on.
+      - run: |
+          uv run --with duckdb==1.5.5 python - <<'PY'
+          import duckdb
+          con = duckdb.connect('../data/prod.duckdb')
+          con.execute('CREATE TABLE job_postings__tbl AS SELECT * FROM job_postings')
+          con.execute('DROP VIEW job_postings')
+          con.execute('ALTER TABLE job_postings__tbl RENAME TO job_postings')
+          con.close()
+          PY
+        working-directory: project_1/analytics
       - run: |
           gh release create warehouse --notes "Warehouse — auto-built by dbt" || true
           gh release upload warehouse data/prod.duckdb --clobber
