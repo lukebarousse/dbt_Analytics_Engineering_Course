@@ -1,0 +1,110 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Connect to the Live Warehouse</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  svg.title{position:absolute;left:0;top:0;width:1920px;height:120px}
+  svg.title text{font-family:var(--mono);font-size:54px;font-weight:700;fill:#FFFFFF;stroke:#000;stroke-width:10px;stroke-linejoin:round;paint-order:stroke fill}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+
+  /* zones */
+  .zone{position:absolute;box-sizing:border-box;border:2px dashed #4A7DBB;border-radius:28px}
+  .zone .zl{position:absolute;left:0;top:-31px;width:100%;text-align:center}
+  .zone .zl > span{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:32px;font-weight:700;color:#FFFFFF;background:var(--bg);padding:0 20px;line-height:60px}
+  .zone .zl img{height:50px;width:auto}
+  .zone .zl .emo{font-size:44px;line-height:1}
+
+  /* release card */
+  .card{position:absolute;box-sizing:border-box;border-radius:26px;background:var(--panel);
+    border:2px solid rgba(242,201,76,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;
+    box-shadow:0 12px 32px rgba(0,0,0,.4)}
+  .card .nm{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--duck);text-align:center}
+  .chip{box-sizing:border-box;height:58px;display:inline-flex;align-items:center;gap:12px;padding:0 24px;
+    border:2px solid rgba(88,166,255,.55);border-radius:14px;background:rgba(88,166,255,.08);
+    font-family:var(--mono);font-size:26px;font-weight:600;color:var(--text);white-space:nowrap}
+  .chip.abs{position:absolute}
+
+  /* glossy yellow cylinder = the warehouse file */
+  .cyl{position:relative;width:240px;height:284px}
+  .cyl .body{position:absolute;left:0;right:0;top:26px;bottom:24px;border-radius:24px/42px;
+    background:linear-gradient(180deg,#f5df8a 0%,#F2C94C 40%,#c9a230 90%);box-shadow:inset 0 -10px 18px rgba(0,0,0,.25)}
+  .cyl .top{position:absolute;left:0;right:0;top:0;height:54px;border-radius:50%;
+    background:linear-gradient(180deg,#f8e7a5,#e3bd45);box-shadow:0 1px 2px rgba(0,0,0,.35)}
+  .cyl .bot{position:absolute;left:0;right:0;bottom:0;height:50px;border-radius:50%;
+    background:linear-gradient(180deg,#c9a230,#a8871f)}
+
+  /* terminal */
+  .term{position:absolute;box-sizing:border-box;border-radius:20px;background:#141414;border:2px solid var(--line);
+    box-shadow:0 12px 32px rgba(0,0,0,.4);overflow:hidden;display:flex;flex-direction:column}
+  .term .bar{flex:none;height:66px;display:flex;align-items:center;gap:14px;padding:0 24px;background:#242424;border-bottom:2px solid var(--line)}
+  .term .dot{width:16px;height:16px;border-radius:50%;background:#4a4a4a}
+  .term .bar .lbl{margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:28px;font-weight:700;color:#FFFFFF;transform:translateX(-45px)}
+  .term .bar img{height:38px;width:38px}
+  .term .body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 50px 10px;font-family:var(--mono);font-size:36px;line-height:1.45;color:var(--text)}
+  .term .ln{white-space:pre}
+  .term .p{color:var(--muted);font-weight:700}
+  .term .c{color:#FFFFFF;font-weight:700}
+  .term .out{margin:22px 0 22px 0;width:fit-content;border:2px solid #444;border-radius:10px}
+  .term .out .hd{padding:6px 30px;border-bottom:2px solid #444;color:var(--muted);text-align:center}
+  .term .out .rs{padding:10px 30px 12px}
+  .term .out .rs div{color:#FFFFFF}
+
+  .lab{position:absolute;font-family:var(--mono);font-size:27px;font-weight:700;color:#FFFFFF;white-space:nowrap;text-align:center}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="title" viewBox="0 0 1920 120"><text x="960" y="78" text-anchor="middle">Connect to the Live Warehouse</text></svg>
+
+  <!-- LEFT: GitHub Releases -->
+  <div class="zone" style="left:60px;top:205px;width:520px;height:810px">
+    <div class="zl"><span><img src="../images/github-white-icon.png" alt="">GitHub Releases</span></div>
+  </div>
+  <div class="card" style="left:100px;top:290px;width:440px;height:640px">
+    <div class="chip">🏷️ warehouse</div>
+    <div class="cyl"><div class="body"></div><div class="top"></div><div class="bot"></div></div>
+    <div class="nm">prod.duckdb</div>
+    <div class="chip">🔄 weekly</div>
+  </div>
+
+  <!-- RIGHT: Your Computer -->
+  <div class="zone" style="left:1260px;top:205px;width:600px;height:810px">
+    <div class="zl"><span><span class="emo">💻</span>Your Computer</span></div>
+  </div>
+  <div class="term" style="left:1300px;top:290px;width:520px;height:640px">
+    <div class="bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="lbl"><img src="../images/DuckDB_logo.png" alt="">duckdb</div></div>
+<div class="body">
+      <div class="ln"><span class="p">D</span> <span class="c">SHOW TABLES;</span></div>
+      <div class="out"><div class="hd">name</div><div class="rs">
+        <div>job_postings</div><div>jobs_per_month</div><div>monthly_summary</div><div>top_locations</div></div></div>
+      <div class="ln"><span class="p">D</span> <span class="c">SELECT …</span></div>
+    </div>
+  </div>
+
+  <!-- connector: release file -> your DuckDB, read over https -->
+  <div class="lab" style="left:580px;width:680px;top:488px">ATTACH 'https://lukeb.co/dbt-warehouse'</div>
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="22" markerHeight="22" orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#F2C94C"/>
+      </marker>
+    </defs>
+    <path d="M 554 570 L 1284 570" fill="none" stroke="#F2C94C" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)"/>
+  </svg>
+  <div style="position:absolute;left:580px;width:680px;top:610px;display:flex;justify-content:center"><div class="chip">🌐 httpfs</div></div>
+</div>
+</body>
+</html>
