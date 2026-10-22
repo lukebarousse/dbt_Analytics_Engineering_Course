@@ -1,0 +1,150 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>What We Build in Basics</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:var(--sans);color:var(--text);background:var(--bg)}
+  svg.title{position:absolute;left:0;top:0;width:1920px;height:120px}
+  svg.title text{font-family:var(--mono);font-size:54px;font-weight:700;fill:#FFFFFF;stroke:#000;stroke-width:10px;stroke-linejoin:round;paint-order:stroke fill}
+  svg.art{position:absolute;inset:0;pointer-events:none}
+
+  /* DuckDB storage zone (yellow = warehouse/storage) */
+  .zone{position:absolute;box-sizing:border-box;border:2px dashed rgba(242,201,76,.6);border-radius:28px}
+  .zone .zl{position:absolute;left:0;top:-29px;width:100%;text-align:center}
+  .zone .zl span{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:30px;font-weight:700;color:#FFFFFF;background:var(--bg);padding:0 20px}
+  .zone .zl img{height:50px;width:50px}
+
+  /* model cards */
+  .card{position:absolute;box-sizing:border-box;border-radius:24px;background:var(--panel);
+    border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    box-shadow:0 12px 32px rgba(0,0,0,.4)}
+  .card .row{display:flex;align-items:center;gap:20px;margin-bottom:4px}
+  .card .nm{font-family:var(--mono);font-size:28px;font-weight:700;color:#FFFFFF;text-align:center}
+  .card .cap{font-family:var(--mono);font-size:22px;color:var(--muted);text-align:center;white-space:nowrap}
+  .chip{box-sizing:border-box;height:42px;display:flex;align-items:center;padding:0 18px;
+    border:1.5px solid rgba(88,166,255,.55);border-radius:10px;background:rgba(88,166,255,.08);
+    font-family:var(--mono);font-size:21px;font-weight:600;color:var(--text);white-space:nowrap}
+  .chip.src{border-color:rgba(201,206,214,.4);background:transparent;color:var(--muted)}
+  /* ghost card: input we read, not something we build */
+  .card.ghost{background:transparent;border:2px dashed #4A4A4A;box-shadow:none}
+  .card.ghost .nm{color:var(--text)}
+  .card.ghost .pfile:before{border-right-color:var(--bg)}
+
+  /* stacked parquet pages (textless glyph) */
+  .pages{position:relative;width:104px;height:96px}
+  .pfile{position:absolute;width:62px;height:78px;background:linear-gradient(180deg,#f2f2f2,#d8d8d8);border-radius:6px;box-shadow:0 3px 8px rgba(0,0,0,.45)}
+  .pfile:before{content:"";position:absolute;right:0;top:0;border-style:solid;border-width:0 16px 16px 0;border-color:transparent var(--panel) transparent transparent}
+  .pfile .rows{position:absolute;left:9px;right:9px;top:22px;height:40px;background:repeating-linear-gradient(180deg,#aebcd8 0 5px,transparent 5px 11px)}
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="title" viewBox="0 0 1920 120"><text x="960" y="78" text-anchor="middle">What We Build in Basics</text></svg>
+
+  <!-- raw files: read in place, outside the database -->
+  <div class="card ghost" style="left:30px;top:465px;width:370px;height:290px">
+    <div class="row">
+      <div class="pages">
+        <div class="pfile" style="left:0;top:0"></div>
+        <div class="pfile" style="left:18px;top:9px"></div>
+        <div class="pfile" style="left:36px;top:18px"><div class="rows"></div></div>
+      </div>
+      <div class="chip src">source</div>
+    </div>
+    <div class="nm">raw_job_postings</div>
+    <div class="cap">12 monthly parquet files</div>
+  </div>
+
+  <!-- dev.duckdb zone -->
+  <div class="zone" style="left:450px;top:185px;width:1440px;height:850px">
+    <div class="zl"><span><img src="../images/DuckDB_logo.png" alt="">dev.duckdb</span></div>
+  </div>
+
+  <!-- view glyph: dashed = nothing stored -->
+  <!-- table glyph: solid yellow header = stored in DuckDB -->
+
+  <div class="card" style="left:490px;top:465px;width:370px;height:290px">
+    <div class="row">
+      <svg width="96" height="72" viewBox="0 0 96 72">
+        <rect x="2" y="2" width="92" height="68" rx="8" fill="#1d2430" stroke="#58A6FF" stroke-width="3" stroke-dasharray="7 6"/>
+        <rect x="16" y="18" width="44" height="6" rx="3" fill="#58A6FF"/>
+        <rect x="16" y="33" width="64" height="6" rx="3" fill="rgba(88,166,255,.6)"/>
+        <rect x="16" y="48" width="52" height="6" rx="3" fill="rgba(88,166,255,.38)"/>
+      </svg>
+      <div class="chip">view</div>
+    </div>
+    <div class="nm">job_postings</div>
+    <div class="cap">9 columns, no error rows</div>
+  </div>
+
+  <div class="card" style="left:985px;top:245px;width:370px;height:290px">
+    <div class="row">
+      <svg width="96" height="72" viewBox="0 0 96 72">
+        <rect x="2" y="2" width="92" height="68" rx="8" fill="#1f1f1f" stroke="rgba(242,201,76,.85)" stroke-width="3"/>
+        <path d="M2 10 a8 8 0 0 1 8 -8 h76 a8 8 0 0 1 8 8 v10 h-92 z" fill="#F2C94C"/>
+        <path d="M2 36 h92 M2 53 h92 M36 20 v50" stroke="#4a4a4a" stroke-width="2.5"/>
+      </svg>
+      <div class="chip">table</div>
+    </div>
+    <div class="nm">jobs_per_month</div>
+    <div class="cap">postings by role</div>
+  </div>
+
+  <div class="card" style="left:985px;top:685px;width:370px;height:290px">
+    <div class="row">
+      <svg width="96" height="72" viewBox="0 0 96 72">
+        <rect x="2" y="2" width="92" height="68" rx="8" fill="#1f1f1f" stroke="rgba(242,201,76,.85)" stroke-width="3"/>
+        <path d="M2 10 a8 8 0 0 1 8 -8 h76 a8 8 0 0 1 8 8 v10 h-92 z" fill="#F2C94C"/>
+        <path d="M2 36 h92 M2 53 h92 M36 20 v50" stroke="#4a4a4a" stroke-width="2.5"/>
+      </svg>
+      <div class="chip">table</div>
+    </div>
+    <div class="nm">top_locations</div>
+    <div class="cap">top 10 job locations</div>
+  </div>
+
+  <div class="card" style="left:1480px;top:465px;width:370px;height:290px">
+    <div class="row">
+      <svg width="96" height="72" viewBox="0 0 96 72">
+        <rect x="2" y="2" width="92" height="68" rx="8" fill="#1f1f1f" stroke="rgba(242,201,76,.85)" stroke-width="3"/>
+        <path d="M2 10 a8 8 0 0 1 8 -8 h76 a8 8 0 0 1 8 8 v10 h-92 z" fill="#F2C94C"/>
+        <path d="M2 36 h92 M2 53 h92 M36 20 v50" stroke="#4a4a4a" stroke-width="2.5"/>
+      </svg>
+      <div class="chip">table</div>
+    </div>
+    <div class="nm">monthly_summary</div>
+    <div class="cap">totals + % remote</div>
+  </div>
+
+  <!-- connectors: dotted 2 10, routed through the gaps, never across a card -->
+  <svg class="art" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="20" markerHeight="20" orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#EDEDED"/>
+      </marker>
+    </defs>
+    <g fill="none" stroke="#EDEDED" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#aw)">
+      <!-- source → view -->
+      <path d="M 412 610 L 476 610"/>
+      <!-- view → the three tables -->
+      <path d="M 872 550 C 935 550, 925 390, 971 390"/>
+      <path d="M 872 610 L 1466 610"/>
+      <path d="M 872 670 C 935 670, 925 830, 971 830"/>
+      <!-- jobs_per_month → monthly_summary (second parent) -->
+      <path d="M 1367 390 H 1625 Q 1665 390 1665 430 V 451"/>
+    </g>
+  </svg>
+</div>
+</body>
+</html>
