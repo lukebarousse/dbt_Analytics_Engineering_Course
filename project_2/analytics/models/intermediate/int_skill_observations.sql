@@ -1,7 +1,7 @@
 -- staging cleans, intermediate thinks, marts serve. the thinking here is a
--- re-grain: 3,304,574 raw (job, skill) pairs collapse to one row per skill.
--- counts run against staging on purpose — they include pairs whose job never
--- made fct (the orphan finding), so this is "observed in the wild", not
+-- re-grain: 3,304,574 raw (job, skill keyword) rows collapse to one row per skill.
+-- counts run against staging on purpose: they would include rows whose job never
+-- made fct (0 such orphans today), so this is "observed in the wild", not
 -- "observed in the star"; dim_skill serves it with the seed's taxonomy.
 
 WITH job_skills AS (

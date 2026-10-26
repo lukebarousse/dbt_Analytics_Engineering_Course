@@ -6,7 +6,7 @@
 -- skips nulls itself).
 
 WITH bridge AS (
-    SELECT * FROM {{ ref('bridge_job_skills') }}
+    SELECT DISTINCT job_id, skill_id FROM {{ ref('bridge_job_skills') }}
 ),
 
 job_postings AS (

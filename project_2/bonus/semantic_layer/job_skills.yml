@@ -2,11 +2,14 @@
 # semantic model that has measures but no agg time dimension
 semantic_models:
   - name: job_skills
-    description: One row per (job, skill) pair, fct jobs only — the bridge guarantees every job here exists in fct.
+    description: >
+      One row per (job_id, skill_keyword), fct jobs only; the bridge guarantees every job
+      here exists in fct. A skill_id repeats on a job when the posting names it two ways
+      (spark, pyspark).
     model: ref('bridge_job_skills')
     defaults:
       agg_time_dimension: search_date
-    # the grain is the (job, skill) PAIR — no single column is primary, so the
+    # the grain is (job_id, skill_keyword): no single column is primary, so the
     # primary entity is declared virtually instead of pointing at a column
     primary_entity: job_skill
     entities:
@@ -23,9 +26,11 @@ semantic_models:
           time_granularity: day
     measures:
       - name: skill_mentions
-        description: Bridge rows are distinct (job, skill) pairs, so counting rows counts mentions.
-        expr: 1
-        agg: sum
+        description: >
+          Distinct jobs that mention the skill. A skill_id repeats on a job when the
+          posting names it two ways (spark, pyspark), so count distinct job_id, not rows.
+        expr: job_id
+        agg: count_distinct
         # ratio inputs must be metrics, not measures; this exposes skill_mentions
         # as one without adding a third entry to the metrics block
         create_metric: true

@@ -1,4 +1,4 @@
--- grain: one row per (job_id, skill_id) pair; raw arrives already distinct.
+-- grain: one row per (job_id, skill_keyword); a skill_id can repeat on a job (spark, pyspark).
 -- the deliberately boring one: some staging models just rename, order, and trim,
 -- and that is the discipline working.
 

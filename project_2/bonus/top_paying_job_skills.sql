@@ -13,7 +13,7 @@ WITH top_jobs AS (
 ),
 
 bridge AS (
-    SELECT * FROM {{ ref('bridge_job_skills') }}
+    SELECT DISTINCT job_id, skill_id FROM {{ ref('bridge_job_skills') }}
 ),
 
 skills AS (
