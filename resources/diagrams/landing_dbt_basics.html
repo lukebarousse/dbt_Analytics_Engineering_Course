@@ -1,0 +1,196 @@
+<!-- @dsCard group="dbt Course Diagrams" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>dbt Basics</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Code+Pro:wght@400;600;700;800&display=swap');
+  :root{
+    --bg:#191919; --panel:#202020; --panel2:#232323; --zone:#1E1E1E; --line:#373737;
+    --text:#D3D3D3; --muted:#9B9B9B; --faint:#6B6B6B;
+    --dbt:#FF694B; --duck:#F2C94C; --blue:#58A6FF; --ok:#57AB5A; --err:#E5534B;
+    --mono:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --hand:'Source Code Pro',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--hand)}
+  .title{position:absolute;left:52px;top:30px;font-family:var(--mono);font-weight:800;font-size:62px;color:#fff;letter-spacing:-.01em}
+  .brand{position:absolute;right:56px;top:30px;display:flex;align-items:center;gap:16px}
+  .brand img{height:64px}
+  .brand .course{font-family:var(--mono);font-weight:700;font-size:26px;color:#fff;line-height:1}
+  .brand .yt{display:inline-block;background:#FF0000;color:#fff;border-radius:6px;font-family:var(--mono);font-weight:800;font-size:16px;padding:3px 7px;margin-left:8px;vertical-align:middle}
+
+  /* 3 x 2 grid of panels with hairline separators */
+  .grid{position:absolute;left:40px;top:128px;width:1840px;height:926px}
+  .p{position:absolute;width:600px;height:450px;box-sizing:border-box;padding:12px 16px 0 18px}
+  .vline{position:absolute;top:0;width:1px;height:926px;background:var(--line)}
+  .hline{position:absolute;left:0;top:462px;width:1840px;height:1px;background:var(--line)}
+  .h{font-family:var(--mono);font-weight:800;font-size:34px;color:var(--blue);line-height:1;letter-spacing:.02em}
+  .h .m{font-family:var(--mono);font-weight:800;font-size:34px;color:var(--blue)}
+  .sub{font-family:var(--mono);font-weight:400;font-size:20px;color:var(--text);margin-top:10px;line-height:1.3}
+  .code{position:absolute;background:#141414;border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;
+    font-family:var(--mono);font-size:19px;line-height:1.38;color:var(--text);white-space:pre;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  .code .k{color:var(--blue);font-weight:700}
+  .code .j{color:var(--dbt);font-weight:700}
+  .code .c{color:var(--faint)}
+  .code .s{color:var(--duck)}
+  .code .ok{color:var(--ok);font-weight:700}
+  .code .y{color:var(--blue)}
+  .notes{position:absolute;font-family:var(--mono);font-weight:400;font-size:19px;color:var(--text);line-height:1.3}
+  .notes div{margin-top:6px}
+  .notes b{color:#fff;font-weight:700}
+  .lab{font-family:var(--mono);font-weight:700;font-size:19px;color:var(--text);text-align:center;white-space:nowrap}
+  .node{position:absolute;box-sizing:border-box;border:1.5px solid var(--line);background:var(--panel);border-radius:10px;
+    font-family:var(--mono);font-weight:700;font-size:19px;color:var(--text);padding:8px 12px;white-space:nowrap;text-align:center}
+  .node.src{border-color:rgba(242,201,76,.6);color:var(--duck)}
+  svg{position:absolute;overflow:visible}
+  .cable{fill:none;stroke:var(--blue);stroke-width:3.5;stroke-dasharray:2 10;stroke-linecap:round}
+  .cable.o{stroke:var(--dbt)}
+  .ico{position:absolute;font-size:34px;line-height:1;font-family:var(--sans)}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="title">dbt Basics</div>
+  <div class="brand">
+    <img src="../images/dbt_logo.png" alt="dbt">
+    <div class="course">dbt for Analytics &amp; Engineering<span class="yt">▶</span></div>
+  </div>
+
+  <svg style="width:0;height:0;position:absolute"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#58A6FF"/></marker><marker id="ahy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F2C94C"/></marker></defs></svg>
+  <div class="grid">
+    <div class="vline" style="left:613px"></div>
+    <div class="vline" style="left:1226px"></div>
+    <div class="hline"></div>
+
+    <!-- 1 MODEL -->
+    <div class="p" style="left:0;top:0">
+      <div class="h">MODEL</div>
+      <div class="sub">One SELECT in a .sql file. The file name becomes the object name.</div>
+      <div class="code" style="left:18px;top:126px;width:338px"><span class="c">-- models/job_postings.sql</span>
+<span class="k">SELECT</span>
+    job_id,
+    job_title,
+    company_name
+<span class="k">FROM</span> read_parquet(<span class="s">'raw/*'</span>)</div>
+      <!-- file -> dbt run -> view -->
+      <div class="ico" style="left:452px;top:132px">📄</div>
+      <div class="lab" style="position:absolute;left:426px;top:176px;width:100px">job_postings.sql</div>
+      <svg style="left:476px;top:204px;width:4px;height:52px"><path class="cable o" d="M2 0 V52"/></svg>
+      <div class="node" style="left:422px;top:258px;width:108px;color:var(--dbt);border-color:rgba(255,105,75,.6)">dbt run</div>
+      <svg style="left:476px;top:300px;width:4px;height:44px"><path class="cable o" d="M2 0 V44"/></svg>
+      <div class="ico" style="left:452px;top:346px">🗄️</div>
+      <div class="lab" style="position:absolute;left:404px;top:390px;width:144px">job_postings (view)</div>
+      <div class="notes" style="left:18px;top:312px;width:340px">
+        <div>- Lives in <b>models/</b></div>
+        <div>- Built as a <b>view</b> by default</div>
+        <div>- dbt writes the CREATE</div>
+      </div>
+    </div>
+
+    <!-- 2 ref() -->
+    <div class="p" style="left:613px;top:0">
+      <div class="h"><span class="m">ref()</span></div>
+      <div class="sub">Point at another model. dbt builds the parent first.</div>
+      <div class="code" style="left:18px;top:126px;width:562px"><span class="c">-- models/jobs_per_month.sql</span>
+<span class="k">SELECT</span>
+    DATE_TRUNC(<span class="s">'month'</span>, search_date) <span class="k">AS</span> month,
+    COUNT(*) <span class="k">AS</span> postings
+<span class="k">FROM</span> <span class="j">{{ ref('job_postings') }}</span>
+<span class="k">GROUP BY</span> month</div>
+      <!-- mini DAG -->
+      <div class="node" style="left:60px;top:338px">job_postings</div>
+      <svg style="left:214px;top:358px;width:150px;height:4px"><path class="cable" d="M0 2 H140" marker-end="url(#ah)"/></svg>
+      <div class="node" style="left:366px;top:338px">jobs_per_month</div>
+      <div class="notes" style="left:18px;top:392px;width:560px">
+        <div>- No hardcoded table names. The <b>graph</b> decides the build order</div>
+      </div>
+    </div>
+
+    <!-- 3 source() -->
+    <div class="p" style="left:1226px;top:0">
+      <div class="h"><span class="m">source()</span></div>
+      <div class="sub">Declare raw data once in YAML. Reference it everywhere.</div>
+      <div class="code" style="left:18px;top:126px;width:560px"><span class="c"># models/sources.yml</span>
+<span class="y">sources</span>:
+  - <span class="y">name</span>: raw
+    <span class="y">tables</span>:
+      - <span class="y">name</span>: job_postings</div>
+      <div class="code" style="left:18px;top:290px;width:560px"><span class="k">FROM</span> <span class="j">{{ source('raw', 'job_postings') }}</span></div>
+      <div class="node src" style="left:40px;top:356px;width:196px">raw.job_postings</div>
+      <svg style="left:240px;top:376px;width:120px;height:4px"><path class="cable" d="M0 2 H112" style="stroke:var(--duck)" marker-end="url(#ahy)"/></svg>
+      <div class="node" style="left:366px;top:356px;width:190px">job_postings</div>
+      <div class="notes" style="left:18px;top:404px;width:570px">
+        <div>- One path to change. Sources show in the DAG</div>
+      </div>
+    </div>
+
+    <!-- 4 TESTS -->
+    <div class="p" style="left:0;top:463px">
+      <div class="h">TESTS</div>
+      <div class="sub">Say what the data must be. dbt checks it on every build.</div>
+      <div class="code" style="left:18px;top:126px;width:300px"><span class="c"># models/schema.yml</span>
+- <span class="y">name</span>: monthly_summary
+  <span class="y">columns</span>:
+    - <span class="y">name</span>: month
+      <span class="y">data_tests</span>:
+        - unique
+        - not_null</div>
+      <div class="code" style="left:336px;top:126px;width:246px">$ <span class="k">dbt test</span>
+<span class="ok">PASS</span> unique_month
+<span class="ok">PASS</span> not_null_month
+
+Done. <span class="ok">PASS=2</span>
+ERROR=0 TOTAL=2</div>
+      <div class="notes" style="left:18px;top:348px;width:570px">
+        <div>- Four built-in tests:</div>
+        <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--blue);margin-top:0;white-space:nowrap">unique · not_null · accepted_values · relationships</div>
+        <div>- A failing test <b>stops</b> what depends on it</div>
+      </div>
+    </div>
+
+    <!-- 5 MATERIALIZATIONS -->
+    <div class="p" style="left:613px;top:463px">
+      <div class="h">MATERIALIZATIONS</div>
+      <div class="sub">How dbt saves a model in the warehouse.</div>
+      <div class="code" style="left:18px;top:126px;width:308px"><span class="c"># dbt_project.yml</span>
+<span class="y">models</span>:
+  <span class="y">analytics</span>:
+    <span class="j">+materialized</span>: table
+    <span class="y">staging</span>:
+      <span class="j">+materialized</span>: view</div>
+      <div class="node" style="left:340px;top:126px;width:238px;text-align:left;height:92px">🔍 <span style="color:var(--blue)">view</span>
+<div style="font-family:var(--mono);font-weight:400;font-size:18px;color:var(--text);margin-top:4px;white-space:normal;line-height:1.25">query saved,<br>recomputed on read</div></div>
+      <div class="node" style="left:340px;top:232px;width:238px;text-align:left;height:92px">🗄️ <span style="color:var(--blue)">table</span>
+<div style="font-family:var(--mono);font-weight:400;font-size:18px;color:var(--text);margin-top:4px;white-space:normal;line-height:1.25">data saved,<br>fast reads</div></div>
+      <div class="notes" style="left:18px;top:342px;width:570px">
+        <div>- Per <b>folder</b> in dbt_project.yml</div>
+        <div>- Or per model with <b>config()</b></div>
+        <div>- Also: <b>incremental</b> and <b>ephemeral</b></div>
+      </div>
+    </div>
+
+    <!-- 6 dbt build -->
+    <div class="p" style="left:1226px;top:463px">
+      <div class="h"><span class="m">dbt build</span></div>
+      <div class="sub">Seed, run, and test in one pass, in DAG order.</div>
+      <div class="code" style="left:18px;top:126px;width:560px">$ <span class="k">dbt build</span>
+1 of 9 <span class="ok">OK</span> created view job_postings
+2 of 9 <span class="ok">PASS</span> not_null_job_postings_job_title
+3 of 9 <span class="ok">OK</span> created table jobs_per_month
+4 of 9 <span class="ok">OK</span> created table monthly_summary
+...
+Done. <span class="ok">PASS=5</span> WARN=0 ERROR=0 <span class="ok">TOTAL=9</span></div>
+      <div class="notes" style="left:18px;top:336px;width:570px">
+        <div>- Tests run <b>right after</b> their model builds</div>
+        <div>- A failed test <b>skips</b> everything downstream</div>
+        <div>- Same command on your laptop and in CI</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
